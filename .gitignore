@@ -1,0 +1,25 @@
+jphaupt_phdthesis.pdf
+**/*.aux
+**/*.bbl
+**/*.xml
+**/*.out
+**/*.log
+**/*.lof
+**/*.fls
+**/*.fdb_latexmk
+**/*.bcf
+**/*.toc
+**/*.nav
+**/*.snm
+**/*.blg
+*synctex*
+**/*.lot
+
+# glossary
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist

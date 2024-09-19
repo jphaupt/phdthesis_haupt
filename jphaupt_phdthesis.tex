@@ -1,0 +1,233 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{naturalnames}{hyperref}
+\documentclass[a4paper,
+               bibliography=totoc,
+%                draft=true,
+               hidelinks,
+               listof=totoc,
+               twoside]{scrreprt}
+\usepackage[bottom = 3 cm]{geometry}
+\usepackage[
+  %automark,
+  %autooneside=false,% <- needed if you want to use \leftmark and \rightmark in a onesided document
+  headsepline %line below header
+]{scrlayer-scrpage}
+%adds page numbers to center of foot on first chapter page
+%\deftripstyle{ChapterStyle}{}{}{}{}{\pagemark}{}
+%\renewcommand*{\chapterpagestyle}{ChapterStyle}
+%deletes default footer page numbers
+\clearpairofpagestyles
+%customize header
+\ihead{\leftmark}
+\ohead{\ifstr{\leftmark}{\rightbotmark}{}{\rightbotmark}}
+\lehead{\pagemark}
+%right-handed even page headers
+\rehead{\headmark}
+\lohead{\headmark}
+\rohead{\pagemark}
+%add section title to header
+\automark[section]{chapter}
+
+\usepackage[main=english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{pdfpages}
+\usepackage{lipsum}
+\usepackage{etoolbox}
+\usepackage{chemformula}
+\usepackage{simpler-wick}
+\usepackage{listings}
+
+\clubpenalty10000
+\widowpenalty10000
+
+\usepackage[perpage, symbol*]{footmisc}
+
+% uncomment if you want to start next chapter on same page
+% \usepackage{etoolbox}
+% \makeatletter
+% \patchcmd{\scr@startchapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+% \makeatother
+
+%for enumeration environment used for own publication list
+\usepackage[inline]{enumitem}
+  \setlist[itemize]{itemsep=10pt, label={--}}
+
+\usepackage{graphicx}
+\usepackage[labelfont=bf, labelsep=space, format=plain]{caption}
+
+%for tabular for appended publications
+\usepackage{array}
+  \newcolumntype{T}{>{\ttfamily}l}
+%   \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}  }m{#1}}
+  \newcolumntype{L}[1]{>{\raggedright\setlength{\parindent}{-0.3cm}\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+\usepackage{hyperref} %has to be loaded before glossaries package for hyperlinks of acronyms to work!
+\usepackage[acronym, toc, nopostdot]{glossaries}
+\usepackage{glossary-longbooktabs}
+  \newcommand*\myglsfirst[1]{\glsfirst{#1}\glsunset{#1}}
+  \newcommand*\myglsfirstplural[1]{\glsfirstplural{#1}\glsunset{#1}}
+  \renewcommand*\glspostdescription{\hfill}
+\usepackage{glossaries-prefix}
+\input{./src/glossary_entries}
+\makeglossaries
+
+%print Contents also in TOC
+\BeforeTOCHead[toc]{\cleardoublepage\pdfbookmark{\contentsname}{toc}}
+\KOMAoptions{parskip=false}% no parskip in ToC
+\RedeclareSectionCommand[afterskip=1sp minus 1sp]{chapter}% no skip after ToC title
+\DeclareTOCStyleEntry[beforeskip=.3cm]{chapter}{chapter}
+
+%make binding margin on first page on left side and not on right
+\let\tmp\oddsidemargin
+\let\oddsidemargin\evensidemargin
+\let\evensidemargin\tmp
+\reversemarginpar
+
+\usepackage[
+  backend=biber,
+  doi=false,
+  giveninits=false,
+  isbn=false,
+  url=false,
+  articletitle=true,
+  chaptertitle=true,
+  style=chem-acs,
+  maxbibnames=99,
+  maxcitenames=99,
+  urldate=iso,
+  seconds=true
+]{biblatex}
+
+%make title in bib hyperlink to doi
+\newbibmacro{string+doi}[1]{%
+  \iffieldundef{doi}{#1}{\href{https://doi.org/\thefield{doi}}{#1}}}
+\DeclareFieldFormat{title}{\usebibmacro{string+doi}{\mkbibemph{#1}}}
+\DeclareFieldFormat[article]{title}{\usebibmacro{string+doi}{\mkbibquote{#1}}}
+
+\usepackage{csquotes}
+\DeclareFieldFormat{title}{\textit{#1}}
+\DeclareFieldFormat{booktitle}{\textit{#1}}
+\DeclareFieldFormat{journaltitle}{\upshape{#1}}
+\DeclareFieldFormat{citetitle}{#1}
+
+% add bib files like so -- make sure to keep categorised!
+% \addbibresource{./library/[...].bib}
+
+\let\cite\supercite
+
+%for onlinecite
+\DeclareCiteCommand{\citenum}
+  {}
+  {\bibhyperref{\printfield{labelnumber}}}
+  {}
+  {}
+
+\makeatletter
+  \newrobustcmd*{\setmaxcitenames}{\numdef\blx@maxcitenames}
+\makeatother
+
+%define thesis title etc.
+\input{./params/metadata}
+%define custom commands
+\input{./params/newcommands}
+
+
+%https://tex.stackexchange.com/questions/246411/koma-script-how-to-style-the-title-of-a-chapter
+\KOMAoption{chapterprefix}{true}
+\renewcommand*\raggedchapter{\centering}
+\newif\ifmakeupper
+\newcommand*\chaptertitleformat[1]{\ifmakeupper\MakeUppercase{#1}\else#1\fi}
+\addtokomafont{chapter}{\makeuppertrue}
+\setkomafont{chapterprefix}{\normalsize\mdseries}
+\renewcommand*{\chapterformat}{%
+    \MakeUppercase{\chapappifchapterprefix{\nobreakspace}}\thechapter\autodot%
+    \IfUsePrefixLine{%
+      \par\nobreak\vspace{-\parskip}\vspace{-.6\baselineskip}%
+      \rule{0.9\textwidth}{.5pt}%
+    }{\enskip}%
+}
+\RedeclareSectionCommand[beforeskip=0pt,afterskip=4\baselineskip]{chapter}
+
+\renewcaptionname{english}{\contentsname}{\chaptertitleformat{Contents}}
+
+\begin{document}
+
+\pagenumbering{roman}
+\include{./src/title_page}
+\include{./src/quote}
+\include{./src/TOC}
+\include{./src/eidesstattliche_erklaerung}
+\include{./src/acknowledgements}
+\printglossary[type=\acronymtype]
+%\printglossary[type=\acronymtype, nonumberlist]
+%\printglossary[title={Symbols}, style=long-booktabs, nonumberlist]
+
+\include{./src/abstract}
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\glsresetall
+
+\include{./src/chapter_intro}
+\include{./src/chapter_theory}
+\include{./src/chapter_summary_outlook}
+
+\listoffigures
+\listoftables
+\printbibliography
+\appendix
+\chapter{examples}
+
+\section{sec}
+\subsection{subsec}
+\label{app:}
+
+\chapter{Curriculum vitae}
+  \label{Chap:CV}
+
+  \section*{Education}
+  \begin{small}
+    \begin{tabular}{L{2.5cm}L{10cm}}
+      \textbf{2020 -- 2025} & PhD student, Theoretical Chemistry\\
+             & Max Planck Institute for Solid State Research, Stuttgart, Germany \\
+             & \textbf{Thesis:} \thetitle \\
+             & \textbf{Advisors:} Prof.\@ Dr.\@ Ali Alavi \\
+      \\
+      \textbf{2014 -- 2019} & Bachelor of Science, Honours Physics and Mathematics, Minor in Computer Science\\
+                  & University of British Columbia, Vancouver, Canada \\
+             & \textbf{Thesis:}  Effects of Anisotropic Long-Range Hopping on Anderson Localization\\
+             & \textbf{Advisor:} Prof Roman Krems \\
+      \\
+    \end{tabular}
+  \end{small}
+
+\clearpage
+
+\section*{Publications}
+\begin{refsection}
+\setmaxcitenames{10}
+
+\begin{singlespace}
+\begin{footnotesize}
+
+\subsection*{First authored}
+\begin{enumerate}[label=(\arabic*), itemindent=-0.5em]
+    \item \todo{publications}
+%   \item \fullcite*{..}
+\end{enumerate}
+
+\subsection*{Co-authored}
+\begin{enumerate}[resume, label={(\arabic*)}, itemindent=-0.5em]
+    \item \todo{publications}
+%   \item \fullcite*{...}
+\end{enumerate}
+
+\end{footnotesize}
+\end{singlespace}
+
+\end{refsection}
+\end{document}
