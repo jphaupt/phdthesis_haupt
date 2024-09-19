@@ -172,9 +172,40 @@
 \setcounter{page}{1}
 \glsresetall
 
+% from Ali:
+% Normally a thesis will have three original chapters and two or three introductory/theory chapters
+% three original chapters (discussed with Ali) would be:
+% Optimization paper
+% binding curve/size consistency paper
+% (py)tchint
+% I guess deterministic optimisation can be mentioned in the tchint chapter
+% ECPs can be mentioned as an outlook, so can solids
 \include{./src/chapter_intro}
+% introduction and context
 \include{./src/chapter_theory}
+% maybe split into two chapters?
+% introduction to many-body problem
+% basic approximations (e.g. BO)
+% QMC
+% - VMC
+% - Jastrow factor
+% - DMC
+% electronic structure methods
+% - Hartree-Fock
+% - FCI
+% - FCIQMC (link to DMC)
+% Transcorrelation
+% - Some history (link to VMC, Jastrow)
+% - Current methods and why they work
+
+\include{src/chapter_optimization}
+% optimization paper
+
+\include{./src/chapter_binding}
+% size consistency/binding curve paper
+
 \include{./src/chapter_summary_outlook}
+% solids, ecps, deterministic optimisation, tc-casscf, etc.
 
 \listoffigures
 \listoftables
