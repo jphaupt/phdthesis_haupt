@@ -39,6 +39,9 @@
 \usepackage{chemformula}
 \usepackage{simpler-wick}
 \usepackage{listings}
+\usepackage{bbold}
+\usepackage{physics}
+\usepackage{amsmath}
 
 \clubpenalty10000
 \widowpenalty10000
@@ -116,6 +119,7 @@
 
 % add bib files like so -- make sure to keep categorised!
 % \addbibresource{./library/[...].bib}
+\addbibresource{library/mypapers.bib}
 
 \let\cite\supercite
 
@@ -172,6 +176,8 @@
 \setcounter{page}{1}
 \glsresetall
 
+% aim for 120-200 pages
+
 % from Ali:
 % Normally a thesis will have three original chapters and two or three introductory/theory chapters
 % three original chapters (discussed with Ali) would be:
@@ -181,31 +187,63 @@
 % I guess deterministic optimisation can be mentioned in the tchint chapter
 % ECPs can be mentioned as an outlook, so can solids
 \include{./src/chapter_intro}
+% ch 1
 % introduction and context
-\include{./src/chapter_theory}
-% maybe split into two chapters?
-% introduction to many-body problem
-% basic approximations (e.g. BO)
-% QMC
-% - VMC
-% - Jastrow factor
-% - DMC
-% electronic structure methods
-% - Hartree-Fock
-% - FCI
-% - FCIQMC (link to DMC)
-% Transcorrelation
-% - Some history (link to VMC, Jastrow)
-% - Current methods and why they work
+% The quantum many-body problem, the TISE, in principle have everything but it's exceedingly difficult in practice, strong vs weak correlation, need for interesting materials and even small molecules to understand e.g. Haber-Bosch process and nitrogen fixation, mention multiscale methods (see Mona's notes?)
+% scope of the thesis
+% electronic structure theory
+% Hartree-Fock Theory
+% correlation energies static vs dynamic, explicit correlation
+% post-HF methods
 
-\include{src/chapter_optimization}
+
+% ch 2
+\include{./src/chapter_qmc}
+% Monte Carlo Methods
+% classical MC - games in Monaco/calculation of pi
+% VMC, Jastrow factor
+% DMC
+% FCIQMC (link to DMC)
+% the sign problem
+
+% ch 3
+\include{./src/chapter_explicit}
+% explicit correlation
+% R12/F12 theory
+% transcorrelation
+% combining TC and FCIQMC
+
+% ch 4
+% aim to be here around page 60-80
+\include{./src/chapter_optimization}
 % optimization paper
+% jastrow factor forms (DTN, BH)
+% different objective functions for optimizing the Jastrow factor
+% "hat" functions
+% no-3-body approximation (performance benchmarking)
+% xTC approximation
 
+% ch 5
 \include{./src/chapter_binding}
 % size consistency/binding curve paper
+% present problem that arises when trying to apply previous method to binding curves
+% present how the problem exists even with xtc
+% the sign problem in TC
+% hydrogen chains? xTC-DCSD
+
+% ch 6
+\include{./src/chapter_pytchint}
+% the pytchint library
+% library, integrals, how it works (see Aron's notes, paper)
+% xtc implementation
+% many options
+% deterministic optimisation
+% benchmarking?
+% Python package
 
 \include{./src/chapter_summary_outlook}
 % solids, ecps, deterministic optimisation, tc-casscf, etc.
+% focus on pytchint
 
 \listoffigures
 \listoftables
