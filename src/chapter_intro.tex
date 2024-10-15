@@ -1,14 +1,35 @@
 \chapter{Introduction}
-  \label{chap:intro}
-\todo{...}
+\label{chap:intro}
 
-\todo{Basic introduction}
-\todo{Discuss how impossible it is to solve basically anything, the CMP/chemistry "theory of everything" etc.}
-\todo{Discuss models, ab initio methods (see Mona's 2Q notes)}
+According to modern quantum theory, to fully describe\footnote{This neglects relavistic effects.} a system of $N_A$ atoms and $N_e$ electrons, we must solve the time-dependent Schr\"odinger equation,
+\begin{equation}
+    \label{eq:schrodinger}
+    i \hbar \frac{\partial}{\partial t} \Psi(\bm{x}, t)
+    = \hat{H} \Psi(\bm{x}, t)
+\end{equation}
+where $x=(\bm{x}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ is the spatial coordinates, and $\sigma$ are the corresponding spins. For atoms with atomic numbers $Z_I$ (positive charge $Ze$), and with $N_e=ZN_A$, the Hamiltonian operator $\hat H$ may be written
+
+\begin{align}
+\begin{split}
+\label{eq:theory_of_everything}
+\hat H =& -\sum_{I=1}^{N_A}\frac{\hbar^2}{2m_I} \nabla^2_I
++ \frac 12 \sum_{I,J=1}^{N_A} \frac{Z^2e^2}{|\bm R_I-\bm R_J|} \\
+&+ \sum_{i=1}^{N_e} \frac{\hbar^2}{2m_e} \nabla^2_i
++ \frac 12 \sum_{i,j=1}^{N_e} \frac{e^2}{|\bm r_i-\bm r_j|}
+- \sum_{i=1}^{N_e} \sum_{I=1}^{N_A} \frac{Z_I e^2}{|\bm r_i-\bm R_I|}
+\end{split}
+\end{align}
+where we have represented the nuclear coordinates by $\bm R_I$ and the electron coordinates by $\bm r_i$.
+
+Since quantum chemistry and condensed matter sciences are in general concerned with nonrelativistic processes involving electrons and nuclei, this might be called the \emph{theory of everything}. Hence, we may be tempted to conclude this dissertation early, but in practice the evaluation of the Hamiltonian \eqref{eq:theory_of_everything} is impossible. First, there is no closed form solution of \eqref{eq:schrodinger} with this Hamiltonian. Second, numerical evaluation of $\hat H$ is far from trivial.
+
+Let's consider a simple example, the argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a simple, coarse $100\times 100\times 100$ grid. Then \emph{at each time step} we need to store $(100^3)^{23}=10^{138}$ values, corresponding to all its degrees of freedoms in position and grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe, this quite a tall order!\todo{get a citation for this number (look at ASTR403 notes)}
+
+This system has only 18 electrons and 18 nuclei, a farcry from the $10^{23}$ or higher number of electrons in a typical condensed matter system, for example. Moreover, we have not taken into account floating point precision, or that we would need to calculate this for possibly many time steps. Clearly, drastic approximations and more sophisticated methods are required.
 
 \section{Overview of the Thesis}
 
-This dissertation fits into the field of electronic structure theory, the branch of quantum chemistry concerned with the description of electrons and their correlation inside molecules and materials. More specifically, this dissertation focuses on high-accuracy (but often high-cost) \emph{ab initio} methodologies, especially \gls{FCIQMC} and \gls{TC}. As such, I will only be discussing small systems of consisting of only a few atoms, as they are tractible with a full, all-electron treatment with these methods. In principle, these methods should be able to be embedded \todo{embedding citation(s)} into more large-scale calculations using multiscale techniques, but this is outside the scope of my work. Nevertheless, the work herein is focused on methodologies, and not on particular physical systems.
+This dissertation fits into the field of nonrelativistic electronic structure theory, the branch of quantum chemistry concerned with the description of electrons and their correlation inside molecules and materials. More specifically, this dissertation focuses on high-accuracy (but often high-cost) \emph{ab initio} methodologies, especially \gls{FCIQMC} and \gls{TC}. As such, we will only be discussing small systems of consisting of only a few atoms, as they are tractible with a full, all-electron treatment with these methods. In principle, these methods should be able to be embedded \todo{embedding citation(s)} into more large-scale calculations using multiscale techniques, but this is outside the scope of my work. Nevertheless, the work herein is focused on methodologies, and not on particular physical systems.
 
 The outline of the dissertation is as thus:
 \begin{itemize}
@@ -21,6 +42,33 @@ The outline of the dissertation is as thus:
     \item Finally, chapter \ref{chap:sumandout} provides a review and an outlook for the field.
 \end{itemize}
 
+
+\section{Principal Approximations}
+
+\todo{...}
+
+\subsection{The Born-Oppenheimer Approximation}
+
+\todo{...\gls{BOA}}
+
+\subsection{Core Electrons}
+
+\todo{...}
+
+\subsection{Model Hamiltonians}
+
+\todo{...}
+
+\section{The Hartree-Fock Method}
+
+\todo{...}
+
+\section{Post-Hartree-Fock Methods}
+
+\todo{...}
+\todo{also discuss static vs dynamic correlation}
+
+\todo{Discuss models, basic approximations, etc.}
 % $\bra{}$
 % $\one$
 % $\hat H$
