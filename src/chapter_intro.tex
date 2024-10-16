@@ -13,9 +13,9 @@ where $x=(\bm{x}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ is the spatial co
 \begin{split}
 \label{eq:theory_of_everything}
 \hat H =& -\sum_{I=1}^{N_A}\frac{\hbar^2}{2m_I} \nabla^2_I
-+ \frac 12 \sum_{I,J=1}^{N_A} \frac{Z^2e^2}{|\bm R_I-\bm R_J|} \\
-&+ \sum_{i=1}^{N_e} \frac{\hbar^2}{2m_e} \nabla^2_i
-+ \frac 12 \sum_{i,j=1}^{N_e} \frac{e^2}{|\bm r_i-\bm r_j|}
++ \frac 1{4\pi\epsilon_0} \frac 12\sum_{I,J=1;I\neq J}^{N_A} \frac{Z_IZ_Je^2}{|\bm R_I-\bm R_J|} \\
+&- \sum_{i=1}^{N_e} \frac{\hbar^2}{2m_e} \nabla^2_i
++ \frac 1{4\pi\epsilon_0} \frac 12\sum_{i,j=1;i\neq j}^{N_e} \frac{e^2}{|\bm r_i-\bm r_j|}
 - \sum_{i=1}^{N_e} \sum_{I=1}^{N_A} \frac{Z_I e^2}{|\bm r_i-\bm R_I|}
 \end{split}
 \end{align}
@@ -23,7 +23,7 @@ where we have represented the nuclear coordinates by $\bm R_I$ and the electron 
 
 Since quantum chemistry and condensed matter sciences are in general concerned with nonrelativistic processes involving electrons and nuclei, this might be called the \emph{theory of everything}. Hence, we may be tempted to conclude this dissertation early, but in practice the evaluation of the Hamiltonian \eqref{eq:theory_of_everything} is impossible. First, there is no closed form solution of \eqref{eq:schrodinger} with this Hamiltonian. Second, numerical evaluation of $\hat H$ is far from trivial.
 
-Let's consider a simple example, the argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a simple, coarse $100\times 100\times 100$ grid. Then \emph{at each time step} we need to store $(100^3)^{23}=10^{138}$ values, corresponding to all its degrees of freedoms in position and grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe, this quite a tall order!\todo{get a citation for this number (look at ASTR403 notes)}
+Let's consider a simple example, the argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a simple, coarse $100\times 100\times 100$ grid. Then \emph{at each time step} we need to store $(100^3)^{23}=10^{138}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe, this is quite a tall order!\todo{get a citation for this number (look at ASTR403 notes)}
 
 This system has only 18 electrons and 18 nuclei, a farcry from the $10^{23}$ or higher number of electrons in a typical condensed matter system, for example. Moreover, we have not taken into account floating point precision, or that we would need to calculate this for possibly many time steps. Clearly, drastic approximations and more sophisticated methods are required.
 
@@ -33,7 +33,7 @@ This dissertation fits into the field of nonrelativistic electronic structure th
 
 The outline of the dissertation is as thus:
 \begin{itemize}
-    \item Chapter \ref{chap:intro} (this chapter) provides a basic overview of electronic structure theory methods and some of its principle concepts.
+    \item Chapter \ref{chap:intro} (this chapter) provides a basic overview of electronic structure theory methods and some of its principal concepts.
     \item Chapter \ref{chap:qmc} provides a basic introduction to \gls{QMC} and how it relates to \gls{FCIQMC}.
     \item Chapter \ref{chap:explicit} reviews the current works in so-called ``explicitly correlated'' methods, notably the well-established R12/F12 and the recently-reinvigorated \gls{TC}.
     \item Chapter \ref{chap:opt} discusses optimization of Jastrow factors in the context of \gls{TC}.
@@ -45,11 +45,37 @@ The outline of the dissertation is as thus:
 
 \section{Principal Approximations}
 
-\todo{...}
+As discussed, to make any progress in electronic structure theory, we must make use of approximations. Of course, we must always be cautious and suspect when using these, and make sure they are valid for the systems in question. Thankfully, over the course of the last century, a cornucopia of different approximations have been developed to tackle the Schr\"odinger question, some of which will be discussed in this dissertation.
 
 \subsection{The Born-Oppenheimer Approximation}
 
-\todo{...\gls{BOA}}
+The most important approximation used in electronic structure theory is the \gls{BOA}.\todo{BOA citation} The \gls{BOA} relies on the fact that the nuclei are much heavier than the electrons, with the mass of a single proton being almost 2000 times the mass of an electron. As an intuitive picture, we may think of the nuclei as moving much slower than the electrons, which can adapt themselves to the instantaneous positions of the nuclei. In mathematical terms, this means we can take the total wave function to be a product of its nuclear and electronic components,
+\begin{equation}
+    \Psi_\mathrm{total} = \Psi_\mathrm{nuc} \Psi_\mathrm{elec}.
+\end{equation}
+
+Notice that the first two terms of \ref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$. This leads to the \emph{electronic Hamitlonian} under the \gls{BOA}, which can be written in atomic units as
+\begin{equation}
+\label{eq:elec_hamiltonian}
+\hat H_\mathrm{elec} = -\sum_{i} \frac{1}{2} \nabla_i^2 - \sum_{i,I} \frac{Z_I}{r_{iI}} + \sum_{i\gt j} \frac{1}{r_{ij}},
+\end{equation}
+where we have simplified notation by using miniscule roman letters for the electrons and capital roman letters for the nuclei, and $r_{ij}=|\mathbf{r}_i-\mathbf{r}_j|$ and $r_{iI}=|\mathbf{r}_i-\mathbf{R}_I|$.
+
+In the language of second quantisation, equation \ref{eq:elec_hamiltonian} can be written as
+\todo{still haven't finished this eqn}
+\begin{equation}
+\label{eq:elec_hamiltonian_2q}
+\hat H_\mathrm{elec} = \sum_{ij\sigma} h_{ij}a_{i\sigma}^\dag a_{j\sigma}+\frac 12 \sum_{ijkl\sigma\tau} g_{ijkl}a_{i\sigma}^\dag a_{j\tau}^\dag a_{k\tau}a_{l\sigma},
+\end{equation}
+where $\sigma,\tau\in\{\uparrow,\downarrow\}$ are spin indices, and \todo{... annihilation and creation operators, integrals, spin orbital basis}
+$\mathdef$
+
+\todo{...}
+
+Note that while chemists and physicists talk about the positions of nuclei in a molecule or solid as if they are fixed in place, as will be done in this dissertation, this is really a colloquialism. If the nuclei had an exact position and zero kinetic energy, the \gls{BOA} would, ipso facto, be in direct contradiction of the Heisenberg uncertainty principle. Instead, on the timescale of the electrons, due to the much higher mass of nuclei, in the \gls{BOA} we treat the nuclei as approximately localised in a state in which their motion is much slower than that of the electrons (but, importantly, not zero). This keeps the approximation from being in conflict with the fundamental postulates of quantum theory.
+
+The \gls{BOA} is an immensely practical tool as it substantially simplifies our equations, and in many applications it is an excellent approximation. It will be a fundamental assumption throughout the rest of this dissertation, though it need not always be valid in all of quantum chemistry.
+
 
 \subsection{Core Electrons}
 
