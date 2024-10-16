@@ -54,7 +54,7 @@ The most important approximation used in electronic structure theory is the \gls
     \Psi_\mathrm{total} = \Psi_\mathrm{nuc} \Psi_\mathrm{elec}.
 \end{equation}
 
-Notice that the first two terms of \ref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$. This leads to the \emph{electronic Hamitlonian} under the \gls{BOA}, which can be written in atomic units as
+Notice that the first two terms of \ref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$. This leads to the \emph{electronic Hamiltonian} under the \gls{BOA}, which can be written in atomic units as
 \begin{equation}
 \label{eq:elec_hamiltonian}
 \hat H_\mathrm{elec} = -\sum_{i} \frac{1}{2} \nabla_i^2 - \sum_{i,I} \frac{Z_I}{r_{iI}} + \sum_{i\gt j} \frac{1}{r_{ij}},
@@ -67,14 +67,33 @@ In the language of second quantisation, equation \ref{eq:elec_hamiltonian} can b
 \label{eq:elec_hamiltonian_2q}
 \hat H_\mathrm{elec} = \sum_{ij\sigma} h_{ij}a_{i\sigma}^\dag a_{j\sigma}+\frac 12 \sum_{ijkl\sigma\tau} g_{ijkl}a_{i\sigma}^\dag a_{j\tau}^\dag a_{k\tau}a_{l\sigma},
 \end{equation}
-where $\sigma,\tau\in\{\uparrow,\downarrow\}$ are spin indices, and \todo{... annihilation and creation operators, integrals, spin orbital basis}
-$\mathdef$
+where $\sigma,\tau\in\{\uparrow,\downarrow\}$ are spin indices, and $a_{i\sigma}$ ($a_{i\sigma}^\dag$) is the annihilation (creation) operator for an electron on spin-orbital $i$ with spin $\sigma$. These must obey the anti-commutation relation
+\begin{equation}
+    \{a_{i\sigma},a_{j\tau}^\dag\}
+    \mathdef
+    a_{i\sigma}a_{j\tau}^\dag + a_{j\tau}^\dag a_{i\sigma}
+    =\delta_{ij}\delta_{\sigma\tau}
+\end{equation}
+so that the electrons satisfy the Pauli exclusion principle.
 
-\todo{...}
+In equation \ref{eq:elec_hamiltonian_2q}, $h_{ij}$ is a one-body integral,
+\begin{equation}
+\label{eq:hij}
+h_{ij} = \int \phi_i^*(\mathbf{r})\left(-\frac 12 \nabla^2 - \sum_I \frac{Z_I}{|\mathbf{R}_I-\mathbf r|}\right)\phi_j(\mathbf{r})\mathrm{d}\mathbf{r}
+\end{equation}
+and $g_{ijkl}$ is a two-body integral,
+\begin{equation}
+g_{ijkl} = \int \phi_i^*(\mathbf{r})\phi_k^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_j(\mathbf{r}')\phi_l(\mathbf{r})\mathrm{d}\mathbf{r}\mathrm{d}\mathbf{r}',
+\end{equation}
+with a spin-orbital basis $\{\phi_i(\mathbf{r})\}$.
 
-Note that while chemists and physicists talk about the positions of nuclei in a molecule or solid as if they are fixed in place, as will be done in this dissertation, this is really a colloquialism. If the nuclei had an exact position and zero kinetic energy, the \gls{BOA} would, ipso facto, be in direct contradiction of the Heisenberg uncertainty principle. Instead, on the timescale of the electrons, due to the much higher mass of nuclei, in the \gls{BOA} we treat the nuclei as approximately localised in a state in which their motion is much slower than that of the electrons (but, importantly, not zero). This keeps the approximation from being in conflict with the fundamental postulates of quantum theory.
+Finally, to treat the nuclear Hamiltonian, we neglect the first term of equation \eqref{eq:theory_of_everything}, and treat the second term as approximately constant, so $\hat H_\mathrm{nuc} = \sum_{IJ} Z_IZ_Jr_{IJ}$. Thus, we are left with the problem of solving the electronic structure problem, which is the subject of this dissertation.
+
+Note that while chemists and physicists typically talk about the positions of nuclei in a molecule or solid as if they are fixed in place, as will be done in this dissertation, this is really a colloquialism. If the nuclei had an exact position and zero kinetic energy, the \gls{BOA} would, ipso facto, be in direct contradiction of the Heisenberg uncertainty principle. Instead, on the timescale of the electrons, due to the much higher mass of nuclei, in the \gls{BOA} we treat the nuclei as approximately localised in a state in which their motion is much slower than that of the electrons (but, importantly, not zero). This keeps the approximation from being in conflict with the fundamental postulates of quantum theory.
 
 The \gls{BOA} is an immensely practical tool as it substantially simplifies our equations, and in many applications it is an excellent approximation. It will be a fundamental assumption throughout the rest of this dissertation, though it need not always be valid in all of quantum chemistry.
+
+While we have done a lot to drastically reduce the complexity of equation \eqref{eq:theory_of_everything}, equation \eqref{eq:elec_hamiltonian_2q} is still intractible for large system sizes, scaling combinatorially with the size of the Hilbert space, as function of the system size $N_e$ (henceforth $N$), and the basis set size $M$. Hence, in addition to using a smaller basis, we still need additional approximations sophisticated methodologies.
 
 
 \subsection{Core Electrons}
