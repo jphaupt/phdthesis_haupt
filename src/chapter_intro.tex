@@ -54,14 +54,14 @@ The most important approximation used in electronic structure theory is the \gls
     \Psi_\mathrm{total} = \Psi_\mathrm{nuc} \Psi_\mathrm{elec}.
 \end{equation}
 
-Notice that the first two terms of \ref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$. This leads to the \emph{electronic Hamiltonian} under the \gls{BOA}, which can be written in atomic units as
+Notice that the first two terms of \eqref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$. This leads to the \emph{electronic Hamiltonian} under the \gls{BOA}, which can be written in atomic units as
 \begin{equation}
 \label{eq:elec_hamiltonian}
 \hat H_\mathrm{elec} = -\sum_{i} \frac{1}{2} \nabla_i^2 - \sum_{i,I} \frac{Z_I}{r_{iI}} + \sum_{i\gt j} \frac{1}{r_{ij}},
 \end{equation}
 where we have simplified notation by using miniscule roman letters for the electrons and capital roman letters for the nuclei, and $r_{ij}=|\mathbf{r}_i-\mathbf{r}_j|$ and $r_{iI}=|\mathbf{r}_i-\mathbf{R}_I|$.
 
-In the language of second quantisation, equation \ref{eq:elec_hamiltonian} can be written as
+In the language of second quantisation, equation \eqref{eq:elec_hamiltonian} can be written as
 \todo{still haven't finished this eqn}
 \begin{equation}
 \label{eq:elec_hamiltonian_2q}
@@ -93,14 +93,18 @@ Note that while chemists and physicists typically talk about the positions of nu
 
 The \gls{BOA} is an immensely practical tool as it substantially simplifies our equations, and in many applications it is an excellent approximation. It will be a fundamental assumption throughout the rest of this dissertation, though it need not always be valid in all of quantum chemistry.
 
-While we have done a lot to drastically reduce the complexity of equation \eqref{eq:theory_of_everything}, equation \eqref{eq:elec_hamiltonian_2q} is still intractible for large system sizes, scaling combinatorially with the size of the Hilbert space, as function of the system size $N_e$ (henceforth $N$), and the basis set size $M$. Hence, in addition to using a smaller basis, we still need additional approximations sophisticated methodologies.
+While we have done a lot to drastically reduce the complexity of equation \eqref{eq:theory_of_everything}, equation \eqref{eq:elec_hamiltonian_2q} is still intractible for large system sizes, scaling combinatorially with the size of the Hilbert space, as function of the system size $N_e$ (henceforth $N$), and the basis set size $M$. Hence, in addition to using a smaller basis, we still need extra approximations and sophisticated methodologies.
 
 
 \subsection{Core Electrons}
 
+In the ground state of a single atom, electrons first occupy the lowest orbitals. The first occupied shells are typically where the electrons are the most tightly bound.\footnote{This neglects symmetries: energy may be higher due to the angular momentum while staying spatially closer to the nucleus.}
 
+Since they tend to be further from the nucleus in an atom, the valence (non-core) electrons are typically the most affected by the introduction of additional atoms in the system. It is therefore often the valence electrons that are most important in chemical systems. For this reason, we sometimes ``freeze'' the core electrons in their respective orbitals, and only correlate the valence electrons.
 
-\todo{...}
+Similarly, we may also delete virtual orbitals, typically those of high energy, to further reduce the size of the problem. The remaining space is known as an active space, and is the basis of the \gls{CAS} methods.
+
+\todo{add a figure of CAS}
 
 \subsection{Model Hamiltonians}
 
@@ -108,9 +112,23 @@ In 1929, the surrealist artist Ren\'e Magritte displayed a now-famous painting o
 
 In a similar way, physicists and chemists often use \emph{model Hamiltonians}, which do away with aspects of equation \eqref{eq:theory_of_everything} that are not expected to be relevant to the problem at hand, resulting in new Hamiltonians that may be considered a representation of equation \eqref{eq:theory_of_everything}, much like Magritte's painting.\footnote{We might further argue that all of science can be described this way, as scientific models are always ``mere'' representations of Nature, and is not Nature itself.} Compared to \emph{ab initio} Hamiltonians like equation \eqref{eq:elec_hamiltonian_2q}, model Hamiltonians are generally much simpler, but depend on parameters whose values we may not necessarily know a priori.
 
-\todo{...}
+The most famous model Hamiltonian is the Hubbard model,\todo{citation} most typically used to describe electrons in a periodic lattice, and can be written as
+\begin{equation}
+\label{eq:hubbard}
+\hat H_\mathrm{Hubb} = - \sum_{<i,j>\sigma} t_{ij} a_{j\sigma}^\dag a_{i\sigma} + \sum_i U_in_{i\uparrow}n_{i\downarrow},
+\end{equation}
+where $<i,j>$ denotes nearest neighbours, $t_{ij}$ (often taken to be constant, $t$) is a parameter called the hopping amplitude, and $U_i$ (often taken to be constant, $U$) is a parameter called the on-site repulsion.
 
-\todo{all models are wrong but some are useful quotation, a map is not the territory, ceci n'est pas une pipe}
+Despite its apparent simplicity, the Hubbard model is a rich model, and has been used to describe a variety of phenomena, from metal-insulator transitions to high-temperature superconductivity. Moreover, it is not always so simple to solve, and has been the subject of much research.\todo{citation: Niklas, Lieb-Wu}
+
+Let's consider an especially simple version of the model, with only two sites, and open boundary conditions:
+\begin{equation}
+\label{eq:hubbard_h2}
+\hat H_\mathrm{Hubb} = - t\sum_{\sigma}(a_{1\sigma}^\dag a_{2\sigma} + a_{2\sigma}^\dag a_{1\sigma}) + U(n_{1\uparrow}n_{1\downarrow}+n_{2\uparrow}n_{2\downarrow}).
+\end{equation}
+We could use this as an approximate description of the H$_2$ molecule, where the electrons are restricted to only the lowest 1s orbitals. Compared to \eqref{eq:theory_of_everything}, this is a tremendously easy problem now.
+
+Of course, when solving a problem using a model Hamiltonian, we must be careful in choosing the correct one. In particular, the exact solution to the Hubbard model in one dimension\todo{cite lieb-wu} does not appear to be in agreement with the \emph{ab initio} solution of a one-dimensional chain of hydrogen atoms.\todo{cite motta paper}
 
 \section{The Hartree-Fock Method}
 
