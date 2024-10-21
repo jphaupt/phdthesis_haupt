@@ -49,7 +49,7 @@ As discussed, to make any progress in electronic structure theory, we must make 
 
 \subsection{The Born-Oppenheimer Approximation}
 
-The most important approximation used in electronic structure theory is the \gls{BOA}.\todo{BOA citation} The \gls{BOA} relies on the fact that the nuclei are much heavier than the electrons, with the mass of a single proton being almost 2000 times the mass of an electron. As an intuitive picture, we may think of the nuclei as moving much slower than the electrons, which can adapt themselves to the instantaneous positions of the nuclei. In mathematical terms, this means we can take the total wave function to be a product of its nuclear and electronic components,
+The most important approximation used in electronic structure theory is the \gls{BOA}.\cite{bornZur1927} The \gls{BOA} relies on the fact that the nuclei are much heavier than the electrons, with the mass of a single proton being almost 2000 times the mass of an electron. As an intuitive picture, we may think of the nuclei as moving much slower than the electrons, which can adapt themselves to the instantaneous positions of the nuclei. In mathematical terms, this means we can take the total wave function to be a product of its nuclear and electronic components,
 \begin{equation}
     \Psi_\mathrm{total} = \Psi_\mathrm{nuc} \Psi_\mathrm{elec}.
 \end{equation}
@@ -62,7 +62,6 @@ Notice that the first two terms of \eqref{eq:theory_of_everything} are independe
 where we have simplified notation by using miniscule roman letters for the electrons and capital roman letters for the nuclei, and $r_{ij}=|\mathbf{r}_i-\mathbf{r}_j|$ and $r_{iI}=|\mathbf{r}_i-\mathbf{R}_I|$.
 
 In the language of second quantisation, equation \eqref{eq:elec_hamiltonian} can be written as
-\todo{still haven't finished this eqn}
 \begin{equation}
 \label{eq:elec_hamiltonian_2q}
 \hat H_\mathrm{elec} = \sum_{ij\sigma} h_{ij}a_{i\sigma}^\dag a_{j\sigma}+\frac 12 \sum_{ijkl\sigma\tau} g_{ijkl}a_{i\sigma}^\dag a_{j\tau}^\dag a_{k\tau}a_{l\sigma},
@@ -85,7 +84,7 @@ and $g_{ijkl}$ is a two-body integral,
 \begin{equation}
 g_{ijkl} = \int \phi_i^*(\mathbf{r})\phi_k^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_j(\mathbf{r}')\phi_l(\mathbf{r})\mathrm{d}\mathbf{r}\mathrm{d}\mathbf{r}',
 \end{equation}
-with a spin-orbital basis $\{\phi_i(\mathbf{r})\}$.
+with a spatial-orbital basis $\{\phi_i(\mathbf{r})\}$.
 
 Finally, to treat the nuclear Hamiltonian, we neglect the first term of equation \eqref{eq:theory_of_everything}, and treat the second term as approximately constant, so $\hat H_\mathrm{nuc} = \sum_{IJ} Z_IZ_Jr_{IJ}$. Thus, we are left with the problem of solving the electronic structure problem, which is the subject of this dissertation.
 
@@ -102,7 +101,7 @@ In the ground state of a single atom, electrons first occupy the lowest orbitals
 
 Since they tend to be further from the nucleus in an atom, the valence (non-core) electrons are typically the most affected by the introduction of additional atoms in the system. It is therefore often the valence electrons that are most important in chemical systems. For this reason, we sometimes ``freeze'' the core electrons in their respective orbitals, and only correlate the valence electrons.
 
-Similarly, we may also delete virtual orbitals, typically those of high energy, to further reduce the size of the problem. The remaining space is known as an active space, and is the basis of the \gls{CAS} methods.
+Similarly, we may also delete virtual orbitals, typically those of high energy, to further reduce the size of the problem. The remaining space is known as an active space, and is the basic idea of the \gls{CAS} methods.
 
 \todo{add a figure of CAS}
 
@@ -112,14 +111,14 @@ In 1929, the surrealist artist Ren\'e Magritte displayed a now-famous painting o
 
 In a similar way, physicists and chemists often use \emph{model Hamiltonians}, which do away with aspects of equation \eqref{eq:theory_of_everything} that are not expected to be relevant to the problem at hand, resulting in new Hamiltonians that may be considered a representation of equation \eqref{eq:theory_of_everything}, much like Magritte's painting.\footnote{We might further argue that all of science can be described this way, as scientific models are always ``mere'' representations of Nature, and is not Nature itself.} Compared to \emph{ab initio} Hamiltonians like equation \eqref{eq:elec_hamiltonian_2q}, model Hamiltonians are generally much simpler, but depend on parameters whose values we may not necessarily know a priori.
 
-The most famous model Hamiltonian is the Hubbard model,\todo{citation} most typically used to describe electrons in a periodic lattice, and can be written as
+The most famous model Hamiltonian is the Hubbard model,\cite{Hubbard1963} most typically used to describe electrons in a periodic lattice, and can be written as
 \begin{equation}
 \label{eq:hubbard}
 \hat H_\mathrm{Hubb} = - \sum_{<i,j>\sigma} t_{ij} a_{j\sigma}^\dag a_{i\sigma} + \sum_i U_in_{i\uparrow}n_{i\downarrow},
 \end{equation}
 where $<i,j>$ denotes nearest neighbours, $t_{ij}$ (often taken to be constant, $t$) is a parameter called the hopping amplitude, and $U_i$ (often taken to be constant, $U$) is a parameter called the on-site repulsion.
 
-Despite its apparent simplicity, the Hubbard model is a rich model, and has been used to describe a variety of phenomena, from metal-insulator transitions to high-temperature superconductivity. Moreover, it is not always so simple to solve, and has been the subject of much research.\todo{citation: Niklas, Lieb-Wu}
+Despite its apparent simplicity, the Hubbard model is a rich model, and has been used to describe a variety of phenomena, from metal-insulator transitions to high-temperature superconductivity. Moreover, it is not always so simple to solve, and has been the subject of much research.\cite{Lieb1968a,liebermannFCIQMC2023}
 
 Let's consider an especially simple version of the model, with only two sites, and open boundary conditions:
 \begin{equation}
@@ -128,9 +127,42 @@ Let's consider an especially simple version of the model, with only two sites, a
 \end{equation}
 We could use this as an approximate description of the H$_2$ molecule, where the electrons are restricted to only the lowest 1s orbitals. Compared to \eqref{eq:theory_of_everything}, this is a tremendously easy problem now.
 
-Of course, when solving a problem using a model Hamiltonian, we must be careful in choosing the correct one. In particular, the exact solution to the Hubbard model in one dimension\todo{cite lieb-wu} does not appear to be in agreement with the \emph{ab initio} solution of a one-dimensional chain of hydrogen atoms.\todo{cite motta paper}
+Of course, when solving a problem using a model Hamiltonian, we must be careful in choosing the correct one. In particular, the exact solution to the Hubbard model in one dimension\cite{Lieb1968a} does not appear to be in agreement with the \emph{ab initio} solution of a one-dimensional chain of hydrogen atoms.\cite{Motta2017,Motta2020}
+
+\section{The Schr\"odinger Equation as a Matrix Problem}
+
+
+Implicit in the operator algebra of the fermionic creation and annihilation operators $a$ and $a^\dag$ in equation \eqref{eq:elec_hamiltonian_2q} is the Pauli exclusion principle: we cannot have two or more fermions occupying identical states. In the context of electronic structure theory and this dissertation, the fermions and states in question are electrons and orbitals, respectively. This handles the antisymmetry requirement of the fermionic wave function, $\hat P_{ij}^\sigma\Psi = -\Psi$, where $\hat P_{ij}^\sigma$ permutes the $i$th and $j$th electrons with spin $\sigma$.
+
+Our wave function can hence by expanded by a linear combination of \glspl{SD},
+\begin{equation}
+    \label{eq:SD_expansion}
+\Psi = \sum_i c_i \ket{D_i},
+\quad \text{where } \ket{D_i} =
+\frac 1{\sqrt{N!}}\left|
+    \begin{matrix}
+        \chi_1(\bm x_1) & \chi_1(\bm x_2) & \cdots & \chi_1(\bm x_N)\\
+        \chi_2(\bm x_1) & \chi_2(\bm x_2) & \cdots & \chi_2(\bm x_N)\\
+        \vdots & \vdots & \ddots & \vdots\\
+        \chi_N(\bm x_1) & \chi_N(\bm x_2) & \cdots & \chi_N(\bm x_N)\\
+    \end{matrix}
+ \right|
+\end{equation}
+for a spin-orbital basis $\{\chi_p(\bm x_q)\}$. A spin-orbital is typically written as a product of a spatial part and a spin part, e.g. $\chi(\bm x) = \phi(\bm r)\omega(\sigma)$.
+
+Given such a finite spin-orbital basis of size $2M$ ($M$ spatial orbitals with 2 different spins each), the \gls{SD} expansion is also finite.\footnote{The \gls{SD} expansion is finite, but it still scales poorly with system size.} Therefore, we may write $\hat H$ as a square matrix and equation \eqref{eq:elec_hamiltonian_2q} as an eigenvalue equation,
+\begin{equation}
+\label{eq:eval_eqn}
+\hat H\Psi = E\Psi.
+\end{equation}
+
+Note, however, that since, in order to make this a finite-dimensional matrix eigenvalue problem, we needed to use a finite spin-orbital basis, $E$ in equation \eqref{eq:eval_eqn} is not the true ground state energy of the system, but indeed only an approximation within that basis set. In order to get the true ground state energy, we need to reach the \gls{CBS}, i.e. $M\to\infty$.
+
+With \eqref{eq:eval_eqn}, we have transformed the wholly intractible partial differential equation \eqref{eq:theory_of_everything} into a finite algebraic eigenvalue problem, which is much better suited for solving on a computer.
+
 
 \section{The Hartree-Fock Method}
+
 
 \todo{...}
 
