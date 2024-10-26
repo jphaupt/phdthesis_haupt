@@ -23,7 +23,7 @@ where we have represented the nuclear coordinates by $\bm R_I$ and the electron 
 
 Since quantum chemistry and condensed matter sciences are in general concerned with nonrelativistic processes involving electrons and nuclei, this might be called the \emph{theory of everything}. Hence, we may be tempted to conclude this dissertation early, but in practice the evaluation of the Hamiltonian \eqref{eq:theory_of_everything} is impossible. First, there is no closed form solution of \eqref{eq:schrodinger} with this Hamiltonian. Second, numerical evaluation of $\hat H$ is far from trivial.
 
-Let's consider a simple example, the argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a simple, coarse $100\times 100\times 100$ grid. Then \emph{at each time step} we need to store $(100^3)^{23}=10^{138}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroduction2017} this is quite a tall order!
+Let's consider a simple example, the Argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a simple, coarse $100\times 100\times 100$ grid. Then \emph{at each time step} we need to store $(100^3)^{23}=10^{138}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroduction2017} this is quite a tall order!
 
 This system has only 18 electrons and 18 nuclei, a farcry from the $10^{23}$ or higher number of electrons in a typical condensed matter system, for example. Moreover, we have not taken into account floating point precision, or that we would need to calculate this for possibly many time steps. Clearly, drastic approximations and more sophisticated methods are required.
 
@@ -33,7 +33,7 @@ This dissertation fits into the field of nonrelativistic electronic structure th
 
 The outline of the dissertation is as thus:
 \begin{itemize}
-    \item Chapter \ref{chap:intro} (this chapter) provides a basic overview of electronic structure theory methods and some of its principal concepts.
+    \item Chapter \ref{chap:intro} (this chapter) provides a basic overview of electronic structure theory methods and some of its principal concepts. Sections \ref{sec:hf} and \ref{sec:post-hf} in particular are largely based on the appropriate chapters of Ref \citenum{helgakerMolecular2014}.
     \item Chapter \ref{chap:qmc} provides a basic introduction to \gls{QMC} and how it relates to \gls{FCIQMC}.
     \item Chapter \ref{chap:explicit} reviews the current works in so-called ``explicitly correlated'' methods, notably the well-established R12/F12 and the recently-reinvigorated \gls{TC}.
     \item Chapter \ref{chap:opt} discusses optimization of Jastrow factors in the context of \gls{TC}.
@@ -103,7 +103,7 @@ Since they tend to be further from the nucleus in an atom, the valence (non-core
 
 Similarly, we may also delete virtual orbitals, typically those of high energy, to further reduce the size of the problem. The remaining space is known as an active space, and is the basic idea of the \gls{CAS} methods.
 
-\todo{add a figure of CAS}
+\todo{add a figure of CAS -- actually let's just leave it for a later section!}
 
 \subsection{Model Hamiltonians}
 
@@ -128,6 +128,15 @@ Let's consider an especially simple version of the model, with only two sites, a
 We could use this as an approximate description of the H$_2$ molecule, where the electrons are restricted to only the lowest 1s orbitals. Compared to \eqref{eq:theory_of_everything}, this is a tremendously easy problem now.
 
 Of course, when solving a problem using a model Hamiltonian, we must be careful in choosing the correct one. In particular, the exact solution to the Hubbard model in one dimension\cite{Lieb1968a} does not appear to be in agreement with the \emph{ab initio} solution of a one-dimensional chain of hydrogen atoms.\cite{Motta2017,Motta2020}
+
+\section{The Variational Principle}
+
+One way of finding approximations to the lowest energy eigenstate of a quantum problem like that of equation \eqref{eq:elec_hamiltonian_2q} is the variational method. Several methods discussed in this dissertation build on the variational method, and the variational method itself is based on the variational principle, which states\cite{sakuraiModern2017} for any ``trial wave function'' \ket{\tilde\Psi},
+% \begin{equation}
+%     \label{eq:variational_principle}
+%     \frac{\braket{\tilde\Psi|\hat H|\tilde\Psi}}{\braket{\tilde\Psi|\tilde\Psi}} \ge \frac\braket{\Psi|\hat H|\Psi}\braket{\Psi|\Psi} =E_0
+% \end{equation}
+
 
 \section{The Schr\"odinger Equation as a Matrix Problem}
 
@@ -156,17 +165,42 @@ Given such a finite spin-orbital basis of size $2M$ ($M$ spatial orbitals with 2
 \hat H\Psi = E\Psi.
 \end{equation}
 
-Note, however, that since, in order to make this a finite-dimensional matrix eigenvalue problem, we needed to use a finite spin-orbital basis, $E$ in equation \eqref{eq:eval_eqn} is not the true ground state energy of the system, but indeed only an approximation within that basis set. In order to get the true ground state energy, we need to reach the \gls{CBS}, i.e. $M\to\infty$.
+Note, however, that in order to make this a finite-dimensional matrix eigenvalue problem, we needed to use a finite spin-orbital basis. Thus, $E$ in equation \eqref{eq:eval_eqn} is not the true ground state energy of the system, but indeed only an approximation within that basis set. This is the case even if we were to solve equation \eqref{eq:eval_eqn} exactly. In order to get the true ground state energy, we need to reach the \gls{CBS}, i.e. $M\to\infty$.
 
-With \eqref{eq:eval_eqn}, we have transformed the wholly intractible partial differential equation \eqref{eq:theory_of_everything} into a finite algebraic eigenvalue problem, which is much better suited for solving on a computer.
+With \eqref{eq:eval_eqn}, we have transformed the hopelessly intractible partial differential equation \eqref{eq:theory_of_everything} into a finite algebraic eigenvalue problem, which is much better suited for solving on a computer.
+
+If we have $N_\uparrow$ spin-up electrons and $N_\downarrow$ spin-down electrons, we then have
+\begin{equation}
+\label{eq:scaling}
+|\mathcal{H}| = {M \choose N_\uparrow}{M\choose N_\downarrow}
+\end{equation}
+where $|\mathcal{H}|$ denotes the size of the Hilbert space, and we have have assumed that the number of spin-up orbitals $M$ is equal to the number of spin-down orbitals. Here, ${n\choose r}=\frac{n!}{r!(n-r)!}$ is a binomial coefficient.
+
+The combinatorial scaling is still unfavourable. For a closed-shell system with 20 electrons in 20 orbitals, $|\mathcal{H}|=3.41\times 10^{10}$. Assuming we wish to have double precision,\footnote{A double precision floating-point number has 1 bit for the sign, 11 bits for the exponent, and 52 bits for fraction (known as the mantissa).\todo{IEEE754 citation} This resolves to 64 bits or 8 bytes.} to store the whole matrix we would need about $10^{23}$ bytes, or 100 zettabytes. So, while we've substantially reduced the complexity of the problem, it is still extremely demanding. More approximations are therefore needed.
 
 
 \section{The Hartree-Fock Method}
+\label{sec:hf}
 
+The typical starting point to most \emph{ab initio} electronic structure methods is the \gls{HF} method.\todo{HF citations} The key approximation in \gls{HF} is that we treat the exact $N$-body wave function solution as approximately a single \gls{SD}.\footnote{More precisely, the \gls{HF} approximation is to treat the wave function as a single configuration. In the context of this dissertation, that configuration will always be a \gls{SD}.} Then, we variationally optimise the energy of the system with respect to parameters pertaining to the spin-orbitals
+
+
+\todo{mention "electron correlation" typically doesn't include Fermi correlation, which is an effect of electron exchange, and fully accounted for in HF}
 
 \todo{...}
 
 \section{Post-Hartree-Fock Methods}
+\label{sec:post-hf}
+
+\subsection{Configuration Interaction}
+
+\subsection{Multi-Configurational Self-Consistent Field}
+
+\subsection{Perturbation Theory}
+
+\subsection{Coupled Cluster}
+
+\subsection{Density Matrix Renormalisation Group}
 
 \todo{...}
 \todo{also discuss static vs dynamic correlation}
