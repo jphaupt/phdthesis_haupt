@@ -7,7 +7,7 @@ According to modern quantum theory, to fully describe\footnote{This neglects rel
     i \hbar \frac{\partial}{\partial t} \Psi(\bm{x}, t)
     = \hat{H} \Psi(\bm{x}, t)
 \end{equation}
-where $x=(\bm{x}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ is the spatial coordinates, and $\sigma$ are the corresponding spins. For atoms with atomic numbers $Z_I$ (positive charge $Ze$), and with $N_e=ZN_A$, the Hamiltonian operator $\hat H$ may be written
+where $\bm x=(\bm{r}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ gives the spatial coordinates, and $\sigma$ the corresponding spins. For atoms with atomic numbers $Z_I$ (positive charge $Ze$), and with $N_e=ZN_A$, the Hamiltonian operator $\hat H$ may be written
 
 \begin{align}
 \begin{split}
@@ -64,7 +64,7 @@ where we have simplified notation by using miniscule roman letters for the elect
 In the language of second quantisation, equation \eqref{eq:elec_hamiltonian} can be written as
 \begin{equation}
 \label{eq:elec_hamiltonian_2q}
-\hat H_\mathrm{elec} = \sum_{ij\sigma} h_{ij}a_{i\sigma}^\dag a_{j\sigma}+\frac 12 \sum_{ijkl\sigma\tau} g_{ijkl}a_{i\sigma}^\dag a_{j\tau}^\dag a_{k\tau}a_{l\sigma},
+\hat H_\mathrm{elec} = \sum_{ij\sigma} h_{ij}a_{i\sigma}^\dag a_{j\sigma}+\frac 12 \sum_{ijkl\sigma\tau} V_{ijkl}a_{i\sigma}^\dag a_{j\tau}^\dag a_{k\tau}a_{l\sigma},
 \end{equation}
 where $\sigma,\tau\in\{\uparrow,\downarrow\}$ are spin indices, and $a_{i\sigma}$ ($a_{i\sigma}^\dag$) is the annihilation (creation) operator for an electron on spin-orbital $i$ with spin $\sigma$. These must obey the anti-commutation relation
 \begin{equation}
@@ -82,7 +82,7 @@ h_{ij} = \int \phi_i^*(\mathbf{r})\left(-\frac 12 \nabla^2 - \sum_I \frac{Z_I}{|
 \end{equation}
 and $g_{ijkl}$ is a two-body integral,
 \begin{equation}
-g_{ijkl} = \int \phi_i^*(\mathbf{r})\phi_k^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_j(\mathbf{r}')\phi_l(\mathbf{r})\mathrm{d}\mathbf{r}\mathrm{d}\mathbf{r}',
+V_{ijkl} = \int \phi_i^*(\mathbf{r})\phi_k^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_j(\mathbf{r}')\phi_l(\mathbf{r})\mathrm{d}\mathbf{r}\mathrm{d}\mathbf{r}',
 \end{equation}
 with a spatial-orbital basis $\{\phi_i(\mathbf{r})\}$.
 
@@ -96,14 +96,13 @@ While we have done a lot to drastically reduce the complexity of equation \eqref
 
 
 \subsection{Core Electrons}
+\label{sec:core_electrons}
 
 In the ground state of a single atom, electrons first occupy the lowest orbitals. The first occupied shells are typically where the electrons are the most tightly bound.\footnote{This neglects symmetries: energy may be higher due to the angular momentum while staying spatially closer to the nucleus.}
 
 Since they tend to be further from the nucleus in an atom, the valence (non-core) electrons are typically the most affected by the introduction of additional atoms in the system. It is therefore often the valence electrons that are most important in chemical systems. For this reason, we sometimes ``freeze'' the core electrons in their respective orbitals, and only correlate the valence electrons.
 
 Similarly, we may also delete virtual orbitals, typically those of high energy, to further reduce the size of the problem. The remaining space is known as an active space, and is the basic idea of the \gls{CAS} methods.
-
-\todo{add a figure of CAS -- actually let's just leave it for a later section!}
 
 \subsection{Model Hamiltonians}
 
@@ -189,7 +188,7 @@ If we have $N_\uparrow$ spin-up electrons and $N_\downarrow$ spin-down electrons
 \label{eq:scaling}
 |\mathcal{H}| = {M \choose N_\uparrow}{M\choose N_\downarrow}
 \end{equation}
-where $|\mathcal{H}|$ denotes the size of the Hilbert space, and we have have assumed that the number of spin-up orbitals $M$ is equal to the number of spin-down orbitals. Here, ${n\choose r}=\frac{n!}{r!(n-r)!}$ is a binomial coefficient.
+where $|\mathcal{H}|$ denotes the size of the Hilbert space, and we have assumed that the number of spin-up orbitals $M$ is equal to the number of spin-down orbitals. Here, ${n\choose r}=\frac{n!}{r!(n-r)!}$ is a binomial coefficient.
 
 The combinatorial scaling is still unfavourable. For a closed-shell system with 20 electrons in 20 orbitals, $|\mathcal{H}|=3.41\times 10^{10}$. Assuming we wish to have double precision,\footnote{A double precision floating-point number has 1 bit for the sign, 11 bits for the exponent, and 52 bits for fraction (known as the mantissa).\cite{ascherFirst2011} This resolves to 64 bits or 8 bytes.} to store the whole matrix we would need about $10^{23}$ bytes, or 100 zettabytes. So, while we've substantially reduced the complexity of the problem, it is still extremely demanding. More approximations are therefore needed.
 
@@ -217,20 +216,58 @@ This is a nonlinear equation, and hence the parameters $\kappa_{PQ}$ must be det
 
 The \gls{HF} method can also be understood as a mean-field theory. That is, we treat the $N$-body problem as $N$ one-body problems, where a single electron is in an effective ``averaged'' potential from the other $N-1$ electrons. This effective one-body Hamiltonian is known as the Fock operator,
 \begin{equation}
-    f = \sum_{PQ} f_{PQ} a_P^\dag a_Q
+    f = \sum_{PQ} f_{PQ} a_P^\dag a_Q.
 \end{equation}
 
+The Fock operator $f$ may be written as
+\begin{equation}
+    f = h + V_\mathrm{eff}
+\end{equation}
+where the Fock potential's matrix elements are $V_{\mathrm{eff},PQ}=\sum_{I\in\mathrm{occ}}(V_{PQII}-V_{PIIQ})$.
 
-\todo{mention "electron correlation" typically doesn't include Fermi correlation, which is an effect of electron exchange, and fully accounted for in HF}
+The Hartree-Fock orbitals, which ultimately dictate the parameters for the minimisation procedure, are determined by diagonalising the Fock matrix,
+\begin{equation}
+    f_{PQ} = \epsilon_P\delta_{PQ}
+\end{equation}
+where the eigenvalues $\epsilon_P$ are known as the orbital energies.
 
-\todo{...}
+Since $f$ itself depends on which of the orbitals are occupied, the solution must be determined self-consistently. Hence \gls{HF} is often referred to as a \gls{SCF} method.
+
+Often, the orbitals for the $\uparrow$ and $\downarrow$ electrons are restricted to be the same. This is known as the \gls{RHF} method. Otherwise, we might instead use the \gls{UHF} method, where they are treated independently. However, since this breaks spin symmetry, we might have spin contamination. \gls{ROHF} is a variant that can treat open-shell systems which \gls{RHF} otherwise would not be able to treat while remaining an eigenstate of the $S^2$ (total spin) operator.
+
+\subsection{Correlation Energy}
+
+The correlation energy (for a given basis set) is defined as the difference between the exact energy and the \gls{HF} energy,
+\begin{equation}
+E_\mathrm{corr} = E_\mathrm{exact} - E_\mathrm{HF}.
+\end{equation}
+It should be noted, however, that despite this name the \gls{HF} method captures Pauli exchange, and hence does actually correlate electrons. Nevertheless, we typically neglect this when we speak of ``electron correlation''.
+
+\subsection{The Roothaan-Hall Equations}
+
+\todo{... Is this section necessary?}
 
 \section{Post-Hartree-Fock Methods}
 \label{sec:post-hf}
+\todo{mention dynamical vs static correlation}
+
+While the \gls{HF} method is convenient and can be used efficiently to solve for hundreds of electrons, it is oftentimes not sufficient to describe the electronic structure of a molecule.
+
+% For so-called ``weakly-correlated'' electron systems, the \gls{HF} method or a modest improvement thereof is sufficient. However, for ``strongly-correlated'' electron systems, the \gls{HF} method can fail completely, not even describing the system qualitatively correctly.
+
+\begin{figure}[htbp]
+    \centering
+
+    \caption{image representing the hierarchy of theories and basis sets}
+    \label{fig:hierarchy}
+\end{figure}
 
 \subsection{Configuration Interaction}
 
 \subsection{Multi-Configurational Self-Consistent Field}
+
+\todo{...\ref{sec:core_electrons}}
+\todo{add a figure of CAS}
 
 \subsection{Perturbation Theory}
 
