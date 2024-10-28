@@ -277,9 +277,14 @@ It should be noted, however, that despite this name the \gls{HF} method captures
 
 \section{Post-Hartree-Fock Methods}
 \label{sec:post-hf}
-\todo{mention dynamical vs static correlation}
 
-While the \gls{HF} method is convenient and can be used efficiently to solve for hundreds of electrons, it is oftentimes not sufficient to describe the electronic structure of a molecule. To account for the remaining correlation, numerous post-Hartree-Fock methods (that is, methods run after \gls{HF}) have been formulated, some of which are
+While the \gls{HF} method is convenient and can be used efficiently to solve for hundreds of electrons, it is oftentimes not sufficient to describe the electronic structure of a molecule. To account for the remaining correlation, numerous post-Hartree-Fock methods (that is, methods run after \gls{HF}) have been formulated, some of which are ribed in this section.
+
+Correlation energy is typically categorised as either dynamical or static, although their effects are not mutually exclusive and sometimes their difference can be hazy.
+
+Dynamical correlation is remaining correlation that arises due to the instantaneous repulsion from the motion (dynamics) of the electrons.
+
+Static correlation, on the other hand, is related to the degeneracy or near-degeneracy of configurations. In general, to accurately describe a system with strong static correlation, a so-called multi-reference method is needed. As will be seen in chapter \ref{chap:binding}, static correlation plays a big role for molecules at dissociation.
 
 % For so-called ``weakly-correlated'' electron systems, the \gls{HF} method or a modest improvement thereof is sufficient. However, for ``strongly-correlated'' electron systems, the \gls{HF} method can fail completely, not even describing the system qualitatively correctly.
 
@@ -292,23 +297,26 @@ While the \gls{HF} method is convenient and can be used efficiently to solve for
 
 \subsection{Configuration Interaction}
 
+Configuration interaction is perhaps the most conceptually straightforward post-Hartree-Fock method. Instead of using a single \gls{SD}, we approximate the wave function as a linear combination of \gls{SD}.
 
+\todo{}
 
 \subsection{Multi-Configurational Self-Consistent Field}
 
 \todo{...\ref{sec:core_electrons}}
 \todo{add a figure of CAS}
 
-\subsection{M{\o}ller-Plesset Perturbation Theory}
+\subsection{Perturbation Theory}
 
+\subsubsection{Rayleigh-Schr\"odinger}
 
+\subsubsection{M{\o}ller-Plesset}
 
 \subsection{Coupled Cluster Theory}
 
-\subsection{Density Matrix Renormalisation Group}
+% \subsection{Density Matrix Renormalisation Group}
 
-\todo{...}
-\todo{also discuss static vs dynamic correlation}
+\todo{DMRG?}
 
 
 % introduction and context
