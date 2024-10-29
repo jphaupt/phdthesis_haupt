@@ -34,8 +34,8 @@ This dissertation fits into the field of nonrelativistic electronic structure th
 The outline of the dissertation is as thus:
 \begin{itemize}
     \item Chapter \ref{chap:intro} (this chapter) provides a basic overview of electronic structure theory methods and some of its principal concepts. Sections \ref{sec:hf} and \ref{sec:post-hf} in particular are largely based on the appropriate chapters of Ref \citenum{helgakerMolecular2014}.
-    \item Chapter \ref{chap:qmc} provides a basic introduction to \gls{QMC} and how it relates to \gls{FCIQMC}.
     \item Chapter \ref{chap:explicit} reviews the current works in so-called ``explicitly correlated'' methods, notably the well-established R12/F12 and the recently-reinvigorated \gls{TC}.
+    \item Chapter \ref{chap:qmc} provides a basic introduction to \gls{QMC} and how it relates to \gls{FCIQMC}.
     \item Chapter \ref{chap:opt} discusses optimization of Jastrow factors in the context of \gls{TC}.
     \item Chapter \ref{chap:binding} discusses an extension of the methods in the previous chapters to ensure size consistency and success when targeting strongly multi-reference problems.
     \item Chapter \ref{chap:pytchint} provides an overview of the software \pytchint developed in the group for evaluation of \gls{TC} integrals.
@@ -153,7 +153,7 @@ To prove this, consider an expansion of $\ket{\tilde\Psi}$ terms of the exact ei
 where, in going from the first to the second line, we used the orthonormality of the eigenbasis $\{\ket k\}$ and that the left- and right-eigenvectors are the same. That is, we used the fact the $\hat H$ is a Hermitian operator. This is an important observation for future discussions, such as in section \ref{sec:tc}.
 
 \section{The Schr\"odinger Equation as a Matrix Problem}
-
+\label{sec:matrix}
 
 Implicit in the operator algebra of the fermionic creation and annihilation operators $a$ and $a^\dag$ in equation \eqref{eq:elec_hamiltonian_2q} is the Pauli exclusion principle: we cannot have two or more fermions occupying identical states. In the context of electronic structure theory and this dissertation, the fermions and states in question are electrons and orbitals, respectively. This handles the antisymmetry requirement of the fermionic wave function, $\hat P_{ij}^\sigma\Psi = -\Psi$, where $\hat P_{ij}^\sigma$ permutes the $i$th and $j$th electrons with spin $\sigma$.
 
@@ -286,20 +286,46 @@ Dynamical correlation is remaining correlation that arises due to the instantane
 
 Static correlation, on the other hand, is related to the degeneracy or near-degeneracy of configurations. In general, to accurately describe a system with strong static correlation, a so-called multi-reference method is needed. As will be seen in chapter \ref{chap:binding}, static correlation plays a big role for molecules at dissociation.
 
+We therefore have two ``axes'' on which to approach the exact solution to equation \eqref{eq:elec_hamiltonian_2q}:
+\begin{itemize}
+    \item The basis set chosen, where going to a larger basis set (in a systematic way) improves the result, e.g. cc-pVDZ to cc-pVTZ to cc-pVQZ, until eventually reaching the \gls{CBS} limit.
+    \item The ``hierarchy of theories'' where the more accurate the method, the closer to the \gls{FCI} limit (discussed below). Many post-Hartree-Fock methods can be systematically improved, for example by considering additional excitations in a coupled cluster method.
+\end{itemize}
+
 % For so-called ``weakly-correlated'' electron systems, the \gls{HF} method or a modest improvement thereof is sufficient. However, for ``strongly-correlated'' electron systems, the \gls{HF} method can fail completely, not even describing the system qualitatively correctly.
+
+% \begin{figure}[htbp]
+%     \centering
+
+%     \caption{image representing the hierarchy of theories and basis sets}
+%     \label{fig:hierarchy}
+% \end{figure}
+
+\subsection{Configuration Interaction}
+\label{sec:ci}
+
+\gls{CI} is perhaps the most conceptually straightforward post-Hartree-Fock method. Instead of using a single \gls{SD}, we approximate the wave function as a linear combination of \glspl{SD}. That is,
+\begin{equation}
+\ket{\Phi_\mathrm{CI}} = \sum_p c_p\ket{D_p}
+\end{equation}
+where $\ket{D_p}$ is a \gls{SD}. This may alternatively be written\footnote{We adopt the common notation convention where $i,j,k,...$ denote occupied orbitals and $a,b,c,...$ virtual (or unoccupied) orbitals.}
+\begin{equation}
+\label{eq:ci}
+\ket{\Phi_\mathrm{CI}} = (\one + \sum_{ia}c_i^a\hat a_a^\dag\hat a_i +
+\sum_{ijab}c_{ij}^{ab} a_a^\dag a_b^\dag a_i a_j+...)\ket{\Phi_0}
+\end{equation}
+where the number of terms in the sum depends on how many excitations we consider, i.e. how far we truncate the \gls{CI} expansion. The energy and wave function are then found as the lowest eigenvalue and corresponding eigenvector, respectively, of the Hamiltonian written in the basis of these \glspl{SD}. This can be done, for example, by exact diagonalisation. If all possible excitations are considered, then we have reached the \gls{CBS} limit, and the solution is exact within that basis set.
 
 \begin{figure}[htbp]
     \centering
 
-    \caption{image representing the hierarchy of theories and basis sets}
-    \label{fig:hierarchy}
+    \caption{Illustration of different a \gls{RHF} reference and examples of single-, double-, and triple-excitations. The method CISDT, for example, would consider all determinants of the form illustrated.}
+    \label{fig:excitations}
 \end{figure}
 
-\subsection{Configuration Interaction}
+There are some important limitations to this method, however. Perhaps most notable is that the \gls{CI} method is not size consistent. For two noninteracting systems $A$ and $B$, we expect the composite system $A+B$ to have energy equal to the sum of that for $A$ and $B$, i.e. $E_{A+B}=E_A+E_B$. However, within a truncated \gls{CI} method, this is not the case\footnote{Of course, in \gls{FCI} we necessarily have size consistency, since we have the exact solution for the basis set.}, due to the additive ansatz \eqref{eq:ci}.
 
-Configuration interaction is perhaps the most conceptually straightforward post-Hartree-Fock method. Instead of using a single \gls{SD}, we approximate the wave function as a linear combination of \gls{SD}.
-
-\todo{}
+Additionally, if we wish to go to the \gls{FCI} method and ensure size consistency and accurate results, we once again have bad scaling, as discussed in section \ref{sec:matrix}. However, there exist sparse diagonalisation routines that need not store the entire matrix $H$, such as the Davidson, Lanczos, and Arnoldi (for non-Hermitian $H$) \todo{citations} methods, which target the ground state and need to store only a fraction of the matrix. Still, these scale with the size of the eigenvector, which is still prohibitively expensive for large systems. A more practical approach to reaching \gls{FCI} accuracy will be discussed later in section \ref{sec:fciqmc}, where we discuss the \gls{FCIQMC} algorithm.
 
 \subsection{Multi-Configurational Self-Consistent Field}
 
@@ -313,6 +339,8 @@ Configuration interaction is perhaps the most conceptually straightforward post-
 \subsubsection{M{\o}ller-Plesset}
 
 \subsection{Coupled Cluster Theory}
+
+\subsubsection{Distinguishable Cluster Theory}
 
 % \subsection{Density Matrix Renormalisation Group}
 
