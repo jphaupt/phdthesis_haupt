@@ -36,7 +36,7 @@ The outline of the dissertation is as thus:
     \item Chapter \ref{chap:intro} (this chapter) provides a basic overview of electronic structure theory methods and some of its principal concepts. Sections \ref{sec:hf} and \ref{sec:post-hf} in particular are largely based on the appropriate chapters of Ref \citenum{helgakerMolecular2014}.
     \item Chapter \ref{chap:explicit} reviews the current works in so-called ``explicitly correlated'' methods, notably the well-established R12/F12 and the recently-reinvigorated \gls{TC}.
     \item Chapter \ref{chap:qmc} provides a basic introduction to \gls{QMC} and how it relates to \gls{FCIQMC}.
-    \item Chapter \ref{chap:opt} discusses optimization of Jastrow factors in the context of \gls{TC}.
+    \item Chapter \ref{chap:opt} discusses optimization strategies of Jastrow factors in the context of \gls{TC}.
     \item Chapter \ref{chap:binding} discusses an extension of the methods in the previous chapters to ensure size consistency and success when targeting strongly multi-reference problems.
     \item Chapter \ref{chap:pytchint} provides an overview of the software \pytchint developed in the group for evaluation of \gls{TC} integrals.
     \item Finally, chapter \ref{chap:sumandout} provides a review and an outlook for the field.
@@ -319,7 +319,7 @@ where the number of terms in the sum depends on how many excitations we consider
 \begin{figure}[htbp]
     \centering
 
-    \caption{Illustration of different a \gls{RHF} reference and examples of single-, double-, and triple-excitations. The method CISDT, for example, would consider all determinants of the form illustrated.}
+    \caption{Illustration of a \gls{RHF} reference and examples of single-, double-, and triple-excitations. The method CISDT, for example, would consider all determinants of the form illustrated.}
     \label{fig:excitations}
 \end{figure}
 
@@ -329,34 +329,63 @@ Additionally, if we wish to go to the \gls{FCI} method and ensure size consisten
 
 \subsection{Multi-Configurational Self-Consistent Field}
 
-\todo{...\ref{sec:core_electrons}}
-\todo{add a figure of CAS}
+As a generalisation of the \gls{HF} method, \gls{MCSCF} is particularly well-suited for problems with static correlation. As in \gls{HF}, we minimise the electronic energy with respect to variational parameters; however, now we also simultaneously minimise with respect to expansion coefficients for a set of configurations (e.g. \glspl{SD}). i.e. consider the MCSCF wave function
+\begin{equation}
+\ket{\kappa,\bm c} = e^{-\kappa}\sum_ic_i\ket{D_i},
+\end{equation}
+where $\kappa$ is familiar from gls{HF}, and the $c_i$ coefficients farmiliar from \gls{CI}. In MCSCF, we optimise
+\begin{equation}
+E_\mathrm{MCSCF} = \frac{\bra{\kappa,\bm c}H\ket{\kappa,\bm c}}{\bra{\kappa,\bm c}\ket{\kappa,\bm c}}.
+\end{equation}
+
+Like in \gls{HF}, the variational parameters appear nonlinearly and must be optimised iteratively. Determining an appropriate set $\{\ket{D_i}\}$ tends to be challenging, and even for small systems generating an MCSCF wave function can be impossible.
+
+\subsubsection{Complete Active Space Self-Consistent Field}
+One ``flavour'' of \gls{MCSCF} that has proven particularly successful is \gls{CASSCF}. In CASSCF, instead of inspecting individual configurations, we consider a set of configurations that satisfy a set of criteria. In particular, we partition the orbitals into three sets: the core, active, and virtual (unoccupied) regions. The core orbitals, as alluded to in section \ref{sec:core_electrons}, are approximated to be doubly occupied. The virtual orbitals are approximated to be unoccupied. The active orbitals are the remaining orbitals, which can have occupations of 0, 1, or 2.
+
+The MCSCF expansion is found by considering all possible excitations of the active electrons in the active space. Notice that in the limit of an empty active space, we recover the \gls{HF} method, and in the limit of an active space containing all orbitals, we recover the \gls{FCI} method.
+
+\begin{figure}[htbp]
+    \centering
+
+    \caption{In \gls{CAS} methods, such as \gls{CASSCF}, the \gls{MO} space is partitioned into three regions: the core, active, and virtual.\todo{}}
+    \label{fig:cas}
+\end{figure}
 
 \subsection{Perturbation Theory}
 
+Perturbation theory is a set of approximate mathematical methods for solving problems involving small disturbances (perturbations) to a problem with a known solution (the unperturbed problem). If these perturbations are not too large, then the solution of the perturbed problem is close to that of the unperturbed problem, and can be expressed as the solution of the unperturbed problem plus some corrections. Perturbation theory fails, however, if the perturbation is large.
+
 \subsubsection{Rayleigh-Schr\"odinger}
 
+Perturbation theory applied to time-independent problems is sometimes referred to as Rayleigh-Schr\"odinger perturbation theory.\cite{sakuraiModern2017} Consider a Hamiltonian,
+\begin{equation}
+H = H_0 + \lambda V,
+\end{equation}
+where $H_0$, referred to as the unperturbed Hamiltonian, $\lambda$ is an arbitrary (real) parameter controlling the strength of the perturbation, and $V$ is the perturbation. We assume that we know the exact solution to $H_0$, such that we have all eigenstates $\{\ket{\Psi_n^{(0)}}\}$ and their corresponding eigenvalues $\{E_n^{(0)} \}$.
+
+To obtain the solution to the true Hamiltonian $H$, we expand in terms of the perturbation $\lambda$,
+\begin{equation}
+\ket{\Psi} = \sum_{k=0}^\infty \lambda^k\ket{\Psi_n^{(k)}}
+\end{equation}
+and
+\begin{equation}
+E = \sum_{k=0}^\infty \lambda^kE_n^{(k)}.
+\end{equation}
+
+By inserting these expansions into the time-independent Schr\"odinger equation, we equate terms of the same order in $\lambda$, which leads to the corrections to the energy and wave function. We may then truncate the expansion.
+
 \subsubsection{M{\o}ller-Plesset}
+
+M{\o}ller-Plesset perturbation theory is a special case of Rayleigh-Schr\"odinger perturbation theory, and is the variant most commonly seen in quantum chemistry.
+
+\todo{}
 
 \subsection{Coupled Cluster Theory}
 
 \subsubsection{Distinguishable Cluster Theory}
+\todo{cite Daniel -- look at theses from his students and the original DCSD paper to get a basic overview of the theory}
 
 % \subsection{Density Matrix Renormalisation Group}
 
-\todo{DMRG?}
-
-
-% introduction and context
-% The quantum many-body problem, the TISE, in principle have everything but it's exceedingly difficult in practice, strong vs weak correlation, need for interesting materials and even small molecules to understand e.g. Haber-Bosch process and nitrogen fixation, mention multiscale methods (see Mona's notes?)
-% scope of the thesis
-% electronic structure theory
-% "all models are wrong, but some of them are useful" (G. E. P. Box, N. R. Draper)
-% Model Hamiltonians (Ashcrof & Mermin)
-% Hartree-Fock Theory
-% correlation energies static vs dynamic, explicit correlation
-% post-HF methods
-
-% small preface about the work, publication(s)
-
-% \one
+% \todo{DMRG?}
