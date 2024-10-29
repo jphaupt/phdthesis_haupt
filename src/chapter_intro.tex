@@ -244,6 +244,7 @@ This is a nonlinear equation, and hence the parameters $\kappa_{PQ}$ must be det
 
 The \gls{HF} method can also be understood as a mean-field theory. That is, we treat the $N$-body problem as $N$ one-body problems, where a single electron is in an effective ``averaged'' potential from the other $N-1$ electrons. This effective one-body Hamiltonian is known as the Fock operator,
 \begin{equation}
+    \label{eq:fock-operator}
     f = \sum_{PQ} f_{PQ} a_P^\dag a_Q.
 \end{equation}
 
@@ -360,9 +361,9 @@ Perturbation theory is a set of approximate mathematical methods for solving pro
 
 Perturbation theory applied to time-independent problems is sometimes referred to as Rayleigh-Schr\"odinger perturbation theory.\cite{sakuraiModern2017} Consider a Hamiltonian,
 \begin{equation}
-H = H_0 + \lambda V,
+H = H_0 + \lambda H',
 \end{equation}
-where $H_0$, referred to as the unperturbed Hamiltonian, $\lambda$ is an arbitrary (real) parameter controlling the strength of the perturbation, and $V$ is the perturbation. We assume that we know the exact solution to $H_0$, such that we have all eigenstates $\{\ket{\Psi_n^{(0)}}\}$ and their corresponding eigenvalues $\{E_n^{(0)} \}$.
+where $H_0$, referred to as the unperturbed Hamiltonian, $\lambda$ is an arbitrary (real) parameter controlling the strength of the perturbation, and $H'$ is the perturbation. We assume that we know the exact solution to $H_0$, such that we have all eigenstates $\{\ket{\Psi_n^{(0)}}\}$ and their corresponding eigenvalues $\{E_n^{(0)} \}$.
 
 To obtain the solution to the true Hamiltonian $H$, we expand in terms of the perturbation $\lambda$,
 \begin{equation}
@@ -378,6 +379,8 @@ By inserting these expansions into the time-independent Schr\"odinger equation, 
 \subsubsection{M{\o}ller-Plesset}
 
 M{\o}ller-Plesset perturbation theory is a special case of Rayleigh-Schr\"odinger perturbation theory, and is the variant most commonly seen in quantum chemistry.
+
+In M{\o}ller-Plesset perturbation theory, the unperturbed Hamiltonian is chosen to be the Fock operator \ref{eq:fock-operator}. The perturbed Hamiltonian is known as the fluctuation potential and is the difference between the true Coulomb interaction and effective one-electron potential discussed in section \ref{sec:hf}.
 
 \todo{}
 
