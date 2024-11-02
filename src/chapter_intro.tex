@@ -106,7 +106,7 @@ Similarly, we may also delete virtual orbitals, typically those of high energy, 
 
 \subsection{Model Hamiltonians}
 
-In 1929, the surrealist artist Ren\'e Magritte displayed a now-famous painting of a pipe with the caption \emph{Ceci n'est pas une pipe} (French for ``This is note a pipe''). It was meant to depict the idea that the painting itself is in a way treacherous: it may appear to be a pipe, but you cannot stuff it or smoke from it, as it is a representation of a pipe.
+In 1929, the surrealist artist Ren\'e Magritte displayed a now-famous painting of a pipe with the caption \emph{Ceci n'est pas une pipe} (French for ``This is not a pipe''). It was meant to depict the idea that the painting itself is in a way treacherous: it may appear to be a pipe, but you cannot stuff it or smoke from it, as it is a representation of a pipe.
 
 In a similar way, physicists and chemists often use \emph{model Hamiltonians}, which do away with aspects of equation \eqref{eq:theory_of_everything} that are not expected to be relevant to the problem at hand, resulting in new Hamiltonians that may be considered a representation of equation \eqref{eq:theory_of_everything}, much like Magritte's painting.\footnote{We might further argue that all of science can be described this way, as scientific models are always ``mere'' representations of Nature, and is not Nature itself.} Compared to \emph{ab initio} Hamiltonians like equation \eqref{eq:elec_hamiltonian_2q}, model Hamiltonians are generally much simpler, but depend on parameters whose values we may not necessarily know a priori.
 
@@ -309,7 +309,7 @@ We therefore have two ``axes'' on which to approach the exact solution to equati
 \begin{equation}
 \ket{\Phi_\mathrm{CI}} = \sum_p c_p\ket{D_p}
 \end{equation}
-where $\ket{D_p}$ is a \gls{SD}. This may alternatively be written\footnote{We adopt the common notation convention where $i,j,k,...$ denote occupied orbitals and $a,b,c,...$ virtual (or unoccupied) orbitals.}
+where $\ket{D_p}$ is a \gls{SD}. This may alternatively be written\footnote{We adopt the common notation convention where $i,j,k,...$ denote occupied orbitals, $a,b,c,...$ virtual (or unoccupied) orbitals, and $p,q,r, ...$ unspecified.}
 \begin{equation}
 \label{eq:ci}
 \ket{\Phi_\mathrm{CI}} = (\one + \sum_{ia}c_i^a\hat a_a^\dag\hat a_i +
@@ -354,6 +354,7 @@ The MCSCF expansion is found by considering all possible excitations of the acti
 \end{figure}
 
 \subsection{Perturbation Theory}
+\label{sec:perturbation-theory}
 
 Perturbation theory is a set of approximate mathematical methods for solving problems involving small disturbances (perturbations) to a problem with a known solution (the unperturbed problem). If these perturbations are not too large, then the solution of the perturbed problem is close to that of the unperturbed problem, and can be expressed as the solution of the unperturbed problem plus some corrections. Perturbation theory fails, however, if the perturbation is large.
 
@@ -367,14 +368,15 @@ where $H_0$, referred to as the unperturbed Hamiltonian, $\lambda$ is an arbitra
 
 To obtain the solution to the true Hamiltonian $H$, we expand in terms of the perturbation $\lambda$,
 \begin{equation}
-\ket{\Psi} = \sum_{k=0}^\infty \lambda^k\ket{\Psi_n^{(k)}}
+\ket{\Psi_n} = \sum_{k=0}^\infty \lambda^k\ket{\Psi_n^{(k)}}
 \end{equation}
 and
 \begin{equation}
-E = \sum_{k=0}^\infty \lambda^kE_n^{(k)}.
+E_n = \sum_{k=0}^\infty \lambda^kE_n^{(k)}.
 \end{equation}
+Since we are generally interested in the ground state, we are typically targetting $n=0$.
 
-By inserting these expansions into the time-independent Schr\"odinger equation, we equate terms of the same order in $\lambda$, which leads to the corrections to the energy and wave function. We may then truncate the expansion.
+By inserting these expansions into the time-independent Schr\"odinger equation, we equate terms of the same order in $\lambda$, which leads to the corrections to the energy and wave function. We may then truncate the expansion to some order. This allows for a systematically improvable result.
 
 \subsubsection{M{\o}ller-Plesset}
 
@@ -382,13 +384,45 @@ M{\o}ller-Plesset perturbation theory is a special case of Rayleigh-Schr\"odinge
 
 In M{\o}ller-Plesset perturbation theory, the unperturbed Hamiltonian is chosen to be the Fock operator \ref{eq:fock-operator}. The perturbed Hamiltonian is known as the fluctuation potential and is the difference between the true Coulomb interaction and effective one-electron potential discussed in section \ref{sec:hf}.
 
-\todo{}
+That is,
+\begin{equation}
+    H_0 = f, \hspace{10pt} H' = \sum_{i<j} r_{ij}^{-1}-V_\mathrm{eff} = H-H_0.
+\end{equation}
+If we apply the theory of Rayleigh-Schr\"odinger perturbation theory, we find the zeroth order wave function to be the \gls{HF} wave function,
+\begin{equation}
+    \ket{\Psi_0^{(0)}} = \ket{\Phi_0}, \hspace{10pt}
+    f\ket{\Phi_0} = \underbrace{\sum_i\epsilon_i}_{E_0^{(0)}}\ket{\Phi_0}
+    % , \hspace{10pt} E^{(0)} = E_\mathrm{HF}.
+\end{equation}
+where we have also identified the zeroth-order energy as the sum of orbital energies $E^{(0)}=\sum_i\epsilon_i$. With a bit more busywork, we get
+\begin{align}
+    E^{(1)} &= \bra{\Psi_0^{(0)}}H'\ket{\Psi_0^{(0)}} = \bra{\Phi_0}H'\ket{\Phi_0} \\
+    E^{(2)} &=
+    \sum_{n>0} \frac{|\bra{\Psi_n^{(0)}}H'\ket{\Psi_0^{(0)}}|^2}{E_0^{(0)}-E_n^{(0)}} =
+    -\sum_{i>j,a>b}\frac{|\bra{\Phi_{ij}^{ab}}H'\ket{\Phi_0}|^2}{\epsilon_a+\epsilon_b-\epsilon_i-\epsilon_j},
+\end{align}
+where $\ket{\Phi_{ij}^{ab}}=a_a^\dag a_b^\dag a_ia_j\ket{\Phi_0}$ is a doubly-excited state with respect to the HF wave function, and $\epsilon_a+\epsilon_b-\epsilon_i-\epsilon_j = E_0^{(0)} - E_n^{(0)}$ is the energy difference between two eigenstates of the Fock operator.
+
+Some features worth noting about M{\o}ller-Plesset perturbation theory:
+\begin{itemize}
+    \item The sum of zeroth- and first-order energies is the HF energy: $E_\mathrm{HF} = E_0^{(0)} + E_0^{(1)}$.
+    \item By the variational principle, $E_0^{(0)}<E_n^{(0)}$ for all $n>0$ (except for degenerate ground states), so $E_0^{(2)}<0$, i.e. the energy always decreases.
+    \item If the ground state is degenerate, the term diverges. It might be possible to lift the degeneracy by a change of basis, however.
+    \item If the \gls{HF} solution is already a good approximation for the system, then M{\o}ller-Plesset perturbation theory can provide surprisingly good (and size consistent) results. Hence, this method is typically only applicable to single-reference problems (i.e. those without strong static correlation).
+\end{itemize}
+
+While higher-order approaches exist and see use, the most popular is \gls{MP2}, due to its excellent compromise between cost and accuracy. That is, for only a little extra work after a successful \gls{HF}, applying \gls{MP2} improves our results.
 
 \subsection{Coupled Cluster Theory}
+
+\todo{standard coupled cluster}
 
 \subsubsection{Distinguishable Cluster Theory}
 \todo{cite Daniel -- look at theses from his students and the original DCSD paper to get a basic overview of the theory}
 
+\subsubsection{Combining with Perturbation Theory}
+
+\todo{CCSD(T) ''gold standard'', etc.}
 % \subsection{Density Matrix Renormalisation Group}
 
 % \todo{DMRG?}
