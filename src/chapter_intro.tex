@@ -80,19 +80,19 @@ In equation \ref{eq:elec_hamiltonian_2q}, $h_{ij}$ is a one-body integral,
 \label{eq:hij}
 h_{ij} = \int \phi_i^*(\mathbf{r})\left(-\frac 12 \nabla^2 - \sum_I \frac{Z_I}{|\mathbf{R}_I-\mathbf r|}\right)\phi_j(\mathbf{r})\mathrm{d}\mathbf{r}
 \end{equation}
-and $g_{ijkl}$ is a two-body integral,
+and $V_{ijkl}$ is a two-body integral,
 \begin{equation}
 V_{ijkl} = \int \phi_i^*(\mathbf{r})\phi_k^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_j(\mathbf{r}')\phi_l(\mathbf{r})\mathrm{d}\mathbf{r}\mathrm{d}\mathbf{r}',
 \end{equation}
 with a spatial-orbital basis $\{\phi_i(\mathbf{r})\}$.
 
-Finally, to treat the nuclear Hamiltonian, we neglect the first term of equation \eqref{eq:theory_of_everything}, and treat the second term as approximately constant, so $\hat H_\mathrm{nuc} = \sum_{IJ} Z_IZ_Jr_{IJ}$. Thus, we are left with the problem of solving the electronic structure problem, which is the subject of this dissertation.
+Finally, to treat the nuclear Hamiltonian, we neglect the first term of equation \eqref{eq:theory_of_everything}, and treat the second term as approximately constant, so $\hat H_\mathrm{nuc} = \sum_{IJ} Z_IZ_Jr_{IJ}^{-1}$. Thus, we are left with the problem of solving the electronic structure problem, which is the subject of this dissertation.
 
 Note that while chemists and physicists typically talk about the positions of nuclei in a molecule or solid as if they are fixed in place, as will be done in this dissertation, this is really a colloquialism. If the nuclei had an exact position and zero kinetic energy, the \gls{BOA} would, ipso facto, be in direct contradiction of the Heisenberg uncertainty principle. Instead, on the timescale of the electrons, due to the much higher mass of nuclei, in the \gls{BOA} we treat the nuclei as approximately localised in a state in which their motion is much slower than that of the electrons (but, importantly, not zero). This keeps the approximation from being in conflict with the fundamental postulates of quantum theory.
 
 The \gls{BOA} is an immensely practical tool as it substantially simplifies our equations, and in many applications it is an excellent approximation. It will be a fundamental assumption throughout the rest of this dissertation, though it need not always be valid in all of quantum chemistry.
 
-While we have done a lot to drastically reduce the complexity of equation \eqref{eq:theory_of_everything}, equation \eqref{eq:elec_hamiltonian_2q} is still intractible for large system sizes, scaling combinatorially with the size of the Hilbert space, as function of the system size $N_e$ (henceforth $N$), and the basis set size $M$. Hence, in addition to using a smaller basis, we still need extra approximations and sophisticated methodologies.
+While we have done a lot to drastically reduce the complexity of equation \eqref{eq:theory_of_everything}, equation \eqref{eq:elec_hamiltonian_2q} is still intractible for large system sizes, scaling combinatorially with the size of the Hilbert space, as a function of the system size $N_e$ (henceforth $N$), and the basis set size $M$. Hence, in addition to using a smaller basis, we still need extra approximations and sophisticated methodologies.
 
 
 \subsection{Core Electrons}
@@ -113,9 +113,9 @@ In a similar way, physicists and chemists often use \emph{model Hamiltonians}, w
 The most famous model Hamiltonian is the Hubbard model,\cite{Hubbard1963} most typically used to describe electrons in a periodic lattice, and can be written as
 \begin{equation}
 \label{eq:hubbard}
-\hat H_\mathrm{Hubb} = - \sum_{<i,j>\sigma} t_{ij} a_{j\sigma}^\dag a_{i\sigma} + \sum_i U_in_{i\uparrow}n_{i\downarrow},
+\hat H_\mathrm{Hubb} = - \sum_{\langle i,j\rangle \sigma} t_{ij} a_{j\sigma}^\dag a_{i\sigma} + \sum_i U_in_{i\uparrow}n_{i\downarrow},
 \end{equation}
-where $<i,j>$ denotes nearest neighbours, $t_{ij}$ (often taken to be constant, $t$) is a parameter called the hopping amplitude, and $U_i$ (often taken to be constant, $U$) is a parameter called the on-site repulsion.
+where $\langle i,j\rangle$ denotes nearest neighbours, $t_{ij}$ (often taken to be constant, $t$) is a parameter called the hopping amplitude, and $U_i$ (often taken to be constant, $U$) is a parameter called the on-site repulsion.
 
 Despite its apparent simplicity, the Hubbard model is a rich model, and has been used to describe a variety of phenomena, from metal-insulator transitions to high-temperature superconductivity. Moreover, it is not always so simple to solve, and has been the subject of much research.\cite{Lieb1968a,liebermannFCIQMC2023}
 
@@ -279,7 +279,7 @@ It should be noted, however, that despite this name the \gls{HF} method captures
 \section{Post-Hartree-Fock Methods}
 \label{sec:post-hf}
 
-While the \gls{HF} method is convenient and can be used efficiently to solve for hundreds of electrons, it is oftentimes not sufficient to describe the electronic structure of a molecule. To account for the remaining correlation, numerous post-Hartree-Fock methods (that is, methods run after \gls{HF}) have been formulated, some of which are ribed in this section.
+While the \gls{HF} method is convenient and can be used efficiently to solve for hundreds of electrons, it is oftentimes not sufficient to describe the electronic structure of a molecule. To account for the remaining correlation, numerous post-Hartree-Fock methods (that is, methods run after \gls{HF}) have been formulated, some of which are described in this section.
 
 Correlation energy is typically categorised as either dynamical or static, although their effects are not mutually exclusive and sometimes their difference can be hazy.
 
@@ -362,7 +362,7 @@ Perturbation theory is a set of approximate mathematical methods for solving pro
 
 Perturbation theory applied to time-independent problems is sometimes referred to as Rayleigh-Schr\"odinger perturbation theory.\cite{sakuraiModern2017} Consider a Hamiltonian,
 \begin{equation}
-H = H_0 + \lambda H',
+H_\mathrm{PT} = H_0 + \lambda H',
 \end{equation}
 where $H_0$, referred to as the unperturbed Hamiltonian, $\lambda$ is an arbitrary (real) parameter controlling the strength of the perturbation, and $H'$ is the perturbation. We assume that we know the exact solution to $H_0$, such that we have all eigenstates $\{\ket{\Psi_n^{(0)}}\}$ and their corresponding eigenvalues $\{E_n^{(0)} \}$.
 
@@ -415,14 +415,44 @@ While higher-order approaches exist and see use, the most popular is \gls{MP2}, 
 
 \subsection{Coupled Cluster Theory}
 
-\todo{standard coupled cluster}
+The lack of size consistency in \gls{CI} theory arises from the linear ansatz in section \ref{sec:ci}. By using a nonlinear ansatz, we arrive at one of the most successful theories in electronic theory, \gls{CC}. While the methods presented here are inherently single-reference and build on a single \gls{SD}, multi-reference generalisations to \gls{CC} theory exist and are the study of active research.\todo{citations, incl. Koehn ;)} Therefore, the presented ``flavours'' of \gls{CC} are expected to fail for systems with strong static correlation.
+
+\subsection{Standard Coupled Cluster}
+
+To ensure a multiplicatively-separable wave function, we use a multiplicative ansatz,
+\begin{equation}
+    \label{eq:cc-ansatz}
+\ket{\Psi_\mathrm{CC}} = \e^T\ket{\Phi_0},
+\end{equation}
+where $\ket{\Phi_0}$ is the reference (typically \gls{HF}) wave function, and $T$ is the cluster operator. The cluster operator is defined $T = T_1 + T_2 + T_3 + \cdots$, where $T_n$ is the $n$-body cluster operator, made up of all possible $n$-body excitations, for example, $T_1 = \sum_{i<j}t_{ij}a_i^\dag a_j^\dag a_j a_i$ for the one-body cluster operator, and $T_2 = \sum_{i<j,a<b}t_{ij}^{ab}a_a^\dag a_b^\dag a_j a_i$ for the two-body cluster operator.
+
+It is worth noting that \gls{CC} and \gls{CI} are identical, differing only in their parametrisation, when all possible excitations are considered. They both provide \gls{FCI}-level accuracy.
+
+By inserting equation \eqref{eq:cc-ansatz} into the time-independent Schr\"odinger equation and pre-multiplying by $\e^T$, we obtain
+
+\begin{align}
+    \label{eq:cc-schrodinger}
+    \bra{\Phi_0}\e^{-T} H \e^T\ket{\Phi_0} &= E \\
+    \bra{\Phi_{ij...}^{ab...}}\e^{-T} H \e^T\ket{\Phi_0} &= 0
+\end{align}
+where $\ket{\Phi_{ij...}^{ab...}}$ is a $n$-body excitation with respect to the reference wave function.
+
+Note, however, that these equations do not rely on the Variational Principle. Instead of minimising a functional, we solve equations \eqref{eq:cc-schrodinger} for the amplitudes, which give the energy. While we still cannot reasonably always include all excitations in the cluster operator $T$, due to the multiplicative ansatz, even if we truncate the cluster operator, we get size-consistent results. In particular, any truncated CC wave function ansatz will contain contributions from all determinants in Fock space. The simplest CC truncation is the \gls{CCSD} method. In a sense, \gls{CCSD} and any other truncated CC method is an approximation for \gls{FCI} where the coefficients are not approximated to be zero (like in \gls{CI}) but instead the higher-order excitations terms are generated from the lower-order excitation terms in a size-consistent fashion.
+
+CC theory owes much of its success to its high accuracy at a reasonable cost. \gls{CCSD} and \gls{CCSDT} in particular scale as $\mathcal{O}(M^6)$ and $\mathcal{O}(M^8)$ respectively, with $M$ the number of spatial orbitals. Every additional set of excitations incurs an additional factor of $\mathcal{O}(M^2)$ scaling.
 
 \subsubsection{Distinguishable Cluster Theory}
-\todo{cite Daniel -- look at theses from his students and the original DCSD paper to get a basic overview of the theory}
 
-\subsubsection{Combining with Perturbation Theory}
+The more recently-developed \gls{DCSD} method's central philosophy is removing irrelevant or nonphysical terms while maintaining many of CC's desireable properties, such as size consistency.\cite{katsCommunication2013}
 
-\todo{CCSD(T) ''gold standard'', etc.}
+This method was showed to give quantitatively better results than standard CC for a variety of systems, and qualitatively correct results for systems where CC can fail spectacularly, such as the N$_2$ binding curve. Since its first publication, \gls{DC} has been extended to explicitly-correlated F12 theory, \gls{EOM}, tailored coupled cluster, and more. \todo{citations}
+
+\subsubsection{Combining Couled Cluster with Perturbation Theory}
+
+It is possible to avoid the computationally-expensive scaling of CC somewhat, by treating some terms perturbatively. The most famous of these is the \gls{CCSD(T)} method, in which the single- and double-excitations are treated fully, whereas the triple-excitations are treated as perturbations, as in section \ref{sec:perturbation-theory}.
+
+\gls{CCSD(T)} scales as $\mathcal{O}(M^7)$ and for the price provides extremely accurate results. This is why sometimes this method is referred to as the ``gold standard'' of quantum chemistry.
+
 % \subsection{Density Matrix Renormalisation Group}
 
 % \todo{DMRG?}
