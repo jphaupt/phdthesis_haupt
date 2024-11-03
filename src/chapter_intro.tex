@@ -274,7 +274,13 @@ It should be noted, however, that despite this name the \gls{HF} method captures
 
 \subsection{The Roothaan-Hall Equations}
 
-\todo{... Is this section necessary?}
+The Roothaan-Hall equations are a matrix representation of the \gls{HF} approximation. Given a basis set, typically \glspl{GTO}, the Roothaan-Hall equations are given by the generalised eigenvalue problem,
+\begin{equation}
+    FC = SC\bm\epsilon
+\end{equation}
+where $C$ is a matrix of coefficients, $F$ is the Fock matrix (which depends on $C$), $S$ is the overlap matrix (which reduces to the identity matrix for orthonormalised bases), and $\bm\epsilon$ is a diagonal matrix of orbital energies.
+
+Since this representation is in matrix form, instead of in terms of derivatives and integrals, it is more amenable to conventional computational techniques.
 
 \section{Post-Hartree-Fock Methods}
 \label{sec:post-hf}
