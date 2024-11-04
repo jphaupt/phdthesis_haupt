@@ -29,7 +29,7 @@ This system has only 18 electrons and 18 nuclei, a farcry from the $10^{23}$ or 
 
 \section{Overview of the Thesis}
 
-This dissertation fits into the field of nonrelativistic electronic structure theory, the branch of quantum chemistry concerned with the description of electrons and their correlation inside molecules and materials. More specifically, this dissertation focuses on high-accuracy (but often high-cost) \emph{ab initio} methodologies, especially \gls{FCIQMC} and \gls{TC}. As such, we will only be discussing small systems of consisting of only a few atoms, as they are tractible with a full, all-electron treatment with these methods. In principle, these methods should be able to be embedded \todo{embedding citation(s)} into more large-scale calculations using multiscale techniques, but this is outside the scope of my work. Nevertheless, the work herein is focused on methodologies, and not on particular physical systems.
+This dissertation fits into the field of nonrelativistic electronic structure theory, the branch of quantum chemistry concerned with the description of electrons and their correlation inside molecules and materials. More specifically, this dissertation focuses on high-accuracy (but often high-cost) \emph{ab initio} methodologies, especially \gls{FCIQMC} and \gls{TC}. As such, we will only be discussing small systems of consisting of only a few atoms, as they are tractible with a full, all-electron treatment with these methods. In principle, these methods should be able to be embedded \cite{jonesEmbedding2020,christlmaierFull2022} into more large-scale calculations using multiscale techniques, but this is outside the scope of my work. Nevertheless, the work herein is focused on methodologies, and not on particular physical systems.
 
 The outline of the dissertation is as thus:
 \begin{itemize}
@@ -197,7 +197,7 @@ The combinatorial scaling is still unfavourable. For a closed-shell system with 
 
 Orbitals (and spin-orbitals), a term already used in this text, describes the spatial distribution (and in the case of spin-orbitals, also the spin) of a single electron. We assume that spatial orbitals form an orthonormal set, and that they form a complete space for an arbitrary wave function. However, in theory to have a \gls{CBS} would mean needing an infinite number of basis functions. In practice, we must of course have a finite basis, and so this naturally leads to a hierarchy of basis sets, where the typically larger basis sets are both more expensive and more accurate.
 
-Many different basis set families exist, but among the most popular are those due to Dunning and coworkers.\cite{dunningGaussian1989} Additionally, many different basis set extrapolation techniques have also been developed.%\cite{}
+Many different basis set families exist, but among the most popular are those due to Dunning and coworkers.\cite{dunningGaussian1989} Additionally, many different basis set extrapolation techniques have also been developed.\cite{fellerEffectiveness2011,halkierBasisset1998,halkierBasisset1999,helgakerBasisset1997,jensenBasis1999,pansiniExtrapolation2016,petersonBenchmark1994,woonBenchmark1994}
 
 Strictly speaking, any kind of functions can be used as a basis set, as long as they are a complete set. However, in practice we may broadly categorise them into two groups: \glspl{STO} and \glspl{GTO}.
 
@@ -224,7 +224,7 @@ It must be noted, however, that \glspl{STO} and \glspl{GTO} have different asymp
 \section{The Hartree-Fock Method}
 \label{sec:hf}
 
-The typical starting point to most \emph{ab initio} electronic structure methods is the \gls{HF} method.\todo{HF citations} The key approximation in \gls{HF} is that we treat the exact $N$-body wave function solution as approximately a single \gls{SD}.\footnote{More precisely, the \gls{HF} approximation is to treat the wave function as a single configuration. In the context of this dissertation, that configuration will always be a \gls{SD}.} Then, we variationally (see section \ref{sec:variational_principle}) optimise the energy of the system with respect to parameters pertaining to the spin-orbitals. Call this \gls{SD} $\ket{\kappa}$.
+The typical starting point to most \emph{ab initio} electronic structure methods is the \gls{HF} method.\cite{hartreeWave1928,fockNaherungsmethode1930,slaterNote1930} The key approximation in \gls{HF} is that we treat the exact $N$-body wave function solution as approximately a single \gls{SD}.\footnote{More precisely, the \gls{HF} approximation is to treat the wave function as a single configuration. In the context of this dissertation, that configuration will always be a \gls{SD}.} Then, we variationally (see section \ref{sec:variational_principle}) optimise the energy of the system with respect to parameters pertaining to the spin-orbitals. Call this \gls{SD} $\ket{\kappa}$.
 
 Then, for some reference configuration $\ket 0$,\footnote{$P=(p,\sigma)$ are spin-orbital indices, for brevity.}
 \begin{equation}
@@ -274,7 +274,7 @@ It should be noted, however, that despite this name the \gls{HF} method captures
 
 \subsection{The Roothaan-Hall Equations}
 
-The Roothaan-Hall equations are a matrix representation of the \gls{HF} approximation. Given a basis set, typically \glspl{GTO}, the Roothaan-Hall equations are given by the generalised eigenvalue problem,
+The Roothaan-Hall equations are a matrix representation of the \gls{HF} approximation.\cite{roothaanNew1951,hallMolecular1997} Given a basis set, typically \glspl{GTO}, the Roothaan-Hall equations are given by the generalised eigenvalue problem,
 \begin{equation}
     FC = SC\bm\epsilon
 \end{equation}
@@ -333,11 +333,11 @@ where the number of terms in the sum depends on how many excitations we consider
 
 There are some important limitations to this method, however. Perhaps most notable is that the \gls{CI} method is not size consistent. For two noninteracting systems $A$ and $B$, we expect the composite system $A+B$ to have energy equal to the sum of that for $A$ and $B$, i.e. $E_{A+B}=E_A+E_B$. However, within a truncated \gls{CI} method, this is not the case\footnote{Of course, in \gls{FCI} we necessarily have size consistency, since we have the exact solution for the basis set.}, due to the additive ansatz \eqref{eq:ci}.
 
-Additionally, if we wish to go to the \gls{FCI} method and ensure size consistency and accurate results, we once again have bad scaling, as discussed in section \ref{sec:matrix}. However, there exist sparse diagonalisation routines that need not store the entire matrix $H$, such as the Davidson, Lanczos, and Arnoldi (for non-Hermitian $H$) \todo{citations} methods, which target the ground state and need to store only a fraction of the matrix. Still, these scale with the size of the eigenvector, which is still prohibitively expensive for large systems. A more practical approach to reaching \gls{FCI} accuracy will be discussed later in section \ref{sec:fciqmc}, where we discuss the \gls{FCIQMC} algorithm.
+Additionally, if we wish to go to the \gls{FCI} method and ensure size consistency and accurate results, we once again have bad scaling, as discussed in section \ref{sec:matrix}. However, there exist sparse diagonalisation routines that need not store the entire matrix $H$, such as the Davidson,\cite{davidsonIterative1975} Lanczos,\cite{lanczosIteration1950} and Arnoldi\cite{arnoldiPrinciple1951} (for non-Hermitian $H$) methods, which target the ground state and need to store only a fraction of the matrix. Still, these scale with the size of the eigenvector, which is still prohibitively expensive for large systems. A more practical approach to reaching \gls{FCI} accuracy will be discussed later in section \ref{sec:fciqmc}, where we discuss the \gls{FCIQMC} algorithm.
 
 \subsection{Multi-Configurational Self-Consistent Field}
 
-As a generalisation of the \gls{HF} method, \gls{MCSCF} is particularly well-suited for problems with static correlation. As in \gls{HF}, we minimise the electronic energy with respect to variational parameters; however, now we also simultaneously minimise with respect to expansion coefficients for a set of configurations (e.g. \glspl{SD}). i.e. consider the MCSCF wave function
+As a generalisation of the \gls{HF} method, \gls{MCSCF} is particularly well-suited for problems with static correlation.\cite{helgakerMolecular2014,eadeDirect1981,roosNew1972} As in \gls{HF}, we minimise the electronic energy with respect to variational parameters; however, now we also simultaneously minimise with respect to expansion coefficients for a set of configurations (e.g. \glspl{SD}). i.e. consider the MCSCF wave function
 \begin{equation}
 \ket{\kappa,\bm c} = e^{-\kappa}\sum_ic_i\ket{D_i},
 \end{equation}
@@ -349,7 +349,7 @@ E_\mathrm{MCSCF} = \frac{\bra{\kappa,\bm c}H\ket{\kappa,\bm c}}{\bra{\kappa,\bm 
 Like in HF, the variational parameters appear nonlinearly and must be optimised iteratively. Determining an appropriate set $\{\ket{D_i}\}$ tends to be challenging, and even for small systems generating an MCSCF wave function can be impossible.
 
 \subsubsection{Complete Active Space Self-Consistent Field}
-One ``flavour'' of \gls{MCSCF} that has proven particularly successful is \gls{CASSCF}. In CASSCF, instead of inspecting individual configurations, we consider a set of configurations that satisfy a set of criteria. In particular, we partition the orbitals into three sets: the core, active, and virtual (unoccupied) regions. The core orbitals, as alluded to in section \ref{sec:core_electrons}, are approximated to be doubly occupied. The virtual orbitals are approximated to always be unoccupied. The active orbitals are the remaining orbitals, which can have occupations of 0, 1, or 2.
+One ``flavour'' of \gls{MCSCF} that has proven particularly successful is \gls{CASSCF}.\cite{olsenCASSCF2011,roosComplete1980,siegbahnComparison1980,siegbahnComplete1981} In CASSCF, instead of inspecting individual configurations, we consider a set of configurations that satisfy a set of criteria. In particular, we partition the orbitals into three sets: the core, active, and virtual (unoccupied) regions. The core orbitals, as alluded to in section \ref{sec:core_electrons}, are approximated to be doubly occupied. The virtual orbitals are approximated to always be unoccupied. The active orbitals are the remaining orbitals, which can have occupations of 0, 1, or 2.
 
 The MCSCF expansion is found by considering all possible excitations of the active electrons in the active space. Notice that in the limit of an empty active space, we recover the \gls{HF} method, and in the limit of an active space containing all orbitals, we recover the \gls{FCI} method.
 
@@ -368,7 +368,7 @@ Perturbation theory is a set of approximate mathematical methods for solving pro
 
 \subsubsection{Rayleigh-Schr\"odinger}
 
-Perturbation theory applied to time-independent problems is sometimes referred to as Rayleigh-Schr\"odinger perturbation theory.\cite{sakuraiModern2017} Consider a Hamiltonian,
+Perturbation theory applied to time-independent problems is sometimes referred to as Rayleigh-Schr\"odinger perturbation theory.\cite{sakuraiModern2017,rayleighTheory1945,schrodingerQuantisierung1926} Consider a Hamiltonian,
 \begin{equation}
 H_\mathrm{PT} = H_0 + \lambda H',
 \end{equation}
@@ -388,7 +388,7 @@ By inserting these expansions into the time-independent Schr\"odinger equation, 
 
 \subsubsection{M{\o}ller-Plesset}
 
-M{\o}ller-Plesset perturbation theory is a special case of Rayleigh-Schr\"odinger perturbation theory, and is the variant most commonly seen in quantum chemistry.
+M{\o}ller-Plesset perturbation theory\cite{mollerNote1934} is a special case of Rayleigh-Schr\"odinger perturbation theory, and is the variant most commonly seen in quantum chemistry.
 
 In M{\o}ller-Plesset perturbation theory, the unperturbed Hamiltonian is chosen to be the Fock operator \ref{eq:fock-operator}. The perturbed Hamiltonian is known as the fluctuation potential and is the difference between the true Coulomb interaction and effective one-electron potential discussed in section \ref{sec:hf}.
 
@@ -423,9 +423,9 @@ While higher-order approaches exist and see use, the most popular is \gls{MP2}, 
 
 \subsection{Coupled Cluster Theory}
 
-The lack of size consistency in \gls{CI} theory arises from the linear ansatz in section \ref{sec:ci}. By using a nonlinear ansatz, we arrive at one of the most successful theories in electronic theory, \gls{CC}. While the methods presented here are inherently single-reference and build on a single \gls{SD}, multi-reference generalisations to \gls{CC} theory exist and are the study of active research.\todo{citations, incl. Koehn ;)} Therefore, the presented ``flavours'' of \gls{CC} are expected to fail for systems with strong static correlation.
+The lack of size consistency in \gls{CI} theory arises from the linear ansatz in section \ref{sec:ci}. By using a nonlinear ansatz, we arrive at one of the most successful theories in electronic theory, \gls{CC}.\cite{cizekCorrelation1966,cizekCorrelation1971,paldusTimeIndependent1975,shavittManyBody2009} While the methods presented here are inherently single-reference and build on a single \gls{SD}, multi-reference generalisations to \gls{CC} theory exist and are the study of active research.\cite{aotoInternally2016,evangelistaPerspective2018,hanauerPilot2011,jankowskiApplicability1992,jeziorskiCoupledcluster1981,kohnImproved2020} Therefore, the presented ``flavours'' of \gls{CC} are expected to fail for systems with strong static correlation.
 
-\subsection{Standard Coupled Cluster}
+\subsubsection{Standard Coupled Cluster}
 
 To ensure a multiplicatively-separable wave function, we use a multiplicative ansatz,
 \begin{equation}
@@ -453,11 +453,11 @@ CC theory owes much of its success to its high accuracy at a reasonable cost. \g
 
 The more recently-developed \gls{DCSD} method's central philosophy is removing irrelevant or nonphysical terms while maintaining many of CC's desireable properties, such as size consistency.\cite{katsCommunication2013}
 
-This method was shown to give quantitatively better results than standard CC for a variety of systems, and qualitatively correct results for systems where CC can fail spectacularly, such as the N$_2$ binding curve. Since its first publication, \gls{DC} has been extended to explicitly-correlated F12 theory, \gls{EOM}, tailored coupled cluster, and more. \todo{citations}
+This method was shown to give quantitatively better results than standard CC for a variety of systems, and qualitatively correct results for systems where CC can fail spectacularly, such as the N$_2$ binding curve. Since its first publication, \gls{DC} has been extended to explicitly-correlated F12 theory,\cite{katsAccurate2015} \gls{EOM},\cite{rishiExcited2017} tailored coupled cluster,\cite{vitaleFCIQMCTailored2020} and more.
 
 \subsubsection{Combining Couled Cluster with Perturbation Theory}
 
-It is possible to avoid the computationally-expensive scaling of CC somewhat, by treating some terms perturbatively. The most famous of these is the \gls{CCSD(T)} method, in which the single- and double-excitations are treated fully, whereas the triple-excitations are treated as perturbations, as in section \ref{sec:perturbation-theory}.
+It is possible to avoid the computationally-expensive scaling of CC somewhat, by treating some terms perturbatively. The most famous of these is the \gls{CCSD(T)} method,\cite{raghavachariFifthorder1989} in which the single- and double-excitations are treated fully, whereas the triple-excitations are treated as perturbations, as in section \ref{sec:perturbation-theory}.
 
 \gls{CCSD(T)} scales as $\mathcal{O}(M^7)$ and for the price provides extremely accurate results. This is why sometimes this method is referred to as the ``gold standard'' of quantum chemistry.
 
