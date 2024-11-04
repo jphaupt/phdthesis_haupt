@@ -195,29 +195,29 @@ The combinatorial scaling is still unfavourable. For a closed-shell system with 
 \subsection{Orbitals}
 \label{sec:orbitals}
 
-Orbitals (and spin-orbitals), a term already used in this text, describes the spatial destribution (and in the case of spin-orbitals, also the spin) of a single electron. We assume that spatial orbitals form an orthonormal set, and that they form a complete space for an arbitrary wave function. However, in practice to have a \gls{CBS} would mean needing an infinite number of basis functions. In practice, we must of course have a finite basis, and so this naturally leads to a hierarchy of basis sets, where the typically larger basis sets are both more expensive and more accurate.
+Orbitals (and spin-orbitals), a term already used in this text, describes the spatial distribution (and in the case of spin-orbitals, also the spin) of a single electron. We assume that spatial orbitals form an orthonormal set, and that they form a complete space for an arbitrary wave function. However, in theory to have a \gls{CBS} would mean needing an infinite number of basis functions. In practice, we must of course have a finite basis, and so this naturally leads to a hierarchy of basis sets, where the typically larger basis sets are both more expensive and more accurate.
 
-Many different basis set families exist, but among the most popular are those due to Dunning and coworkers.\todo{cite dunning, maybe others?} Additionally, many different basis set extrapolation techniques have also been developed.\todo{cite extrapolation techniques}
+Many different basis set families exist, but among the most popular are those due to Dunning and coworkers.\cite{dunningGaussian1989} Additionally, many different basis set extrapolation techniques have also been developed.%\cite{}
 
 Strictly speaking, any kind of functions can be used as a basis set, as long as they are a complete set. However, in practice we may broadly categorise them into two groups: \glspl{STO} and \glspl{GTO}.
 
 The exact solution for the Hydrogen atom is the Slater-type function $\frac 1{\sqrt{\pi}} \e^{-r}$, and similarly we know that molecular orbitals also decay as $\sim e^{-\zeta r}$.
 
-However, these \glspl{STO} are difficult to work with, as we integrals of the form
+However, these \glspl{STO} are difficult to work with, as we need to evaluate integrals of the form
 \begin{equation}
     \label{eq:two-body-integral}
 \int\d^3r_1\d^3r_2 \phi_P(\bm r_1)\phi_Q^*(\bm r_1)\frac 1 {r_{12}}\phi_R(\bm r_2)\phi_S^*(\bm r_2)
 \end{equation}
 are routinely needed.
 
-Therefore, \glspl{GTO} have been developed, which have the form $\e^{-\alpha r^2}$. \glspl{GTO} are much easier to handle, as the product of a gaussian is also a gaussian, and the integral of a gaussian is exactly known, so equations like \eqref{eq:two-body-integral} have known solutions. With this comes a tradeoff, since we know \glspl{STO} more faithfully capture the form of molecular orbitals, but \glspl{GTO} are much better for practical purposes. For this, the most common basis sets typically use a linear combination (or ``contraction'') of gaussians fitted to a \gls{STO}. An illustration is shown in figure \ref{fig:sto-gto}.
+Therefore, \glspl{GTO} have been developed, which have the form $\e^{-\alpha r^2}$. \glspl{GTO} are much easier to handle, as the product of a gaussian is also a gaussian, and the integral of a gaussian is exactly known, so equations like \eqref{eq:two-body-integral} have known solutions. With this comes a tradeoff, since we know \glspl{STO} more faithfully capture the form of molecular orbitals, but \glspl{GTO} are much better suited for computations. For this, the most common basis sets typically use a linear combination (or ``contraction'') of gaussians fitted to a \gls{STO}. An illustration is shown in figure \ref{fig:sto-gto}.
 
 It must be noted, however, that \glspl{STO} and \glspl{GTO} have different asymptotic behaviour for $r\to\infty$ and $r\to 0$. The latter in particular will be discussed in section \ref{sec:cusp}.
 
 \begin{figure}[htbp]
     \centering
-
-    \caption{Illustration of an $s$-type orbital and the fitted gaussians. Note that for most of the curve, there is good agreement, but not for the short- and long-range. The short-range behaviour in particular leads to complications, and is the focus of the methods discussed in chapter \ref{chap:explicit}. The long-range behaviour is typically less of a problem, since the integrals we are interested in typically decay with $r$. \todo{maybe get the actual parameters for e.g. a 1s orbital? I think this is even given in Szabo/Ostlund}}
+    \includegraphics{figures/intro/gto-sto.pdf}
+    \caption{Illustration of an $s$-type orbital and the fitted gaussians (STO-$x$G means $x$ gaussians are used to approximate the \gls{STO}). Note that for much of the curve, there is good agreement, but not for the short- and long-range. The short-range behaviour in particular leads to complications, and is the focus of the methods discussed in chapter \ref{chap:explicit}. The long-range behaviour is typically less of a problem, since the integrals we are interested in typically decay with $r$. Fitting parameters for the gaussians were taken from reference \citenum{szaboModern2012}}
     \label{fig:sto-gto}
 \end{figure}
 
@@ -270,7 +270,7 @@ The correlation energy (for a given basis set) is defined as the difference betw
 \begin{equation}
 E_\mathrm{corr} = E_\mathrm{exact} - E_\mathrm{HF}.
 \end{equation}
-It should be noted, however, that despite this name the \gls{HF} method captures Pauli exchange, and hence does actually correlate electrons. Nevertheless, we typically neglect this when we speak of ``electron correlation''.
+It should be noted, however, that despite this name the \gls{HF} method captures Pauli exchange, and hence does actually correlate electrons. Nevertheless, we typically neglect this when we speak of ``correlation energy''.
 
 \subsection{The Roothaan-Hall Equations}
 
@@ -299,14 +299,15 @@ We therefore have two ``axes'' on which to approach the exact solution to equati
     \item The ``hierarchy of theories'' where the more accurate the method, the closer to the \gls{FCI} limit (discussed below). Many post-Hartree-Fock methods can be systematically improved, for example by considering additional excitations in a coupled cluster method.
 \end{itemize}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/intro/hierarchies.pdf}
+    \caption{A sketch for the hierarchy of theories and basis sets. There are two axes on which to systematically improve until the exact solution to the time-independent Schr\"odinger equation under the \gls{BOA}: increasing basis set size (x axis) and increasing the level of theory (y axis). For most of this dissertation, we assume to be at or close to the highest level of theory (the FCI limit), as we mostly employ \gls{FCIQMC}. We therefore focus on methods of rapidly converging to the \gls{CBS} limit without the inherently expensive process of adding more basis functions.}
+    \label{fig:hierarchies}
+\end{figure}
+
 % For so-called ``weakly-correlated'' electron systems, the \gls{HF} method or a modest improvement thereof is sufficient. However, for ``strongly-correlated'' electron systems, the \gls{HF} method can fail completely, not even describing the system qualitatively correctly.
 
-% \begin{figure}[htbp]
-%     \centering
-
-%     \caption{image representing the hierarchy of theories and basis sets}
-%     \label{fig:hierarchy}
-% \end{figure}
 
 \subsection{Configuration Interaction}
 \label{sec:ci}
@@ -325,8 +326,8 @@ where the number of terms in the sum depends on how many excitations we consider
 
 \begin{figure}[htbp]
     \centering
-
-    \caption{Illustration of a \gls{RHF} reference and examples of single-, double-, and triple-excitations. The method CISDT, for example, would consider all determinants of the form illustrated.}
+    \includegraphics{figures/intro/configurations.pdf}
+    \caption{Illustration of a \gls{RHF} reference and examples of single-, double-, and triple-excitations. The method CISDT, for example, would consider all determinants of the forms illustrated.}
     \label{fig:excitations}
 \end{figure}
 
@@ -340,24 +341,25 @@ As a generalisation of the \gls{HF} method, \gls{MCSCF} is particularly well-sui
 \begin{equation}
 \ket{\kappa,\bm c} = e^{-\kappa}\sum_ic_i\ket{D_i},
 \end{equation}
-where $\kappa$ is familiar from gls{HF}, and the $c_i$ coefficients farmiliar from \gls{CI}. In MCSCF, we optimise
+where $\kappa$ is familiar from HF, and the $c_i$ coefficients farmiliar from \gls{CI}. In MCSCF, we optimise
 \begin{equation}
 E_\mathrm{MCSCF} = \frac{\bra{\kappa,\bm c}H\ket{\kappa,\bm c}}{\bra{\kappa,\bm c}\ket{\kappa,\bm c}}.
 \end{equation}
 
-Like in \gls{HF}, the variational parameters appear nonlinearly and must be optimised iteratively. Determining an appropriate set $\{\ket{D_i}\}$ tends to be challenging, and even for small systems generating an MCSCF wave function can be impossible.
+Like in HF, the variational parameters appear nonlinearly and must be optimised iteratively. Determining an appropriate set $\{\ket{D_i}\}$ tends to be challenging, and even for small systems generating an MCSCF wave function can be impossible.
 
 \subsubsection{Complete Active Space Self-Consistent Field}
-One ``flavour'' of \gls{MCSCF} that has proven particularly successful is \gls{CASSCF}. In CASSCF, instead of inspecting individual configurations, we consider a set of configurations that satisfy a set of criteria. In particular, we partition the orbitals into three sets: the core, active, and virtual (unoccupied) regions. The core orbitals, as alluded to in section \ref{sec:core_electrons}, are approximated to be doubly occupied. The virtual orbitals are approximated to be unoccupied. The active orbitals are the remaining orbitals, which can have occupations of 0, 1, or 2.
+One ``flavour'' of \gls{MCSCF} that has proven particularly successful is \gls{CASSCF}. In CASSCF, instead of inspecting individual configurations, we consider a set of configurations that satisfy a set of criteria. In particular, we partition the orbitals into three sets: the core, active, and virtual (unoccupied) regions. The core orbitals, as alluded to in section \ref{sec:core_electrons}, are approximated to be doubly occupied. The virtual orbitals are approximated to always be unoccupied. The active orbitals are the remaining orbitals, which can have occupations of 0, 1, or 2.
 
 The MCSCF expansion is found by considering all possible excitations of the active electrons in the active space. Notice that in the limit of an empty active space, we recover the \gls{HF} method, and in the limit of an active space containing all orbitals, we recover the \gls{FCI} method.
 
-\begin{figure}[htbp]
-    \centering
+% TODO ? CAS figure
+% \begin{figure}[htbp]
+%     \centering
 
-    \caption{In \gls{CAS} methods, such as \gls{CASSCF}, the \gls{MO} space is partitioned into three regions: the core, active, and virtual.\todo{}}
-    \label{fig:cas}
-\end{figure}
+%     \caption{In \gls{CAS} methods, such as \gls{CASSCF}, the \gls{MO} space is partitioned into three regions: the core, active, and virtual.\todo{}}
+%     \label{fig:cas}
+% \end{figure}
 
 \subsection{Perturbation Theory}
 \label{sec:perturbation-theory}
@@ -451,7 +453,7 @@ CC theory owes much of its success to its high accuracy at a reasonable cost. \g
 
 The more recently-developed \gls{DCSD} method's central philosophy is removing irrelevant or nonphysical terms while maintaining many of CC's desireable properties, such as size consistency.\cite{katsCommunication2013}
 
-This method was showed to give quantitatively better results than standard CC for a variety of systems, and qualitatively correct results for systems where CC can fail spectacularly, such as the N$_2$ binding curve. Since its first publication, \gls{DC} has been extended to explicitly-correlated F12 theory, \gls{EOM}, tailored coupled cluster, and more. \todo{citations}
+This method was shown to give quantitatively better results than standard CC for a variety of systems, and qualitatively correct results for systems where CC can fail spectacularly, such as the N$_2$ binding curve. Since its first publication, \gls{DC} has been extended to explicitly-correlated F12 theory, \gls{EOM}, tailored coupled cluster, and more. \todo{citations}
 
 \subsubsection{Combining Couled Cluster with Perturbation Theory}
 
