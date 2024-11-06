@@ -49,7 +49,7 @@ As discussed, to make any progress in electronic structure theory, we must make 
 
 \subsection{The Born-Oppenheimer Approximation}
 
-The most important approximation used in electronic structure theory is the \gls{BOA}.\cite{bornZur1927} The \gls{BOA} relies on the fact that the nuclei are much heavier than the electrons, with the mass of a single proton being almost 2000 times the mass of an electron. As an intuitive picture, we may think of the nuclei as moving much slower than the electrons, which can adapt themselves to the instantaneous positions of the nuclei. In mathematical terms, this means we can take the total wave function to be a product of its nuclear and electronic components,
+The most important approximation used in electronic structure theory is the \gls{BOA}.\cite{bornZurQuantentheorieMolekeln1927} The \gls{BOA} relies on the fact that the nuclei are much heavier than the electrons, with the mass of a single proton being almost 2000 times the mass of an electron. As an intuitive picture, we may think of the nuclei as moving much slower than the electrons, which can adapt themselves to the instantaneous positions of the nuclei. In mathematical terms, this means we can take the total wave function to be a product of its nuclear and electronic components,
 \begin{equation}
     \Psi_\mathrm{total} = \Psi_\mathrm{nuc} \Psi_\mathrm{elec}.
 \end{equation}
@@ -197,7 +197,7 @@ The combinatorial scaling is still unfavourable. For a closed-shell system with 
 
 Orbitals (and spin-orbitals), a term already used in this text, describes the spatial distribution (and in the case of spin-orbitals, also the spin) of a single electron. We assume that spatial orbitals form an orthonormal set, and that they form a complete space for an arbitrary wave function. However, in theory to have a \gls{CBS} would mean needing an infinite number of basis functions. In practice, we must of course have a finite basis, and so this naturally leads to a hierarchy of basis sets, where the typically larger basis sets are both more expensive and more accurate.
 
-Many different basis set families exist, but among the most popular are those due to Dunning and coworkers.\cite{dunningGaussian1989} Additionally, many different basis set extrapolation techniques have also been developed.\cite{fellerEffectiveness2011,halkierBasisset1998,halkierBasisset1999,helgakerBasisset1997,jensenBasis1999,pansiniExtrapolation2016,petersonBenchmark1994,woonBenchmark1994}
+Many different basis set families exist, but among the most popular are those due to Dunning and coworkers.\cite{dunningGaussianBasisSets1989} Additionally, many different basis set extrapolation techniques have also been developed.\cite{fellerEffectiveness2011,halkierBasisset1998,halkierBasisset1999,helgakerBasisset1997,jensenBasis1999,pansiniExtrapolation2016,petersonBenchmark1994,woonBenchmark1994}
 
 Strictly speaking, any kind of functions can be used as a basis set, as long as they are a complete set. However, in practice we may broadly categorise them into two groups: \glspl{STO} and \glspl{GTO}.
 
@@ -210,16 +210,19 @@ However, these \glspl{STO} are difficult to work with, as we need to evaluate in
 \end{equation}
 are routinely needed.
 
-Therefore, \glspl{GTO} have been developed, which have the form $\e^{-\alpha r^2}$. \glspl{GTO} are much easier to handle, as the product of a gaussian is also a gaussian, and the integral of a gaussian is exactly known, so equations like \eqref{eq:two-body-integral} have known solutions. With this comes a tradeoff, since we know \glspl{STO} more faithfully capture the form of molecular orbitals, but \glspl{GTO} are much better suited for computations. For this, the most common basis sets typically use a linear combination (or ``contraction'') of gaussians fitted to a \gls{STO}. An illustration is shown in figure \ref{fig:sto-gto}.
+Therefore, \glspl{GTO} have been developed,\cite{boysElectronic1950} which have the form $\e^{-\alpha r^2}$. \glspl{GTO} are much easier to handle, as the product of a gaussian is also a gaussian, and the integral of a gaussian is exactly known, so equations like \eqref{eq:two-body-integral} have known solutions. With this comes a tradeoff, since we know \glspl{STO} more faithfully capture the form of molecular orbitals, but \glspl{GTO} are much better suited for computations. For this, the most common basis sets typically use a linear combination (or ``contraction'') of gaussians fitted to a \gls{STO}. An illustration is shown in figure \ref{fig:sto-gto}.
 
 It must be noted, however, that \glspl{STO} and \glspl{GTO} have different asymptotic behaviour for $r\to\infty$ and $r\to 0$. The latter in particular will be discussed in section \ref{sec:cusp}.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics{figures/intro/gto-sto.pdf}
-    \caption{Illustration of an $s$-type orbital and the fitted gaussians (STO-$x$G means $x$ gaussians are used to approximate the \gls{STO}). Note that for much of the curve, there is good agreement, but not for the short- and long-range. The short-range behaviour in particular leads to complications, and is the focus of the methods discussed in chapter \ref{chap:explicit}. The long-range behaviour is typically less of a problem, since the integrals we are interested in typically decay with $r$. Fitting parameters for the gaussians were taken from reference \citenum{szaboModern2012}}
+    \caption{Illustration of an $s$-type orbital and the fitted gaussians (STO-$x$G means $x$ gaussians are used to approximate the \gls{STO}). Note that for much of the curve, there is good agreement, but not for the short- and long-range. The short-range behaviour in particular leads to complications, and is the focus of the methods discussed in chapter \ref{chap:explicit}. The long-range behaviour is typically less of a problem, since the integrals we are interested in typically decay with $r$. Fitting parameters for the gaussians were taken from reference \citenum{szaboModern2012}.}
     \label{fig:sto-gto}
 \end{figure}
+
+\subsection{Density Matrices}
+\todo{you probably want to include a section on RDMs, at least 1RDMs, since they are used later in the thesis!}
 
 \section{The Hartree-Fock Method}
 \label{sec:hf}
@@ -312,7 +315,7 @@ We therefore have two ``axes'' on which to approach the exact solution to equati
 \subsection{Configuration Interaction}
 \label{sec:ci}
 
-\gls{CI} is perhaps the most conceptually straightforward post-Hartree-Fock method. Instead of using a single \gls{SD}, we approximate the wave function as a linear combination of \glspl{SD}. That is,
+\Gls{CI} is perhaps the most conceptually straightforward post-Hartree-Fock method. Instead of using a single \gls{SD}, we approximate the wave function as a linear combination of \glspl{SD}. That is,
 \begin{equation}
 \ket{\Phi_\mathrm{CI}} = \sum_p c_p\ket{D_p}
 \end{equation}
@@ -451,7 +454,7 @@ CC theory owes much of its success to its high accuracy at a reasonable cost. \g
 
 \subsubsection{Distinguishable Cluster Theory}
 
-The more recently-developed \gls{DCSD} method's central philosophy is removing irrelevant or nonphysical terms while maintaining many of CC's desireable properties, such as size consistency.\cite{katsCommunication2013}
+The more recently-developed \gls{DCSD} method's central philosophy is removing irrelevant or nonphysical terms while maintaining many of CC's desireable properties, such as size consistency.\cite{katsCommunicationDistinguishableCluster2013}
 
 This method was shown to give quantitatively better results than standard CC for a variety of systems, and qualitatively correct results for systems where CC can fail spectacularly, such as the N$_2$ binding curve. Since its first publication, \gls{DC} has been extended to explicitly-correlated F12 theory,\cite{katsAccurate2015} \gls{EOM},\cite{rishiExcited2017} tailored coupled cluster,\cite{vitaleFCIQMCTailored2020} and more.
 
