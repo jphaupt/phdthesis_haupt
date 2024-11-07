@@ -2,7 +2,16 @@
 \label{chap:explicit}
 \todo{...}
 
+With the advent of modern computers combined with a vast array of sophisticated algorithms from which to choose, \emph{ab initio} quantum chemistry has become a tremendously powerful tool, going beyond the study of small atoms, to molecules and solids, and are among the most effective and systematically improvable techniques to date. Nevertheless, convergence to the \gls{CBS} limit is notoriously slow.
+
+In particular, consider the popular basis set family developed by Dunning and coworkers, \gls{cc-pV$X$Z}.\\cite{dunningGaussian1989a,woonGaussian1993,woonGaussian1994,petersonBenchmark1994,wilsonGaussian1996}
+The size of these basis sets scale as $M\in\mathcal{O}(X^3)$, and since for standard post-Hartree-Fock discussed in chapter \ref{sec:post-hf} we require four-index integrals, our computation time will scale at least as $t\in\mathcal{O}(X^{12})$.\cite{klopperR122007}
+
 Chapter will be largely based on two reviews on explicitly correlated methods \cite{gruneisPerspective2017,hattigExplicitly2012}
+
+klopper review has a nice intro on basis set conversion \cite{klopperR122007}
+
+\todo{correlation-consistent basis sets of Dunning et al, \vxz{$X$} with $X=2,3,4,...$}
 
 first discuss historical context
 
@@ -18,19 +27,22 @@ generalised \cite{packCuspConditionsMolecular1966}
 behaviour of Phi in the vicinity of coalescence
 
 
-\todo{mention STOs satisfy cusp}
+\todo{mention STOs satisfy cusp (nice discussion in the Kong review)}
 \todo{mention cusp relationship with dynamical correlation}
+
+\todo{figure of the cusp condition -- would be nice to think of other ways to add images}
 
 \section{Hylleraas Methods}
 
-earliest explicitly correlated method is when Hylleraas introduced a wave function form containing polynomial in r12
-% \cite{hylleraasNeue1929}
+earliest explicitly correlated method is when Hylleraas introduced a wave function form containing polynomial in r12\cite{hylleraasNeueBerechnungEnergie1929}
+\todo{also mention Slater's early work on this? (I think this is explicitly correlated anyway) No one else seems to mention it and I can't seem to remember where I first found this reference...
+nvm it is definitely cited elsewhere. see haettig review!}
+\cite{slaterCentralFieldsRydberg1928}
 
 \todo{Hylleraas method}
 
 Hyl-CI methods, using short review \cite{largo-cabrerizoHylleraasCI1987}, though many different approaches have been proposed
-\cite{jamesGround1933,kol/osAccurate1964,perkinsAtomic1968,perkinsAtomic1969,simsCombined1971,simsOneCenter1971,claryHylleraastype1977,claryCIHylleraas1976}
-% ,kol/osAccurate1964
+\cite{jamesGround1933,kolosAccurate1964,perkinsAtomic1968,perkinsAtomic1969,simsCombined1971,simsOneCenter1971,claryHylleraastype1977,claryCIHylleraas1976}
 \todo{Hyl-CI methods...}
 
 difficult integrals, why it's not used, etc.
@@ -40,6 +52,8 @@ difficult integrals, why it's not used, etc.
 \section{An Overview of F12/R12 Methods}
 \todo{... see review papers }
 
+brief mention of gaussian-type geminals\cite{boysIntegral1960,singerUse1960}, lots of work on refining and extending it.\cite{lesterGaussian1964,mitroyTheory2013,bukowskiNew1994,perssonAccurate1996,panGaussian1970,panElectron1972,szalewiczNew1982,szalewiczAtomic1983,wenzelAtomic1986}
+
 \todo{make sure to include some excited state information}
 
 \section{The Transcorrelated Method}
@@ -47,6 +61,10 @@ difficult integrals, why it's not used, etc.
 \todo{brief recap of Boys-Handy method, some extensions by other people, and how it is used in our group}
 
 Hirschfelder first introduced a similarity transform method \cite{hirschfelderRemoval1963}
+
+then was worked on by Boys and Handy \todo{cite}, to be discussed here
+
+recent renewal of interest (lots and lots of citation) with various applications, including DMRG, quantum computing, etc.
 
 \todo{also mention biorthogonal orbitals etc.}
 
@@ -56,3 +74,7 @@ Hirschfelder first introduced a similarity transform method \cite{hirschfelderRe
 \subsection{Modern Resurgence}
 
 \subsection{Comparison to F12/R12}
+
+discuss additive vs multiplicative ansatz
+
+have some performance comparison plots, maybe can ask permission to reproduce from Evelin or someone else
