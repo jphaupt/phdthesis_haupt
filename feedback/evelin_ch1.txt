@@ -1,0 +1,178 @@
+Acronyms
+
+DCSD: "clusters" -> "cluster"
+
+Introduction:
+
+"fully describe": you immediately address it via a footnote, but wouldn't it be easier to just call it a non-relativistic system?
+
+N_e = Z N_A: can't that Hamiltonian also be used for ions?
+
+Terms depending on spin do not appear in your Hamiltonian. Is that considered a relativistic effect?
+
+the "theory of everything" comment might be pushing it
+
+"farcry" -> "far cry"
+
+1.1 Overview of the Thesis
+
+"small systems of consisting" -> "small systems consisting"
+
+1.2 Principal Approximations
+
+"a cornucopia .. have been developed" -> "a cornucopia ... has been developed"
+
+1.2.1. The Born-Oppenheimer Approximation
+
+"for an electron on spin-orbital" -> "for an electron in spin-orbital"
+
+You could mention the anticommutation relationships between annihilators and between creators as well, i.e. [a_p,a_q]_+ = [a_p^\dagger,a_q^\dagger]_+ = 0.
+
+eq. 1.8: in V_ijkl i and j refer to the same electrons but in the operator string in eq 1.5 they refer to different electrons
+
+eq. 1.5: it should be something like (pq|rs) a_p^\dagger a_r^\dagger a_s a_q; The inverse order in the annihilators is important for sign reasons.
+
+eq. 1.5: you use i and j as indices for electrons in previous equations. In second quantization, you sum over orbitals instead. A general orbital index is usually p,q,r; occupied orbitals i,j,k and virtual orbitals a, b, c; but there are also other conventions
+
+eq. 1.5: I would consider separating spin and orbital sums since they have different limits
+
+"To treat the nuclear Hamiltonian, we neglect the first term" I think that's a bit misleading. We don't treat the nuclear Hamiltonian. Instead we just solve the electronic problem at different nuclear positions giving us the potential energy surface in which the nuclei move. Actually solving the nuclear Hamiltonian is probably (I'm not entirely sure) molecular dynamics territory.
+
+1.2.2 Core Electrons
+
+Some might argue core orbitals would be more accurate since you cannot distinguish electrons. But in qunatum chemistry that distinction is usually ignored anyway.
+
+1.2.3 Model Hamiltonian
+
+footnote: "is not Nature itself" -> "are not nature itself"
+
+eq. 1.9. spin sum could be slit off 
+
+1.3. The Variational Principle
+
+The requirement that H must be Hermitian for the variational principle to hold could be menitioned sooner in the section.
+
+1.4 The Schrödinger Equation as a Matrix Problem
+
+"creation and annihilation operators a and a^\dagger" a^\dagger are creation operators and a are the annihilation operators
+
+"permutes the ith and jth electrons with spin \sigma" Shouldn't you also be able to exchange electrons of opposite spin as long as you exchange spatial and spin coordiantes at the same time?
+
+"can hence by expanded" -> "can hence be expanded"
+
+eq. 1.13 from the text it's not obvious that D_i are the slater determinants and not \Psi
+
+It's not necessarily the case that the 2M basis functions use only M spatial orbitals. That only holds in the restricted case.
+
+footnote: "52 bits for fraction" not sure what "for fraction" means here
+
+1.4.1. Orbitals
+
+"orbitals ... describes" -> "orbitals ... describe"
+
+"Slater-type orbitalss ... Gaussian-type orbitalss" -> "Slater-type orbitals ... Gaussian-type orbitals"
+
+
+eq 1.16 bit unconventional to have the complex conjugated orbitals second
+
+"the integrals of a gaussian is exactly known" as far as I know, it's usually the integrals over s-functions that's analytically known and integrals with higher angular momentum functions are obtained via recursion, but I guess your statement doesn't disagree with that. This recursion however is one of the major advantages of GTOs since only integrals over s-orbitals actually need to be evaluated directly with the rest just being linear combinations of lower angular momentum integrals.
+
+
+1.5. The Hartree-Fock Method
+
+"Call this SD \ket{\kappa}." is an incomplete sentence.
+
+In the Fock operator, the self-interaction is usually formally included but drops out since Coloumb and exchange self-interaction exactly cancel.
+
+Note: I'm used to doing HF in first quantization. So I can't give reliable feedback on second quantized HF.
+
+
+"Since f itself depends on which of the orbitals are occupied" I would just write that it depends on the orbitals. It's not just the occupation of the orbitals that changes during iteration.
+
+ROHF comes with its own problems. In particular, orbital energies are ill-defined for ROHF. A ways to circumvent that are pseudocanonical orbitals, where you diagonalie occ-occ and virt-virt blocks of the Fock matrix instead of the complete Fock matrix to get the orbitals.
+
+1.5.1. Correlation Energy
+
+Think the correlation you describe here is also called Fermi correlation.
+
+1.5.2. The Roothan-Hall Equations
+
+Roothan-Hall equations are obtained by simply expanding the unknown MOs in a basis of known functions e.g. atomic orbitals.
+
+1.6. Post-Hartree-Fock Methods
+
+HF for hundreds of electrons might run into issues with the size of the ERIs (pq|rs) if not handled properly
+
+Figure 1.2. "There are two axes on which to systematically improve until the ..." seems to be missing a verb after until.
+
+1.6.1. Configuration Interaction
+
+"configuration interaction (CI) is" -> "Configuration interaction (CI) is"
+
+eq. (1.26) Should the 1 be a matrix or just a number? Does it matter?
+
+1.6.2. Multi-Configuratuional Self-Consistent Field
+
+"impossible" is a strong word
+
+1.6.2.? Complete Active Space Self-Consistent Field
+
+Aren't non-integer occupations possible in CASSCF?
+
+1.6.3. Perturbation Theory
+
+1.6.3.? Rayleigh-Schrödinger
+
+"targetting" -> "targeting"
+
+"Since we are generally interested in the ground state" would make it clear that this applied to this work and not a more general generally.
+
+
+1.6.3.? M\oller-Plesset
+
+"If we apply the theory of Rayleigh-Schrödinger theory" -> "If we apply Rayleigh-Schrödinger theory"
+
+The equality between the orbital energy linear combination and the zeroth order energies is a bit unclean since the indices do not match. Maybe replace the equals sign with something that indicates equivalence instead.
+
+"MP2 improves our results."  is a bit weak of a statement. Would replace with something like "MP2 can improve our results significantly."
+
+1.6.4. Coupled Cluster Theory
+
+"using a non-linear ansatz" -> "using an exponential ansatz"
+
+"expected to fail for systems with strong static correlation" DCSD doesn't fail as much as the others though.
+
+1.6.4.?. Standard Coupled Cluster
+
+"multicatively-separable" -> "multiplicatively-separable"
+
+"when all possible excitations are considered" CC always contains all possible excitations (except if the singles aren't included like CCD). I like to think of the difference between CI trunctation and CC truncation as CI truncating based on excitation class and CC truncating based on excitation process, with the latter being able to describe multiple independent excitation processes leading to all possible excitation classes. The statement as is is probably fine though, too.
+
+"premultiplying by e^T" should be e^-T.
+
+What you get here is linked coupled cluster. You could also build the expectation value by projecting against <\Psi_CC| instead, but that would lead to a product of de-exitation and exitation operators, which is significantly more complicated to solve. Another alternative is unlinked CC, where you just multiply with <0| without the additional e^-T, but leads to a formal violation of size consistency since the energy would appear in the amplitude equations.
+
+"instead of minimising a functional" -> "instead of minimusing an expecation value"
+
+"we solve equations (1.37) for the amplitudes" should be equations (1.38).
+
+Might be beneficial to clarify that (1.38) is for singles, doubles and so on.
+
+I think I noticed some inconsistent formatting in equation references. Sometimes they have paranethesis, sometimes they do not.
+
+"The simplest CC truncation is ... (CCSD)" the simplest would be CCS, but that is indinstinguishable from HF for the ground state energy. The next simplest is CCD. Maybe "The simplest CC truncation commonly used is ... (CCSD)".
+
+1.6.4.? Distinguishable Cluster Theory
+
+No comment.
+
+1.6.4.? Combining Couled Cluster with Perturbation Theory
+
+Type in header: "Couled" -> "Coupled"
+
+Another important feature of standard CCSD(T) is that the O(M^7) step is only carried out once after the iterative CCSD caclulation. We lose that advantage with xTC unfortunately.
+
+
+References: Several sources with my name on it are missing my third taken name "Corvid".
+
+

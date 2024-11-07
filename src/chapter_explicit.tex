@@ -1,22 +1,25 @@
 \chapter{Explicitly Correlated Methods}
 \label{chap:explicit}
-\todo{...}
+
+\todo{If I need to make this chapter longer, maybe also include a discussion about what electron correlation actually is, like in the Kong review.}
 
 With the advent of modern computers combined with a vast array of sophisticated algorithms from which to choose, \emph{ab initio} quantum chemistry has become a tremendously powerful tool, going beyond the study of small atoms, to molecules and solids, and are among the most effective and systematically improvable techniques to date. Nevertheless, convergence to the \gls{CBS} limit is notoriously slow.
 
-In particular, consider the popular basis set family developed by Dunning and coworkers, \gls{cc-pV$X$Z}.\\cite{dunningGaussian1989a,woonGaussian1993,woonGaussian1994,petersonBenchmark1994,wilsonGaussian1996}
+In particular, consider the popular basis set family developed by Dunning and coworkers, \gls{cc-pV$X$Z}.\cite{dunningGaussian1989a,woonGaussian1993,woonGaussian1994,petersonBenchmark1994,wilsonGaussian1996}
 The size of these basis sets scale as $M\in\mathcal{O}(X^3)$, and since for standard post-Hartree-Fock discussed in chapter \ref{sec:post-hf} we require four-index integrals, our computation time will scale at least as $t\in\mathcal{O}(X^{12})$.\cite{klopperR122007}
 
-Chapter will be largely based on two reviews on explicitly correlated methods \cite{gruneisPerspective2017,hattigExplicitly2012}
+Meanwhile, the \gls{CBS} correlation error scales as $\epsilon\in\mathcal{O}(X^{-3})$ \cite{helgakerBasisset1997,halkierBasisset1998} or $\epsilon\in\mathcal{O}(M^{-1})$,\cite{klopperInitio1995} resulting in $t\in\mathcal{O}(M^{-\frac 14})$. Thus, the methods discussed so far come with the painful cost of requiring very large basis sets to approach high-accuracy results.
 
-klopper review has a nice intro on basis set conversion \cite{klopperR122007}
+Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling, and the subject of this chapter, which is in large part based on two reviews, references \citenum{gruneisPerspective2017} and \citenum{hattigExplicitly2012}.
 
-\todo{correlation-consistent basis sets of Dunning et al, \vxz{$X$} with $X=2,3,4,...$}
-
-first discuss historical context
+\todo{Maybe have a picture of basis set convergence? Maybe even just HF, compare F12 vs TC vs Hyl(?) vs standard}
 
 \section{The Cusp Conditions}
 \label{sec:cusp}
+
+The slow convergence to the \gls{CBS} limit is due to behaviour of the wave function near coalescence points.
+
+\todo{also mention it's not actually the coalescence itself, but a region around it; see one of the reviews (I forget which one)}
 
 cusp review \cite{kurokawaChapterTwoGeneral2016}
 
@@ -78,3 +81,5 @@ recent renewal of interest (lots and lots of citation) with various applications
 discuss additive vs multiplicative ansatz
 
 have some performance comparison plots, maybe can ask permission to reproduce from Evelin or someone else
+
+also discuss many-body integrals for f12 vs at most 3-body for tc
