@@ -1,7 +1,7 @@
 \chapter{Explicitly Correlated Methods}
 \label{chap:explicit}
 
-\todo{If I need to make this chapter longer, maybe also include a discussion about what electron correlation actually is, like in the Kong review.}
+\todo{If I need to make this chapter longer, maybe also include a discussion about what electron correlation actually is, like in the Kong review. -- probably best to include in the first chapter though}
 
 With the advent of modern computers combined with a vast array of sophisticated algorithms from which to choose, \emph{ab initio} quantum chemistry has become a tremendously powerful tool, going beyond the study of small atoms, to molecules and solids, and are among the most effective and systematically improvable techniques to date. Nevertheless, convergence to the \gls{CBS} limit is notoriously slow.
 
@@ -10,36 +10,47 @@ The size of these basis sets scale as $M\in\mathcal{O}(X^3)$, and since for stan
 
 Meanwhile, the \gls{CBS} correlation error scales as $\epsilon\in\mathcal{O}(X^{-3})$ \cite{helgakerBasisset1997,halkierBasisset1998} or $\epsilon\in\mathcal{O}(M^{-1})$,\cite{klopperInitio1995} resulting in $t\in\mathcal{O}(M^{-\frac 14})$. Thus, the methods discussed so far come with the painful cost of requiring very large basis sets to approach high-accuracy results.
 
-Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling, and the subject of this chapter, which is in large part based on two reviews, references \citenum{gruneisPerspective2017} and \citenum{hattigExplicitly2012}.
+Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling by explicitly including the interelectronic distance $r_{12}$, and is the subject of this chapter. As the R12/F12 family of methods is the most mature of the explicitly correlated electronic structure methods, many reviews focusing on this topic already exist. This chapter in particular is in large part based on three reviews: references \citenum{gruneisPerspective2017}, \cite{klopperR122007} and \citenum{hattigExplicitly2012}.
 
 \todo{Maybe have a picture of basis set convergence? Maybe even just HF, compare F12 vs TC vs Hyl(?) vs standard}
 
 \section{The Cusp Conditions}
 \label{sec:cusp}
 
-The slow convergence to the \gls{CBS} limit is due to behaviour of the wave function near coalescence points.
+The slow convergence to the \gls{CBS} limit is due to behaviour of the wave function near coalescence points. \todo{also mention it's not actually the coalescence itself, but a region around it; see one of the reviews (I forget which one)}
 
-\todo{also mention it's not actually the coalescence itself, but a region around it; see one of the reviews (I forget which one)}
+Consider two charged point particles in a system described by the Hamiltonian of equation \eqref{eq:elec_hamiltonian_2q}. By the Schr\"odinger equation, the local energy
+\begin{equation}
+    E_L\mathdef \frac{H\Psi}{\Psi}
+\end{equation}
+must be constant in the exact solution. However, when these two particles coalescence, i.e. $r_{12}\to 0$, the Coulomb potential, $r^{-1}$, diverges. Thus, for the local energy to be constant, we must have that near coalescence points, the kinetic energy exactly cancels the Coulomb energy. A more formal treatment of this argument leads to the electron-electron Kato cusp condition,\cite{katoEigenfunctionsManyparticleSystems1957a}
+\begin{equation}
+    \label{eq:cusp}
+    \left.\widetilde{\frac{\partial \Psi}{\partial r_{12}}}\right|_{r_{12}\to 0}
+    = \frac 12 \Psi(r_{12}=0)
+\end{equation}
+where the tilde represents spherical averaging.
 
-cusp review \cite{kurokawaChapterTwoGeneral2016}
+This cusp condition was also later generalised.\cite{packCuspConditionsMolecular1966,kurokawaChapterTwoGeneral2016}
+Early literature on the subject suggested that the success of explicitly correlated methods were due to the superior description of short-range correlation effects, and in particular in their much more faithful capturing of the cusp conditions like equation \ref{sec:cusp}.\cite{roothaanAnalytical1960,watsonApproximate1960,weissConfiguration1961,schwartzGround1962}
+However, further study found that the correlation error from a bad description of the wave function around a small sphere centred on the cusp is actually negligible.\cite{coulsonElectron1961,gilbertInterpretation1963,prendergastImpact2001,klopperR122007} Instead, the success of explicitly correlated methods is actually due to the superior description of the overall shape and size of the Coulomb hole, which has a radius on the order of the atomic radius.
 
-e-n and e-e cusp conditions due to kato\cite{katoEigenfunctionsManyparticleSystems1957a}
+To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation\cite{kongExplicitly2012}, but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful for their lack of practicality.
 
-generalised \cite{packCuspConditionsMolecular1966}
+\todo{would be nice to think of other ways to add images}
 
-behaviour of Phi in the vicinity of coalescence
+\begin{figure}[htbp]
+    \centering
 
-
-\todo{mention STOs satisfy cusp (nice discussion in the Kong review)}
-\todo{mention cusp relationship with dynamical correlation}
-
-\todo{figure of the cusp condition -- would be nice to think of other ways to add images}
+    \caption{A toy example of the Coulomb cusp \todo{...}}
+    \label{fig:cusp}
+\end{figure}
 
 \section{Hylleraas Methods}
 
 earliest explicitly correlated method is when Hylleraas introduced a wave function form containing polynomial in r12\cite{hylleraasNeueBerechnungEnergie1929}
 \todo{also mention Slater's early work on this? (I think this is explicitly correlated anyway) No one else seems to mention it and I can't seem to remember where I first found this reference...
-nvm it is definitely cited elsewhere. see haettig review!}
+nvm it is definitely cited elsewhere. see haettig review ("This was done by Slater in 1928.")! Or Kong review page 84}
 \cite{slaterCentralFieldsRydberg1928}
 
 \todo{Hylleraas method}
