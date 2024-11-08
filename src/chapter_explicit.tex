@@ -10,14 +10,12 @@ The size of these basis sets scale as $M\in\mathcal{O}(X^3)$, and since for stan
 
 Meanwhile, the \gls{CBS} correlation error scales as $\epsilon\in\mathcal{O}(X^{-3})$ \cite{helgakerBasisset1997,halkierBasisset1998} or $\epsilon\in\mathcal{O}(M^{-1})$,\cite{klopperInitio1995} resulting in $t\in\mathcal{O}(M^{-\frac 14})$. Thus, the methods discussed so far come with the painful cost of requiring very large basis sets to approach high-accuracy results.
 
-Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling by explicitly including the interelectronic distance $r_{12}$, and is the subject of this chapter. As the R12/F12 family of methods is the most mature of the explicitly correlated electronic structure methods, many reviews focusing on this topic already exist. This chapter in particular is in large part based on three reviews: references \citenum{gruneisPerspective2017}, \cite{klopperR122007} and \citenum{hattigExplicitly2012}.
+Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling by explicitly including the interelectronic distance $r_{12}$, and is the subject of this chapter. As the R12/F12 family of methods is the most mature of the explicitly correlated electronic structure methods, many reviews focusing on this topic already exist. This chapter in particular is in large part based on three reviews: references \cite{klopperR122007}, \citenum{gruneisPerspective2017} and \citenum{hattigExplicitly2012}.
 
 \todo{Maybe have a picture of basis set convergence? Maybe even just HF, compare F12 vs TC vs Hyl(?) vs standard}
 
 \section{The Cusp Conditions}
 \label{sec:cusp}
-
-The slow convergence to the \gls{CBS} limit is due to behaviour of the wave function near coalescence points. \todo{also mention it's not actually the coalescence itself, but a region around it; see one of the reviews (I forget which one)}
 
 Consider two charged point particles in a system described by the Hamiltonian of equation \eqref{eq:elec_hamiltonian_2q}. By the Schr\"odinger equation, the local energy
 \begin{equation}
@@ -48,20 +46,31 @@ To understand why gaussian-type basis sets fail so spectacularly at capturing th
 
 \section{Hylleraas Methods}
 
-earliest explicitly correlated method is when Hylleraas introduced a wave function form containing polynomial in r12\cite{hylleraasNeueBerechnungEnergie1929}
-\todo{also mention Slater's early work on this? (I think this is explicitly correlated anyway) No one else seems to mention it and I can't seem to remember where I first found this reference...
-nvm it is definitely cited elsewhere. see haettig review ("This was done by Slater in 1928.")! Or Kong review page 84}
-\cite{slaterCentralFieldsRydberg1928}
+Almost 30 years prior to Kato's landmark paper describing cusps in the analytical form for the wave function, there was already work being done to understand the significance of including $r_{12}$ in the wave function. Instead of being motivated by rigorous mathematics like Kato's, Slater was motivated by studyies in the He atom. In particular, he tried to construct a wave function which faithfully represents both the core region as well as the Rydberg limit (i.e. a highly excited atom where the electron is very far from the nucleus).\cite{kongExplicitly2012,grynbergIntroduction2010,slaterCentralFieldsRydberg1928,slaterNormal1928} This led him to suggest multiplying the wave function by a factor
+\begin{equation}
+    \e^{-2(r_1+r_2)+r_{12}/2},
+\end{equation}
+which can easily be shown to satisfy the cusp equation \eqref{eq:cusp}.
 
-\todo{Hylleraas method}
+However, the first successful explicitly correlated electronic structure calculation is typically attributed to Hylleraas,\cite{hattigExplicitly2012}, where he aimed to improve convergence of orbital expansions for helium.\cite{hylleraasUeber1928,hylleraasNeueBerechnungEnergie1929} In this method, the coordinates $s\mathdef r_1+r_2$, $t\mathdef r_1 - r_2$ and $u\mathdef r_{12}$ are used to construct the wave function
+\begin{equation}
+    \Psi_N(s,t,u) = \e^{-\alpha s}\sum_{k}^N c_ks^{l_k}t^{2m_k}u^{n_k}.
+\end{equation}
 
-Hyl-CI methods, using short review \cite{largo-cabrerizoHylleraasCI1987}, though many different approaches have been proposed
-\cite{jamesGround1933,kolosAccurate1964,perkinsAtomic1968,perkinsAtomic1969,simsCombined1971,simsOneCenter1971,claryHylleraastype1977,claryCIHylleraas1976}
-\todo{Hyl-CI methods...}
+In particular, using only three terms ($N=3$), and variationally optimising for the parameters $c_1,c_2,c_3$, Hylleraas was able to reach within 1.3 millihartree from the exact result.
 
-difficult integrals, why it's not used, etc.
+Since then, there was rapid development on this approach and combining it with \gls{CI} (which came to be known as the CI-Hyl methods).
+\cite{largo-cabrerizoHylleraasCI1987,jamesGround1933,kolosAccurate1964,perkinsAtomic1968,perkinsAtomic1969,simsCombined1971,simsOneCenter1971,claryHylleraastype1977,claryCIHylleraas1976} In CI-Hyl methods, the wave function is expanded as in \gls{CI},
+\begin{equation}
+    \Psi = \sum_k c_k \Phi_k
+\end{equation}
+where
+\begin{equation}
+    \Phi_k = r^{\nu_k}_{ij}\prod_i\chi_{k_i}(\bm x_i)
+\end{equation}
+where ${\chi_k}$ is a spin-orbital basis.
 
-\todo{...}
+However, CI-Hyl methods were to eventually fall out of favour. This is because the expansions involve exceedingly difficult integrals involving many electrons and over products of correlation factors. This significantly restricts the tractibility and scalability of the method, and it has since largely gone unused.
 
 \section{An Overview of F12/R12 Methods}
 \todo{... see review papers }
@@ -78,7 +87,7 @@ Hirschfelder first introduced a similarity transform method \cite{hirschfelderRe
 
 then was worked on by Boys and Handy \todo{cite}, to be discussed here
 
-recent renewal of interest (lots and lots of citation) with various applications, including DMRG, quantum computing, etc.
+recent renewal of interest (lots and lots of citations) with various applications, including DMRG, quantum computing, etc.
 
 \todo{also mention biorthogonal orbitals etc.}
 
