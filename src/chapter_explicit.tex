@@ -39,8 +39,8 @@ To understand why gaussian-type basis sets fail so spectacularly at capturing th
 
 \begin{figure}[htbp]
     \centering
-
-    \caption{A toy example of the Coulomb cusp \todo{...}}
+    \includegraphics{figures/explicit/cusp.pdf}
+    \caption{A toy example of the Coulomb cusp. Here, the Fourier expansion $x\approx\frac{\pi}{2} - \frac {4}{\pi} \sum_{n=1}^N\frac{\cos[(2n-1)x]}{(2n-1)^2}$ is plotted for a few values of $N$, including the exact solution. As can be seen, even for many terms, the Fourier expansion is a poor descripter in the cusp region. Indeed, the only way to describe it exactly is with an infinite number of terms.}
     \label{fig:cusp}
 \end{figure}
 
@@ -66,11 +66,24 @@ Since then, there was rapid development on this approach and combining it with \
 \end{equation}
 where
 \begin{equation}
-    \Phi_k = r^{\nu_k}_{ij}\prod_i\chi_{k_i}(\bm x_i)
+    \Phi_k = \mathcal{A} r^{\nu_k}_{ij}\prod_i\chi_{k_i}(\bm x_i)
 \end{equation}
-where ${\chi_k}$ is a spin-orbital basis.
+where ${\chi_k}$ is a spin-orbital basis and $\mathcal{A}$ is the antisymmetriser operator.
 
 However, CI-Hyl methods were to eventually fall out of favour. This is because the expansions involve exceedingly difficult integrals involving many electrons and over products of correlation factors. This significantly restricts the tractibility and scalability of the method, and it has since largely gone unused.
+
+\section{Explicitly Correlated Gaussians}
+
+\todo{see reviews}
+\gls{ECG} method developed by Boys and Singer\cite{boysIntegral1960,singerUse1960} (basis with explicit correlated baked in) $r_{ij}^\nu$ replaced by $\exp(-cr_{ij})$.
+
+All integrals possible with closed-form algebraic expressions\cite{lesterGaussian1964}
+
+Later, two-electron correlators \gls{GTG}. review article \cite{mitroyTheory2013} Approximate linear r12 by combination of GTGs, avoid nonlinear optimisation \cite{bukowskiNew1994,perssonAccurate1996}
+
+MP2\cite{panGaussian1970,panElectron1972}
+
+approaches to avoid difficult integrals\cite{szalewiczNew1982,szalewiczAtomic1983,wenzelAtomic1986,szalewiczAtomic1984,tewWeak2007}
 
 \section{An Overview of F12/R12 Methods}
 \todo{... see review papers }

@@ -1,18 +1,22 @@
 Acronyms
 
 DCSD: "clusters" -> "cluster"
+done
 
 Introduction:
 
 "fully describe": you immediately address it via a footnote, but wouldn't it be easier to just call it a non-relativistic system?
 
 N_e = Z N_A: can't that Hamiltonian also be used for ions?
+addressed
 
 Terms depending on spin do not appear in your Hamiltonian. Is that considered a relativistic effect?
 
 the "theory of everything" comment might be pushing it
+-> addressed by adding a citation
 
-"farcry" -> "far cry"
+"farcry" -> "far cry
+done
 
 1.1 Overview of the Thesis
 
@@ -46,7 +50,7 @@ Some might argue core orbitals would be more accurate since you cannot distingui
 
 footnote: "is not Nature itself" -> "are not nature itself"
 
-eq. 1.9. spin sum could be slit off 
+eq. 1.9. spin sum could be slit off
 
 1.3. The Variational Principle
 
@@ -174,5 +178,3 @@ Another important feature of standard CCSD(T) is that the O(M^7) step is only ca
 
 
 References: Several sources with my name on it are missing my third taken name "Corvid".
-
-
