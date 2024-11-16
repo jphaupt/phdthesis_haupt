@@ -221,6 +221,30 @@ It must be noted, however, that \glspl{STO} and \glspl{GTO} have different asymp
     \label{fig:sto-gto}
 \end{figure}
 
+\subsection{Density Matrices}
+\label{sec:density-matrices}
+
+The \gls{1RDM} is defined by its matrix elements
+\begin{equation}
+    \gamma_{pq} = \bra{\Psi}a_q^\dag a_p \ket{\Psi},
+\end{equation}
+or written in a spin-orbital basis:
+\begin{equation}
+    \label{eq:one-rdm}
+    \gamma(\bm x_1, \bm x_2) = \sum_{pq} \phi_q(\bm x_2)^*\phi_p(\bm x_1) \gamma_{pq}
+\end{equation}
+
+Similarly, the \gls{2RDM} is defined as
+\begin{equation}
+    \label{eq:two-rdm}
+    \Gamma_{pqrs} = \bra{\Psi}a_s^\dag a_r^\dag a_q a_p \ket{\Psi}.
+\end{equation}
+
+Any two-electron Hermitian operator $\Omega$ can be written (in a spin-orbital basis) as
+\begin{equation}
+    \bra{\Psi}\Omega\ket{\Psi} = \sum_{pq} \gamma_{pq}\Omega_{pq} \sum_{pqrs} \Gamma_{pqrs}\Omega_{rpsq}.
+\end{equation}
+
 \subsection{Electron Correlation}
 \label{sec:correlation}
 
@@ -243,14 +267,11 @@ In the case of electronic structure, the variables in question are $\bm x \mathd
 \end{align}
 where $\rho(\bm x)$ is the electron density and $\rho(\bm x_1, \bm x_2)$ is the probability of finding electrons at $(\bm x_1, \bm x_2)$ simultaneously, known as the pair density,
 \begin{align}
-    \rho(\bm x) &= N\int \d^3x_2 \cdots \d^3x_N \Psi^*(\bm x_1, \bm x_2, \bm x_3, \cdots, \bm x_N)\Psi(\bm x_1, \bm x_2, \bm x_3, \cdots, \bm x_N) \\
+    \rho(\bm x) &= N\int \d^3x_2 \cdots \d^3x_N \Psi^*(\bm x, \bm x_2, \bm x_3, \cdots, \bm x_N)\Psi(\bm x, \bm x_2, \bm x_3, \cdots, \bm x_N) \\
     \rho(\bm x_1, \bm x_2) &= N(N-1)\int \d^3x_2 \cdots \d^3x_N \Psi^*(\bm x_1, \bm x_2, \bm x_3, \cdots, \bm x_N)\Psi(\bm x_1, \bm x_2, \bm x_3, \cdots, \bm x_N).
 \end{align}
 
 There are two key sources of electron correlation: Fermi correlation, which arises from the fact that electrons obey Fermi statistics, i.e. the wave function is antisymmetric with respect to exchange of $\bm x_1$ and $\bm x_2$, and Coulomb correlation, which arises from the fact that electrons repel each other.
-
-\subsection{Density Matrices}
-\todo{you probably want to include a section on RDMs, at least 1RDMs, since they are used later in the thesis!}
 
 \section{The Hartree-Fock Method}
 \label{sec:hf}
