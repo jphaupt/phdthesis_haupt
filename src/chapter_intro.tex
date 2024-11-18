@@ -23,7 +23,7 @@ where $N_A$ and $N_e$ are the number of nuclei and electrons, respectively, and 
 
 Since quantum chemistry and condensed matter sciences are in general concerned with nonrelativistic processes involving electrons and nuclei, this might boldly be called the \emph{theory of everything}.\cite{laughlinTheory2000} Hence, we may be tempted to conclude this dissertation early, but in practice the evaluation of the Hamiltonian \eqref{eq:theory_of_everything} is impossible. First, there is no closed form solution of \eqref{eq:schrodinger} with this Hamiltonian. Second, numerical evaluation of $\hat H$ is far from trivial.
 
-Let's consider a simple example, the Argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a very coarse $10\times 10\times 10$ grid. Then \emph{at each time step} we need to store $10^{3\times (18+18)}=10^{108}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroductionCosmology2017} this is completely unreasonable.
+Let's consider a simple example, the Argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a very coarse $10\times 10\times 10$ grid. Then \emph{at each time step} we need to store $10^{3\times (18+18)}=10^{108}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroduction2017} this is completely unreasonable.
 
 This system has only 18 electrons and 18 nuclei, a far cry from the $10^{23}$ or higher number of electrons in a typical condensed matter system, for example. Moreover, we have not taken into account floating point precision, or that we would need to calculate this for possibly many time steps. Clearly, drastic approximations and more sophisticated methods are required.
 
@@ -33,7 +33,7 @@ This dissertation fits into the field of nonrelativistic electronic structure th
 
 The outline of the dissertation is as thus:
 \begin{itemize}
-    \item Chapter \ref{chap:intro} (this chapter) provides a basic overview of electronic structure theory methods and some of its principal concepts. Sections \ref{sec:hf} and \ref{sec:post-hf} in particular are largely based on the appropriate chapters of Ref \citenum{helgakerMolecularElectronicStructureTheory2014}.
+    \item Chapter \ref{chap:intro} (this chapter) provides a basic overview of electronic structure theory methods and some of its principal concepts. Sections \ref{sec:hf} and \ref{sec:post-hf} in particular are largely based on the appropriate chapters of Ref \citenum{helgakerMolecular2014}.
     \item Chapter \ref{chap:explicit} reviews the current works in so-called ``explicitly correlated'' methods, notably the well-established R12/F12 and the recently-reinvigorated \gls{TC}.
     \item Chapter \ref{chap:qmc} provides a basic introduction to \gls{QMC} and how it relates to \gls{FCIQMC}.
     \item Chapter \ref{chap:opt} discusses optimization strategies of Jastrow factors in the context of \gls{TC}.
@@ -131,7 +131,7 @@ Of course, when solving a problem using a model Hamiltonian, we must be careful 
 \section{The Variational Principle}
 \label{sec:variational_principle}
 
-One way of finding approximations to the lowest energy eigenstate of a quantum problem like that of equation \eqref{eq:elec_hamiltonian_2q} is the variational method. Several methods discussed in this dissertation build on the variational method, and the variational method itself is based on the variational principle, which states\cite{sakuraiModernQuantumMechanics2017} for any ``trial wave function'' $\ket{\tilde\Psi}$,
+One way of finding approximations to the lowest energy eigenstate of a quantum problem like that of equation \eqref{eq:elec_hamiltonian_2q} is the variational method. Several methods discussed in this dissertation build on the variational method, and the variational method itself is based on the variational principle, which states\cite{sakuraiModern2017} for any ``trial wave function'' $\ket{\tilde\Psi}$,
 \begin{equation}
     \label{eq:variational_principle}
     \frac{\bra{\tilde\Psi}\hat H\ket{\tilde\Psi}}{\braket{\tilde\Psi}}
@@ -190,7 +190,7 @@ If we have $N_\uparrow$ spin-up electrons and $N_\downarrow$ spin-down electrons
 \end{equation}
 where $|\mathcal{H}|$ denotes the size of the Hilbert space, and we have assumed that the number of spin-up orbitals $M$ is equal to the number of spin-down orbitals. Here, ${n\choose r}=\frac{n!}{r!(n-r)!}$ is a binomial coefficient.
 
-The combinatorial scaling is still unfavourable. For a closed-shell system with 20 electrons in 20 orbitals, $|\mathcal{H}|=3.41\times 10^{10}$. Assuming we wish to have double precision,\footnote{A double precision floating-point number has 1 bit for the sign, 11 bits for the exponent, and 52 bits for fraction (known as the mantissa).\cite{ascherFirstCourseNumerical2011} This resolves to 64 bits or 8 bytes.} to store the whole matrix we would need about $10^{23}$ bytes, or 100 zettabytes. So, while we've substantially reduced the complexity of the problem, it is still extremely demanding. More approximations are therefore needed.
+The combinatorial scaling is still unfavourable. For a closed-shell system with 20 electrons in 20 orbitals, $|\mathcal{H}|=3.41\times 10^{10}$. Assuming we wish to have double precision,\footnote{A double precision floating-point number has 1 bit for the sign, 11 bits for the exponent, and 52 bits for fraction (known as the mantissa).\cite{ascherFirst2011} This resolves to 64 bits or 8 bytes.} to store the whole matrix we would need about $10^{23}$ bytes, or 100 zettabytes. So, while we've substantially reduced the complexity of the problem, it is still extremely demanding. More approximations are therefore needed.
 
 \subsection{Orbitals}
 \label{sec:orbitals}
@@ -217,7 +217,7 @@ It must be noted, however, that \glspl{STO} and \glspl{GTO} have different asymp
 \begin{figure}[htbp]
     \centering
     \includegraphics{figures/intro/gto-sto.pdf}
-    \caption{Illustration of an $s$-type orbital and the fitted gaussians (STO-$x$G means $x$ gaussians are used to approximate the \gls{STO}). Note that for much of the curve, there is good agreement, but not for the short- and long-range. The short-range behaviour in particular leads to complications, and is the focus of the methods discussed in chapter \ref{chap:explicit}. The long-range behaviour is typically less of a problem, since the integrals we are interested in typically decay with $r$. Fitting parameters for the gaussians were taken from reference \citenum{szaboModernQuantumChemistry2012}.}
+    \caption{Illustration of an $s$-type orbital and the fitted gaussians (STO-$x$G means $x$ gaussians are used to approximate the \gls{STO}). Note that for much of the curve, there is good agreement, but not for the short- and long-range. The short-range behaviour in particular leads to complications, and is the focus of the methods discussed in chapter \ref{chap:explicit}. The long-range behaviour is typically less of a problem, since the integrals we are interested in typically decay with $r$. Fitting parameters for the gaussians were taken from reference \citenum{szaboModern2012}.}
     \label{fig:sto-gto}
 \end{figure}
 
@@ -394,7 +394,7 @@ Additionally, if we wish to go to the \gls{FCI} method and ensure size consisten
 
 \subsection{Multi-Configurational Self-Consistent Field}
 
-As a generalisation of the \gls{HF} method, \gls{MCSCF} is particularly well-suited for problems with static correlation.\cite{helgakerMolecularElectronicStructureTheory2014,eadeDirect1981,roosNew1972} As in \gls{HF}, we minimise the electronic energy with respect to variational parameters; however, now we also simultaneously minimise with respect to expansion coefficients for a set of configurations (e.g. \glspl{SD}). i.e. consider the MCSCF wave function
+As a generalisation of the \gls{HF} method, \gls{MCSCF} is particularly well-suited for problems with static correlation.\cite{helgakerMolecular2014,eadeDirect1981,roosNew1972} As in \gls{HF}, we minimise the electronic energy with respect to variational parameters; however, now we also simultaneously minimise with respect to expansion coefficients for a set of configurations (e.g. \glspl{SD}). i.e. consider the MCSCF wave function
 \begin{equation}
 \ket{\kappa,\bm c} = e^{-\kappa}\sum_ic_i\ket{D_i},
 \end{equation}
@@ -425,7 +425,7 @@ Perturbation theory is a set of approximate mathematical methods for solving pro
 
 \subsubsection{Rayleigh-Schr\"odinger}
 
-Perturbation theory applied to time-independent problems is sometimes referred to as Rayleigh-Schr\"odinger perturbation theory.\cite{sakuraiModernQuantumMechanics2017,rayleighTheory1945,schrodingerQuantisierung1926} Consider a Hamiltonian,
+Perturbation theory applied to time-independent problems is sometimes referred to as Rayleigh-Schr\"odinger perturbation theory.\cite{sakuraiModern2017,rayleighTheory1945,schrodingerQuantisierung1926} Consider a Hamiltonian,
 \begin{equation}
 H_\mathrm{PT} = H_0 + \lambda H',
 \end{equation}
