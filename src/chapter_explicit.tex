@@ -10,7 +10,6 @@ Meanwhile, the \gls{CBS} correlation error scales as $\epsilon\in\mathcal{O}(X^{
 
 Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling by explicitly including the interelectronic distance $r_{12}$, and is the subject of this chapter. As the R12/F12 family of methods is the most mature of the explicitly correlated electronic structure methods, many reviews focusing on this topic already exist. This chapter in particular is in large part based on three reviews: references \citenum{klopperR122007}, \citenum{gruneisPerspective2017} and \citenum{hattigExplicitly2012}.
 
-\todo{Maybe have a picture of basis set convergence? Maybe even just HF, compare F12 vs TC vs Hyl(?) vs standard}
 
 \section{The Cusp Conditions}
 \label{sec:cusp}
@@ -31,9 +30,9 @@ This cusp condition was also later generalised.\cite{packCuspConditionsMolecular
 Early literature on the subject suggested that the success of explicitly correlated methods were due to the superior description of short-range correlation effects, and in particular in their much more faithful capturing of the cusp conditions like equation \ref{sec:cusp}.\cite{roothaanAnalytical1960,watsonApproximate1960,weissConfiguration1961,schwartzGround1962}
 However, further study found that the correlation error from a bad description of the wave function around a small sphere centred on the cusp is actually negligible.\cite{coulsonElectron1961,gilbertInterpretation1963,prendergastImpact2001,klopperR122007} Instead, the success of explicitly correlated methods is actually due to the superior description of the overall shape and size of the Coulomb hole, which has a radius on the order of the atomic radius.
 
-To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation\cite{kongExplicitly2012}, but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful for their lack of practicality.
+To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation\cite{kongExplicitly2012}, but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful due to their lack of practicality.
 
-\todo{would be nice to think of other ways to add images}
+% \todo{would be nice to think of other ways to add images}
 
 \begin{figure}[htbp]
     \centering
@@ -72,7 +71,7 @@ However, CI-Hyl methods were to eventually fall out of favour. This is because t
 
 \section{Explicitly Correlated Gaussians}
 
-\todo{see reviews}
+% \todo{see Kong reviews}
 \gls{ECG} method developed by Boys and Singer\cite{boysIntegral1960,singerUse1960} (basis with explicit correlation baked in) $r_{ij}^\nu$ replaced by $\exp(-cr_{ij})$.
 
 All integrals possible with closed-form algebraic expressions\cite{lesterGaussian1964}
@@ -127,3 +126,6 @@ discuss additive vs multiplicative ansatz
 have some performance comparison plots, maybe can ask permission to reproduce from Evelin or someone else
 
 also discuss many-body integrals for f12 vs at most 3-body for tc
+
+
+\todo{Maybe have a picture of basis set convergence? Maybe even just HF, compare F12 vs TC vs Hyl(?) vs standard}
