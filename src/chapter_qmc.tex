@@ -19,7 +19,7 @@ If we imagine throwing darts at a dartboard randomly, we can approximate $\pi$. 
 \begin{equation}
     P(\text{inside circle}) =  \frac{\pi r^2}{4r^2} = \frac{\pi}{4}.
 \end{equation}
-Therefore, if we sample a large number of points, the ratio of the number of darts that land inside the unit circle to the total number of darts, we can approximate the probability distribution $P$ and thus get an estimate for $\pi$. This is illustrated in \autoref{fig:darts}, and captures the core philosophy of \gls{MC} methods.
+Therefore, if we sample a large number of points, the ratio of the number of darts that land inside the unit circle to the total number of darts, we can approximate the probability distribution $P$ and thus get an estimate for $\pi$. This is illustrated in figure \ref{fig:darts}, and captures the core philosophy of \gls{MC} methods.
 
 \begin{figure}[htbp]
     \centering
@@ -30,9 +30,22 @@ Therefore, if we sample a large number of points, the ratio of the number of dar
 
 \subsection{A More Mathematical Description}
 
+As we have expressed the problem of the previous section in terms of areas, it is clear that it can be formulated in terms of integrals. For this particular problem, we have:
+\begin{equation}
+    \pi = \int_{-1}^1 \int_{-1}^1 \mathrm{d}x \mathrm{d}y \Theta(1-x^2-y^2) .
+\end{equation}
+
+More generally, consider the integral of some smooth function $f$ over $[a,b]\subseteq \mathbb{R}$,
+\begin{equation}
+    I = \int_a^b \d x f(x).
+\end{equation}
+Standard finite element methods for solving this integral
+% I am mostly following the discussion and notation in Thijssen's book -- remember to cite it along with all the primary references
+
 \subsection{The Metropolis-Hastings Algorithm}
 
-\section{Going Quantum: Variational Monte Carlo}
+\section{Variational (Quantum) Monte Carlo}
+\label{sec:vmc}
 \todo{make sure to mention the Jastrow factor}
 
 \section{Diffusion Monte Carlo}
