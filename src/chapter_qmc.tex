@@ -7,7 +7,7 @@
 
 \gls{MC} methods are a class of numerical methods that use random sampling to numerically solve problems. It has found applications in an impressive range of fields, from physics to finance.\todo{citation} It is particularly useful for problems with high dimensionality, where deterministic methods are often impractical. In quantum chemistry and physics, since a `dimension' can refer to any degree of freedom, high-dimensional problems are commonplace, and so \gls{MC} methods are a natural choice.
 
-While the name \gls{MC} was coined by Stanislav Ulam, after the famous casino in Monaco,\todo{citation} the foundational concept was already developed in the 18th century by the French mathematician Georges-Louis Leclerc, Comte de Buffon. As one of the earliest example applications, in the Buffon needle problem, one can randomly toss needles onto a lined sheet of paper and determine $\pi$.\todo{citation}
+While the name \emph{Monte Carlo} was coined by Stanislav Ulam, after the famous casino in Monaco,\todo{citation} the foundational concept was already developed in the 18th century by the French mathematician Georges-Louis Leclerc, Comte de Buffon. As one of the earliest example applications, in the Buffon needle problem, one can randomly toss needles onto a lined sheet of paper and determine $\pi$.\todo{citation}
 
 \section{Classical Monte Carlo Methods}
 
@@ -32,14 +32,14 @@ Therefore, if we sample a large number of points, the ratio of the number of dar
 
 As we have expressed the problem of the previous section in terms of areas, it is clear that it can also be formulated in terms of integrals. For this particular problem, we have:
 \begin{equation}
-    \pi = \int_{-1}^1 \int_{-1}^1 \mathrm{d}x \mathrm{d}y \Theta(1-x^2-y^2) .
+    \pi = \int_{-1}^1  \mathrm{d}x \int_{-1}^1 \mathrm{d}y\ \Theta(1-x^2-y^2) ,
 \end{equation}
-
+where $\Theta$ is the Heaviside step function.
 More generally, consider the integral of some smooth function $f$ over $[a,b]\subseteq \mathbb{R}$,\footnote{We present the one-dimensional case for simplicity. The generalization to higher dimensions is straightforward.}
 \begin{equation}
-    I = \int_a^b \d x f(x).
+    I = \int_a^b \d x \ f(x).
 \end{equation}
-Standard finite element methods for solving integrals of this type typically involving dividing the integration domain into subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. The error $\sigma$ in these sorts of methods is typically $\sigma\propto h^{-k} \propto N^{-k}$, where $k\in\mathbb{Z}_{>0}$. For a multi-dimensional integral, $\sigma\propto N^{-k/d}$, where $d$ is the number of dimensions.\cite{ascherFirst2011}
+Standard finite element methods for solving integrals of this type typically involving dividing the integration domain into $N$ subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. The error $\sigma$ in these sorts of methods is typically $\sigma\propto h^{-k} \propto N^{-k}$, where $k\in\mathbb{Z}_{>0}$. For a multi-dimensional integral, $\sigma\propto N^{-k/d}$, where $d$ is the number of dimensions.\cite{ascherFirst2011}
 % I am mostly following the discussion and notation in Thijssen's book -- remember to cite it along with all the primary references
 
 In \gls{MC} methods,\todo{citations} $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled. For uniformly sampled points, t`he variance is then
@@ -58,7 +58,7 @@ and
     \int\d x \ p(x) = 1.
 \end{equation}
 
-Then, the integral is
+The integral is
 \begin{equation}
     I = \int\d x \  f(x) = \int\d x\ \frac{f(x)}{p(x)} p(x).
 \end{equation}
@@ -72,13 +72,17 @@ In this case, the variance in the result is
 \begin{equation}
     \sigma^2 = \left\langle \left( \frac{1}{N}\sum^N_{i=1} \frac{f(x_i)}{p(x_i)}\right)^2\right\rangle - \left( \left\langle  \frac{1}{N}\sum^N_{i=1} \frac{f(x_i)}{p(x_i)}\right\rangle\right)^2.
 \end{equation}
-From this, we can see if $f/p$ is constant, the error vanishes, so it is important to choose a good $p$. If $p$ is chosen poorly, the variance can be worsened, so this is a delicate problem.
+From this, we can see that if $f/p$ is constant, the error vanishes, so it is important to choose a good $p$. If $p$ is chosen poorly, the variance can be worsened, so this is a delicate problem.
 
 In practice it is often difficult to estimate $f$, and a choice for $p$ is problem-specific. However, when we have some approximation for its overall shape, importance sampling can be a powerful tool. Alternatively, another method known as adaptive Monte Carlo\todo{citation} seeks the most significant regions of $f$ by random sampling, so that no a priori knowledge of the functional form is required.
 
 \section{Variational (Quantum) Monte Carlo}
 \label{sec:vmc}
+\todo{describe the basic algorithm}
+
+\subsection{Trial Functions}
 \todo{make sure to mention the Jastrow factor}
+\todo{Also a section of this in Thijssen}
 
 \section{Diffusion Monte Carlo}
 \todo{main point here is just its similarity to FCIQMC}
