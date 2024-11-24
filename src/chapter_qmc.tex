@@ -11,7 +11,7 @@ While the name \gls{MC} was coined by Stanislav Ulam, after the famous casino in
 
 \section{Classical Monte Carlo Methods}
 
-We start our discussion with classical \gls{MC} methods. We consider the classical textbook problem of calculating the value of $\pi$, then we give it a more rigorous framework.
+We start our discussion with classical \gls{MC} methods. We consider the classical textbook problem of calculating the value of $\pi$, then we provide a more rigorous framework.
 
 \subsection{A Very Bad Game of Darts}
 
@@ -30,7 +30,7 @@ Therefore, if we sample a large number of points, the ratio of the number of dar
 
 \subsection{A More Mathematical Description}
 
-As we have expressed the problem of the previous section in terms of areas, it is clear that it can be formulated in terms of integrals. For this particular problem, we have:
+As we have expressed the problem of the previous section in terms of areas, it is clear that it can also be formulated in terms of integrals. For this particular problem, we have:
 \begin{equation}
     \pi = \int_{-1}^1 \int_{-1}^1 \mathrm{d}x \mathrm{d}y \Theta(1-x^2-y^2) .
 \end{equation}
@@ -39,10 +39,18 @@ More generally, consider the integral of some smooth function $f$ over $[a,b]\su
 \begin{equation}
     I = \int_a^b \d x f(x).
 \end{equation}
-Standard finite element methods for solving this integral
+Standard finite element methods for solving integrals of this type typically involving dividing the integration domain into subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. The error $\sigma$ in these sorts of methods is typically $\sigma\propto h^{-k} \propto N^{-k}$, where $k\in\mathbb{Z}_{>0}$. For a multi-dimensional integral, $\sigma\propto N^{-k/d}$, where $d$ is the number of dimensions.\cite{ascherFirst2011}
 % I am mostly following the discussion and notation in Thijssen's book -- remember to cite it along with all the primary references
 
-\subsection{The Metropolis-Hastings Algorithm}
+In \gls{MC} methods,\todo{citations} $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled. For uniformly sampled points, t`he variance is then
+\begin{align}
+    \sigma^2 &= \left\langle \left( \frac{b-a}{N}\sum^N_{i=1}f_i\right)2\right\rangle - \left( \left\langle  \frac{b-a}{N}\sum^N_{i=1}f_i\right\rangle\right)^2 \\
+    &= \frac{(b-a)^2}{N}(\bar{f^2} - \bar f^2)
+\end{align}
+where $f_i\mathdef f(x_i)$ where $x_i$ is a random number drawn, the angular brackets denote an average over all possible realisations, and the overbar represents an average of the function over the domain ($[a,b]$). i.e. the error in this method is proportional to the variance of $f$. Perhaps more interestingly, $\sigma\propto N^{-1/2}$, in line with the central limit theorem.\todo{citations}
+
+\todo{complete discussion with some basic importance sampling stuff}
+
 
 \section{Variational (Quantum) Monte Carlo}
 \label{sec:vmc}
@@ -58,6 +66,10 @@ Standard finite element methods for solving this integral
 
 \section{QMC Meets Electronic Structure: the FCIQMC Algorithm}
 \label{sec:fciqmc}
+
+\subsection{Main Concepts}
+
+\subsection{Energy Estimators}
 
 \subsection{The Sign Problem in FCIQMC}
 
