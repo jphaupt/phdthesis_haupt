@@ -126,13 +126,52 @@ One final note, is that since the current state of a Markov chain is dependent o
 
 As our first foray into \gls{QMC}, we consider \gls{VMC}. In section \ref{sec:variational_principle} we introduced the variational principle by parametrising the wave function and then finding the minimum of the expectation value of the energy occurring in the parametrisation space. If we have a large number of electrons and/or a large number of parameters, then the integrals involved in the evaluation of the energy will necessarily be high-dimensional. This is where \gls{MC} comes in. For basic trial wave functions and small atoms like Hydrogen or Helium, direct integration may be possible, but as discussed in the previous section, this quickly becomes impossible for larger systems.
 
+For a trial wave function $\Psi$ (we omit the tilde from section \ref{sec:variational_principle}), the expectation value of the energy is
+\begin{align}
+    \label{eq:vmc_energy}
+    \langle E \rangle &= \frac{\bra{\Psi}H\ket{\Psi}}{\bra{\Psi}\ket{\Psi}} \\
+    &= \frac{\int\d^{3N}r\ \Psi^*H\Psi}{\int\d^{3N}r\ |\Psi|^2}.
+\end{align}
+We may calculate this integral using \gls{MC}, varying the parameters and stopping according to some minimisation algorithm. In particular, define the local energy as
+\begin{equation}
+    E_L(\bm r) = \frac{H\Psi}{\Psi}.
+\end{equation}
+Notice that the more strongly $\Psi$ resembles the exact wave function, the less strongly $E_L$ varies with $\bm r$. In particular, if $\Psi$ is equal to an exact eigenstate, then $E_L$ is constant. Therefore, an alternative objective function to the energy expectation of equation \ref{eq:vmc_energy} is the variance.\todo{cite}
 
+Defining
+\begin{equation}
+    p(\bm r) = \frac{|\Psi|^2}{\int\d^{3N}r\ |\Psi|^2},
+\end{equation}
+we may write equation \ref{eq:vmc_energy} as
+\begin{equation}
+    \langle E\rangle = \frac{\int\d^{3N}r\ p(\bm r)E_L(\bm r)}{\int\d^{3N}r\ p(\bm r)}.
+\end{equation}
+However, $\int\d^{3N}r\ p(\bm r) = 1$ so
+\begin{equation}
+    \langle E\rangle = \int\d^{3N}r\ p(\bm r)E_L(\bm r).
+\end{equation}
 
+This form of the energy is amenable to the Metropolis-Hastings approach outlined in section \ref{sec:mcmc}. In principle, the algorithm is doable with just a single walker, but in practice we reduce the statistical error by using many. The algorithm then becomes
 
+\begin{minipage}{\textwidth}
+\begin{lstlisting}[escapeinside={(*}{*)}]
+    Initialise (*$N$*) walkers in random positions.
+    until convergence criterion met
+      for each walker at position (*$r$*)
+        sample the local energy (*$E_L$*) at (*$r$*)
+        propose a new position (*$r'$*) with probably (*$p=|\Psi(r')/\Psi(r)|^2$ *)
+        if (*$r'$*) is accepted
+          set (*$r$*) to (*$r'$*)
+\end{lstlisting}
+\end{minipage}
 
-\todo{describe the basic algorithm}
+The energy is then calculated as the expectation value of the local energy, averaged over the samples generated in this procedure. Steps at the beginning (before equilibrium) are discarded, and a blocking procedure should be employed. Decision to stop is generally based on compute time and/or precision required.
+
 
 \subsection{Trial Functions}
+
+While \gls{VMC} is a powerful tool, the quality of the solution is constrained by the quality of the trial wave function.
+
 \todo{make sure to mention the Jastrow factor}
 \todo{Also a section of this in Thijssen}
 
