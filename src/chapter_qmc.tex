@@ -11,7 +11,7 @@ While the name \emph{Monte Carlo} was coined by Stanislav Ulam, after the famous
 
 \section{Classical Monte Carlo Methods}
 
-We start our discussion with classical \gls{MC} methods. We consider the classical textbook problem of calculating the value of $\pi$, then we provide a more rigorous framework.
+We start our discussion with classical \gls{MC} methods. While there are numerous possible applications, such as molecular dynamics,\todo{cite}, here we restrict ourselves to the topic of Monte Carlo integration. In particular, we consider the classical textbook problem of calculating the value of $\pi$, then we provide a more rigorous framework.
 
 \subsection{A Very Bad Game of Darts}
 
@@ -47,7 +47,7 @@ In \gls{MC} methods,\todo{citations} $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ 
     \sigma^2 &= \left\langle \left( \frac{b-a}{N}\sum^N_{i=1}f_i\right)2\right\rangle - \left( \left\langle  \frac{b-a}{N}\sum^N_{i=1}f_i\right\rangle\right)^2 \\
     &= \frac{(b-a)^2}{N}(\bar{f^2} - \bar f^2)
 \end{align}
-where $f_i\mathdef f(x_i)$ where $x_i$ is a random number drawn, the angular brackets denote an average over all possible realisations, and the overbar represents an average of the function over the domain ($[a,b]$ in this discussion). i.e. the error in this method is proportional to the variance of $f$. Perhaps more interestingly, $\sigma\propto N^{-1/2}$, in line with the central limit theorem.\todo{citations} Comparing this error with standard quadrature, we see that MC integration is moroe efficient than an order-$k$ algorithm when $d>2k$. That is, although this particular \gls{MC} example is naive, using simply a uniform distribution, it is still more efficient than standard methodologies for very large dimensions.
+where $f_i\mathdef f(x_i)$ and $x_i$ is a random number drawn, the angular brackets denote an average over all possible realisations, and the overbar represents an average of the function over the domain ($[a,b]$ in this discussion). i.e. the error in this method is proportional to the variance of $f$. Perhaps more interestingly, $\sigma\propto N^{-1/2}$, in line with the central limit theorem.\todo{citations} Comparing this error with standard quadrature, we see that MC integration is moroe efficient than an order-$k$ algorithm when $d>2k$. That is, although this particular \gls{MC} example is naive, using simply a uniform distribution, it is still more efficient than standard methodologies for very large dimensions.
 
 There exist several methods to reduce errors in \gls{MC} methods.\todo{citations} Among the most important ones is importance sampling. In the prevous example, it is clear that if significant contributions to the integral come from a small region of the domain, only a few points would be sampled by the \gls{MC} algorithm there. This would lead to large statistical errors. Mathematically, this is from the large variance of the function. In importance sampling, we sample from a distribution $p$ which has roughly the same shape as $f$ such that $f/p$ is roughly constant over the integration domain. Of course, being a probability distribution, we require
 \begin{equation}
@@ -78,6 +78,13 @@ In practice it is often difficult to estimate $f$, and a choice for $p$ is probl
 
 \section{Variational (Quantum) Monte Carlo}
 \label{sec:vmc}
+
+As our first foray into \gls{QMC}, we consider \gls{VMC}. In section \ref{sec:variational_principle} we introduced the variational principle by parametrising the wave function and then finding the minimum of the expectation value of the energy occurring in the parametrisation space. If we have a large number of electrons and/or a large number of parameters, then the integrals involved in the evaluation of the energy will necessarily be high-dimensional. This is where \gls{MC} comes in. For basic trial wave functions and small atoms like Hydrogen or Helium, direct integration may be possible, but as discussed in the previous section, this quickly becomes impossible for larger systems.
+
+
+
+
+
 \todo{describe the basic algorithm}
 
 \subsection{Trial Functions}
