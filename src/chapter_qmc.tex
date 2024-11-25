@@ -9,6 +9,8 @@
 
 While the name \emph{Monte Carlo} was coined by Stanislav Ulam, after the famous casino in Monaco,\todo{citation} the foundational concept was already developed in the 18th century by the French mathematician Georges-Louis Leclerc, Comte de Buffon. As one of the earliest example applications, in the Buffon needle problem, one can randomly toss needles onto a lined sheet of paper and determine $\pi$.\todo{citation}
 
+Monte Carlo methods is a broad term, and as such it is not possible to give a comprehensive overview in a single chapter, and there exist many reviews and textbooks on \gls{MC} and related topics.\todo{citations: see those in thijssen} We will focus on only a few here concepts particularly relevant for this dissertation, largely following reference \citenum{foulkesQuantum} and the relevant chapters of \citenum{thijssenComputational2007}.
+
 \section{Classical Monte Carlo Methods}
 
 We start our discussion with classical \gls{MC} methods. While there are numerous possible applications, such as molecular dynamics,\todo{cite}, here we restrict ourselves to the topic of Monte Carlo integration. In particular, we consider the classical textbook problem of calculating the value of $\pi$, then we provide a more rigorous framework.
@@ -76,6 +78,49 @@ From this, we can see that if $f/p$ is constant, the error vanishes, so it is im
 
 In practice it is often difficult to estimate $f$, and a choice for $p$ is problem-specific. However, when we have some approximation for its overall shape, importance sampling can be a powerful tool. Alternatively, another method known as adaptive Monte Carlo\todo{citation} seeks the most significant regions of $f$ by random sampling, so that no a priori knowledge of the functional form is required.
 
+\subsection{Metropolis-Hastings Algorithm}
+\label{sec:mcmc}
+A particularly successful method for generating random samples $x_i$ from a probability distribution $\pi(x)$, where direct sampling of $\pi$ is difficult, is the Metropolis-Hastings algorithm.\todo{citation} Often, $\pi(x)$ is known only up to a normalisation constant, $\pi(x)=\pi(x)/C$ where $C=\int\d x\ \pi(x)$ is intractible.
+
+The Metropolis-Hastings algorithm is based on Markov chains\todo{cite}, and we construct such a Markov chain so that its stationary distribution is $\pi(x)$, which is to say if the Markov chain starts at $\pi(x)$ for step $t$, it is still $\pi(x)$ for step $t+1$.
+
+The probability of having a sequence of states $x_1,x_2,\ldots,x_N$ is
+\begin{equation}
+    p(x_1,x_2,\ldots,x_N) = p(x_1)p(x_2|x_1)p(x_3|x_2)\cdots p(x_N|x_{N-1}).
+\end{equation}
+where $p(x|x')$ is the transition probability from $x'\to x$. Then, the probability at step $t$ to be in state $x$, $\pi_t(x)$ is given by
+\begin{equation}
+\pi_{t+1}(x) = \sum_{x'\in \Omega} \pi_t(x')p(x|x')
+\end{equation}
+where $\Omega$ is the set of all possible states. This is called the master equation. In the stationary state, $\pi_t(x)=\pi(x)$, so
+\begin{equation}
+    \pi(x) = \sum_{x'\in \Omega} \pi(x')p(x|x').
+\end{equation}
+Finding the general solution to this problem is nontrivial. However, a sufficient (but not necessary) condition is called detailed balance:
+\begin{equation}
+    \pi(x)p(x|x') = \pi(x')p(x'|x).
+\end{equation}
+This ensures that the probability of going from $x$ to $x'$ is the same as the probability of going from $x'$ to $x$, which implies that the probability is stationary.
+
+In order to actually construct the algorithm, we must introduce the trial step probability $\omega(x|x')$, and the acceptance probability $A(x|x')$. Then,
+\begin{equation}
+    p(x|x') = \omega(x|x')A(x|x').
+\end{equation}
+$\omega(x|x'),A(x|x')\in [0,1]$ for each pair $x,x'$, and $\sum_{x'}\omega(x|x') = 1$. Furthermore, the original formulation of the algorithm required $\omega(x|x') = \omega(x'|x)$, which leads to (plugging into the master equation)
+\begin{equation}
+    \frac{A(x|x')}{A(x'|x)} = \frac{\pi(x')}{\pi(x)}.
+\end{equation}
+
+The algorithm proceeds in two stages: we propose a step $x'\to x$, and then accept or reject it. The probability of accepting is
+\begin{equation}
+    A(x|x') = \min\left(1,\frac{\pi(x')}{\pi(x)}\right).
+\end{equation}
+If we accept, we set the new state to $x$, otherwise we stay at $x'$.
+
+In practice, on a computer, accepting is done by generating a random number $r\in [0,1)$ and accepting if $r<\frac{\pi(x')}{\pi(x)}$, and otherwise rejecting. Furthermore, we don't just have a single Markov chain, but a collection of so-called ``walkers'', that each perform their own Markov chain. The integrand is then sampled at each position where the walkers reach.
+
+One final note, is that since the current state of a Markov chain is dependent on the previous state, the Markov chain is not independent of itself. This is referred to as autocorrelation.\todo{cite} One method to reduce this autocorrelation and give essentially independent samples is known as blocking.\todo{cite}
+
 \section{Variational (Quantum) Monte Carlo}
 \label{sec:vmc}
 
@@ -99,7 +144,7 @@ As our first foray into \gls{QMC}, we consider \gls{VMC}. In section \ref{sec:va
 \section{The Fermion Sign Problem}
 \todo{make sure to mention the fixed node approximation here}
 
-\section{QMC Meets Electronic Structure: the FCIQMC Algorithm}
+\section{Full Configuration Interaction Quantum Monte Carlo}
 \label{sec:fciqmc}
 
 \subsection{Main Concepts}
