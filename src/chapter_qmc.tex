@@ -168,9 +168,12 @@ This form of the energy is amenable to the Metropolis-Hastings approach outlined
 The energy is then calculated as the expectation value of the local energy, averaged over the samples generated in this procedure. Steps at the beginning (before equilibrium) are discarded, and a blocking procedure should be employed. Decision to stop is generally based on compute time and/or precision required.
 
 
-\subsection{Trial Functions}
+\subsection{Trial Wave Functions}
+\label{sec:jastrow}
 
-While \gls{VMC} is a powerful tool, the quality of the solution is constrained by the quality of the trial wave function.
+While \gls{VMC} is a powerful tool, the quality of the solution is constrained by the quality of the trial wave function. Moreover, the evluation of the trial wave function is expensive, and we therefore want a form that is easy to evaluate.
+
+The form of the trial wave function is typically chosen based on a Jastrow factor, as already introduced in section \ref{sec:tc}.
 
 \todo{make sure to mention the Jastrow factor}
 \todo{Also a section of this in Thijssen}
