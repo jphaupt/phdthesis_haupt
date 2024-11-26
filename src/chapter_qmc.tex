@@ -187,6 +187,17 @@ where $\chi$ describes electron-nuclear correlation and $u$ describes two-electr
 $\Phi$ is typically chosen to be a single Slater determinant.\todo{citations} In particular, by choosing the \gls{HF} determinant, typically only a small portion of the energy (that is, the correlation energy) is left for the Jastrow factor to describe, and typically even simple Jastrow factors can do this.\todo{cite: see Foulkes} However, sometimes this is not enough, for example, when the HF determinant is not sufficient to describe all symmetries of the true wave function.\todo{citations}
 
 \section{Diffusion Monte Carlo}
+By performing a Wick rotation (that is, substitute $t\to i\tau$) in the time-dependent Schr\"odinger equation, equation \ref{eq:schrodinger}, we get the imaginary-time Schr\"odinger equation
+\begin{equation}
+    \label{eq:imag_time_schrodinger}
+    \frac{\partial}{\partial\tau}\Psi(\bm x, \tau) = \hat H \Psi(\bm x, \tau)
+\end{equation}
+This equation is a diffusion (or heat) equation, and $\Psi$ may be interpreted as the density distribution for a large number of independent particles (walkers).\todo{citations} More specifically, the kinetic energy term, being second order, describes the movement of the particles whereas the potential energy term describes generation or annihilation of walkers.
+
+\todo{...}
+
+While \gls{DMC} does not rely on the variational principle, the convergence of its practical variants still relies on a trial wave function.
+
 \todo{main point here is just its similarity to FCIQMC}
 
 \section{Auxiliary Field Quantum Monte Carlo}
