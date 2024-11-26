@@ -173,10 +173,18 @@ The energy is then calculated as the expectation value of the local energy, aver
 
 While \gls{VMC} is a powerful tool, the quality of the solution is constrained by the quality of the trial wave function. Moreover, the evluation of the trial wave function is expensive, and we therefore want a form that is easy to evaluate.
 
-The form of the trial wave function is typically chosen based on a Jastrow factor, as already introduced in section \ref{sec:tc}.
+The form of the trial wave function is typically chosen based on a Jastrow factor, as already introduced in section \ref{sec:tc}. Generally,
+\begin{equation}
+    \Psi_\mathrm{trial} = \e^J\Phi.
+\end{equation}
 
-\todo{make sure to mention the Jastrow factor}
-\todo{Also a section of this in Thijssen}
+For computational efficiency, the Jastrow factor typically only retains one- and two-body terms,
+\begin{equation}
+    J = \sum_i \chi(\bm x_i) - \frac 12 \sum_{i\neq j} u(\bm x_i, \bm x_j),
+\end{equation}
+where $\chi$ describes electron-nuclear correlation and $u$ describes two-electron correlation. There exist a number of more specific forms for $J$\todo{citations}, though one unifying principle is for them to adhere to expected short-range (cusp conditions) and long-range ($1/r$) behaviour.
+
+$\Phi$ is typically chosen to be a single Slater determinant.\todo{citations} In particular, by choosing the \gls{HF} determinant, typically only a small portion of the energy (that is, the correlation energy) is left for the Jastrow factor to describe, and typically even simple Jastrow factors can do this.\todo{cite: see Foulkes} However, sometimes this is not enough, for example, when the HF determinant is not sufficient to describe all symmetries of the true wave function.\todo{citations}
 
 \section{Diffusion Monte Carlo}
 \todo{main point here is just its similarity to FCIQMC}
