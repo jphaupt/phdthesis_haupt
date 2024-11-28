@@ -247,17 +247,11 @@ More concretely, in pseudocode, the basic \gls{DMC} algorithm is:
 \end{lstlisting}
 \end{minipage}
 
-Notice that in contrast to \gls{VMC}, \gls{DMC} does not rely on a variational principle, nor a trial wave function. However, in practice a trial wave function is actually necessary for fermions, as we consider in electronic structure.
+Notice that in contrast to \gls{VMC}, \gls{DMC} does not rely on a variational principle, nor a trial wave function. There is also a discretisation error incurred by the operator decomposition, though this can be handled via an application of the Metropolis-Hastings alogirthm.\cite{thijssenComputational2007}
+However, in practice a trial wave function is actually necessary for fermions, as we consider in electronic structure. The walker distribution is positive, but for fermions this is not the case due to their exchange statistics. In order to still practically use DMC, an approximation called the fixed node approximation is made, where the nodal structure (i.e. the roots of $\Psi$) of the distribution is determined by a trial function. Thus, the accuracy of DMC is still limited by the quality of the trial wave function (or more precisely, by its nodal surface).
 
-\todo{algorithm pseudocode}
+% While \gls{DMC} does not rely on the variational principle, the convergence of its practical variants still relies on a trial wave function.
 
-\todo{...}
-
-In principle exact, no trial wave function, but ...
-\todo{fixed node approximation}
-While \gls{DMC} does not rely on the variational principle, the convergence of its practical variants still relies on a trial wave function.
-
-\todo{main point here is just its similarity to FCIQMC}
 
 % \section{Auxiliary Field Quantum Monte Carlo}
 % % may can skip AFQMC? Don't really see a point to including a full discussion of this method
