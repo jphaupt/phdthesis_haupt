@@ -190,7 +190,7 @@ $\Phi$ is typically chosen to be a single Slater determinant.\todo{citations} In
 \Gls{DMC} starts by performing a Wick rotation (that is, substitute $t\to i\tau$) in the time-dependent Schr\"odinger equation, equation \ref{eq:schrodinger}, we get the imaginary-time Schr\"odinger equation
 \begin{equation}
     \label{eq:imag_time_schrodinger}
-    \frac{\partial}{\partial\tau}\Psi(\bm r, \tau) = \hat H \Psi(\bm r, \tau)
+    \frac{\partial}{\partial\tau}\Psi(\bm r, \tau) = -\hat H \Psi(\bm r, \tau)
 \end{equation}
 This equation is a diffusion (or heat) equation, and $\Psi$ may be interpreted as the density distribution for a large number of independent particles (walkers).\todo{citations} More specifically, the kinetic energy term, being second order, describes the movement of the particles whereas the potential energy term describes generation or annihilation of walkers. The solution of this equation is
 \begin{equation}
@@ -235,14 +235,14 @@ More concretely, in pseudocode, the basic \gls{DMC} algorithm is:
 \begin{lstlisting}[escapeinside={(*}{*)}]
     Initialise (*$N$*) walkers in random positions.
     until convergence criterion met
-        for each walker at position (*$r$*)
-            shift position (*$\bm R$*) to (*$\bm R'$*) according to
-                transition probability (*$G$*)
+        for each walker at position (*$\bm r$*)
+            shift position (*$\bm r$*) to (*$\bm r'$*) according to
+              (*$\hookrightarrow$*)transition probability (*$G$*)
             evaluate (*$q=\e^{-\Delta\tau(V(\bm r')-S)}$*)
             walker survives with probability (*$q$*)
-            if (*$q$*) is greater than 1
+            if (*$q>1$*)
                 create (*$1-q$*) new walkers
-                    (with stochastic rounding)
+                  (*$\hookrightarrow$*)(with stochastic rounding)
         update (*$S$*).
 \end{lstlisting}
 \end{minipage}
@@ -266,6 +266,29 @@ However, in practice a trial wave function is actually necessary for fermions, a
 The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.\todo{citations} For this, there exist a few different implementations,\cite{Guther_neci_2020,spencerHANDEQMC2019b,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.\cite{Guther_neci_2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains expoential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\todo{citations}
 
 \subsection{Main Concepts}
+
+Like \gls{DMC}, \gls{FCIQMC} is based on the imaginary-time Schr\"odinger equation, equation \ref{eq:imag_time_schrodinger}, repeated here:
+\begin{equation}
+    \frac{\partial}{\partial\tau}\Psi(\bm r, \tau) = -\hat H\Psi(\bm r, \tau).
+\end{equation}
+The solution to this equation is
+\begin{equation}
+    \Psi(\bm r, \tau) = \e^{-\tau\hat H}\Psi(\bm r, 0).
+\end{equation}
+Expanding $\e^{-\tau\hat H}$ to first order in small imaginary time step $\Delta\tau$ gives us the FCIQMC projector
+\begin{equation}
+    P = 1-\Delta\tau\hat H \to 1-\Delta\tau(\hat H - S),
+\end{equation}
+where we have introduced an arbitrary shift $S$ in analogy to \gls{DMC}. Notice, in particular, that if $S=E_0$ the ground state energy, all other states decay away. Hence, repeated application of $P$ while adjusting $S$ to get as close to $E_0$ as possible will give us the ground state, as long as our initial state has nonzero overlap with the ground state.
+
+Like \gls{FCI}, the wave function is expanded in some basis. Throughout this dissertation, Slater determinants are used, though \glspl{CSF} are also possible.\todo{cite Werner guga} The basis will be kept constant, and the coefficients may change with each time step,
+\begin{equation}
+    \ket{\Psi(\tau)} = \sum_i c_i(\tau)\ket{D_i}.
+\end{equation}
+
+
+
+\todo{}
 
 \subsection{Energy Estimators}
 
