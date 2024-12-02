@@ -317,7 +317,11 @@ where the right-hand side of the equation is the new wave function, $\ket{\Psi(\
     c_i(\tau+\Delta\tau) = c_i(\tau) - \Delta\tau(H_{ii}-S)c_i(\tau) - \Delta\tau\sum_{j\neq i}H_{ij}c_j(\tau).
 \end{equation}
 
-\todo{mention reference state etc.}
+In practice, we start the algorithm with a population of walkers on a reference determinant (typically, but not always, the Hartree-Fock determinant), and calculate the correlation energy via FCIQMC. Instead of $H$ in the working equations we would use the matrix
+\begin{equation}
+    K_{ij} = H_{ij} - E_\mathrm{ref}\delta_{ij}
+\end{equation}
+where $E_\mathrm{ref}\mathdef\bra{\Psi_\mathrm{ref}}H\ket{\Psi_\mathrm{ref}}$ is the energy of the reference energy. However, FCIQMC is capable of adapting to a new reference determinant whenever another determinant exceeds the population of the reference determinant, and is not single-reference like canonical coupled cluster, for example. This shift is primarily a convenience.
 
 \subsubsection{Spawning}
 
@@ -326,22 +330,30 @@ The first step, spawning, is realised by the application of the off-diagonal mat
     p_s(j|i) = \Delta\tau\frac{|H_{ij}|}{p_\mathrm{gen}(j|i)}.
 \end{equation}
 
-Thus, at each FCIQMC iteration, every determinant $D_i$ spawns $N_ip_s(j|i)$ new walkers on a determinant $D_j$ selected by an excitation generation algorithm.\todo{citations: pchb, umrigar, etc.} Here, $N_i$ is the (signed) number of walkers on $D_i$. If $H_{ij} < 0$ then the child walkers are the same sign as the parent; otherwise, they have opposite sign.
+Thus, at each FCIQMC iteration, every determinant $D_i$ spawns $N_ip_s(j|i)$ new walkers on a determinant $D_j$ selected by an excitation generation algorithm.\todo{citations: pchb, umrigar, etc.} Here, $N_i$ is the (signed) number of walkers on $D_i$. If $H_{ij} < 0$ then the child walkers are the same sign as the parent; otherwise, they have opposite sign. The original formulation of the algorithm used integer number of walkers, and spawned a walker with probability $p_s(j|i)$ per walker on $N_i$, but it is more efficient to simply use noninteger values and spawn $p_s(j|i)$ walkers.
 
 \subsubsection{Death/Cloning}
-\todo{}
+\todo{diagonal step}
 
 \subsubsection{Annihilation}
-\todo{}
+\todo{adding everything together}
+\todo{mention in particular that it is not easily parallelised unlike the other steps!}
 
 \subsection{Energy Estimators}
 
+\todo{shift energy, projected energy, trial energy}
 
-% \subsection{The Sign Problem in FCIQMC}
 \subsection{Annihilation Plateaus}
+% \subsection{The Sign Problem in FCIQMC}
+
+\todo{special kind of sign problem}
+\todo{figure?}
 
 \subsection{The Initiator Approximation}
+\todo{ameliorates the sign problem}
 
 \subsection{Reduced Density Matrix Sampling}
+\todo{necessary for our studies}
 
 \subsection{Combining TC with Modern Electronic Structure}
+\todo{TC + FCIQMC compatibility}
