@@ -303,24 +303,25 @@ The key advantage of \gls{FCIQMC} over ordinary \gls{FCI} is no longer needing t
 
 \gls{FCIQMC} is typically run in three steps:
 \begin{enumerate*}[label=(\alph*), itemjoin={\hspace{1em}}]
-    \item \textbf{spawning},
-    \item \textbf{death/cloning}, and
+    \item \textbf{death/cloning},
+    \item \textbf{spawning}, and
     \item \textbf{annihlation}.
 \end{enumerate*}
 Each step can be recognised in the application of the projector operator of equation \ref{eq:fciqmc_projector} onto some state $\ket\Psi = \sum_i c_i\ket{D_i}$,
 \begin{equation}
-    P\ket\Psi = \underbrace{\sum_i (1-\Delta\tau(H_{ii}-S))c_i\ket{D_i}}_{(a)} \underset{(c)}{\underset{\uparrow}{-}} \underbrace{\sum_{i}\sum_{j\neq i}\Delta\tau H_{ji}c_i\ket{D_j}}_{(b)},
+    P\ket\Psi = \underbrace{\sum_i (1-\Delta\tau(H_{ii}-S))c_i\ket{D_i}}_{(a)} \underset{(c)}{\underset{\uparrow}{-}} \underbrace{\sum_{i}\sum_{j\neq i}\Delta\tau H_{ij}c_j\ket{D_j}}_{(b)},
 \end{equation}
 where the right-hand side of the equation is the new wave function, $\ket{\Psi(\tau+\Delta\tau)}$.
 
-The first step, spawning, is the application of the diagonal matrix elements
+The first step, death/cloning, is the application of the diagonal matrix elements
 
 \todo{}
 
 \subsection{Energy Estimators}
 
 
-\subsection{The Sign Problem in FCIQMC}
+% \subsection{The Sign Problem in FCIQMC}
+\subsection{Annihilation Plateaus}
 
 \subsection{The Initiator Approximation}
 
