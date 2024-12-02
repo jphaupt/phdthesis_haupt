@@ -303,18 +303,35 @@ The key advantage of \gls{FCIQMC} over ordinary \gls{FCI} is no longer needing t
 
 \gls{FCIQMC} is typically run in three steps:
 \begin{enumerate*}[label=(\alph*), itemjoin={\hspace{1em}}]
-    \item \textbf{death/cloning},
-    \item \textbf{spawning}, and
+    \item \textbf{spawning},
+    \item \textbf{death/cloning}, and
     \item \textbf{annihlation}.
 \end{enumerate*}
-Each step can be recognised in the application of the projector operator of equation \ref{eq:fciqmc_projector} onto some state $\ket\Psi = \sum_i c_i\ket{D_i}$,
+Each step can be recognised in the application of the projector operator of equation \ref{eq:fciqmc_projector} onto some state
+$\ket\Psi = \sum_i c_i\ket{D_i}$,
 \begin{equation}
-    P\ket\Psi = \underbrace{\sum_i (1-\Delta\tau(H_{ii}-S))c_i\ket{D_i}}_{(a)} \underset{(c)}{\underset{\uparrow}{-}} \underbrace{\sum_{i}\sum_{j\neq i}\Delta\tau H_{ij}c_j\ket{D_j}}_{(b)},
+    P\ket\Psi = \ket\Psi \underset{(c)}{\underset{\uparrow}{-}} \underbrace{\sum_{i}\sum_{j\neq i}\Delta\tau H_{ji}c_i\ket{D_j}}_{(a)} \underset{(c)}{\underset{\uparrow}{-}} \underbrace{\sum_i (\Delta\tau(H_{ii}-S))c_i\ket{D_i}}_{(b)},
 \end{equation}
-where the right-hand side of the equation is the new wave function, $\ket{\Psi(\tau+\Delta\tau)}$.
+where the right-hand side of the equation is the new wave function, $\ket{\Psi(\tau+\Delta\tau)}$. Or, in terms of the coefficients (relabelling $i\leftrightarrow j$ in the $(a)$ terms),
+\begin{equation}
+    c_i(\tau+\Delta\tau) = c_i(\tau) - \Delta\tau(H_{ii}-S)c_i(\tau) - \Delta\tau\sum_{j\neq i}H_{ij}c_j(\tau).
+\end{equation}
 
-The first step, death/cloning, is the application of the diagonal matrix elements
+\todo{mention reference state etc.}
 
+\subsubsection{Spawning}
+
+The first step, spawning, is realised by the application of the off-diagonal matrix elements. In this step, each walker on \gls{SD} $D_i$ may spawn a new set of walkers to connected\footnote{$D_i$ and $D_j$ are said to be connected if $\bra{D_i}H\ket{D_j}\neq 0$} \gls{SD} $D_j$. As we are sampling the sum $\Delta\tau\sum_{j\neq i} H_{ij}c_j(\tau)$, as in the Metropolis-Hastings algorithm, it is beneficial (in terms of efficiency) to sample more where $H_{ij}$ is larger. That is, the probability of spawning on $D_j$ from $D_i$, denoted $p_\mathrm{gen}(j|i)$ (the generation probability) should be proportional to $H_{ij}$. Finally, the spawning probability is
+\begin{equation}
+    p_s(j|i) = \Delta\tau\frac{|H_{ij}|}{p_\mathrm{gen}(j|i)}.
+\end{equation}
+
+Thus, at each FCIQMC iteration, every determinant $D_i$ spawns $N_ip_s(j|i)$ new walkers on a determinant $D_j$ selected by an excitation generation algorithm.\todo{citations: pchb, umrigar, etc.} Here, $N_i$ is the (signed) number of walkers on $D_i$. If $H_{ij} < 0$ then the child walkers are the same sign as the parent; otherwise, they have opposite sign.
+
+\subsubsection{Death/Cloning}
+\todo{}
+
+\subsubsection{Annihilation}
 \todo{}
 
 \subsection{Energy Estimators}
