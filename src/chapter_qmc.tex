@@ -277,20 +277,48 @@ The solution to this equation is
 \end{equation}
 Expanding $\e^{-\tau\hat H}$ to first order in small imaginary time step $\Delta\tau$ gives us the FCIQMC projector
 \begin{equation}
+    \label{eq:fciqmc_projector}
     P = 1-\Delta\tau\hat H \to 1-\Delta\tau(\hat H - S),
 \end{equation}
 where we have introduced an arbitrary shift $S$ in analogy to \gls{DMC}. Notice, in particular, that if $S=E_0$ the ground state energy, all other states decay away. Hence, repeated application of $P$ while adjusting $S$ to get as close to $E_0$ as possible will give us the ground state, as long as our initial state has nonzero overlap with the ground state.
 
-Like \gls{FCI}, the wave function is expanded in some basis. Throughout this dissertation, Slater determinants are used, though \glspl{CSF} are also possible.\todo{cite Werner guga} The basis will be kept constant, and the coefficients may change with each time step,
+Like \gls{FCI}, the wave function is expanded in some basis. Throughout this dissertation, \glspl{SD} are used, though \glspl{CSF} are also possible.\todo{cite Werner guga} The basis will be kept constant, and the coefficients may change with each time step,
 \begin{equation}
     \ket{\Psi(\tau)} = \sum_i c_i(\tau)\ket{D_i}.
 \end{equation}
 
+Like in \gls{DMC}, we adjust $S$ to approximate the ground state energy $E_0$, as $S=E_0$ would project out all states other than the ground state, as long as $\braket{\Psi(\tau=0)|\Psi_0}\neq 0$ where $\ket{\Psi_0}$ is the ground state. Similarly, $S$ affects the walker population. In particular, for walker population $N_w$, if $S>E_0$ then the population grows, and if $S<E_0$ it decays. If we have a target population $N_w$ then we keep $S>E_0$ (typically, just by setting $S=0$) and ``turn on'' the shift once $N_w$ is reached. However, unlike DMC, \gls{FCIQMC} walks can have either negative or positive weight. These weights correspond to the $c_i$, and the walkers ``diffuse'' across \gls{SD} (or \gls{CSF}) space. The walker population is reported in terms of absolute values, i.e.
+\begin{equation}
+    N_w = \sum_{i\in\{SDs\}}|N_i|,
+\end{equation}
+where we sum over the walkers across all \glspl{SD}. Once in variable-shift mode, in practice $S$ is updated every $m$ cycles:
+\begin{equation}
+    S(\tau+m\Delta\tau) = S(\tau) - \frac{\zeta}{m\Delta\tau}\ln\left(\frac{N_w(\tau+m\Delta\tau)}{N_w(\tau)}\right),
+\end{equation}
+where $\zeta$ is a damping parameter.
 
+The key advantage of \gls{FCIQMC} over ordinary \gls{FCI} is no longer needing to store the full \gls{CI} vector, making use of sparsity. Even for relatively large and strongly-correlated systems, only a small subspace of the entire Hilbert space needs to be sampled in FCIQMC, whereas in FCI, the full CI vector must be stored (or if done via dense diagonalisation, the entire $H$ matrix, which is unrealistic for even small systems).
+
+\subsection{Basic Algorithm}
+
+\gls{FCIQMC} is typically run in three steps:
+\begin{enumerate*}[label=(\alph*), itemjoin={\hspace{1em}}]
+    \item \textbf{spawning},
+    \item \textbf{death/cloning}, and
+    \item \textbf{annihlation}.
+\end{enumerate*}
+Each step can be recognised in the application of the projector operator of equation \ref{eq:fciqmc_projector} onto some state $\ket\Psi = \sum_i c_i\ket{D_i}$,
+\begin{equation}
+    P\ket\Psi = \underbrace{\sum_i (1-\Delta\tau(H_{ii}-S))c_i\ket{D_i}}_{(a)} \underset{(c)}{\underset{\uparrow}{-}} \underbrace{\sum_{i}\sum_{j\neq i}\Delta\tau H_{ji}c_i\ket{D_j}}_{(b)},
+\end{equation}
+where the right-hand side of the equation is the new wave function, $\ket{\Psi(\tau+\Delta\tau)}$.
+
+The first step, spawning, is the application of the diagonal matrix elements
 
 \todo{}
 
 \subsection{Energy Estimators}
+
 
 \subsection{The Sign Problem in FCIQMC}
 
