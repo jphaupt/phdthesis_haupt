@@ -362,9 +362,10 @@ Notice that if $p_d$ is the same sign as the walker, then the number of walkers 
 
 \subsubsection{Annihilation}
 
-After spawning and death/cloning, we may have walkers of opposite sign on the same determinant. This is dealt with in the ``annihilation'' step of the algorithm, realised combining the terms in equation \ref{eq:fciqmc_projector_application}. This step, while simple in principle, amounts to cancelling opposite walkers. Determinants without walkers left on them are then removed as well, to keep the storage of $\ket\Psi$ sparse. However, so far the steps have all been embarrassingly parallel, but in this step we need to communicate in order to locate determinants on the same determinant, so this step is critical for parallelisation. Nevertheless, efficient implementations such as in \neci is able to scale efficiently to over 40000 cores.\todo{citation}
+After spawning and death/cloning, we may have walkers of opposite sign on the same determinant. This is dealt with in the ``annihilation'' step of the algorithm, realised by combining the terms in equation \ref{eq:fciqmc_projector_application}. This step, while simple in principle, amounts to cancelling opposite walkers. Determinants without walkers left on them are then removed as well, to keep the storage of $\ket\Psi$ sparse. However, so far the steps have all been embarrassingly parallel, but in this step we need to communicate in order to locate determinants on the same determinant, so this step is critical for parallelisation. Nevertheless, efficient implementations such as in \neci is able to scale efficiently to over 40000 cores.\todo{citation}
 
 \subsection{Energy Estimators}
+\label{sec:fciqmc_energy_estimators}
 
 \todo{shift energy, projected energy, trial energy}
 
