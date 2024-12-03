@@ -407,8 +407,12 @@ In this stage of the simulation, walkers are being spawned with incoherent signs
 \end{figure}
 
 \subsection{The Initiator Approximation}
-\todo{ameliorates the sign problem}
-\todo{mention the initiator bias}
+
+Since incoherent walker proliferation is a major source of the annihilation plateau, a sensible strategy to overcome this is by forcing growth to be coherent. This is achieved by the initiator approximation\todo{citation}. An \gls{FCIQMC} calculation with the initiator approximation is sometimes referred to as i-FCIQMC; however, since the approximation is so useful and ubiqituous, we simply referred to as FCIQMC. Indeed, in this dissertation all FCIQMC calculations used the initiator approximation, unless otherwise specified.
+
+The initiator approximation allows only those determinants (dubbed ``initiators'') with at least $N_\mathrm{thresh}$ walkers to spawn new walkers on unoccupied determinants. If the population is greater than this threshold, the assumption is that the (relative) sign of that state is correct, and hence the spawning event should produce the correct sign.
+
+Since the approximation truncates spawning, the growth phase of the simulation is slower. However, the annihilation plateau disappears. Note that as $N_w\to\infty$, the initiator approximation becomes exact, as all sampled states are initiators. While there is a small bias introduced by the initiator approximation, the efficiency is greatly improved and the range of potential applications is greatly increased.\todo{citations}
 
 \subsection{Reduced Density Matrix Sampling}
 \todo{necessary for our studies}
