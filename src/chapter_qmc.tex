@@ -44,7 +44,7 @@ More generally, consider the integral of some smooth function $f$ over $[a,b]\su
 Standard finite element methods for solving integrals of this type typically involving dividing the integration domain into $N$ subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. The error $\sigma$ in these sorts of methods is typically $\sigma\propto h^{-k} \propto N^{-k}$, where $k\in\mathbb{Z}_{>0}$. For a multi-dimensional integral, $\sigma\propto N^{-k/d}$, where $d$ is the number of dimensions.\cite{ascherFirst2011}
 % I am mostly following the discussion and notation in Thijssen's book -- remember to cite it along with all the primary references
 
-In \gls{MC} methods,\todo{citations} $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled. For uniformly sampled points, t`he variance is then
+In \gls{MC} methods,\todo{citations} $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled. For uniformly sampled points, the variance is then
 \begin{align}
     \sigma^2 &= \left\langle \left( \frac{b-a}{N}\sum^N_{i=1}f_i\right)2\right\rangle - \left( \left\langle  \frac{b-a}{N}\sum^N_{i=1}f_i\right\rangle\right)^2 \\
     &= \frac{(b-a)^2}{N}(\bar{f^2} - \bar f^2)
@@ -310,6 +310,7 @@ The key advantage of \gls{FCIQMC} over ordinary \gls{FCI} is no longer needing t
 Each step can be recognised in the application of the projector operator of equation \ref{eq:fciqmc_projector} onto some state
 $\ket\Psi = \sum_i c_i\ket{D_i}$,
 \begin{equation}
+    \label{eq:fciqmc_projector_application}
     P\ket\Psi = \ket\Psi \underset{(c)}{\underset{\uparrow}{-}} \underbrace{\sum_{i}\sum_{j\neq i}\Delta\tau H_{ji}c_i\ket{D_j}}_{(a)} \underset{(c)}{\underset{\uparrow}{-}} \underbrace{\sum_i (\Delta\tau(H_{ii}-S))c_i\ket{D_i}}_{(b)},
 \end{equation}
 where the right-hand side of the equation is the new wave function, $\ket{\Psi(\tau+\Delta\tau)}$. Or, in terms of the coefficients (relabelling $i\leftrightarrow j$ in the $(a)$ terms),
@@ -323,9 +324,28 @@ In practice, we start the algorithm with a population of walkers on a reference 
 \end{equation}
 where $E_\mathrm{ref}\mathdef\bra{\Psi_\mathrm{ref}}H\ket{\Psi_\mathrm{ref}}$ is the energy of the reference energy. However, FCIQMC is capable of adapting to a new reference determinant whenever another determinant exceeds the population of the reference determinant, and is not single-reference like canonical coupled cluster, for example. This shift is primarily a convenience.
 
+The basic \gls{FCIQMC} algorithm can be summarised by the following pseudocode (with further details below):
+
+\begin{minipage}{\textwidth}
+\begin{lstlisting}[escapeinside={(*}{*)}]
+    Initialise (*$N_\mathrm{start}$*) walkers on the reference determinant.
+    until stop criterion met
+        for each occupied determinant (*$D_i$*)
+            select a random determinant based on (*$p_\mathrm{gen}$*)
+            (*$\textbf{spawn}$*) (*$p_s(j|i)$*) determinants on (*$D_j$*)
+        for each occupied determinant (*$D_i$*)
+            remove (*$p_d$*) ((*$\textbf{death/cloning}$*)) walkers from (*$D_i$*)
+        for each occupied determinant (*$D_i$*)
+            (*$\textbf{annihilate}$*) opposite signed walkers
+        calculate the projected energy
+        if (*$\sum |N_i|\ge N_w$*)
+            update (*$S$*).
+\end{lstlisting}
+\end{minipage}
+
 \subsubsection{Spawning}
 
-The first step, spawning, is realised by the application of the off-diagonal matrix elements. In this step, each walker on \gls{SD} $D_i$ may spawn a new set of walkers to connected\footnote{$D_i$ and $D_j$ are said to be connected if $\bra{D_i}H\ket{D_j}\neq 0$} \gls{SD} $D_j$. As we are sampling the sum $\Delta\tau\sum_{j\neq i} H_{ij}c_j(\tau)$, as in the Metropolis-Hastings algorithm, it is beneficial (in terms of efficiency) to sample more where $H_{ij}$ is larger. That is, the probability of spawning on $D_j$ from $D_i$, denoted $p_\mathrm{gen}(j|i)$ (the generation probability) should be proportional to $H_{ij}$. Finally, the spawning probability is
+The first step, spawning, is realised by the application of the off-diagonal matrix elements. In this step, each walker on \gls{SD} $D_i$ may spawn a new set of walkers to connected\footnote{$D_i$ and $D_j$ are said to be connected if $\bra{D_i}H\ket{D_j}\neq 0$.} \gls{SD} $D_j$. As we are sampling the sum $\Delta\tau\sum_{j\neq i} H_{ij}c_j(\tau)$, as in the Metropolis-Hastings algorithm, it is beneficial (in terms of efficiency) to sample more where $H_{ij}$ is larger. That is, the probability of spawning on $D_j$ from $D_i$, denoted $p_\mathrm{gen}(j|i)$ (the generation probability) should be proportional to $H_{ij}$. Finally, the spawning probability is
 \begin{equation}
     p_s(j|i) = \Delta\tau\frac{|H_{ij}|}{p_\mathrm{gen}(j|i)}.
 \end{equation}
@@ -333,17 +353,23 @@ The first step, spawning, is realised by the application of the off-diagonal mat
 Thus, at each FCIQMC iteration, every determinant $D_i$ spawns $N_ip_s(j|i)$ new walkers on a determinant $D_j$ selected by an excitation generation algorithm.\todo{citations: pchb, umrigar, etc.} Here, $N_i$ is the (signed) number of walkers on $D_i$. If $H_{ij} < 0$ then the child walkers are the same sign as the parent; otherwise, they have opposite sign. The original formulation of the algorithm used integer number of walkers, and spawned a walker with probability $p_s(j|i)$ per walker on $N_i$, but it is more efficient to simply use noninteger values and spawn $p_s(j|i)$ walkers.
 
 \subsubsection{Death/Cloning}
-\todo{diagonal step}
+
+The death/cloning step is characterised by the diagonal matrix elements. In this step, $p_d$ walkers are removed from the simulation\footnote{The original formulation removed (or cloned) walkers with a probability of $p_d$.} where
+\begin{equation}
+    p_d = \Delta\tau(H_{ii}-S).
+\end{equation}
+Notice that if $p_d$ is the same sign as the walker, then the number of walkers on $D_i$ increases (hence ``cloning'', as opposed to ``death''). ``Cloning'' is especially common in the growth stage of the population, where the population is growing exponentially towards $N_w$.
 
 \subsubsection{Annihilation}
-\todo{adding everything together}
-\todo{mention in particular that it is not easily parallelised unlike the other steps!}
+
+After spawning and death/cloning, we may have walkers of opposite sign on the same determinant. This is dealt with in the ``annihilation'' step of the algorithm, realised combining the terms in equation \ref{eq:fciqmc_projector_application}. This step, while simple in principle, amounts to cancelling opposite walkers. Determinants without walkers left on them are then removed as well, to keep the storage of $\ket\Psi$ sparse. However, so far the steps have all been embarrassingly parallel, but in this step we need to communicate in order to locate determinants on the same determinant, so this step is critical for parallelisation. Nevertheless, efficient implementations such as in \neci is able to scale efficiently to over 40000 cores.\todo{citation}
 
 \subsection{Energy Estimators}
 
 \todo{shift energy, projected energy, trial energy}
 
 \subsection{Annihilation Plateaus}
+
 % \subsection{The Sign Problem in FCIQMC}
 
 \todo{special kind of sign problem}
