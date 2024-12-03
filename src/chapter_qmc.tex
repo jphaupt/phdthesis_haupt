@@ -287,7 +287,7 @@ Like \gls{FCI}, the wave function is expanded in some basis. Throughout this dis
     \ket{\Psi(\tau)} = \sum_i c_i(\tau)\ket{D_i}.
 \end{equation}
 
-Like in \gls{DMC}, we adjust $S$ to approximate the ground state energy $E_0$, as $S=E_0$ would project out all states other than the ground state, as long as $\braket{\Psi(\tau=0)|\Psi_0}\neq 0$ where $\ket{\Psi_0}$ is the ground state. Similarly, $S$ affects the walker population. In particular, for walker population $N_w$, if $S>E_0$ then the population grows, and if $S<E_0$ it decays. If we have a target population $N_w$ then we keep $S>E_0$ (typically, just by setting $S=0$) and ``turn on'' the shift once $N_w$ is reached. However, unlike DMC, \gls{FCIQMC} walks can have either negative or positive weight. These weights correspond to the $c_i$, and the walkers ``diffuse'' across \gls{SD} (or \gls{CSF}) space. The walker population is reported in terms of absolute values, i.e.
+Like in \gls{DMC}, we adjust $S$ to approximate the ground state energy $E_0$, as $S=E_0$ would project out all states other than the ground state, as long as $\braket{\Psi(\tau=0)}{\Psi_0}\neq 0$ where $\ket{\Psi_0}$ is the ground state. Similarly, $S$ affects the walker population. In particular, for walker population $N_w$, if $S>E_0$ then the population grows, and if $S<E_0$ it decays. If we have a target population $N_w$ then we keep $S>E_0$ (typically, just by setting $S=0$) and ``turn on'' the shift once $N_w$ is reached. However, unlike DMC, \gls{FCIQMC} walks can have either negative or positive weight. These weights correspond to the $c_i$, and the walkers ``diffuse'' across \gls{SD} (or \gls{CSF}) space. The walker population is reported in terms of absolute values, i.e.
 \begin{equation}
     N_w = \sum_{i\in\{SDs\}}|N_i|,
 \end{equation}
@@ -322,9 +322,9 @@ In practice, we start the algorithm with a population of walkers on a reference 
 \begin{equation}
     K_{ij} = H_{ij} - E_\mathrm{ref}\delta_{ij}
 \end{equation}
-where $E_\mathrm{ref}\mathdef\bra{\Psi_\mathrm{ref}}H\ket{\Psi_\mathrm{ref}}$ is the energy of the reference energy. However, FCIQMC is capable of adapting to a new reference determinant whenever another determinant exceeds the population of the reference determinant, and is not single-reference like canonical coupled cluster, for example. This shift is primarily a convenience.
+where $E_\mathrm{ref}\mathdef\bra{D_\mathrm{ref}}H\ket{D_\mathrm{ref}}$ is the energy of the reference determinant. However, FCIQMC is capable of adapting to a new reference determinant whenever another determinant exceeds the population of the reference determinant, and is not single-reference like canonical coupled cluster, for example. This shift is primarily a convenience.
 
-The basic \gls{FCIQMC} algorithm can be summarised by the following pseudocode (with further details below):
+The basic \gls{FCIQMC} algorithm can be summarised by the following pseudocode (with further details below). Note that there are many extensions to the basic algorithm, beyond what is discussed in this dissertation.
 
 \begin{minipage}{\textwidth}
 \begin{lstlisting}[escapeinside={(*}{*)}]
@@ -367,17 +367,48 @@ After spawning and death/cloning, we may have walkers of opposite sign on the sa
 \subsection{Energy Estimators}
 \label{sec:fciqmc_energy_estimators}
 
-\todo{shift energy, projected energy, trial energy}
+The shift $S$ is updated to approximate $E_0$, so we already have an estimator for the energy. However, since $S$ is used to also control the population, this estimator can be noisy.\todo{citations}
+
+A more commonly used energy estimator is the projected energy,
+\begin{equation}
+    \label{eq:projected_energy}
+    E_\mathrm{proj} = \frac{\bra{D_\mathrm{ref}}\hat H\ket{\Psi}}{\braket{D_\mathrm{ref}}{\Psi}},
+\end{equation}
+where we project onto the reference (most occupied) determinant.\footnote{While it may be tempting to instead use the energy estimator $\bra{\Psi}\hat H\ket{\Psi}/\braket{\Psi}{\Psi}$, this comes with a prohibitive cost, and has a bias.\todo{citations (see Werner's thesis)}}
+
+In principle, any wave function could be used in place of the trial determinant in equation \ref{eq:projected_energy} (so long as it has nonzero overlap with $\ket\Psi$). The choice of the reference determinant is for ease of computation, and because the larger the overlap with $\ket\Psi$, the smaller the error in the stochastic sampling. Since the reference determinant (by definition) has the largest number of walkers on it, it is the sensible choice for a single-determinant projected energy.
+
+Another energy estimator is the ``trial energy'', which is just the projected energy on a multi-determinant wave function instead of $\ket{D_\mathrm{ref}}$. In this method, after some time in variable shift mode, a ``trial space'' is constructed based on the top $N_T$ determinants. The Hamiltonian spanned within the trial space is diagonalised exactly (sparsely or densely), and the eigenvector $\ket{\Psi_\mathrm{trial}}$ is stored. Then, the trial projected energy can be calculated as
+\begin{equation}
+    E_\mathrm{trial} = \frac{\bra{\Psi_\mathrm{trial}}\hat H\ket{\Psi}}{\braket{\Psi_\mathrm{trial}}{\Psi}}.
+\end{equation}
+Note that while this is expected to reduce the error in the energy estimator, it also increases the cost by a factor of $N_T$.
+
+An example of these energy estimators is shown in figure \ref{fig:fciqmc_energy_estimators}. As in other \gls{QMC} methods, these energy estimators have autocorrelation, so in reporting the values, a blocking analysis is required.\todo{citations}
+
+\begin{figure}[htbp]
+    \centering
+    \todo{plots for projected energies}
+    \caption{An example of the energy estimators used in an FCIQMC simulation. The shift is the most noisy, whereas the trial energy is the least noisy, but only available in variable shift mode and carries the highest cost. \todo{mention the system and basis!}}
+    \label{fig:fciqmc_energy_estimators}
+\end{figure}
 
 \subsection{Annihilation Plateaus}
 
-% \subsection{The Sign Problem in FCIQMC}
+\gls{FCIQMC} has its own kind of sign problem in the form of resolving the correct relative sign structure of the sampled states in the \gls{CI} vector.\todo{citations} This manifests in the form of a so-called ``annihilation plateau'', illustrated in figure \ref{fig:annihilation_plateau}.
 
-\todo{special kind of sign problem}
-\todo{figure?}
+In this stage of the simulation, walkers are being spawned with incoherent signs, causing a massive amount of walker annihilation. This causes the population to stay relatively constant, until the sign structure is finally resolved and the population continues to grow again. The height of the plateau (i.e. the constant number of walkers where the simulation stagnates) quantifies the difficulty of the sign problem. In particular, for certain large systems, it can be prohibitively expensive to overcome.\todo{citations (see Kai thesis)} If we are below the annihilation plateau, then the original formulation of \gls{FCIQMC} is not reliable, as the correct sign structure is not yet resolved.
+
+\begin{figure}[htbp]
+    \centering
+    \todo{figure}
+    \caption{An example of an annihilation plateau in the context of a \gls{FCIQMC} simulation. Despite not yet reaching the target population, the total population is roughly constant before increasing again. This stage is referred to as the plateau, and the higher the plateau, the more difficult the sign problem is. \todo{describe exactly what system this is!}}
+    \label{fig:annihilation_plateau}
+\end{figure}
 
 \subsection{The Initiator Approximation}
 \todo{ameliorates the sign problem}
+\todo{mention the initiator bias}
 
 \subsection{Reduced Density Matrix Sampling}
 \todo{necessary for our studies}
