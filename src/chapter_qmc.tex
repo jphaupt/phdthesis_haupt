@@ -51,7 +51,7 @@ In \gls{MC} methods, $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled
 \end{align}
 where $f_i\mathdef f(x_i)$ and $x_i$ is a random number drawn, the angular brackets denote an average over all possible realisations, and the overbar represents an average of the function over the domain ($[a,b]$ in this discussion). i.e. the error in this method is proportional to the variance of $f$. Perhaps more interestingly, $\sigma\propto N^{-1/2}$, in line with the central limit theorem.\supercite{bernoulliJacobi1713} Comparing this error with standard quadrature, we see that MC integration is moroe efficient than an order-$k$ algorithm when $d>2k$. That is, although this particular \gls{MC} example is naive, using simply a uniform distribution, it is still more efficient than standard methodologies for very large dimensions.
 
-There exist several methods to reduce errors in \gls{MC} methods.\supercite{jamesMonte1980} Among the most important ones is importance sampling. In the prevous example, it is clear that if significant contributions to the integral come from a small region of the domain, only a few points would be sampled by the \gls{MC} algorithm there. This would lead to large statistical errors. Mathematically, this is from the large variance of the function. In importance sampling, we sample from a distribution $p$ which has roughly the same shape as $f$ such that $f/p$ is roughly constant over the integration domain. Of course, being a probability distribution, we require
+There exist several methods to reduce errors in \gls{MC} methods.\supercite{jamesMonte1980} Among the most important ones is importance sampling.\supercite{kahnModification1959} In the prevous example, it is clear that if significant contributions to the integral come from a small region of the domain, only a few points would be sampled by the \gls{MC} algorithm there. This would lead to large statistical errors. Mathematically, this is from the large variance of the function. In importance sampling, we sample from a distribution $p$ which has roughly the same shape as $f$ such that $f/p$ is roughly constant over the integration domain. Of course, being a probability distribution, we require
 \begin{equation}
     p(x)>0 \quad \forall x
 \end{equation}
@@ -80,9 +80,9 @@ In practice it is often difficult to estimate $f$, and a choice for $p$ is probl
 
 \subsection{Metropolis-Hastings Algorithm}
 \label{sec:mcmc}
-A particularly successful method for generating random samples $x_i$ from a probability distribution $\pi(x)$, where direct sampling of $\pi$ is difficult, is the Metropolis-Hastings algorithm.\todo{citation} Often, $\pi(x)$ is known only up to a normalisation constant, $\pi(x)=\pi(x)/C$ where $C=\int\d x\ \pi(x)$ is intractible.
+A particularly successful method for generating random samples $x_i$ from a probability distribution $\pi(x)$, where direct sampling of $\pi$ is difficult, is the Metropolis-Hastings algorithm.\supercite{metropolisEquation1953,hastingsMonte1970} Often, $\pi(x)$ is known only up to a normalisation constant, $\pi(x)=\pi(x)/C$ where $C=\int\d x\ \pi(x)$ is intractible.
 
-The Metropolis-Hastings algorithm is based on Markov chains\todo{cite}, and we construct such a Markov chain so that its stationary distribution is $\pi(x)$, which is to say if the Markov chain starts at $\pi(x)$ for step $t$, it is still $\pi(x)$ for step $t+1$.
+The Metropolis-Hastings algorithm is based on Markov chains,\supercite{markovTheory1954} and we construct such a Markov chain so that its stationary distribution is $\pi(x)$, which is to say if the Markov chain starts at $\pi(x)$ for step $t$, it is still $\pi(x)$ for step $t+1$.
 
 The probability of having a sequence of states $x_1,x_2,\ldots,x_N$ is
 \begin{equation}
@@ -119,7 +119,7 @@ If we accept, we set the new state to $x$, otherwise we stay at $x'$.
 
 In practice, on a computer, accepting is done by generating a random number $r\in [0,1)$ and accepting if $r<\frac{\pi(x')}{\pi(x)}$, and otherwise rejecting. Furthermore, we don't just have a single Markov chain, but a collection of so-called ``walkers'', that each perform their own Markov chain. The integrand is then sampled at each position where the walkers reach.
 
-One final note, is that since the current state of a Markov chain is dependent on the previous state, the Markov chain is not independent of itself. This is referred to as autocorrelation.\todo{cite} One method to reduce this autocorrelation and give essentially independent samples is known as blocking.\todo{cite}
+One final note, is that since the current state of a Markov chain is dependent on the previous state, the Markov chain is not independent of itself. This is referred to as autocorrelation. One method to reduce this autocorrelation and give essentially independent samples is known as blocking.\supercite{flyvbjergError1989}
 
 \section{Variational (Quantum) Monte Carlo}
 \label{sec:vmc}
@@ -136,7 +136,7 @@ We may calculate this integral using \gls{MC}, varying the parameters and stoppi
 \begin{equation}
     E_L(\bm r) = \frac{H\Psi}{\Psi}.
 \end{equation}
-Notice that the more strongly $\Psi$ resembles the exact wave function, the less strongly $E_L$ varies with $\bm r$. In particular, if $\Psi$ is equal to an exact eigenstate, then $E_L$ is constant. Therefore, an alternative objective function to the energy expectation of equation \ref{eq:vmc_energy} is the variance.\todo{cite}
+Notice that the more strongly $\Psi$ resembles the exact wave function, the less strongly $E_L$ varies with $\bm r$. In particular, if $\Psi$ is equal to an exact eigenstate, then $E_L$ is constant. Therefore, an alternative objective function to the energy expectation of equation \ref{eq:vmc_energy} is the variance.\supercite{cuzzocreaVariational2020,snajdrAre2000,kentMonte1999}
 
 Defining
 \begin{equation}
@@ -173,18 +173,20 @@ The energy is then calculated as the expectation value of the local energy, aver
 
 While \gls{VMC} is a powerful tool, the quality of the solution is constrained by the quality of the trial wave function. Moreover, the evluation of the trial wave function is expensive, and we therefore want a form that is easy to evaluate.
 
-The form of the trial wave function is typically chosen based on a Jastrow factor, as already introduced in section \ref{sec:tc}. Generally,
+The form of the trial wave function is typically chosen based on a Jastrow factor, as already introduced in section \ref{sec:tc}. Generally,\supercite{jastrowManyBody1955}
 \begin{equation}
     \Psi_\mathrm{trial} = \e^J\Phi.
 \end{equation}
 
-For computational efficiency, the Jastrow factor typically only retains one- and two-body terms,
+For computational efficiency, the Jastrow factor typically only retains one- and two-body terms,\supercite{foulkesQuantum}
 \begin{equation}
     J = \sum_i \chi(\bm x_i) - \frac 12 \sum_{i\neq j} u(\bm x_i, \bm x_j),
 \end{equation}
-where $\chi$ describes electron-nuclear correlation and $u$ describes two-electron correlation. There exist a number of more specific forms for $J$\todo{citations}, though one unifying principle is for them to adhere to expected short-range (cusp conditions) and long-range ($1/r$) behaviour.
+where $\chi$ describes electron-nuclear correlation and $u$ describes two-electron correlation. There exist a number of more specific forms for $J$,\supercite{lopezriosFrameworkConstructingGeneric2012} though one unifying principle is for them to adhere to expected short-range (cusp conditions) and long-range ($1/r$) behaviour.
 
-$\Phi$ is typically chosen to be a single Slater determinant.\todo{citations} In particular, by choosing the \gls{HF} determinant, typically only a small portion of the energy (that is, the correlation energy) is left for the Jastrow factor to describe, and typically even simple Jastrow factors can do this.\todo{cite: see Foulkes} However, sometimes this is not enough, for example, when the HF determinant is not sufficient to describe all symmetries of the true wave function.\todo{citations}
+$\Phi$ is typically chosen to be a single Slater determinant.\supercite{foulkesQuantum,fahyVariational1988,liCohesive1991,rajagopalQuantum1994,malatestaVariational1997}
+In particular, by choosing the \gls{HF} determinant, typically only a small portion of the energy (that is, the correlation energy) is left for the Jastrow factor to describe, and typically even simple Jastrow factors can do this.\supercite{foulkesQuantum}
+However, sometimes this is not enough, for example, when the HF determinant is not sufficient to describe all symmetries of the true wave function.\supercite{harrisonQuantum1985,lesterRecent1997,umrigarDiffusion1993}
 
 \section{Diffusion Monte Carlo}
 \Gls{DMC} starts by performing a Wick rotation (that is, substitute $t\to i\tau$) in the time-dependent Schr\"odinger equation, equation \ref{eq:schrodinger}, we get the imaginary-time Schr\"odinger equation
@@ -192,11 +194,12 @@ $\Phi$ is typically chosen to be a single Slater determinant.\todo{citations} In
     \label{eq:imag_time_schrodinger}
     \frac{\partial}{\partial\tau}\Psi(\bm r, \tau) = -\hat H \Psi(\bm r, \tau)
 \end{equation}
-This equation is a diffusion (or heat) equation, and $\Psi$ may be interpreted as the density distribution for a large number of independent particles (walkers).\todo{citations} More specifically, the kinetic energy term, being second order, describes the movement of the particles whereas the potential energy term describes generation or annihilation of walkers. The solution of this equation is
+This equation is a diffusion (or heat) equation, and $\Psi$ may be interpreted as the density distribution for a large number of independent particles (walkers).\supercite{fickLiquid1995}
+More specifically, the kinetic energy term, being second order, describes the movement of the particles whereas the potential energy term describes generation or annihilation of walkers. The solution of this equation is
 \begin{equation}
     \Psi(\bm r, \tau) = \e^{(H-S)\tau}\Psi(\bm r, 0),
 \end{equation}
-where we have introduced the energy shift $S$ which is adapted to estimate the ground state energy.\todo{citations}
+where we have introduced the energy shift $S$ which is adapted to estimate the ground state energy.\supercite{kosztinIntroduction1996}
 
 We may also express $\Psi$ in terms of its Green's function, in order to get a form that expresses a small time step,
 \begin{equation}
@@ -211,7 +214,7 @@ also obeys the imaginary-time Schr\"odinger equation, but with the initial condi
     G(\bm r, \bm r'; 0) = \delta(\bm r-\bm r').
 \end{equation}
 
-For small time steps, $G$ may be approximated by the Lie-Trotter-Suzuki decomposition,\todo{cite} i.e. for operators $A$, $A_k$,
+For small time steps, $G$ may be approximated by the Lie-Trotter-Suzuki decomposition,\supercite{lieTheorie1970,trotterProduct1959,suzukiGeneralized1976} i.e. for operators $A$, $A_k$,
 \begin{equation}
     A = \sum_kA_k \implies \e^{-\alpha A} = \left( \prod_k e^{-\alpha A_k/M} \right)^M
 \end{equation}
@@ -257,13 +260,12 @@ However, in practice a trial wave function is actually necessary for fermions, a
 % % may can skip AFQMC? Don't really see a point to including a full discussion of this method
 % \section{The Fermion Sign Problem}
 % \label{sec:sign_problem}
-% \todo{make sure to mention the fixed node approximation here}
 % maybe can also skip the fermion sign problem since it's not super relevant for me, just mention it vaguely in the DMC section
 
 \section{Full Configuration Interaction Quantum Monte Carlo}
 \label{sec:fciqmc}
 
-The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.\todo{citations} For this, there exist a few different implementations,\cite{Guther_neci_2020,spencerHANDEQMC2019b,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.\cite{Guther_neci_2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains expoential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\todo{citations}
+The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.\supercite{booth_fciqmc_2009} For this, there exist a few different implementations,\cite{Guther_neci_2020,spencerHANDEQMC2019b,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.\cite{Guther_neci_2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains expoential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\supercite{dobrautzSpinPure2021,weserStochastic2022}
 
 \subsection{Main Concepts}
 
@@ -282,7 +284,7 @@ Expanding $\e^{-\tau\hat H}$ to first order in small imaginary time step $\Delta
 \end{equation}
 where we have introduced an arbitrary shift $S$ in analogy to \gls{DMC}. Notice, in particular, that if $S=E_0$ the ground state energy, all other states decay away. Hence, repeated application of $P$ while adjusting $S$ to get as close to $E_0$ as possible will give us the ground state, as long as our initial state has nonzero overlap with the ground state.
 
-Like \gls{FCI}, the wave function is expanded in some basis. Throughout this dissertation, \glspl{SD} are used, though \glspl{CSF} are also possible.\todo{cite Werner guga} The basis will be kept constant, and the coefficients may change with each time step,
+Like \gls{FCI}, the wave function is expanded in some basis. Throughout this dissertation, \glspl{SD} are used, though \glspl{CSF} are also possible.\supercite{dobrautzEfficient2019} The basis will be kept constant, and the coefficients may change with each time step,
 \begin{equation}
     \ket{\Psi(\tau)} = \sum_i c_i(\tau)\ket{D_i}.
 \end{equation}
@@ -350,7 +352,8 @@ The first step, spawning, is realised by the application of the off-diagonal mat
     p_s(j|i) = \Delta\tau\frac{|H_{ij}|}{p_\mathrm{gen}(j|i)}.
 \end{equation}
 
-Thus, at each FCIQMC iteration, every determinant $D_i$ spawns $N_ip_s(j|i)$ new walkers on a determinant $D_j$ selected by an excitation generation algorithm.\todo{citations: pchb, umrigar, etc.} Here, $N_i$ is the (signed) number of walkers on $D_i$. If $H_{ij} < 0$ then the child walkers are the same sign as the parent; otherwise, they have opposite sign. The original formulation of the algorithm used integer number of walkers, and spawned a walker with probability $p_s(j|i)$ per walker on $N_i$, but it is more efficient to simply use noninteger values and spawn $p_s(j|i)$ walkers.
+Thus, at each FCIQMC iteration, every determinant $D_i$ spawns $N_ip_s(j|i)$ new walkers on a determinant $D_j$ selected by an excitation generation algorithm.\supercite{neufeldExciting2019,liFast2018,weserExploiting2023}
+Here, $N_i$ is the (signed) number of walkers on $D_i$. If $H_{ij} < 0$ then the child walkers are the same sign as the parent; otherwise, they have opposite sign. The original formulation of the algorithm used integer number of walkers, and spawned a walker with probability $p_s(j|i)$ per walker on $N_i$, but it is more efficient to simply use noninteger values and spawn $p_s(j|i)$ walkers.
 
 \subsubsection{Death/Cloning}
 
@@ -362,42 +365,43 @@ Notice that if $p_d$ is the same sign as the walker, then the number of walkers 
 
 \subsubsection{Annihilation}
 
-After spawning and death/cloning, we may have walkers of opposite sign on the same determinant. This is dealt with in the ``annihilation'' step of the algorithm, realised by combining the terms in equation \ref{eq:fciqmc_projector_application}. This step, while simple in principle, amounts to cancelling opposite walkers. Determinants without walkers left on them are then removed as well, to keep the storage of $\ket\Psi$ sparse. However, so far the steps have all been embarrassingly parallel, but in this step we need to communicate in order to locate determinants on the same determinant, so this step is critical for parallelisation. Nevertheless, efficient implementations such as in \neci is able to scale efficiently to over 40000 cores.\todo{citation}
+After spawning and death/cloning, we may have walkers of opposite sign on the same determinant. This is dealt with in the ``annihilation'' step of the algorithm, realised by combining the terms in equation \ref{eq:fciqmc_projector_application}. This step, while simple in principle, amounts to cancelling opposite walkers. Determinants without walkers left on them are then removed as well, to keep the storage of $\ket\Psi$ sparse. However, so far the steps have all been embarrassingly parallel, but in this step we need to communicate in order to locate determinants on the same determinant, so this step is critical for parallelisation. Nevertheless, efficient implementations such as in \neci is able to scale efficiently to over 40000 cores.\supercite{Booth2014}
 
 \subsection{Energy Estimators}
 \label{sec:fciqmc_energy_estimators}
 
-The shift $S$ is updated to approximate $E_0$, so we already have an estimator for the energy. However, since $S$ is used to also control the population, this estimator can be noisy.\todo{citations}
+The shift $S$ is updated to approximate $E_0$, so we already have an estimator for the energy. However, since $S$ is used to also control the population, this estimator can be noisy.\supercite{booth_fciqmc_2009}
 
 A more commonly used energy estimator is the projected energy,
 \begin{equation}
     \label{eq:projected_energy}
     E_\mathrm{proj} = \frac{\bra{D_\mathrm{ref}}\hat H\ket{\Psi}}{\braket{D_\mathrm{ref}}{\Psi}},
 \end{equation}
-where we project onto the reference (most occupied) determinant.\footnote{While it may be tempting to instead use the energy estimator $\bra{\Psi}\hat H\ket{\Psi}/\braket{\Psi}{\Psi}$, this comes with a prohibitive cost, and has a bias.\todo{citations (see Werner's thesis)}}
+where we project onto the reference (most occupied) determinant.\footnote{While it may be tempting to instead use the energy estimator $\bra{\Psi}\hat H\ket{\Psi}/\braket{\Psi}{\Psi}$, this comes with a prohibitive cost, and has a bias.\supercite{bluntDensitymatrix2014,booth_fciqmc_2009}
+}
 
 In principle, any wave function could be used in place of the trial determinant in equation \ref{eq:projected_energy} (so long as it has nonzero overlap with $\ket\Psi$). The choice of the reference determinant is for ease of computation, and because the larger the overlap with $\ket\Psi$, the smaller the error in the stochastic sampling. Since the reference determinant (by definition) has the largest number of walkers on it, it is the sensible choice for a single-determinant projected energy.
 
-Another energy estimator is the ``trial energy'', which is just the projected energy on a multi-determinant wave function instead of $\ket{D_\mathrm{ref}}$. In this method, after some time in variable shift mode, a ``trial space'' is constructed based on the top $N_T$ determinants. The Hamiltonian spanned within the trial space is diagonalised exactly (sparsely or densely), and the eigenvector $\ket{\Psi_\mathrm{trial}}$ is stored. Then, the trial projected energy can be calculated as
+Another energy estimator is the ``trial energy'',\supercite{bluntSemistochastic2015,petruzieloSemistochastic2012} which is just the projected energy on a multi-determinant wave function instead of $\ket{D_\mathrm{ref}}$. In this method, after some time in variable shift mode, a ``trial space'' is constructed based on the top $N_T$ determinants. The Hamiltonian spanned within the trial space is diagonalised exactly (sparsely or densely), and the eigenvector $\ket{\Psi_\mathrm{trial}}$ is stored. Then, the trial projected energy can be calculated as
 \begin{equation}
     E_\mathrm{trial} = \frac{\bra{\Psi_\mathrm{trial}}\hat H\ket{\Psi}}{\braket{\Psi_\mathrm{trial}}{\Psi}}.
 \end{equation}
 Note that while this is expected to reduce the error in the energy estimator, it also increases the cost by a factor of $N_T$.
 
-An example of these energy estimators is shown in figure \ref{fig:fciqmc_energy_estimators}. As in other \gls{QMC} methods, these energy estimators have autocorrelation, so in reporting the values, a blocking analysis is required.\todo{citations}
+An example of these energy estimators is shown in figure \ref{fig:fciqmc_energy_estimators}. As in other \gls{QMC} methods, these energy estimators have autocorrelation, so in reporting the values, a blocking analysis is required.\supercite{flyvbjergError1989}
 
 \begin{figure}[htbp]
     \centering
-    \todo{plots for projected energies}
-    \caption{An example of the energy estimators used in an FCIQMC simulation. The shift is the most noisy, whereas the trial energy is the least noisy, but only available in variable shift mode and carries the highest cost. \todo{mention the system and basis!}}
+    \todo{plots for energy estimators: shift, projected, trial}
+    \caption{An example of the energy estimators used in an FCIQMC simulation. The shift is the most noisy, whereas the trial energy is the least noisy, but only available in variable shift mode and carries the highest cost. \AA \todo{mention the system and basis!}}
     \label{fig:fciqmc_energy_estimators}
 \end{figure}
 
 \subsection{Annihilation Plateaus}
 
-\gls{FCIQMC} has its own kind of sign problem in the form of resolving the correct relative sign structure of the sampled states in the \gls{CI} vector.\todo{citations} This manifests in the form of a so-called ``annihilation plateau'', illustrated in figure \ref{fig:annihilation_plateau}.
+\gls{FCIQMC} has its own kind of sign problem in the form of resolving the correct relative sign structure of the sampled states in the \gls{CI} vector.\supercite{spencerSignProblemPopulation2012} This manifests in the form of a so-called ``annihilation plateau'', illustrated in figure \ref{fig:annihilation_plateau}.
 
-In this stage of the simulation, walkers are being spawned with incoherent signs, causing a massive amount of walker annihilation. This causes the population to stay relatively constant, until the sign structure is finally resolved and the population continues to grow again. The height of the plateau (i.e. the constant number of walkers where the simulation stagnates) quantifies the difficulty of the sign problem. In particular, for certain large systems, it can be prohibitively expensive to overcome.\todo{citations (see Kai thesis)} If we are below the annihilation plateau, then the original formulation of \gls{FCIQMC} is not reliable, as the correct sign structure is not yet resolved.
+In this stage of the simulation, walkers are being spawned with incoherent signs, causing a massive amount of walker annihilation. This causes the population to stay relatively constant, until the sign structure is finally resolved and the population continues to grow again. The height of the plateau (i.e. the constant number of walkers where the simulation stagnates) quantifies the difficulty of the sign problem. In particular, for certain large systems, it can be prohibitively expensive to overcome. If we are below the annihilation plateau, then the original formulation of \gls{FCIQMC} is not reliable, as the correct sign structure is not yet resolved.
 
 \begin{figure}[htbp]
     \centering
@@ -408,15 +412,15 @@ In this stage of the simulation, walkers are being spawned with incoherent signs
 
 \subsection{The Initiator Approximation}
 
-Since incoherent walker proliferation is a major source of the annihilation plateau, a sensible strategy to overcome this is by forcing growth to be coherent. This is achieved by the initiator approximation\todo{citation}. An \gls{FCIQMC} calculation with the initiator approximation is sometimes referred to as i-FCIQMC; however, since the approximation is so useful and ubiqituous, we simply referred to as FCIQMC. Indeed, in this dissertation all FCIQMC calculations used the initiator approximation, unless otherwise specified.
+Since incoherent walker proliferation is a major source of the annihilation plateau, a sensible strategy to overcome this is by forcing growth to be coherent. This is achieved by the initiator approximation.\supercite{Cleland_initiator_2010} An \gls{FCIQMC} calculation with the initiator approximation is sometimes referred to as i-FCIQMC; however, since the approximation is so useful and ubiqituous, we simply referred to as FCIQMC. Indeed, in this dissertation all FCIQMC calculations used the initiator approximation, unless otherwise specified.
 
 The initiator approximation allows only those determinants (dubbed ``initiators'') with at least $N_\mathrm{thresh}$ walkers to spawn new walkers on unoccupied determinants. If the population is greater than this threshold, the assumption is that the (relative) sign of that state is correct, and hence the spawning event should produce the correct sign.
 
-Since the approximation truncates spawning, the growth phase of the simulation is slower. However, the annihilation plateau disappears. Note that as $N_w\to\infty$, the initiator approximation becomes exact, as all sampled states are initiators. While there is a small bias introduced by the initiator approximation, the efficiency is greatly improved and the range of potential applications is greatly increased.\todo{citations}
+Since the approximation truncates spawning, the growth phase of the simulation is slower. However, the annihilation plateau disappears. Note that as $N_w\to\infty$, the initiator approximation becomes exact, as all sampled states are initiators. While there is a small bias introduced by the initiator approximation, the efficiency is greatly improved and the range of potential applications is greatly increased.
 
 \subsection{Reduced Density Matrix Sampling}
 \label{sec:fciqmc_rdm}
-As described in section \ref{sec:density-matrices}, reduced density matrices are a useful tool for understanding the properties of a system. These can be sampled in \gls{FCIQMC} by considering the RDMs in the same basis.\todo{citation} The \gls{1RDM} is given by
+As described in section \ref{sec:density-matrices}, reduced density matrices are a useful tool for understanding the properties of a system. These can be sampled in \gls{FCIQMC} by considering the RDMs in the same basis.\supercite{overyUnbiased2014} The \gls{1RDM} is given by
 \begin{equation}
     \gamma_{pq} = \sum_{ij} c_ic_j \bra{D_i}a_p^\dag a_q\ket{D_j}
 \end{equation}
@@ -430,7 +434,7 @@ Note also that by inserting the Hamiltonian (energy) operator into equation \ref
 
 \subsection{Combining TC with Modern Electronic Structure}
 
-The \gls{FCIQMC} algorithm may also be combined with the \gls{TC} method described in section \ref{sec:tc}.\todo{citations} Consider solving for the eigenstates $\Phi$ of the TC Hamiltonian $\htc$ using the imaginary-time Schr\"odinger equation,
+The \gls{FCIQMC} algorithm may also be combined with the \gls{TC} method described in section \ref{sec:tc}.\supercite{Luo_tc_fciqmc_2018} Consider solving for the eigenstates $\Phi$ of the TC Hamiltonian $\htc$ using the imaginary-time Schr\"odinger equation,
 \begin{equation}
     -\frac{\partial}{\partial\tau}\Phi = (\htc - S)\Phi.
 \end{equation}
@@ -446,4 +450,4 @@ However, since $\htc$ is non-Hermitian, the coefficients $\tilde c_i$ of the lef
 \end{equation}
 and we must be careful when considering matrix connections $\bra{D_i}\htc\ket{D_j}$ and $\bra{D_j}\htc\ket{D_i}$. In particular, the probability of spawning a walker from $\ket{D_i}$ to $\ket{D_j}$ may not be the same as the probability of spawning from $\ket{D_j}$ to $\ket{D_i}$. Furthermore, when considering replicas such as in RDM sampling, the replica needs to be of the adjoint operator, $\htc^\dag$, in order to target $\tilde c_i$. This is accomplished by a simple transform of the Jastrow factor, $J\to -J$, though this may cause practical complications. Otherwise, \gls{FCIQMC} may be extended to \gls{TC} by simply applying the method directly to $\htc$. An appropriate transformation from $\hat H$ is therefore necessary beforehand.
 
-Similar arguments may be made for applying \gls{TC} to \gls{CC} methods\todo{citations} and \gls{DMRG}\todo{citations}, and \gls{TC} variants of these methods have already been developed and successfully applied.\todo{citations} In addition to TC-FCIQMC, this also continues to be an active area of research.
+Similar arguments may be made for applying \gls{TC} to \gls{CC} methods\supercite{schraivogelTranscorrelated2021,schraivogelTranscorrelated2023} and \gls{DMRG},\supercite{baiardiTranscorrelated2020} and \gls{TC} variants of these methods have already been developed and successfully applied. In addition to TC-FCIQMC, this also continues to be an active area of research.

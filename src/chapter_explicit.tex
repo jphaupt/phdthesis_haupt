@@ -43,13 +43,13 @@ To understand why gaussian-type basis sets fail so spectacularly at capturing th
 
 \section{Hylleraas Methods}
 
-Almost 30 years prior to Kato's landmark paper describing cusps in the analytical form for the wave function, there was already work being done to understand the significance of including $r_{12}$ in the wave function. Instead of being motivated by rigorous mathematics like Kato's, Slater was motivated by studyies in the He atom. In particular, he tried to construct a wave function which faithfully represents both the core region as well as the Rydberg limit (i.e. a highly excited atom where the electron is very far from the nucleus).\cite{kongExplicitly2012,grynbergIntroduction2010,slaterCentralFieldsRydberg1928,slaterNormal1928} This led him to suggest multiplying the wave function by a factor
+Almost 30 years prior to Kato's landmark paper describing cusps in the analytical form for the wave function, there was already work being done to understand the significance of including $r_{12}$ in the wave function. Instead of being motivated by rigorous mathematics like Kato's, Slater was motivated by studyies in the He atom. In particular, he tried to construct a wave function which faithfully represents both the core region as well as the Rydberg limit (i.e. a highly excited atom where the electron is very far from the nucleus).\cite{kongExplicitly2012,grynbergIntroduction2010,slaterCentral1928,slaterNormal1928} This led him to suggest multiplying the wave function by a factor
 \begin{equation}
     \e^{-2(r_1+r_2)+r_{12}/2},
 \end{equation}
 which can easily be shown to satisfy the cusp equation \eqref{eq:cusp}.
 
-However, the first successful explicitly correlated electronic structure calculation is typically attributed to Hylleraas,\cite{hattigExplicitly2012}, where he aimed to improve convergence of orbital expansions for helium.\cite{hylleraasUeber1928,hylleraasNeueBerechnungEnergie1929} In this method, the coordinates $s\mathdef r_1+r_2$, $t\mathdef r_1 - r_2$ and $u\mathdef r_{12}$ are used to construct the wave function
+However, the first successful explicitly correlated electronic structure calculation is typically attributed to Hylleraas,\cite{hattigExplicitly2012}, where he aimed to improve convergence of orbital expansions for helium.\cite{hylleraasUeber1928,hylleraasNeue1929} In this method, the coordinates $s\mathdef r_1+r_2$, $t\mathdef r_1 - r_2$ and $u\mathdef r_{12}$ are used to construct the wave function
 \begin{equation}
     \Psi_N(s,t,u) = \e^{-\alpha s}\sum_{k}^N c_ks^{l_k}t^{2m_k}u^{n_k}.
 \end{equation}
