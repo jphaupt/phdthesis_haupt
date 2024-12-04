@@ -392,8 +392,9 @@ An example of these energy estimators is shown in figure \ref{fig:fciqmc_energy_
 
 \begin{figure}[htbp]
     \centering
-    \todo{plots for energy estimators: shift, projected, trial}
-    \caption{An example of the energy estimators used in an FCIQMC simulation. The shift is the most noisy, whereas the trial energy is the least noisy, but only available in variable shift mode and carries the highest cost. \AA \todo{mention the system and basis!}}
+    \includegraphics[width=0.9\textwidth]{figures/qmc/c2_example.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/qmc/c2_example_zoomed.pdf}
+    \caption{An example of the energy estimators used in an FCIQMC simulation. The shift is the most noisy, whereas the trial energy is the least noisy, but only available in variable shift mode and carries the highest cost. In this case, the trial energy is not a substantial improvement from the reference-projected energy. This calculation was done on the C$_2$ molecule with the \vdz basis, at equilibrium geometry, 1.2425 \AA.}
     \label{fig:fciqmc_energy_estimators}
 \end{figure}
 
@@ -405,8 +406,8 @@ In this stage of the simulation, walkers are being spawned with incoherent signs
 
 \begin{figure}[htbp]
     \centering
-    \todo{figure}
-    \caption{An example of an annihilation plateau in the context of a \gls{FCIQMC} simulation. Despite not yet reaching the target population, the total population is roughly constant before increasing again. This stage is referred to as the plateau, and the higher the plateau, the more difficult the sign problem is. \todo{describe exactly what system this is!}}
+    \includegraphics[width=0.9\textwidth]{figures/qmc/c2_example_plateau.pdf}
+    \caption{An example of an annihilation plateau in the context of a \gls{FCIQMC} simulation. Despite not yet reaching the target population, the total population is roughly constant before increasing again. This stage is referred to as the annihilation plateau, and the higher the plateau, the more difficult the sign problem is. This calculation was done on the C$_2$ molecule with the \vdz basis, at equilibrium geometry, 1.2425 \AA. In this particular case, the plateau appears around $1.36\times 10^7$ walkers, and the target number is $5\times 10^7$.}
     \label{fig:annihilation_plateau}
 \end{figure}
 
