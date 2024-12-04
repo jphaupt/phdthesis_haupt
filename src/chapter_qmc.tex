@@ -6,13 +6,14 @@
 \gls{MC} methods are a class of numerical methods that use random sampling to numerically solve problems. It has found applications in an impressive range of fields, from physics to finance.\supercite{boyleOptions1977,johnsonMonte2024,kroeseWhy2014,rosenbluthMonte1955,foulkesQuantum,thijssenComputational2007}
 It is particularly useful for problems with high dimensionality, where deterministic methods are often impractical. In quantum chemistry and physics, since a `dimension' can refer to any degree of freedom, high-dimensional problems are commonplace, and so \gls{MC} methods are a natural choice.
 
-While the name \emph{Monte Carlo} was coined by Stanislav Ulam, after the famous casino in Monaco,\todo{citation} the foundational concept was already developed in the 18th century by the French mathematician Georges-Louis Leclerc, Comte de Buffon. As one of the earliest example applications, in the Buffon needle problem, one can randomly toss needles onto a lined sheet of paper and determine $\pi$.\supercite{leclercEssai,Histoire1735,senetaNineteenthCentury2001}
+While the name \emph{Monte Carlo} was coined by Stanislav Ulam, after the famous casino in Monaco,\supercite{metropolisMonte1949,metropolisEquation1953} the foundational concept was already developed in the 18th century by the French mathematician Georges-Louis Leclerc, Comte de Buffon. As one of the earliest example applications, in the Buffon needle problem, one can randomly toss needles onto a lined sheet of paper and determine $\pi$.\supercite{leclercEssai,Histoire1735,senetaNineteenthCentury2001}
 
-Monte Carlo methods is a broad term, and as such it is not possible to give a comprehensive overview in a single chapter, and there exist many reviews and textbooks on \gls{MC} and related topics.\todo{citations: see those in thijssen} Here, we will focus on only a few concepts particularly relevant for this dissertation, largely following reference \citenum{foulkesQuantum} and the relevant chapters of reference \citenum{thijssenComputational2007}.
+Monte Carlo methods is a broad term, and as such it is not possible to give a comprehensive overview in a single chapter, and there exist many reviews and textbooks on \gls{MC} and related topics.\supercite{allenComputer1989,binderMonte1986,binderMonte1988,newmanMonte1999,reiherHammersley1966,barKalos1988}
+Here, we will focus on only a few concepts particularly relevant for this dissertation, largely following reference \citenum{foulkesQuantum} and the relevant chapters of reference \citenum{thijssenComputational2007}.
 
 \section{Classical Monte Carlo Methods}
 
-We start our discussion with classical \gls{MC} methods. While there are numerous possible applications, notably in molecular dynamics,\todo{cite} here we restrict ourselves to the topic of Monte Carlo integration. In particular, we consider the classical textbook problem of calculating the value of $\pi$, then we provide a more rigorous framework.
+We start our discussion with classical \gls{MC} methods. While there are numerous possible applications, notably in molecular dynamics,\supercite{allenComputer1989} here we restrict ourselves to the topic of Monte Carlo integration. In particular, we consider the classical textbook problem of calculating the value of $\pi$, then we provide a more rigorous framework.
 
 \subsection{A Very Bad Game of Darts}
 
@@ -43,14 +44,14 @@ More generally, consider the integral of some smooth function $f$ over $[a,b]\su
 Standard finite element methods for solving integrals of this type typically involving dividing the integration domain into $N$ subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. The error $\sigma$ in these sorts of methods is typically $\sigma\propto h^{-k} \propto N^{-k}$, where $k\in\mathbb{Z}_{>0}$. For a multi-dimensional integral, $\sigma\propto N^{-k/d}$, where $d$ is the number of dimensions.\cite{ascherFirst2011}
 % I am mostly following the discussion and notation in Thijssen's book -- remember to cite it along with all the primary references
 
-In \gls{MC} methods,\todo{citations} $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled. For uniformly sampled points, the variance is then
+In \gls{MC} methods, $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled. For uniformly sampled points, the variance is then
 \begin{align}
     \sigma^2 &= \left\langle \left( \frac{b-a}{N}\sum^N_{i=1}f_i\right)2\right\rangle - \left( \left\langle  \frac{b-a}{N}\sum^N_{i=1}f_i\right\rangle\right)^2 \\
     &= \frac{(b-a)^2}{N}(\bar{f^2} - \bar f^2)
 \end{align}
-where $f_i\mathdef f(x_i)$ and $x_i$ is a random number drawn, the angular brackets denote an average over all possible realisations, and the overbar represents an average of the function over the domain ($[a,b]$ in this discussion). i.e. the error in this method is proportional to the variance of $f$. Perhaps more interestingly, $\sigma\propto N^{-1/2}$, in line with the central limit theorem.\todo{citations} Comparing this error with standard quadrature, we see that MC integration is moroe efficient than an order-$k$ algorithm when $d>2k$. That is, although this particular \gls{MC} example is naive, using simply a uniform distribution, it is still more efficient than standard methodologies for very large dimensions.
+where $f_i\mathdef f(x_i)$ and $x_i$ is a random number drawn, the angular brackets denote an average over all possible realisations, and the overbar represents an average of the function over the domain ($[a,b]$ in this discussion). i.e. the error in this method is proportional to the variance of $f$. Perhaps more interestingly, $\sigma\propto N^{-1/2}$, in line with the central limit theorem.\supercite{bernoulliJacobi1713} Comparing this error with standard quadrature, we see that MC integration is moroe efficient than an order-$k$ algorithm when $d>2k$. That is, although this particular \gls{MC} example is naive, using simply a uniform distribution, it is still more efficient than standard methodologies for very large dimensions.
 
-There exist several methods to reduce errors in \gls{MC} methods.\todo{citations} Among the most important ones is importance sampling. In the prevous example, it is clear that if significant contributions to the integral come from a small region of the domain, only a few points would be sampled by the \gls{MC} algorithm there. This would lead to large statistical errors. Mathematically, this is from the large variance of the function. In importance sampling, we sample from a distribution $p$ which has roughly the same shape as $f$ such that $f/p$ is roughly constant over the integration domain. Of course, being a probability distribution, we require
+There exist several methods to reduce errors in \gls{MC} methods.\supercite{jamesMonte1980} Among the most important ones is importance sampling. In the prevous example, it is clear that if significant contributions to the integral come from a small region of the domain, only a few points would be sampled by the \gls{MC} algorithm there. This would lead to large statistical errors. Mathematically, this is from the large variance of the function. In importance sampling, we sample from a distribution $p$ which has roughly the same shape as $f$ such that $f/p$ is roughly constant over the integration domain. Of course, being a probability distribution, we require
 \begin{equation}
     p(x)>0 \quad \forall x
 \end{equation}
@@ -75,7 +76,7 @@ In this case, the variance in the result is
 \end{equation}
 From this, we can see that if $f/p$ is constant, the error vanishes, so it is important to choose a good $p$. If $p$ is chosen poorly, the variance can be worsened, so this is a delicate problem.
 
-In practice it is often difficult to estimate $f$, and a choice for $p$ is problem-specific. However, when we have some approximation for its overall shape, importance sampling can be a powerful tool. Alternatively, another method known as adaptive Monte Carlo\todo{citation} seeks the most significant regions of $f$ by random sampling, so that no a priori knowledge of the functional form is required.
+In practice it is often difficult to estimate $f$, and a choice for $p$ is problem-specific. However, when we have some approximation for its overall shape, importance sampling can be a powerful tool. Alternatively, another method known as adaptive Monte Carlo\cite{arounaAdaptative2004} seeks the most significant regions of $f$ by random sampling, so that no a priori knowledge of the functional form is required.
 
 \subsection{Metropolis-Hastings Algorithm}
 \label{sec:mcmc}
