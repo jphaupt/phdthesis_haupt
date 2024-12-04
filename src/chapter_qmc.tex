@@ -415,7 +415,35 @@ The initiator approximation allows only those determinants (dubbed ``initiators'
 Since the approximation truncates spawning, the growth phase of the simulation is slower. However, the annihilation plateau disappears. Note that as $N_w\to\infty$, the initiator approximation becomes exact, as all sampled states are initiators. While there is a small bias introduced by the initiator approximation, the efficiency is greatly improved and the range of potential applications is greatly increased.\todo{citations}
 
 \subsection{Reduced Density Matrix Sampling}
-\todo{necessary for our studies}
+\label{sec:fciqmc_rdm}
+As described in section \ref{sec:density-matrices}, reduced density matrices are a useful tool for understanding the properties of a system. These can be sampled in \gls{FCIQMC} by considering the RDMs in the same basis. The \gls{1RDM} is given by
+\begin{equation}
+    \gamma_{pq} = \sum_{ij} c_ic_j \bra{D_i}a_p^\dag a_q\ket{D_j}
+\end{equation}
+and the \gls{2RDM} by
+\begin{equation}
+    \Gamma_{pqrs} = \sum_{ijkl} c_ic_j \bra{D_i}a_p^\dag a_q^\dag a_s a_r\ket{D_j}.
+\end{equation}
+In FCIQMC, we have the \gls{CI} coefficients $c_i$ and $c_j$ by the walker distributions. However, using the same simulation for both $c_i$ and $c_j$ introduces a bias, hence to stochastically sample RDMs, we use an independent simultaneous simulation (referred to as a replica). One simulation samples $c_i$ whereas the other samples $c_j$. Since the statistical errors are independent, the overall error is reduced. Unfortunately this requires twice the computing power, but thankfully since the calculations are independent, they are trivially parallelisable.
+
+Note also that by inserting the Hamiltonian (energy) operator into equation \ref{eq:rdm-expectation} and using the replica trick to obtain the RDMs, we can also obtain yet another energy measure in FCIQMC.
 
 \subsection{Combining TC with Modern Electronic Structure}
-\todo{TC + FCIQMC compatibility}
+
+The \gls{FCIQMC} algorithm may also be combined with the \gls{TC} method described in section \ref{sec:tc}.\todo{citations} Consider solving for the eigenstates $\Phi$ of the TC Hamiltonian $\htc$ using the imaginary-time Schr\"odinger equation,
+\begin{equation}
+    -\frac{\partial}{\partial\tau}\Phi = (\htc - S)\Phi.
+\end{equation}
+Since $\htc$ and $\hat H$ are isospectral, we have stationary states for the same values as the non-TC method. That is, we can control the walker population by setting the shift to the ground state energy, $S=E_0$.
+
+The state $\Phi$ is described by a linear combination of \glspl{SD}, as in non-TC-FCIQMC,
+\begin{equation}
+    \ket\Phi = \sum_i c_i \ket{D_i}.
+\end{equation}
+However, since $\htc$ is non-Hermitian, the coefficients $\tilde c_i$ of the left-eigenvector with the same energy are not necessarily the same,
+\begin{equation}
+    \bra\Phi = \sum_i \tilde c_i \bra{D_i},
+\end{equation}
+and we must be careful when considering matrix connections $\bra{D_i}\htc\ket{D_j}$ and $\bra{D_j}\htc\ket{D_i}$. In particular, the probability of spawning a walker from $\ket{D_i}$ to $\ket{D_j}$ may not be the same as the probability of spawning from $\ket{D_j}$ to $\ket{D_i}$. Furthermore, when considering replicas such as in RDM sampling, the replica needs to be of the adjoint operator, $\htc^\dag$, in order to target $\tilde c_i$. This is accomplished by a simple transform of the Jastrow factor, $J\to -J$, though this may cause practical complications. Otherwise, \gls{FCIQMC} may be extended to \gls{TC} by simply applying the method directly to $\htc$. An appropriate transformation from $\hat H$ is therefore necessary beforehand.
+
+Similar arguments may be made for applying \gls{TC} to \gls{CC} methods\todo{citations} and \gls{DMRG}\todo{citations}, and \gls{TC} variants of these methods have already been developed and successfully applied.\todo{citations} In addition to TC-FCIQMC, this also continues to be an active area of research.
