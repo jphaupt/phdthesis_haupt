@@ -1,19 +1,18 @@
 \chapter{Monte Carlo Methods}
 \label{chap:qmc}
-\todo{...}
-\todo{look especially at thijssen and the foulkes review for these sections}
 
 % probably get some inspiration from Kai's and Werner's theses -- focus on FCIQMC
 
-\gls{MC} methods are a class of numerical methods that use random sampling to numerically solve problems. It has found applications in an impressive range of fields, from physics to finance.\todo{citation} It is particularly useful for problems with high dimensionality, where deterministic methods are often impractical. In quantum chemistry and physics, since a `dimension' can refer to any degree of freedom, high-dimensional problems are commonplace, and so \gls{MC} methods are a natural choice.
+\gls{MC} methods are a class of numerical methods that use random sampling to numerically solve problems. It has found applications in an impressive range of fields, from physics to finance.\supercite{boyleOptions1977,johnsonMonte2024,kroeseWhy2014,rosenbluthMonte1955,foulkesQuantum,thijssenComputational2007}
+It is particularly useful for problems with high dimensionality, where deterministic methods are often impractical. In quantum chemistry and physics, since a `dimension' can refer to any degree of freedom, high-dimensional problems are commonplace, and so \gls{MC} methods are a natural choice.
 
-While the name \emph{Monte Carlo} was coined by Stanislav Ulam, after the famous casino in Monaco,\todo{citation} the foundational concept was already developed in the 18th century by the French mathematician Georges-Louis Leclerc, Comte de Buffon. As one of the earliest example applications, in the Buffon needle problem, one can randomly toss needles onto a lined sheet of paper and determine $\pi$.\todo{citation}
+While the name \emph{Monte Carlo} was coined by Stanislav Ulam, after the famous casino in Monaco,\todo{citation} the foundational concept was already developed in the 18th century by the French mathematician Georges-Louis Leclerc, Comte de Buffon. As one of the earliest example applications, in the Buffon needle problem, one can randomly toss needles onto a lined sheet of paper and determine $\pi$.\supercite{leclercEssai,Histoire1735,senetaNineteenthCentury2001}
 
 Monte Carlo methods is a broad term, and as such it is not possible to give a comprehensive overview in a single chapter, and there exist many reviews and textbooks on \gls{MC} and related topics.\todo{citations: see those in thijssen} Here, we will focus on only a few concepts particularly relevant for this dissertation, largely following reference \citenum{foulkesQuantum} and the relevant chapters of reference \citenum{thijssenComputational2007}.
 
 \section{Classical Monte Carlo Methods}
 
-We start our discussion with classical \gls{MC} methods. While there are numerous possible applications, such as molecular dynamics,\todo{cite}, here we restrict ourselves to the topic of Monte Carlo integration. In particular, we consider the classical textbook problem of calculating the value of $\pi$, then we provide a more rigorous framework.
+We start our discussion with classical \gls{MC} methods. While there are numerous possible applications, notably in molecular dynamics,\todo{cite} here we restrict ourselves to the topic of Monte Carlo integration. In particular, we consider the classical textbook problem of calculating the value of $\pi$, then we provide a more rigorous framework.
 
 \subsection{A Very Bad Game of Darts}
 
@@ -416,7 +415,7 @@ Since the approximation truncates spawning, the growth phase of the simulation i
 
 \subsection{Reduced Density Matrix Sampling}
 \label{sec:fciqmc_rdm}
-As described in section \ref{sec:density-matrices}, reduced density matrices are a useful tool for understanding the properties of a system. These can be sampled in \gls{FCIQMC} by considering the RDMs in the same basis. The \gls{1RDM} is given by
+As described in section \ref{sec:density-matrices}, reduced density matrices are a useful tool for understanding the properties of a system. These can be sampled in \gls{FCIQMC} by considering the RDMs in the same basis.\todo{citation} The \gls{1RDM} is given by
 \begin{equation}
     \gamma_{pq} = \sum_{ij} c_ic_j \bra{D_i}a_p^\dag a_q\ket{D_j}
 \end{equation}
