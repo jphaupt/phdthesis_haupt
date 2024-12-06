@@ -30,7 +30,7 @@ This cusp condition was also later generalised.\cite{packCuspConditionsMolecular
 Early literature on the subject suggested that the success of explicitly correlated methods were due to the superior description of short-range correlation effects, and in particular in their much more faithful capturing of the cusp conditions like equation \ref{sec:cusp}.\cite{roothaanAnalytical1960,watsonApproximate1960,weissConfiguration1961,schwartzGround1962}
 However, further study found that the correlation error from a bad description of the wave function around a small sphere centred on the cusp is actually negligible.\cite{coulsonElectron1961,gilbertInterpretation1963,prendergastImpact2001,klopperR122007} Instead, the success of explicitly correlated methods is actually due to the superior description of the overall shape and size of the Coulomb hole, which has a radius on the order of the atomic radius.
 
-To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation\cite{kongExplicitly2012}, but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful due to their lack of practicality.
+To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation,\cite{kongExplicitly2012} but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful due to their lack of practicality.
 
 % \todo{would be nice to think of other ways to add images}
 
@@ -43,13 +43,13 @@ To understand why gaussian-type basis sets fail so spectacularly at capturing th
 
 \section{Hylleraas Methods}
 
-Almost 30 years prior to Kato's landmark paper describing cusps in the analytical form for the wave function, there was already work being done to understand the significance of including $r_{12}$ in the wave function. Instead of being motivated by rigorous mathematics like Kato's, Slater was motivated by studyies in the He atom. In particular, he tried to construct a wave function which faithfully represents both the core region as well as the Rydberg limit (i.e. a highly excited atom where the electron is very far from the nucleus).\cite{kongExplicitly2012,grynbergIntroduction2010,slaterCentral1928,slaterNormal1928} This led him to suggest multiplying the wave function by a factor
+Almost 30 years prior to Kato's landmark paper describing cusps in the analytical form for the wave function, there was already work being done to understand the significance of including $r_{12}$ terms in the wave function. Instead of being motivated by rigorous mathematics like Kato's, Slater was motivated by studies in the He atom. In particular, he tried to construct a wave function which faithfully represents both the core region as well as the Rydberg limit (i.e. a highly excited atom where the electron is very far from the nucleus).\cite{kongExplicitly2012,grynbergIntroduction2010,slaterCentral1928,slaterNormal1928} This led him to suggest multiplying the wave function by a factor
 \begin{equation}
     \e^{-2(r_1+r_2)+r_{12}/2},
 \end{equation}
 which can easily be shown to satisfy the cusp equation \eqref{eq:cusp}.
 
-However, the first successful explicitly correlated electronic structure calculation is typically attributed to Hylleraas,\cite{hattigExplicitly2012}, where he aimed to improve convergence of orbital expansions for helium.\cite{hylleraasUeber1928,hylleraasNeue1929} In this method, the coordinates $s\mathdef r_1+r_2$, $t\mathdef r_1 - r_2$ and $u\mathdef r_{12}$ are used to construct the wave function
+However, the first successful explicitly correlated electronic structure calculation is typically attributed to Hylleraas,\cite{hattigExplicitly2012} where he aimed to improve convergence of orbital expansions for helium.\cite{hylleraasUeber1928,hylleraasNeue1929} In this method, the coordinates $s\mathdef r_1+r_2$, $t\mathdef r_1 - r_2$ and $u\mathdef r_{12}$ are used to construct the wave function
 \begin{equation}
     \Psi_N(s,t,u) = \e^{-\alpha s}\sum_{k}^N c_ks^{l_k}t^{2m_k}u^{n_k}.
 \end{equation}
@@ -71,32 +71,31 @@ However, CI-Hyl methods were to eventually fall out of favour. This is because t
 
 \section{Explicitly Correlated Gaussians}
 
-Boys\cite{boysIntegral1960} and Singer\cite{singerUse1960} independently introduced gaussian basis functions with explicit correlation for calculations on molecules. Much like how gaussian basis functions approximately
+Boys\cite{boysIntegral1960} and Singer\cite{singerUse1960} independently introduced gaussian basis functions with explicit correlation for calculations on molecules.\cite{mitroyTheory2013} These methods are referred to as \glspl{ECG}, or in the case of functions of two electrons, \glspl{GTG}. A spherical \gls{GTG} may be written (with nuclar coordinates $\bm R_1$ and $\bm R_2$) as
+\begin{equation}
+    g(\bm r_1, \bm r_2) = \exp(-\zeta_1|\bm r_1 - \bm R_1|^2 - \zeta_2|\bm r_2 - \bm R_2|^2 - \gamma|\bm r_1 - \bm r_2|^2).
+\end{equation}
+This can be interpreted as two $s$-type orbitals and an interelectronic correlation factor $\e^{-\gamma r_{12}}$.
+While they do not have the correct cusp behaviour, much like how gaussian basis functions approximately capture the electron-nuclear cusp, a linear combination of \glspl{GTG} approximatelycapture the electron-electron cusp.
 
-\todo{}
-% \todo{see Kong reviews}
-\gls{ECG} method developed by Boys and Singer\cite{boysIntegral1960,singerUse1960} (basis with explicit correlation baked in) $r_{ij}^\nu$ replaced by $\exp(-cr_{ij})$.
-One major strength of this approach is that all integrals have closed-form algebraic expressions.\cite{lesterGaussian1964} Later, two-electron correlators, called \gls{GTG} were developed. review article \cite{mitroyTheory2013} Approximate linear r12 by combination of GTGs, avoid nonlinear optimisation \cite{bukowskiNew1994,perssonAccurate1996}
+One major strength of this approach is that all integrals have closed-form algebraic expressions,\cite{lesterGaussian1964} and avoids nonlinear optimisation.\cite{bukowskiNew1994,perssonAccurate1996} \Gls{ECG} methods have been extended to post-Hartre-Fock methods, such as MP2\cite{panGaussian1970,panElectron1972}, and methods to avoid its many difficult integrals have also been developed.\cite{szalewiczNew1982,szalewiczAtomic1983,wenzelAtomic1986,szalewiczAtomic1984,tewWeak2007}
 
-MP2\cite{panGaussian1970,panElectron1972}
-
-
-approaches to avoid difficult integrals\cite{szalewiczNew1982,szalewiczAtomic1983,wenzelAtomic1986,szalewiczAtomic1984,tewWeak2007}
-
-\todo{}
-
-While not as popular as F12 methods (see section \autoref{sec:f12}), \glspl{ECG} have been used for highly accurate variational calculations\cite{korobovCoulomb2000}, as well as for applications outside of standard electron structure theory, such as bosons\cite{vargaPrecise1995}, positronium (a bound state of electron and positron)\cite{bubinGroundstate2011}, and non-Born-Oppenheimer systems\cite{stankeNonBornOppenheimer2009}.
+While not as popular as F12 methods (see section \ref{sec:f12}), \glspl{ECG} have been used for highly accurate variational calculations,\cite{korobovCoulomb2000} as well as for applications outside of standard electron structure theory, such as bosons,\cite{vargaPrecise1995} positronium, (a bound state of electron and positron)\cite{bubinGroundstate2011} and non-Born-Oppenheimer systems.\cite{stankeNonBornOppenheimer2009}
 
 \section{F12 Methods}
 \label{sec:f12}
 
-\subsection{A Historial Perspective: R12 Methods}
+The most influential explicitly correlated class of methods to date are the F12 methods. The core principle of these methods is to
+
+% I think for this section I will largely be pulling from section 4 of \supercite{shiozakiMultireference2013}
+
+% \subsection{A Historial Perspective: R12 Methods}
 \todo{... see review papers haettig pg 30 for basic intro then 35 - 50 then excited state papers}
 
 \todo{revisit}
 brief mention of how it builds on gaussian-type geminals
 
-\subsection{}
+% \subsection{}
 
 \todo{make sure to include some excited state information}
 
@@ -108,13 +107,17 @@ Hirschfelder first introduced a similarity transform method \cite{hirschfelderRe
 
 then was worked on by Boys and Handy \todo{cite}, to be discussed here
 
+uses ideas from \gls{VMC}, discussed more in section \ref{sec:vmc}.
+
 recent renewal of interest (lots and lots of citations) with various applications, including DMRG, quantum computing, etc.
 
 will talk in more detail about the Jastrow factor in section \ref{sec:jastrow} since it is also used in vmc
 
 \todo{also mention biorthogonal orbitals etc.}
 
-\todo{short proof of isospecttrality}
+\todo{short proof of isospectrality}
+
+\todo{reference section \ref{sec:variational_principle} and how it is not trivial to make TC variational since the proof of the variational principle uses the Hermiticity of the operator}
 
 \subsection{The Method of Boys and Handy}
 
