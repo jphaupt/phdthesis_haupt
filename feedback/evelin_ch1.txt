@@ -42,17 +42,17 @@ Terms depending on spin do not appear in your Hamiltonian. Is that considered a 
 
 1.2.2 Core Electrons
 
-- [ ] Some might argue core orbitals would be more accurate since you cannot distinguish electrons. But in qunatum chemistry that distinction is usually ignored anyway.
+- [x] Some might argue core orbitals would be more accurate since you cannot distinguish electrons. But in qunatum chemistry that distinction is usually ignored anyway.
 
 1.2.3 Model Hamiltonian
 
-- [ ] footnote: "is not Nature itself" -> "are not nature itself"
+- [x] footnote: "is not Nature itself" -> "are not nature itself"
 
-- [ ] eq. 1.9. spin sum could be slit off
+- [x] eq. 1.9. spin sum could be slit off
 
 1.3. The Variational Principle
 
-- [ ] The requirement that H must be Hermitian for the variational principle to hold could be menitioned sooner in the section.
+- [x] The requirement that H must be Hermitian for the variational principle to hold could be menitioned sooner in the section.
 
 1.4 The Schrödinger Equation as a Matrix Problem
 
