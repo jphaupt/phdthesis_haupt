@@ -1,13 +1,13 @@
 \chapter{Introduction}
 \label{chap:intro}
 
-According to modern quantum theory, to fully describe\footnote{This neglects relavistic effects.} a system of $N_A$ atoms and $N_e$ electrons, we must solve the time-dependent Schr\"odinger equation,
+According to modern quantum theory, to fully describe a (nonrelativistic) system of $N_A$ nuclei and $N_e$ electrons, we must solve the time-dependent Schr\"odinger equation,
 \begin{equation}
     \label{eq:schrodinger}
     i \hbar \frac{\partial}{\partial t} \Psi(\bm{x}, t)
     = \hat{H} \Psi(\bm{x}, t)
 \end{equation}
-where $\bm x=(\bm{r}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ gives the spatial coordinates, and $\sigma$ the corresponding spins. For atoms with atomic numbers $Z_I$ (positive charge $Ze$), the Hamiltonian operator $\hat H$ may be written
+where $\bm x=(\bm{r}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ gives the spatial coordinates, and $\sigma$ the corresponding spins. For nuclei with atomic numbers $Z_I$ (positive charge $Ze$), the Hamiltonian operator $\hat H$ may be written
 
 \begin{align}
 \begin{split}
@@ -29,7 +29,7 @@ This system has only 18 electrons and 18 nuclei, a far cry from the $10^{23}$ or
 
 \section{Overview of the Thesis}
 
-This dissertation fits into the field of nonrelativistic electronic structure theory, the branch of quantum chemistry concerned with the description of electrons and their correlation inside molecules and materials. More specifically, this dissertation focuses on high-accuracy (but often high-cost) \emph{ab initio} methodologies, especially \gls{FCIQMC} and \gls{TC}. As such, we will only be discussing small systems of consisting of only a few atoms, as they are tractible with a full, all-electron treatment with these methods. In principle, these methods should be able to be embedded \cite{jonesEmbedding2020,christlmaierFull2022} into more large-scale calculations using multiscale techniques, but this is outside the scope of my work. Nevertheless, the work herein is focused on methodologies, and not on particular physical systems.
+This dissertation fits into the field of nonrelativistic electronic structure theory, the branch of quantum chemistry concerned with the description of electrons and their correlation inside molecules and materials. More specifically, this dissertation focuses on high-accuracy (but often high-cost) \emph{ab initio} methodologies, especially \gls{FCIQMC} and \gls{TC}. As such, we will only be discussing small systems consisting of only a few atoms, as they are tractible with a full, all-electron treatment with these methods. In principle, these methods should be able to be embedded \cite{jonesEmbedding2020,christlmaierFull2022} into more large-scale calculations using multiscale techniques, but this is outside the scope of my work. Nevertheless, the work herein is focused on methodologies, and not on particular physical systems.
 
 The outline of the dissertation is as thus:
 \begin{itemize}
@@ -45,7 +45,7 @@ The outline of the dissertation is as thus:
 
 \section{Principal Approximations}
 
-As discussed, to make any progress in electronic structure theory, we must make use of approximations. Of course, we must always be cautious and suspicious when using these, and make sure they are valid for the systems in question. Thankfully, over the course of the last century, a cornucopia of different approximations have been developed to tackle the Schr\"odinger question, some of which will be discussed in this section.
+As discussed, to make any progress in electronic structure theory, we must make use of approximations. Of course, we must always be cautious and suspicious when using these, and make sure they are valid for the systems in question. Thankfully, over the course of the last century, a cornucopia of different approximations has been developed to tackle the Schr\"odinger question, some of which will be discussed in this section.
 
 \subsection{The Born-Oppenheimer Approximation}
 
@@ -64,29 +64,32 @@ where we have simplified notation by using miniscule roman letters for the elect
 In the language of second quantisation, equation \eqref{eq:elec_hamiltonian} can be written as
 \begin{equation}
 \label{eq:elec_hamiltonian_2q}
-\hat H_\mathrm{elec} = \sum_{ij\sigma} h_{ij}a_{i\sigma}^\dag a_{j\sigma}+\frac 12 \sum_{ijkl\sigma\tau} V_{ijkl}a_{i\sigma}^\dag a_{j\tau}^\dag a_{k\tau}a_{l\sigma},
+\hat H_\mathrm{elec} = \sum_{pq} h_{pq}a_{p}^\dag a_{q}+\frac 12 \sum_{pqrs} V_{pqrs}a_{p}^\dag a_{r}^\dag a_{s}a_{q},
 \end{equation}
-where $\sigma,\tau\in\{\uparrow,\downarrow\}$ are spin indices, and $a_{i\sigma}$ ($a_{i\sigma}^\dag$) is the annihilation (creation) operator for an electron on spin-orbital $i$ with spin $\sigma$. These must obey the anti-commutation relation
+where $p,q,r,s$ are general spin-orbital indices, and $a_{p}$ ($a_{p}^\dag$) is the annihilation (creation) operator for an electron in spin-orbital $p$. These must obey the anti-commutation relations
 \begin{equation}
-    \{a_{i\sigma},a_{j\tau}^\dag\}
+    \{a_{p},a_{q}^\dag\}
     \mathdef
-    a_{i\sigma}a_{j\tau}^\dag + a_{j\tau}^\dag a_{i\sigma}
-    =\delta_{ij}\delta_{\sigma\tau}
+    a_{p}a_{q}^\dag + a_{p}^\dag a_{q}
+    =\delta_{pq}
+\end{equation}
+\begin{equation}
+    \{a_{p},a_{q}\} = \{a_{p}^\dag,a_{q}^\dag\} = 0
 \end{equation}
 so that the electrons satisfy the Pauli exclusion principle.
 
-In equation \ref{eq:elec_hamiltonian_2q}, $h_{ij}$ is a one-body integral,
+In equation \ref{eq:elec_hamiltonian_2q}, $h_{pq}$ is a one-body integral,
 \begin{equation}
 \label{eq:hij}
-h_{ij} = \int \phi_i^*(\mathbf{r})\left(-\frac 12 \nabla^2 - \sum_I \frac{Z_I}{|\mathbf{R}_I-\mathbf r|}\right)\phi_j(\mathbf{r})\mathrm{d}\mathbf{r}
+h_{pq} = \int \mathrm{d}^3r\ \phi_p^*(\mathbf{r})\left(-\frac 12 \nabla^2 - \sum_I \frac{Z_I}{|\mathbf{R}_I-\mathbf r|}\right)\phi_q(\mathbf{r})
 \end{equation}
-and $V_{ijkl}$ is a two-body integral,
+and $V_{pqrs}$ is a two-body integral,
 \begin{equation}
-V_{ijkl} = \int \phi_i^*(\mathbf{r})\phi_k^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_j(\mathbf{r}')\phi_l(\mathbf{r})\mathrm{d}\mathbf{r}\mathrm{d}\mathbf{r}',
+V_{pqrs} = \int \mathrm{d}^3r\int\mathrm{d}^3r'\ \phi_p^*(\mathbf{r})\phi_r^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_q(\mathbf{r})\phi_s(\mathbf{r}'),
 \end{equation}
 with a spatial-orbital basis $\{\phi_i(\mathbf{r})\}$.
 
-Finally, to treat the nuclear Hamiltonian, we neglect the first term of equation \eqref{eq:theory_of_everything}, and treat the second term as approximately constant, so $\hat H_\mathrm{nuc} = \sum_{IJ} Z_IZ_Jr_{IJ}^{-1}$. Thus, we are left with the problem of solving the electronic structure problem, which is the subject of this dissertation.
+For our purposes, we neglect the first term of equation \eqref{eq:theory_of_everything}, and treat the second term as approximately constant, so $\hat H_\mathrm{nuc} = \sum_{IJ} Z_IZ_Jr_{IJ}^{-1}$. Thus, we are left with the problem of solving the electronic structure problem, which is the subject of this dissertation. Solving the electronic problem for different nuclear positions gives us the potential energy surface.
 
 Note that while chemists and physicists typically talk about the positions of nuclei in a molecule or solid as if they are fixed in place, as will be done in this dissertation, this is really a colloquialism. If the nuclei had an exact position and zero kinetic energy, the \gls{BOA} would, ipso facto, be in direct contradiction of the Heisenberg uncertainty principle. Instead, on the timescale of the electrons, due to the much higher mass of nuclei, in the \gls{BOA} we treat the nuclei as approximately localised in a state in which their motion is much slower than that of the electrons (but, importantly, not zero). This keeps the approximation from being in conflict with the fundamental postulates of quantum theory.
 

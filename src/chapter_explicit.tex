@@ -80,12 +80,12 @@ While they do not have the correct cusp behaviour, much like how gaussian basis 
 
 One major strength of this approach is that all integrals have closed-form algebraic expressions,\cite{lesterGaussian1964} and avoids nonlinear optimisation.\cite{bukowskiNew1994,perssonAccurate1996} \Gls{ECG} methods have been extended to post-Hartre-Fock methods, such as MP2\cite{panGaussian1970,panElectron1972}, and methods to avoid its many difficult integrals have also been developed.\cite{szalewiczNew1982,szalewiczAtomic1983,wenzelAtomic1986,szalewiczAtomic1984,tewWeak2007}
 
-While not as popular as F12 methods (see section \ref{sec:f12}), \glspl{ECG} have been used for highly accurate variational calculations,\cite{korobovCoulomb2000} as well as for applications outside of standard electron structure theory, such as bosons,\cite{vargaPrecise1995} positronium (a bound state of an electron and a positron),\cite{bubinGroundstate2011} and non-Born-Oppenheimer systems.\cite{stankeNonBornOppenheimer2009}
+While not as popular as F12 methods (see section \ref{sec:f12}), \glspl{ECG} have been used for highly accurate variational calculations,\cite{korobovCoulomb2000} as well as for applications outside of standard electronic structure theory, such as bosons,\cite{vargaPrecise1995} positronium (a bound state of an electron and a positron),\cite{bubinGroundstate2011} and non-Born-Oppenheimer systems.\cite{stankeNonBornOppenheimer2009}
 
 \section{F12 Methods}
 \label{sec:f12}
 
-The most influential explicitly correlated class of methods to date are the F12 methods. The core principle of these methods is to augment the wave function from a conventional (typically \gls{SD}) basis with an explicitly-correlated correction, called the F12 (or R12) correction. The original formulation\todo{cite Kutzelnigg} parametrised a two-electron system (such as helium) wave function as
+The most influential class of explicitly correlated methods to date are the F12 methods. The core principle of these methods is to augment the wave function from a conventional (typically \gls{SD}) basis with an explicitly-correlated correction, called the F12 (or R12) correction. The original formulation\todo{cite Kutzelnigg} parametrised a two-electron system (such as helium) wave function as
 \begin{equation}
     \ket\Psi = (1+tQ_{12}r_12)\ket{\Psi_0}+\sum_{p}t_{p}\ket{\Psi_{p}}
 \end{equation}
