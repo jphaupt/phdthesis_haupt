@@ -125,7 +125,7 @@ Despite its apparent simplicity, the Hubbard model is a rich model, and has been
 Let's consider an especially simple version of the model, with only two sites, and open boundary conditions:
 \begin{equation}
 \label{eq:hubbard_h2}
-\hat H_\mathrm{Hubb} = - t\sum_{\sigma}(a_{1\sigma}^\dag a_{2\sigma} + a_{2\sigma}^\dag a_{1\sigma}) + U(n_{1\uparrow}n_{1\downarrow}+n_{2\uparrow}n_{2\downarrow}).
+\hat H_\mathrm{Hubb} = - t\sum_{\sigma}(a_{1\sigma}^\dag a_{2\sigma} + a_{2\sigma}^\dag a_{1\sigma}) + U(\hat n_{1\uparrow}\hat n_{1\downarrow}+\hat n_{2\uparrow}\hat n_{2\downarrow}).
 \end{equation}
 We could use this as an approximate description of the H$_2$ molecule, where the electrons are restricted to only the lowest 1s orbitals. Compared to \eqref{eq:theory_of_everything}, this is a tremendously easy problem now.
 
@@ -158,9 +158,9 @@ where, in going from the first to the second line, we used the orthonormality of
 \section{The Schr\"odinger Equation as a Matrix Problem}
 \label{sec:matrix}
 
-Implicit in the operator algebra of the fermionic creation and annihilation operators $a$ and $a^\dag$ in equation \eqref{eq:elec_hamiltonian_2q} is the Pauli exclusion principle: we cannot have two or more fermions occupying identical states. In the context of electronic structure theory and this dissertation, the fermions and states in question are electrons and orbitals, respectively. This handles the antisymmetry requirement of the fermionic wave function, $\hat P_{ij}^\sigma\Psi = -\Psi$, where $\hat P_{ij}^\sigma$ permutes the $i$th and $j$th electrons with spin $\sigma$.
+Implicit in the operator algebra of the fermionic creation and annihilation operators $a^\dag$ and $a$ in equation \eqref{eq:elec_hamiltonian_2q} is the Pauli exclusion principle: we cannot have two or more fermions occupying identical states. In the context of electronic structure theory and this dissertation, the fermions and states in question are electrons and orbitals, respectively. This handles the antisymmetry requirement of the fermionic wave function, $\hat P_{ij}^\sigma\Psi = -\Psi$, where $\hat P_{ij}^\sigma$ permutes the $i$th and $j$th electrons with spin $\sigma$.
 
-Our wave function can hence by expanded by a linear combination of \glspl{SD},
+Our wave function can hence be expanded by a linear combination of \glspl{SD},
 \begin{equation}
     \label{eq:SD_expansion}
 \Psi = \sum_i c_i \ket{D_i},
@@ -176,7 +176,7 @@ Our wave function can hence by expanded by a linear combination of \glspl{SD},
 \end{equation}
 for a spin-orbital basis $\{\chi_p(\bm x_q)\}$. A spin-orbital is typically written as a product of a spatial part and a spin part, e.g. $\chi(\bm x) = \phi(\bm r)\omega(\sigma)$.
 
-Given such a finite spin-orbital basis of size $2M$ ($M$ spatial orbitals with 2 different spins each), the \gls{SD} expansion is also finite. Therefore, we may write $\hat H$ as a square matrix and equation \eqref{eq:elec_hamiltonian_2q} as an eigenvalue equation,
+Given such a finite spin-orbital basis of size $2M$ ($M$ spatial orbitals with 2 different spins each),\footnote{We assume here the same number of spin-$\uparrow$ and spin-$\downarrow$ orbitals for simplicity, though it need not always be the case.} the \gls{SD} expansion is also finite. Therefore, we may write $\hat H$ as a square matrix and equation \eqref{eq:elec_hamiltonian_2q} as an eigenvalue equation,
 \begin{equation}
 \label{eq:eval_eqn}
 \hat H\Psi = E\Psi.
@@ -193,12 +193,12 @@ If we have $N_\uparrow$ spin-up electrons and $N_\downarrow$ spin-down electrons
 \end{equation}
 where $|\mathcal{H}|$ denotes the size of the Hilbert space, and we have assumed that the number of spin-up orbitals $M$ is equal to the number of spin-down orbitals. Here, ${n\choose r}=\frac{n!}{r!(n-r)!}$ is a binomial coefficient.
 
-The combinatorial scaling is still unfavourable. For a closed-shell system with 20 electrons in 20 orbitals, $|\mathcal{H}|=3.41\times 10^{10}$. Assuming we wish to have double precision,\footnote{A double precision floating-point number has 1 bit for the sign, 11 bits for the exponent, and 52 bits for fraction (known as the mantissa).\cite{ascherFirst2011} This resolves to 64 bits or 8 bytes.} to store the whole matrix we would need about $10^{23}$ bytes, or 100 zettabytes. So, while we've substantially reduced the complexity of the problem, it is still extremely demanding. More approximations are therefore needed.
+The combinatorial scaling is still unfavourable. For a closed-shell system with 20 electrons in 20 orbitals, $|\mathcal{H}|=3.41\times 10^{10}$. Assuming we wish to have double precision,\footnote{A double precision floating-point number has 1 bit for the sign, 11 bits for the exponent, and 52 bits for digits in the number (known as the mantissa or significand).\cite{ascherFirst2011} This resolves to 64 bits or 8 bytes.} to store the whole matrix we would need about $10^{23}$ bytes, or 100 zettabytes. So, while we've substantially reduced the complexity of the problem, it is still extremely demanding. More approximations are therefore needed.
 
 \subsection{Orbitals}
 \label{sec:orbitals}
 
-Orbitals (and spin-orbitals), a term already used in this text, describes the spatial ditestribution (and in the case of spin-orbitals, also the spin) of a single electron. We assume that spatial orbitals form an orthonormal set, and that they form a complete space for an arbitrary wave function. However, in theory to have a \gls{CBS} would mean needing an infinite number of basis functions. In practice, we must of course have a finite basis, and so this naturally leads to a hierarchy of basis sets, where the typically larger basis sets are both more expensive and more accurate.
+Orbitals (and spin-orbitals), a term already used in this text, describe the spatial distribution (and in the case of spin-orbitals, also the spin) of a single electron. We assume that spatial orbitals form an orthonormal set, and that they form a complete space for an arbitrary wave function. However, in theory to have a \gls{CBS} would mean needing an infinite number of basis functions. In practice, we must of course have a finite basis, and so this naturally leads to a hierarchy of basis sets, where the typically larger basis sets are both more expensive and more accurate.
 
 Many different basis set families exist, but among the most popular are those due to Dunning and coworkers.\cite{dunningGaussian1989a} Additionally, many different basis set extrapolation techniques have also been developed.\cite{fellerEffectiveness2011,halkierBasisset1998,halkierBasisset1999,helgakerBasisset1997,jensenBasis1999,pansiniExtrapolation2016,petersonBenchmark1994,woonBenchmark1994}
 
@@ -209,7 +209,7 @@ The exact solution for the Hydrogen atom is the Slater-type function $\frac 1{\s
 However, these \glspl{STO} are difficult to work with, as we need to evaluate integrals of the form
 \begin{equation}
     \label{eq:two-body-integral}
-\int\d^3r_1\d^3r_2 \phi_P(\bm r_1)\phi_Q^*(\bm r_1)\frac 1 {r_{12}}\phi_R(\bm r_2)\phi_S^*(\bm r_2)
+\int\d^3r_1\int d^3r_2\ \phi_p^*(\bm r_1)\phi_r^*(\bm r_2)\frac 1 {r_{12}}\phi_q(\bm r_1)\phi_s(\bm r_2)
 \end{equation}
 are routinely needed.
 
@@ -280,43 +280,43 @@ There are two key sources of electron correlation: Fermi correlation, which aris
 \section{The Hartree-Fock Method}
 \label{sec:hf}
 
-The typical starting point to most \emph{ab initio} electronic structure methods is the \gls{HF} method.\cite{hartreeWave1928,fockNaherungsmethode1930,slaterNote1930} The key approximation in \gls{HF} is that we treat the exact $N$-body wave function solution as approximately a single \gls{SD}.\footnote{More precisely, the \gls{HF} approximation is to treat the wave function as a single configuration. In the context of this dissertation, that configuration will always be a \gls{SD}.} Then, we variationally (see section \ref{sec:variational_principle}) optimise the energy of the system with respect to parameters pertaining to the spin-orbitals. Call this \gls{SD} $\ket{\kappa}$.
+The typical starting point to most \emph{ab initio} electronic structure methods is the \gls{HF} method.\cite{hartreeWave1928,fockNaherungsmethode1930,slaterNote1930} The key approximation in \gls{HF} is that we treat the exact $N$-body wave function solution as approximately a single \gls{SD}.\footnote{More precisely, the \gls{HF} approximation is to treat the wave function as a single configuration. In the context of this dissertation, that configuration will always be a \gls{SD}.} Then, we variationally (see section \ref{sec:variational_principle}) optimise the energy of the system with respect to parameters pertaining to the spin-orbitals. We will refer to this \gls{SD} as $\ket{\kappa}$.
 
-Then, for some reference configuration $\ket 0$,\footnote{$P=(p,\sigma)$ are spin-orbital indices, for brevity.}
+Then, for some reference configuration $\ket 0$,
 \begin{equation}
 \ket{\Phi_0} = \e^{-\kappa} \ket 0.
 \end{equation}
 Here,
 \begin{equation}
-\kappa = \sum_{PQ} \kappa_{PQ}a_P^\dag a_Q
+\kappa = \sum_{pq} \kappa_{pq}a_p^\dag a_q
 \end{equation}
-is an anti-Hermitian ($\kappa_{PQ}^* = -\kappa_{QP}$) operator whose matrix elements $\kappa_{PQ}$ are the orbital rotation coefficients and will be the variational parameters. The anti-Hermiticity of $\kappa$ ensures that the orbital rotation $\e^{-\kappa}$ is unitary.
+is an anti-Hermitian operator (i.e. $\kappa_{pq}^* = -\kappa_{qp}$) whose matrix elements $\kappa_{pq}$ are the orbital rotation coefficients and will be the variational parameters. The anti-Hermiticity of $\kappa$ ensures that the orbital rotation $\e^{-\kappa}$ is unitary.
 
 With $\braket{\Phi_0}=1$, we want
 \begin{equation}
-E_\mathrm{HF} = \min_{\kappa_{PQ}}\bra{\Phi_0}\hat H\ket{\Phi_0}.
+E_\mathrm{HF} = \min_{\kappa_{pq}}\bra{\Phi_0}\hat H\ket{\Phi_0}.
 \end{equation}
-This is a nonlinear equation, and hence the parameters $\kappa_{PQ}$ must be determined iteratively. Since $\e^{-\kappa}$ is unitary, the orthonormality of the spin-orbitals is preserved, $\bra{\phi_P}\ket{\phi_Q} = \delta_{PQ}$.
+This is a nonlinear equation, and hence the parameters $\kappa_{pq}$ must be determined iteratively. Since $\e^{-\kappa}$ is unitary, the orthonormality of the spin-orbitals is preserved, $\bra{\phi_p}\ket{\phi_q} = \delta_{pq}$.
 
 The \gls{HF} method can also be understood as a mean-field theory. That is, we treat the $N$-body problem as $N$ one-body problems, where a single electron is in an effective ``averaged'' potential from the other $N-1$ electrons. This effective one-body Hamiltonian is known as the Fock operator,
 \begin{equation}
     \label{eq:fock-operator}
-    f = \sum_{PQ} f_{PQ} a_P^\dag a_Q.
+    f = \sum_{pq} f_{pq} a_p^\dag a_q.
 \end{equation}
 
 The Fock operator $f$ may be written as
 \begin{equation}
     f = h + V_\mathrm{eff}
 \end{equation}
-where the Fock potential's matrix elements are $V_{\mathrm{eff},PQ}=\sum_{I\in\mathrm{occ}}(V_{PQII}-V_{PIIQ})$.
+where the Fock potential's matrix elements are $V_{\mathrm{eff},pq}=\sum_{i\in\mathrm{occ}}(V_{pqii}-V_{piiq})$.
 
 The Hartree-Fock orbitals, which ultimately dictate the parameters for the minimisation procedure, are determined by diagonalising the Fock matrix,
 \begin{equation}
-    f_{PQ} = \epsilon_P\delta_{PQ}
+    f_{pq} = \epsilon_p\delta_{pq}
 \end{equation}
-where the eigenvalues $\epsilon_P$ are known as the orbital energies.
+where the eigenvalues $\epsilon_p$ are known as the orbital energies.
 
-Since $f$ itself depends on which of the orbitals are occupied, the solution must be determined self-consistently. Hence \gls{HF} is often referred to as a \gls{SCF} method.
+Since $f$ itself depends on the orbitals, the solution must be determined self-consistently. Hence \gls{HF} is often referred to as a \gls{SCF} method.
 
 Often, the orbitals for the $\uparrow$ and $\downarrow$ electrons are restricted to be the same. This is known as the \gls{RHF} method. Otherwise, we might instead use the \gls{UHF} method, where they are treated independently. However, since this breaks spin symmetry, we might have spin contamination. \gls{ROHF} is a variant that can treat open-shell systems which \gls{RHF} otherwise would not be able to treat while remaining an eigenstate of the $S^2$ (total spin) operator.
 
@@ -339,7 +339,7 @@ The Roothaan-Hall equations are a matrix representation of the \gls{HF} approxim
 \begin{equation}
     FC = SC\bm\epsilon
 \end{equation}
-where $C$ is a matrix of coefficients, $F$ is the Fock matrix (which depends on $C$), $S$ is the overlap matrix (which reduces to the identity matrix for orthonormalised bases), and $\bm\epsilon$ is a diagonal matrix of orbital energies.
+where $C$ is a matrix of coefficients, $F$ is the Fock matrix (which depends on $C$), $S$ is the overlap matrix (which reduces to the identity matrix for orthonormalised bases), and $\bm\epsilon$ is a diagonal matrix of orbital energies. The Roothaan-Hall equations are obtained by expanding the unknown \glspl{MO} in a basis of known functions, typically \glspl{AO}.
 
 Since this representation is in matrix form, instead of in terms of derivatives and integrals, it is more amenable to conventional computational techniques.
 
