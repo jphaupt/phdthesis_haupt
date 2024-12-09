@@ -1,0 +1,3 @@
+see annotated pdf
+
+DMC is a bit like another side of the same coin with FCIQMC. So if you include both, you should emphasize the imaginary-time projection aspect, as that is shared between the two. Maybe you had it elsewhere, in which case you can ignore me. But currently in DMC section I did not see a mention of this, and I think it should be explained there.

@@ -103,54 +103,54 @@ addressed
 
 1.6. Post-Hartree-Fock Methods
 
-- [ ] HF for hundreds of electrons might run into issues with the size of the ERIs (pq|rs) if not handled properly
+- [x] HF for hundreds of electrons might run into issues with the size of the ERIs (pq|rs) if not handled properly
 
-- [ ] Figure 1.2. "There are two axes on which to systematically improve until the ..." seems to be missing a verb after until.
+- [x] Figure 1.2. "There are two axes on which to systematically improve until the ..." seems to be missing a verb after until.
 
 1.6.1. Configuration Interaction
 
-- [ ] "configuration interaction (CI) is" -> "Configuration interaction (CI) is"
+- [x] "configuration interaction (CI) is" -> "Configuration interaction (CI) is"
 
 - [ ] eq. (1.26) Should the 1 be a matrix or just a number? Does it matter?
 
-- [ ] 1.6.2. Multi-Configuratuional Self-Consistent Field
+1.6.2. Multi-Configuratuional Self-Consistent Field
 
-- [ ] "impossible" is a strong word
+- [x] "impossible" is a strong word
 
-- [ ] 1.6.2.? Complete Active Space Self-Consistent Field
+1.6.2.? Complete Active Space Self-Consistent Field
 
-- [ ] Aren't non-integer occupations possible in CASSCF?
+- [x] Aren't non-integer occupations possible in CASSCF?
 
 1.6.3. Perturbation Theory
 
 1.6.3.? Rayleigh-Schrödinger
 
-- [ ] "targetting" -> "targeting"
+- [x] "targetting" -> "targeting"
 
-- [ ] "Since we are generally interested in the ground state" would make it clear that this applied to this work and not a more general generally.
+- [x] "Since we are generally interested in the ground state" would make it clear that this applied to this work and not a more general generally.
 
 
 1.6.3.? M\oller-Plesset
 
-- [ ] "If we apply the theory of Rayleigh-Schrödinger theory" -> "If we apply Rayleigh-Schrödinger theory"
+- [x] "If we apply the theory of Rayleigh-Schrödinger theory" -> "If we apply Rayleigh-Schrödinger theory"
 
 - [ ] The equality between the orbital energy linear combination and the zeroth order energies is a bit unclean since the indices do not match. Maybe replace the equals sign with something that indicates equivalence instead.
 
-- [ ] "MP2 improves our results."  is a bit weak of a statement. Would replace with something like "MP2 can improve our results significantly."
+- [x] "MP2 improves our results."  is a bit weak of a statement. Would replace with something like "MP2 can improve our results significantly."
 
 1.6.4. Coupled Cluster Theory
 
-- [ ] "using a non-linear ansatz" -> "using an exponential ansatz"
+- [x] "using a non-linear ansatz" -> "using an exponential ansatz"
 
-- [ ] "expected to fail for systems with strong static correlation" DCSD doesn't fail as much as the others though.
+- [x] "expected to fail for systems with strong static correlation" DCSD doesn't fail as much as the others though.
 
 1.6.4.?. Standard Coupled Cluster
 
-- [ ] "multicatively-separable" -> "multiplicatively-separable"
+- [x] "multicatively-separable" -> "multiplicatively-separable"
 
 - [ ] "when all possible excitations are considered" CC always contains all possible excitations (except if the singles aren't included like CCD). I like to think of the difference between CI trunctation and CC truncation as CI truncating based on excitation class and CC truncating based on excitation process, with the latter being able to describe multiple independent excitation processes leading to all possible excitation classes. The statement as is is probably fine though, too.
 
-- [ ] "premultiplying by e^T" should be e^-T.
+- [x] "premultiplying by e^T" should be e^-T.
 
 - [ ] What you get here is linked coupled cluster. You could also build the expectation value by projecting against <\Psi_CC| instead, but that would lead to a product of de-exitation and exitation operators, which is significantly more complicated to solve. Another alternative is unlinked CC, where you just multiply with <0| without the additional e^-T, but leads to a formal violation of size consistency since the energy would appear in the amplitude equations.
 
