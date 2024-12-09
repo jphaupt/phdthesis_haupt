@@ -156,13 +156,13 @@ addressed
 
 - [ ] "instead of minimising a functional" -> "instead of minimusing an expecation value"
 
-- [ ] "we solve equations (1.37) for the amplitudes" should be equations (1.38).
+- [x] "we solve equations (1.37) for the amplitudes" should be equations (1.38).
 
 - [ ] Might be beneficial to clarify that (1.38) is for singles, doubles and so on.
 
-- [ ] I think I noticed some inconsistent formatting in equation references. Sometimes they have paranethesis, sometimes they do not.
+- [x] I think I noticed some inconsistent formatting in equation references. Sometimes they have paranethesis, sometimes they do not.
 
-- [ ] "The simplest CC truncation is ... (CCSD)" the simplest would be CCS, but that is indinstinguishable from HF for the ground state energy. The next simplest is CCD. Maybe "The simplest CC truncation commonly used is ... (CCSD)".
+- [x] "The simplest CC truncation is ... (CCSD)" the simplest would be CCS, but that is indinstinguishable from HF for the ground state energy. The next simplest is CCD. Maybe "The simplest CC truncation commonly used is ... (CCSD)".
 
 1.6.4.? Distinguishable Cluster Theory
 
@@ -170,9 +170,9 @@ No comment.
 
 1.6.4.? Combining Couled Cluster with Perturbation Theory
 
-- [ ] Type in header: "Couled" -> "Coupled"
+- [x] Type in header: "Couled" -> "Coupled"
 
-- [ ] Another important feature of standard CCSD(T) is that the O(M^7) step is only carried out once after the iterative CCSD caclulation. We lose that advantage with xTC unfortunately.
+- [x] Another important feature of standard CCSD(T) is that the O(M^7) step is only carried out once after the iterative CCSD caclulation. We lose that advantage with xTC unfortunately.
 
 
 - [ ] References: Several sources with my name on it are missing my third taken name "Corvid".

@@ -21,7 +21,7 @@ where $\bm x=(\bm{r}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ gives the spa
 \end{align}
 where $N_A$ and $N_e$ are the number of nuclei and electrons, respectively, and we have represented the nuclear coordinates by $\bm R_I$ and the electron coordinates by $\bm r_i$.
 
-Since quantum chemistry and condensed matter sciences are in general concerned with nonrelativistic processes involving electrons and nuclei, this might boldly be called the \emph{theory of everything}.\cite{laughlinTheory2000} Hence, we may be tempted to conclude this dissertation early, but in practice the evaluation of the Hamiltonian \eqref{eq:theory_of_everything} is impossible. First, there is no closed form solution of \eqref{eq:schrodinger} with this Hamiltonian. Second, numerical evaluation of $\hat H$ is far from trivial.
+Since quantum chemistry and condensed matter sciences are in general concerned with nonrelativistic processes involving electrons and nuclei, this might boldly be called the \emph{theory of everything}.\cite{laughlinTheory2000} Hence, we may be tempted to conclude this dissertation early, but in practice the evaluation of the Hamiltonian in equation \ref{eq:theory_of_everything} is impossible. First, there is no closed form solution of equation \ref{eq:schrodinger} with this Hamiltonian. Second, numerical evaluation of $\hat H$ is far from trivial.
 
 Let's consider a simple example, the Argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a very coarse $10\times 10\times 10$ grid. Then \emph{at each time step} we need to store $10^{3\times (18+18)}=10^{108}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroduction2017} this is completely unreasonable.
 
@@ -54,14 +54,14 @@ The most important approximation used in electronic structure theory is the \gls
     \Psi_\mathrm{total} = \Psi_\mathrm{nuc} \Psi_\mathrm{elec}.
 \end{equation}
 
-Notice that the first two terms of \eqref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$. This leads to the \emph{electronic Hamiltonian} under the \gls{BOA}, which can be written in atomic units as
+Notice that the first two terms of equation \ref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$. This leads to the \emph{electronic Hamiltonian} under the \gls{BOA}, which can be written in atomic units as
 \begin{equation}
 \label{eq:elec_hamiltonian}
 \hat H_\mathrm{elec} = -\sum_{i} \frac{1}{2} \nabla_i^2 - \sum_{i,I} \frac{Z_I}{r_{iI}} + \sum_{i\gt j} \frac{1}{r_{ij}},
 \end{equation}
 where we have simplified notation by using miniscule roman letters for the electrons and capital roman letters for the nuclei, and $r_{ij}=|\mathbf{r}_i-\mathbf{r}_j|$ and $r_{iI}=|\mathbf{r}_i-\mathbf{R}_I|$, as well as by using atomic units.
 
-In the language of second quantisation, equation \eqref{eq:elec_hamiltonian} can be written as
+In the language of second quantisation, equation \ref{eq:elec_hamiltonian} can be written as
 \begin{equation}
 \label{eq:elec_hamiltonian_2q}
 \hat H_\mathrm{elec} = \sum_{pq} h_{pq}a_{p}^\dag a_{q}+\frac 12 \sum_{pqrs} V_{pqrs}a_{p}^\dag a_{r}^\dag a_{s}a_{q},
@@ -89,13 +89,13 @@ V_{pqrs} = \int \mathrm{d}^3r\int\mathrm{d}^3r'\ \phi_p^*(\mathbf{r})\phi_r^*(\m
 \end{equation}
 with a spatial-orbital basis $\{\phi_i(\mathbf{r})\}$.
 
-For our purposes, we neglect the first term of equation \eqref{eq:theory_of_everything}, and treat the second term as approximately constant, so $\hat H_\mathrm{nuc} = \sum_{IJ} Z_IZ_Jr_{IJ}^{-1}$. Thus, we are left with the problem of solving the electronic structure problem, which is the subject of this dissertation. Solving the electronic problem for different nuclear positions gives us the potential energy surface.
+For our purposes, we neglect the first term of equation \ref{eq:theory_of_everything}, and treat the second term as approximately constant, so $\hat H_\mathrm{nuc} = \sum_{IJ} Z_IZ_Jr_{IJ}^{-1}$. Thus, we are left with the problem of solving the electronic structure problem, which is the subject of this dissertation. Solving the electronic problem for different nuclear positions gives us the potential energy surface.
 
 Note that while chemists and physicists typically talk about the positions of nuclei in a molecule or solid as if they are fixed in place, as will be done in this dissertation, this is really a colloquialism. If the nuclei had an exact position and zero kinetic energy, the \gls{BOA} would, ipso facto, be in direct contradiction of the Heisenberg uncertainty principle. Instead, on the timescale of the electrons, due to the much higher mass of nuclei, in the \gls{BOA} we treat the nuclei as approximately localised in a state in which their motion is much slower than that of the electrons (but, importantly, not zero). This keeps the approximation from being in conflict with the fundamental postulates of quantum theory.
 
 The \gls{BOA} is an immensely practical tool as it substantially simplifies our equations, and in many applications it is an excellent approximation. It will be a fundamental assumption throughout the rest of this dissertation, though it need not always be valid in all of quantum chemistry.
 
-While we have done a lot to drastically reduce the complexity of equation \eqref{eq:theory_of_everything}, equation \eqref{eq:elec_hamiltonian_2q} is still intractible for large system sizes, scaling combinatorially with the size of the Hilbert space, as a function of the system size $N_e$ (henceforth $N$), and the basis set size $M$. Hence, in addition to using a smaller basis, we still need extra approximations and sophisticated methodologies.
+While we have done a lot to drastically reduce the complexity of equation \ref{eq:theory_of_everything}, equation \ref{eq:elec_hamiltonian_2q} is still intractible for large system sizes, scaling combinatorially with the size of the Hilbert space, as a function of the system size $N_e$ (henceforth $N$), and the basis set size $M$. Hence, in addition to using a smaller basis, we still need extra approximations and sophisticated methodologies.
 
 
 \subsection{Core Orbitals}
@@ -111,7 +111,7 @@ Similarly, we may also delete virtual orbitals, typically those of high energy, 
 
 In 1929, the surrealist artist Ren\'e Magritte displayed a now-famous painting of a pipe with the caption \emph{Ceci n'est pas une pipe} (French for ``This is not a pipe''). It was meant to depict the idea that the painting itself is in a way treacherous: it may appear to be a pipe, but you cannot stuff it or smoke from it, as it is a representation of a pipe.
 
-In a similar way, physicists and chemists often use \emph{model Hamiltonians}, which do away with aspects of equation \eqref{eq:theory_of_everything} that are not expected to be relevant to the problem at hand, resulting in new Hamiltonians that may be considered a representation of equation \eqref{eq:theory_of_everything}, much like Magritte's painting.\footnote{We might further argue that all of science can be described this way, as scientific models are always ``mere'' representations of Nature, and are not Nature itself.} Compared to \emph{ab initio} Hamiltonians like equation \eqref{eq:elec_hamiltonian_2q}, model Hamiltonians are generally much simpler, but depend on parameters whose values we may not necessarily know a priori.
+In a similar way, physicists and chemists often use \emph{model Hamiltonians}, which do away with aspects of equation \ref{eq:theory_of_everything} that are not expected to be relevant to the problem at hand, resulting in new Hamiltonians that may be considered a representation of equation \ref{eq:theory_of_everything}, much like Magritte's painting.\footnote{We might further argue that all of science can be described this way, as scientific models are always ``mere'' representations of Nature, and are not Nature itself.} Compared to \emph{ab initio} Hamiltonians like equation \ref{eq:elec_hamiltonian_2q}, model Hamiltonians are generally much simpler, but depend on parameters whose values we may not necessarily know a priori.
 
 The most famous model Hamiltonian is the Hubbard model,\cite{Hubbard1963} most typically used to describe electrons in a periodic lattice, and can be written as
 \begin{equation}
@@ -127,14 +127,14 @@ Let's consider an especially simple version of the model, with only two sites, a
 \label{eq:hubbard_h2}
 \hat H_\mathrm{Hubb} = - t\sum_{\sigma}(a_{1\sigma}^\dag a_{2\sigma} + a_{2\sigma}^\dag a_{1\sigma}) + U(\hat n_{1\uparrow}\hat n_{1\downarrow}+\hat n_{2\uparrow}\hat n_{2\downarrow}).
 \end{equation}
-We could use this as an approximate description of the H$_2$ molecule, where the electrons are restricted to only the lowest 1s orbitals. Compared to \eqref{eq:theory_of_everything}, this is a tremendously easy problem now.
+We could use this as an approximate description of the H$_2$ molecule, where the electrons are restricted to only the lowest 1s orbitals. Compared to equation \ref{eq:theory_of_everything}, this is a tremendously easy problem now.
 
 Of course, when solving a problem using a model Hamiltonian, we must be careful in choosing the correct one. In particular, the exact solution to the Hubbard model in one dimension\cite{Lieb1968a} does not appear to be in agreement with the \emph{ab initio} solution of a one-dimensional chain of hydrogen atoms.\cite{Motta2017,Motta2020}
 
 \section{The Variational Principle}
 \label{sec:variational_principle}
 
-One way of finding approximations to the lowest energy eigenstate of a quantum problem like that of equation \eqref{eq:elec_hamiltonian_2q} is the variational method. Several methods discussed in this dissertation build on the variational method, and the variational method itself is based on the variational principle, which states\cite{sakuraiModern2017} for any ``trial wave function'' $\ket{\tilde\Psi}$ and Hermitian operator (such as the electronic Hamiltonian) $\hat H$,
+One way of finding approximations to the lowest energy eigenstate of a quantum problem like that of equation \ref{eq:elec_hamiltonian_2q} is the variational method. Several methods discussed in this dissertation build on the variational method, and the variational method itself is based on the variational principle, which states\cite{sakuraiModern2017} for any ``trial wave function'' $\ket{\tilde\Psi}$ and Hermitian operator (such as the electronic Hamiltonian) $\hat H$,
 \begin{equation}
     \label{eq:variational_principle}
     \frac{\bra{\tilde\Psi}\hat H\ket{\tilde\Psi}}{\braket{\tilde\Psi}}
@@ -158,7 +158,7 @@ where, in going from the first to the second line, we used the orthonormality of
 \section{The Schr\"odinger Equation as a Matrix Problem}
 \label{sec:matrix}
 
-Implicit in the operator algebra of the fermionic creation and annihilation operators $a^\dag$ and $a$ in equation \eqref{eq:elec_hamiltonian_2q} is the Pauli exclusion principle: we cannot have two or more fermions occupying identical states. In the context of electronic structure theory and this dissertation, the fermions and states in question are electrons and orbitals, respectively. This handles the antisymmetry requirement of the fermionic wave function, $\hat P_{ij}^\sigma\Psi = -\Psi$, where $\hat P_{ij}^\sigma$ permutes the $i$th and $j$th electrons with spin $\sigma$.
+Implicit in the operator algebra of the fermionic creation and annihilation operators $a^\dag$ and $a$ in equation \ref{eq:elec_hamiltonian_2q} is the Pauli exclusion principle: we cannot have two or more fermions occupying identical states. In the context of electronic structure theory and this dissertation, the fermions and states in question are electrons and orbitals, respectively. This handles the antisymmetry requirement of the fermionic wave function, $\hat P_{ij}^\sigma\Psi = -\Psi$, where $\hat P_{ij}^\sigma$ permutes the $i$th and $j$th electrons with spin $\sigma$.
 
 Our wave function can hence be expanded by a linear combination of \glspl{SD},
 \begin{equation}
@@ -176,15 +176,15 @@ Our wave function can hence be expanded by a linear combination of \glspl{SD},
 \end{equation}
 for a spin-orbital basis $\{\chi_p(\bm x_q)\}$. A spin-orbital is typically written as a product of a spatial part and a spin part, e.g. $\chi(\bm x) = \phi(\bm r)\omega(\sigma)$.
 
-Given such a finite spin-orbital basis of size $2M$ ($M$ spatial orbitals with 2 different spins each),\footnote{We assume here the same number of spin-$\uparrow$ and spin-$\downarrow$ orbitals for simplicity, though it need not always be the case.} the \gls{SD} expansion is also finite. Therefore, we may write $\hat H$ as a square matrix and equation \eqref{eq:elec_hamiltonian_2q} as an eigenvalue equation,
+Given such a finite spin-orbital basis of size $2M$ ($M$ spatial orbitals with 2 different spins each),\footnote{We assume here the same number of spin-$\uparrow$ and spin-$\downarrow$ orbitals for simplicity, though it need not always be the case.} the \gls{SD} expansion is also finite. Therefore, we may write $\hat H$ as a square matrix and equation \ref{eq:elec_hamiltonian_2q} as an eigenvalue equation,
 \begin{equation}
 \label{eq:eval_eqn}
 \hat H\Psi = E\Psi.
 \end{equation}
 
-Note, however, that in order to make this a finite-dimensional matrix eigenvalue problem, we needed to use a finite spin-orbital basis. Thus, $E$ in equation \eqref{eq:eval_eqn} is not the true ground state energy of the system, but indeed only an approximation within that basis set. This is the case even if we were to solve equation \eqref{eq:eval_eqn} exactly. In order to get the true ground state energy, we need to reach the \gls{CBS}, i.e. $M\to\infty$.
+Note, however, that in order to make this a finite-dimensional matrix eigenvalue problem, we needed to use a finite spin-orbital basis. Thus, $E$ in equation \ref{eq:eval_eqn} is not the true ground state energy of the system, but indeed only an approximation within that basis set. This is the case even if we were to solve equation \ref{eq:eval_eqn} exactly. In order to get the true ground state energy, we need to reach the \gls{CBS}, i.e. $M\to\infty$.
 
-With \eqref{eq:eval_eqn}, we have transformed the hopelessly intractible partial differential equation \eqref{eq:theory_of_everything} into a finite algebraic eigenvalue problem, which is much better suited for solving on a computer.
+With equation \ref{eq:eval_eqn}, we have transformed the hopelessly intractible partial differential equation \ref{eq:theory_of_everything} into a finite algebraic eigenvalue problem, which is much better suited for solving on a computer.
 
 If we have $N_\uparrow$ spin-up electrons and $N_\downarrow$ spin-down electrons, we then have
 \begin{equation}
@@ -213,7 +213,7 @@ However, these \glspl{STO} are difficult to work with, as we need to evaluate in
 \end{equation}
 are routinely needed.
 
-Therefore, \glspl{GTO} have been developed,\cite{boysElectronic1950} which have the form $\e^{-\alpha r^2}$. \glspl{GTO} are much easier to handle, as the product of a gaussian is also a gaussian, and the integral of a gaussian is exactly known, so equations like \eqref{eq:two-body-integral} have known solutions. With this comes a tradeoff, since we know \glspl{STO} more faithfully capture the form of molecular orbitals, but \glspl{GTO} are much better suited for computations. For this, the most common basis sets typically use a linear combination (or ``contraction'') of gaussians fitted to a \gls{STO}. An illustration is shown in figure \ref{fig:sto-gto}.
+Therefore, \glspl{GTO} have been developed,\cite{boysElectronic1950} which have the form $\e^{-\alpha r^2}$. \glspl{GTO} are much easier to handle, as the product of a gaussian is also a gaussian, and the integral of a gaussian is exactly known, so equations like \ref{eq:two-body-integral} have known solutions. With this comes a tradeoff, since we know \glspl{STO} more faithfully capture the form of molecular orbitals, but \glspl{GTO} are much better suited for computations. For this, the most common basis sets typically use a linear combination (or ``contraction'') of gaussians fitted to a \gls{STO}. An illustration is shown in figure \ref{fig:sto-gto}.
 
 It must be noted, however, that \glspl{STO} and \glspl{GTO} have different asymptotic behaviour for $r\to\infty$ and $r\to 0$. The latter in particular will be discussed in section \ref{sec:cusp}.
 
@@ -354,7 +354,7 @@ Dynamical correlation is remaining correlation that arises due to the instantane
 
 Static correlation, on the other hand, is related to the degeneracy or near-degeneracy of configurations. In general, to accurately describe a system with strong static correlation, a so-called multi-reference method is needed. As will be seen in chapter \ref{chap:binding}, static correlation plays a big role for molecules at dissociation.
 
-We therefore have two ``axes'' on which to approach the exact solution to equation \eqref{eq:elec_hamiltonian_2q}:
+We therefore have two ``axes'' on which to approach the exact solution to equation \ref{eq:elec_hamiltonian_2q}:
 \begin{itemize}
     \item The basis set chosen, where going to a larger basis set (in a systematic way) improves the result, e.g. cc-pVDZ to cc-pVTZ to cc-pVQZ, until eventually reaching the \gls{CBS} limit.
     \item The ``hierarchy of theories'' where the more accurate the method, the closer to the \gls{FCI} limit (discussed below). Many post-Hartree-Fock methods can be systematically improved, for example by considering additional excitations in a coupled cluster method.
@@ -392,7 +392,7 @@ where the number of terms in the sum depends on how many excitations we consider
     \label{fig:excitations}
 \end{figure}
 
-There are some important limitations to this method, however. Perhaps most notable is that the \gls{CI} method is not size consistent. For two noninteracting systems $A$ and $B$, we expect the composite system $A+B$ to have energy equal to the sum of that for $A$ and $B$, i.e. $E_{A+B}=E_A+E_B$. However, within a truncated \gls{CI} method, this is not the case\footnote{Of course, in \gls{FCI} we necessarily have size consistency, since we have the exact solution for the basis set.}, due to the additive ansatz \eqref{eq:ci}.
+There are some important limitations to this method, however. Perhaps most notable is that the \gls{CI} method is not size consistent. For two noninteracting systems $A$ and $B$, we expect the composite system $A+B$ to have energy equal to the sum of that for $A$ and $B$, i.e. $E_{A+B}=E_A+E_B$. However, within a truncated \gls{CI} method, this is not the case\footnote{Of course, in \gls{FCI} we necessarily have size consistency, since we have the exact solution for the basis set.}, due to the additive ansatz \ref{eq:ci}.
 
 Additionally, if we wish to go to the \gls{FCI} method and ensure size consistency and accurate results, we once again have bad scaling, as discussed in section \ref{sec:matrix}. However, there exist sparse diagonalisation routines that need not store the entire matrix $H$, such as the Davidson,\cite{davidsonIterative1975} Lanczos,\cite{lanczosIteration1950} and Arnoldi\cite{arnoldiPrinciple1951} (for non-Hermitian $H$) methods, which target the ground state and need to store only a fraction of the matrix. Still, these scale with the size of the eigenvector, which is still prohibitively expensive for large systems. A more practical approach to reaching \gls{FCI} accuracy will be discussed later in section \ref{sec:fciqmc}, where we discuss the \gls{FCIQMC} algorithm.
 
@@ -497,16 +497,16 @@ where $\ket{\Phi_0}$ is the reference (typically \gls{HF}) wave function, and $T
 
 It is worth noting that \gls{CC} and \gls{CI} are identical, differing only in their parametrisation, when neither are truncated. They both provide \gls{FCI}-level accuracy.
 
-By inserting equation \eqref{eq:cc-ansatz} into the time-independent Schr\"odinger equation and pre-multiplying by $\e^{-T}$, we obtain
+By inserting equation \ref{eq:cc-ansatz} into the time-independent Schr\"odinger equation and pre-multiplying by $\e^{-T}$, we obtain
 
 \begin{align}
-    \label{eq:cc-schrodinger}
     \bra{\Phi_0}\e^{-T} H \e^T\ket{\Phi_0} &= E \\
+    \label{eq:cc-schrodinger}
     \bra{\Phi_{ij...}^{ab...}}\e^{-T} H \e^T\ket{\Phi_0} &= 0
 \end{align}
 where $\ket{\Phi_{ij...}^{ab...}}$ is a $n$-body excitation with respect to the reference wave function.
 
-Note, however, that these equations do not rely on the Variational Principle. Instead of minimising a functional, we solve equations \eqref{eq:cc-schrodinger} for the amplitudes, which give the energy. While we still cannot reasonably always include all excitations in the cluster operator $T$, due to the multiplicative ansatz, even if we truncate the cluster operator, we get size-consistent results. In particular, any truncated CC wave function ansatz will contain contributions from all determinants in Fock space. The simplest CC truncation is the \gls{CCSD} method. In a sense, \gls{CCSD} and any other truncated CC method is an approximation for \gls{FCI} where the coefficients are not approximated to be zero (like in \gls{CI}) but instead the higher-order excitations terms are generated from the lower-order excitation terms in a size-consistent fashion.
+Note, however, that these equations do not rely on the Variational Principle. Instead of minimising a functional, we solve equations \ref{eq:cc-schrodinger} for the amplitudes, which give the energy. While we still cannot reasonably always include all excitations in the cluster operator $T$, due to the multiplicative ansatz, even if we truncate the cluster operator, we get size-consistent results. In particular, any truncated CC wave function ansatz will contain contributions from all determinants in Fock space. The simplest CC truncation commonly used is the \gls{CCSD} method. In a sense, \gls{CCSD} and any other truncated CC method is an approximation for \gls{FCI} where the coefficients are not approximated to be zero (like in \gls{CI}) but instead the higher-order excitations terms are generated from the lower-order excitation terms in a size-consistent fashion.
 
 CC theory owes much of its success to its high accuracy at a reasonable cost. \gls{CCSD} and \gls{CCSDT} in particular scale as $\mathcal{O}(M^6)$ and $\mathcal{O}(M^8)$ respectively, with $M$ the number of spatial orbitals. Every additional set of excitations incurs an additional factor of $\mathcal{O}(M^2)$ scaling.
 
@@ -516,11 +516,11 @@ The more recently-developed \gls{DCSD} method's central philosophy is removing i
 
 This method was shown to give quantitatively better results than standard CC for a variety of systems, and qualitatively correct results for systems where CC can fail spectacularly, such as the N$_2$ binding curve. Since its first publication, \gls{DC} has been extended to explicitly-correlated F12 theory,\cite{katsAccurate2015} \gls{EOM},\cite{rishiExcited2017} tailored coupled cluster,\cite{vitaleFCIQMCTailored2020} and more.
 
-\subsubsection{Combining Couled Cluster with Perturbation Theory}
+\subsubsection{Combining Coupled Cluster with Perturbation Theory}
 
 It is possible to avoid the computationally-expensive scaling of CC somewhat, by treating some terms perturbatively. The most famous of these is the \gls{CCSD(T)} method,\cite{raghavachariFifthorder1989} in which the single- and double-excitations are treated fully, whereas the triple-excitations are treated as perturbations, as in section \ref{sec:perturbation-theory}.
 
-\gls{CCSD(T)} scales as $\mathcal{O}(M^7)$ and for the price provides extremely accurate results. This is why sometimes this method is referred to as the ``gold standard'' of quantum chemistry.
+\gls{CCSD(T)} scales as $\mathcal{O}(M^7)$ and for the price provides extremely accurate results. The perturbative correction is a step that is applied only once at the end of a \gls{CCSD} calculation. This is why sometimes this method is referred to as the ``gold standard'' of quantum chemistry.
 
 % \subsection{Density Matrix Renormalisation Group}
 
