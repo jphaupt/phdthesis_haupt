@@ -216,7 +216,7 @@ also obeys the imaginary-time Schr\"odinger equation, but with the initial condi
 
 For small time steps, $G$ may be approximated by the Lie-Trotter-Suzuki decomposition,\supercite{lieTheorie1970,trotterProduct1959,suzukiGeneralized1976} i.e. for operators $A$, $A_k$,
 \begin{equation}
-    A = \sum_kA_k \implies \e^{-\alpha A} = \left( \prod_k e^{-\alpha A_k/M} \right)^M
+    A = \sum_kA_k \implies \e^{-\alpha A} \approx \left( \prod_k e^{-\alpha A_k/M} \right)^M
 \end{equation}
 for some value $\alpha$ and for large $M$. From this, we can get the Green's function,
 \begin{equation}
@@ -265,7 +265,7 @@ However, in practice a trial wave function is actually necessary for fermions, a
 \section{Full Configuration Interaction Quantum Monte Carlo}
 \label{sec:fciqmc}
 
-The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.\supercite{booth_fciqmc_2009} For this, there exist a few different implementations,\cite{Guther_neci_2020,spencerHANDEQMC2019b,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.\cite{Guther_neci_2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains expoential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\supercite{dobrautzSpinPure2021,weserStochastic2022}
+The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.\supercite{booth_fciqmc_2009} For this, there exist a few different implementations,\cite{Guther_neci_2020,spencerHANDEQMC2019b,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.\cite{Guther_neci_2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains exponential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\supercite{dobrautzSpinPure2021,weserStochastic2022}
 
 \subsection{Main Concepts}
 
