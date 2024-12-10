@@ -1,3 +1,5 @@
 see annotated pdf
 
 - [ ] DMC is a bit like another side of the same coin with FCIQMC. So if you include both, you should emphasize the imaginary-time projection aspect, as that is shared between the two. Maybe you had it elsewhere, in which case you can ignore me. But currently in DMC section I did not see a mention of this, and I think it should be explained there.
+
+- [ ] section 3.1.3: Is there a reason to switch from p to \pi? Now \pi is the distribution to sample from, while in previous section it was p. In this section p is the conditional probability distribution, which is different from p in the previous section. So I'd swap p <-> \pi, either here or in the previous section.

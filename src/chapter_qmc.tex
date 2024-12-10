@@ -58,17 +58,26 @@ More generally, consider the integral of some smooth function $f$ over $[a,b]\su
 \begin{equation}
     I = \int_a^b \d x \ f(x).
 \end{equation}
-Standard finite element methods for solving integrals of this type typically involving dividing the integration domain into $N$ subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. The error $\sigma$ in these sorts of methods is typically $\sigma\propto h^{-k} \propto N^{-k}$, where $k\in\mathbb{Z}_{>0}$. For a multi-dimensional integral, $\sigma\propto N^{-k/d}$, where $d$ is the number of dimensions.\cite{ascherFirst2011}
+Standard finite element methods for solving integrals of this type typically involving dividing the integration domain into $N$ subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. That is,
+\begin{equation}
+I \approx \sum_{i=1}^N w_if(x_i).
+\end{equation}
+The error $\sigma$ in these sorts of methods is typically $\sigma\propto h^{-k} \propto N^{-k}$, where $k\in\mathbb{Z}_{>0}$. For a multi-dimensional integral, $\sigma\propto N^{-k/d}$, where $d$ is the number of dimensions.\cite{ascherFirst2011}
 % I am mostly following the discussion and notation in Thijssen's book -- remember to cite it along with all the primary references
 
-In \gls{MC} methods, $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled. For uniformly sampled points, the variance is then
+In \gls{MC} methods, $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled. That is,
+
+\begin{equation}
+    I\approx \sum_{i=1}^N f(x_i).
+\end{equation}
+If, for example, we choose $N$ to be randomly sampled, then the variance is then
 \begin{align}
-    \sigma^2 &= \left\langle \left( \frac{b-a}{N}\sum^N_{i=1}f_i\right)2\right\rangle - \left( \left\langle  \frac{b-a}{N}\sum^N_{i=1}f_i\right\rangle\right)^2 \\
+    \sigma^2 &= \left\langle \left( \frac{b-a}{N}\sum^N_{i=1}f_i\right)^2\right\rangle - \left( \left\langle  \frac{b-a}{N}\sum^N_{i=1}f_i\right\rangle\right)^2 \\
     &= \frac{(b-a)^2}{N}(\bar{f^2} - \bar f^2)
 \end{align}
-where $f_i\mathdef f(x_i)$ and $x_i$ is a random number drawn, the angular brackets denote an average over all possible realisations, and the overbar represents an average of the function over the domain ($[a,b]$ in this discussion). i.e. the error in this method is proportional to the variance of $f$. Perhaps more interestingly, $\sigma\propto N^{-1/2}$, in line with the central limit theorem.\supercite{bernoulliJacobi1713} Comparing this error with standard quadrature, we see that MC integration is moroe efficient than an order-$k$ algorithm when $d>2k$. That is, although this particular \gls{MC} example is naive, using simply a uniform distribution, it is still more efficient than standard methodologies for very large dimensions.
+where $f_i\mathdef f(x_i)$ and $x_i$ is a random number drawn, the angular brackets denote an average over all possible realisations, and the overbar represents an average of the function over the domain ($[a,b]$ in this discussion). i.e. the error in this method is proportional to the variance of $f$. Perhaps more interestingly, $\sigma\propto N^{-1/2}$, in line with the central limit theorem.\supercite{bernoulliJacobi1713} Comparing this error with standard quadrature, we see that MC integration is more efficient than an order-$k$ algorithm when $d>2k$. That is, although this particular \gls{MC} example is naive, using simply a uniform distribution, it is still more efficient than standard methodologies for very large dimensions.
 
-There exist several methods to reduce errors in \gls{MC} methods.\supercite{jamesMonte1980} Among the most important ones is importance sampling.\supercite{kahnModification1959} In the prevous example, it is clear that if significant contributions to the integral come from a small region of the domain, only a few points would be sampled by the \gls{MC} algorithm there. This would lead to large statistical errors. Mathematically, this is from the large variance of the function. In importance sampling, we sample from a distribution $p$ which has roughly the same shape as $f$ such that $f/p$ is roughly constant over the integration domain. Of course, being a probability distribution, we require
+There exist several methods to reduce errors in \gls{MC} methods.\supercite{jamesMonte1980} Among the most important ones is importance sampling.\supercite{kahnModification1959} In the prevous example, it is clear that if significant contributions to the integral come from a small region of the domain, only a few points would be sampled by the \gls{MC} algorithm there when using a uniform distribution. This would lead to large statistical errors. Mathematically, this is from the large variance of the function. In importance sampling, we sample from a distribution $p$ which has roughly the same shape as $f$ such that $f/p$ is roughly constant over the integration domain. Of course, being a probability distribution, we require
 \begin{equation}
     p(x)>0 \quad \forall x
 \end{equation}
@@ -134,7 +143,7 @@ The algorithm proceeds in two stages: we propose a step $x'\to x$, and then acce
 \end{equation}
 If we accept, we set the new state to $x$, otherwise we stay at $x'$.
 
-In practice, on a computer, accepting is done by generating a random number $r\in [0,1)$ and accepting if $r<\frac{\pi(x')}{\pi(x)}$, and otherwise rejecting. Furthermore, we don't just have a single Markov chain, but a collection of so-called ``walkers'', that each perform their own Markov chain. The integrand is then sampled at each position where the walkers reach.
+In practice, on a computer, accepting is done by generating a random number $r\in [0,1)$ and accepting if $r<\frac{\pi(x')}{\pi(x)}$, and otherwise rejecting. Furthermore, we don't just have a single Markov chain, but a collection of so-called ``walkers'', that each perform their own Markov chain (for parallelisation). The integrand is then sampled at each position where the walkers reach.
 
 One final note, is that since the current state of a Markov chain is dependent on the previous state, the Markov chain is not independent of itself. This is referred to as autocorrelation. One method to reduce this autocorrelation and give essentially independent samples is known as blocking.\supercite{flyvbjergError1989}
 
@@ -147,12 +156,18 @@ For a trial wave function $\Psi$ (we omit the tilde from section \ref{sec:variat
 \begin{align}
     \label{eq:vmc_energy}
     \langle E \rangle &= \frac{\bra{\Psi}H\ket{\Psi}}{\bra{\Psi}\ket{\Psi}} \\
-    &= \frac{\int\d^{3N}r\ \Psi^*H\Psi}{\int\d^{3N}r\ |\Psi|^2}.
+    \label{eq:vmc_step1}
+    &= \frac{\int\d^{3N}r\ \Psi^*H\Psi}{\int\d^{3N}r\ |\Psi|^2} \\
+    \label{eq:vmc_step2}
+    &= \frac{\int\d^{3N}r\ \Psi^*\Psi \frac{H\Psi}{\Psi}}{\int\d^{3N}r\ |\Psi|^2} \\
+    \label{eq:vmc_step3}
+    &= \frac{\int\d^{3N}r\ |\Psi|^2 E_L(\bm r)}{\int\d^{3N}r\ |\Psi|^2},
 \end{align}
-We may calculate this integral using \gls{MC}, varying the parameters and stopping according to some minimisation algorithm. In particular, define the local energy as
+where we have defined the local energy as
 \begin{equation}
-    E_L(\bm r) = \frac{H\Psi}{\Psi}.
+    E_L(\bm r) \mathdef \frac{H\Psi}{\Psi}.
 \end{equation}
+This rewriting of the integral is particularly suitable for evluation using \gls{MC}. Then we may vary the parameters and stop according to some minimisation algorithm.
 Notice that the more strongly $\Psi$ resembles the exact wave function, the less strongly $E_L$ varies with $\bm r$. In particular, if $\Psi$ is equal to an exact eigenstate, then $E_L$ is constant. Therefore, an alternative objective function to the energy expectation of equation \ref{eq:vmc_energy} is the variance.\supercite{cuzzocreaVariational2020,snajdrAre2000,kentMonte1999}
 
 Defining
@@ -161,34 +176,33 @@ Defining
 \end{equation}
 we may write equation \ref{eq:vmc_energy} as
 \begin{equation}
-    \langle E\rangle = \frac{\int\d^{3N}r\ p(\bm r)E_L(\bm r)}{\int\d^{3N}r\ p(\bm r)}.
-\end{equation}
-However, $\int\d^{3N}r\ p(\bm r) = 1$ so
-\begin{equation}
     \langle E\rangle = \int\d^{3N}r\ p(\bm r)E_L(\bm r).
 \end{equation}
 
-This form of the energy is amenable to the Metropolis-Hastings approach outlined in section \ref{sec:mcmc}. In principle, the algorithm is doable with just a single walker, but in practice we reduce the statistical error by using many. The algorithm then becomes
+This form of the energy is amenable to the Metropolis-Hastings approach outlined in section \ref{sec:mcmc}. Recall also that $p$ need not be normalised when using the Metropolis-Hastings algorithm for sampling.
 
-\begin{minipage}{\textwidth}
+
+In principle, the algorithm is doable with just a single walker, but in practice we reduce the statistical error by using many. The algorithm then becomes
+
+% \begin{minipage}{\textwidth}
 \begin{lstlisting}[escapeinside={(*}{*)}]
     Initialise (*$N$*) walkers in random positions.
-    until convergence criterion met
+    until convergence criterion met(*\footnote{The convergence criterion in VMC is typically just to sample a predefind number of configurations.}*)
       for each walker at position (*$r$*)
         sample the local energy (*$E_L$*) at (*$r$*)
         propose a new position (*$r'$*) with probably (*$p=|\Psi(r')/\Psi(r)|^2$ *)
         if (*$r'$*) is accepted
           set (*$r$*) to (*$r'$*)
 \end{lstlisting}
-\end{minipage}
+% \end{minipage}
 
-The energy is then calculated as the expectation value of the local energy, averaged over the samples generated in this procedure. Steps at the beginning (before equilibrium) are discarded, and a blocking procedure should be employed. Decision to stop is generally based on compute time and/or precision required.
+The energy is then calculated as the expectation value of the local energy, averaged over the samples generated in this procedure. Steps at the beginning (before equilibrium) are discarded in a process called equilibration,\supercite{casino} and a blocking procedure should be employed. Decision to stop is generally based on compute time and/or precision required.
 
-
+% TODO : you are here with Kristoffer's feedback
 \subsection{Trial Wave Functions}
 \label{sec:jastrow}
 
-While \gls{VMC} is a powerful tool, the quality of the solution is constrained by the quality of the trial wave function. Moreover, the evluation of the trial wave function is expensive, and we therefore want a form that is easy to evaluate.
+While \gls{VMC} is a powerful tool, the quality of the solution is constrained by the quality of the trial wave function. Moreover, the evaluation of the trial wave function is expensive, and we therefore want a form that is easy to evaluate.
 
 The form of the trial wave function is typically chosen based on a Jastrow factor, as already introduced in section \ref{sec:tc}. Generally,\supercite{jastrowManyBody1955}
 \begin{equation}
@@ -282,7 +296,7 @@ However, in practice a trial wave function is actually necessary for fermions, a
 \section{Full Configuration Interaction Quantum Monte Carlo}
 \label{sec:fciqmc}
 
-The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.\supercite{booth_fciqmc_2009} For this, there exist a few different implementations,\cite{Guther_neci_2020,spencerHANDEQMC2019b,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.\cite{Guther_neci_2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains exponential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\supercite{dobrautzSpinPure2021,weserStochastic2022}
+The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.\supercite{booth_fciqmc_2009} For this, there exist a few different implementations,\cite{Guther_neci_2020,spencerHANDEQMC2019b,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.\cite{Guther_neci_2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains exponential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\supercite{dobrautzSpinPure2021,weserStochastic2022}
 
 \subsection{Main Concepts}
 
