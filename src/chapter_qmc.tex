@@ -17,7 +17,7 @@ We start our discussion with classical \gls{MC} methods. While there are numerou
 
 \subsection{A Very Bad Game of Darts}
 
-If we imagine throwing darts at a dartboard randomly, we can approximate $\pi$. If the radius of the circle is $r$, then its area is $\pi r^2$. The area of the square circumscribing the circle is $4r^2$. Therefore, the ratio of the area of the circle to the area of the square is $\pi/4$. If we randomy sample a point in the square (``throw a dart''), the probability that the point is inside the circle is proportional to its area. Since we sample inside the square, the probability of landing inside the circle is
+If we imagine throwing darts at a dartboard randomly, we can approximate $\pi$. If the radius of the circle is $r$, then its area is $\pi r^2$. The area of the square circumscribing the circle is $4r^2$. Therefore, the ratio of the area of the circle to the area of the square is $\pi/4$. If we randomly sample a point in the square (``throw a dart''), the probability that the point is inside the circle is proportional to its area. Since we sample inside the square, the probability of landing inside the circle is
 \begin{equation}
     P(\text{inside circle}) =  \frac{\pi r^2}{4r^2} = \frac{\pi}{4}.
 \end{equation}
@@ -30,13 +30,13 @@ This is illustrated in figure \ref{fig:darts}, and captures the core philosophy 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/qmc/darts.pdf}
-    \caption{Our ``game of darts''. Points inside the unit circle are coloured blue whereas points outside are orange. Using stochastic sampling, this naive approach uses 5000 randomly generated numbers between -1 and 1 to approximate $\pi\approx 4N_\mathrm{in}/N_\mathrm{out}\approx 3.1464$.
+    \caption{Our ``game of darts''. Points inside the unit circle are coloured blue whereas points outside are orange. Using stochastic sampling, this naive approach uses 5000 randomly generated coordinates $(x,y)\in[-1,1]\times[-1,1]$ to approximate $\pi\approx 4N_\mathrm{in}/N_\mathrm{out}\approx 3.1464$.
     % Of course, there are many ways to improve this method, the most obvious being to use a fraction of the unit circle, such as the first quadrant.
     }
     \label{fig:darts}
 \end{figure}
 
-As controlling the stochastic error is critical in \gls{MC} methods, to estimate the reliability of our estimate, we can determined the standard deviation of the estimate. Our sampling scheme is a binomial distribution, with $p=\pi/4$. Hence,
+Controlling the stochastic error is critical in \gls{MC} methods. To estimate the reliability of our estimate, we can determined the standard deviation of the estimate. Our sampling scheme is a binomial distribution, with $p=\pi/4$. Hence,
 \begin{equation}
     \sigma^2_{\pi} = \mathrm{Var}(4P(\text{inside circle})) = \frac{16p(1-p)}{N}
 \end{equation}
@@ -70,7 +70,7 @@ In \gls{MC} methods, $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled
 \begin{equation}
     I\approx \sum_{i=1}^N f(x_i).
 \end{equation}
-If, for example, we choose $N$ to be randomly sampled, then the variance is then
+If, for example, we choose $N$ to be randomly sampled, then the variance is
 \begin{align}
     \sigma^2 &= \left\langle \left( \frac{b-a}{N}\sum^N_{i=1}f_i\right)^2\right\rangle - \left( \left\langle  \frac{b-a}{N}\sum^N_{i=1}f_i\right\rangle\right)^2 \\
     &= \frac{(b-a)^2}{N}(\bar{f^2} - \bar f^2)
@@ -143,14 +143,14 @@ The algorithm proceeds in two stages: we propose a step $x'\to x$, and then acce
 \end{equation}
 If we accept, we set the new state to $x$, otherwise we stay at $x'$.
 
-In practice, on a computer, accepting is done by generating a random number $r\in [0,1)$ and accepting if $r<\frac{\pi(x')}{\pi(x)}$, and otherwise rejecting. Furthermore, we don't just have a single Markov chain, but a collection of so-called ``walkers'', that each perform their own Markov chain (for parallelisation). The integrand is then sampled at each position where the walkers reach.
+In practice, on a computer, accepting is done by generating a uniform random number $r\in [0,1)$ and accepting if $r<\frac{\pi(x')}{\pi(x)}$, and otherwise rejecting. Furthermore, we don't just have a single Markov chain, but a collection of so-called ``walkers'', that each perform their own Markov chain (for parallelisation). The integrand is then sampled at each position where the walkers reach.
 
 One final note, is that since the current state of a Markov chain is dependent on the previous state, the Markov chain is not independent of itself. This is referred to as autocorrelation. One method to reduce this autocorrelation and give essentially independent samples is known as blocking.\supercite{flyvbjergError1989}
 
 \section{Variational (Quantum) Monte Carlo}
 \label{sec:vmc}
 
-As our first foray into \gls{QMC}, we consider \gls{VMC}. In section \ref{sec:variational_principle} we introduced the variational principle by parametrising the wave function and then finding the minimum of the expectation value of the energy occurring in the parametrisation space. If we have a large number of electrons and/or a large number of parameters, then the integrals involved in the evaluation of the energy will necessarily be high-dimensional. This is where \gls{MC} comes in. For basic trial wave functions and small atoms like Hydrogen or Helium, direct integration may be possible, but as discussed in the previous section, this quickly becomes impossible for larger systems.
+As our first foray into \gls{QMC}, we consider \gls{VMC}. In section \ref{sec:variational_principle} we introduced the Variational Principle by parametrising the wave function and then finding the minimum of the expectation value of the energy occurring in the parametrisation space. If we have a large number of electrons and/or a large number of parameters, then the integrals involved in the evaluation of the energy will necessarily be high-dimensional. This is where \gls{MC} comes in. For basic trial wave functions and small atoms like Hydrogen or Helium, direct integration may be possible, but as discussed in the previous section, this quickly becomes impossible for larger systems.
 
 For a trial wave function $\Psi$ (we omit the tilde from section \ref{sec:variational_principle}), the expectation value of the energy is
 \begin{align}
@@ -163,11 +163,11 @@ For a trial wave function $\Psi$ (we omit the tilde from section \ref{sec:variat
     \label{eq:vmc_step3}
     &= \frac{\int\d^{3N}r\ |\Psi|^2 E_L(\bm r)}{\int\d^{3N}r\ |\Psi|^2},
 \end{align}
-where we have defined the local energy as
+where we have introduced the local energy, defined as
 \begin{equation}
     E_L(\bm r) \mathdef \frac{H\Psi}{\Psi}.
 \end{equation}
-This rewriting of the integral is particularly suitable for evluation using \gls{MC}. Then we may vary the parameters and stop according to some minimisation algorithm.
+This rewriting of the integral is particularly suitable for evaluation using \gls{MC}. Then we may vary the parameters and stop according to some minimisation algorithm.
 Notice that the more strongly $\Psi$ resembles the exact wave function, the less strongly $E_L$ varies with $\bm r$. In particular, if $\Psi$ is equal to an exact eigenstate, then $E_L$ is constant. Therefore, an alternative objective function to the energy expectation of equation \ref{eq:vmc_energy} is the variance.\supercite{cuzzocreaVariational2020,snajdrAre2000,kentMonte1999}
 
 Defining
@@ -180,7 +180,6 @@ we may write equation \ref{eq:vmc_energy} as
 \end{equation}
 
 This form of the energy is amenable to the Metropolis-Hastings approach outlined in section \ref{sec:mcmc}. Recall also that $p$ need not be normalised when using the Metropolis-Hastings algorithm for sampling.
-
 
 In principle, the algorithm is doable with just a single walker, but in practice we reduce the statistical error by using many. The algorithm then becomes
 
@@ -196,9 +195,8 @@ In principle, the algorithm is doable with just a single walker, but in practice
 \end{lstlisting}
 % \end{minipage}
 
-The energy is then calculated as the expectation value of the local energy, averaged over the samples generated in this procedure. Steps at the beginning (before equilibrium) are discarded in a process called equilibration,\supercite{casino} and a blocking procedure should be employed. Decision to stop is generally based on compute time and/or precision required.
+The energy is then calculated as the expectation value of the local energy, averaged over the samples generated in this procedure. Steps at the beginning (before equilibrium) are discarded in a process called equilibration,\supercite{casino} and a blocking procedure should be employed. The decision to stop is generally based on compute time and/or precision required.
 
-% TODO : you are here with Kristoffer's feedback
 \subsection{Trial Wave Functions}
 \label{sec:jastrow}
 
@@ -287,8 +285,8 @@ More concretely, in pseudocode, the basic \gls{DMC} algorithm is:
 \end{lstlisting}
 \end{minipage}
 
-Notice that in contrast to \gls{VMC}, \gls{DMC} does not rely a trial wave function. There is also a discretisation error incurred by the operator decomposition, though this can be handled via an application of the Metropolis-Hastings alogirthm.\cite{thijssenComputational2007}
-However, in practice a trial wave function is actually necessary for fermions in order to improve the statistics. Since in electronic structure, we focus on fermions (electrons), this is an important feature. The walker distribution is positive, but for fermions this is not the case due to their exchange statistics. In order to still practically use DMC,\footnote{Other simple solutions such as assigning a sign to each walker leads to large errors.} an approximation called the fixed node approximation is made, where the nodal structure (i.e. the roots of $\Psi$) of the distribution is determined by a trial function. Thus, the accuracy of DMC is still limited by the quality of the trial wave function (or more precisely, by its nodal surface). In a Slater-Jastrow-type trial wave function like equation \ref{eq:slater-jastrow}, only the Slater-component will affect the nodal surface (and hence the accuracy). Thus, the choice of orbitals as well as the number of determinants can be important considerations.
+Notice that in contrast to \gls{VMC}, \gls{DMC} does not rely on a trial wave function. There is also a discretisation error incurred by the operator decomposition, though this can be handled via an application of the Metropolis-Hastings alogirthm.\cite{thijssenComputational2007}
+However, in practice a trial wave function is actually necessary for fermions in order to improve the statistics. The walker distribution is positive, but for fermions this is not the case due to their exchange statistics. Since in electronic structure, we focus on fermions (electrons), this is an important feature. In order to still practically use DMC,\footnote{Other simple solutions such as assigning a sign to each walker leads to large errors.} an approximation called the fixed node approximation is made, where the nodal structure (i.e. the roots of $\Psi$) of the distribution is determined by a trial function. Thus, the accuracy of DMC is still limited by the quality of the trial wave function (or more precisely, by its nodal surface). In a Slater-Jastrow-type trial wave function like equation \ref{eq:slater-jastrow}, only the Slater-component will affect the nodal surface (and hence the accuracy). Thus, the choice of orbitals as well as the number of determinants can be important considerations.
 
 % While \gls{DMC} does not rely on the variational principle, the convergence of its practical variants still relies on a trial wave function.
 
@@ -326,7 +324,7 @@ Like \gls{FCI}, the wave function is expanded in some basis. Throughout this dis
     \ket{\Psi(\tau)} = \sum_i c_i(\tau)\ket{D_i}.
 \end{equation}
 
-Like in \gls{DMC}, we adjust $S$ to approximate the ground state energy $E_0$, as $S=E_0$ would project out all states other than the ground state, as long as $\braket{\Psi(\tau=0)}{\Psi_0}\neq 0$ where $\ket{\Psi_0}$ is the ground state. Similarly, $S$ affects the walker population. In particular, for walker population $N_w$, if $S>E_0$ then the population grows, and if $S<E_0$ it decays. If we have a target population $N_w^\mathrm{target}$ then we keep $S>E_0$ (typically, just by setting $S=0$) and ``turn on'' the shift once $N_w^\mathrm{target}$ is reached. However, unlike DMC, \gls{FCIQMC} walks can have either negative or positive weight. These weights correspond to the $c_i$, and the walkers ``diffuse'' across \gls{SD} (or \gls{CSF}) space. The walker population is reported in terms of absolute values, i.e.
+Like in \gls{DMC}, we adjust $S$ to approximate the ground state energy $E_0$, as $S=E_0$ would project out all states other than the ground state, as long as $\braket{\Psi(\tau=0)}{\Psi_0}\neq 0$ where $\ket{\Psi_0}$ is the ground state. Similarly, $S$ affects the walker population. In particular, for walker population $N_w$, if $S>E_0$ then the population grows, and if $S<E_0$ it decays. If we have a target population $N_w^\mathrm{target}$ then we keep $S>E_0$ (typically, just by setting $S=0$) and ``turn on'' the shift once $N_w^\mathrm{target}$ is reached. However, unlike DMC, \gls{FCIQMC} walkers can have either negative or positive weight. These weights correspond to the $c_i$, and the walkers ``diffuse'' across \gls{SD} (or \gls{CSF}) space. The walker population is reported in terms of absolute values, i.e.
 \begin{equation}
     N_w = \sum_{i\in\{SDs\}}|N_i|,
 \end{equation}
@@ -450,7 +448,7 @@ In this stage of the simulation, walkers are being spawned with incoherent signs
 
 \subsection{The Initiator Approximation}
 
-Since incoherent walker proliferation is a major source of the annihilation plateau, a sensible strategy to overcome this is by forcing growth to be coherent. This is achieved by the initiator approximation.\supercite{Cleland_initiator_2010} An \gls{FCIQMC} calculation with the initiator approximation is sometimes referred to as i-FCIQMC; however, since the approximation is so useful and ubiqituous, we simply referred to as FCIQMC. Indeed, in this dissertation all FCIQMC calculations used the initiator approximation, unless otherwise specified.
+Since incoherent walker proliferation is a major source of the annihilation plateau, a sensible strategy to overcome this is by forcing growth to be coherent. This is achieved by the initiator approximation.\supercite{Cleland_initiator_2010} An \gls{FCIQMC} calculation with the initiator approximation is sometimes referred to as i-FCIQMC; however, since the approximation is so useful and ubiqituous, we simply referred to it as FCIQMC. Indeed, in this dissertation all FCIQMC calculations used the initiator approximation, unless otherwise specified.
 
 The initiator approximation allows only those determinants (dubbed ``initiators'') with at least $N_\mathrm{thresh}$ walkers to spawn new walkers on unoccupied determinants. If the population is greater than this threshold, the assumption is that the (relative) sign of that state is correct, and hence the spawning event should produce the correct sign.
 
