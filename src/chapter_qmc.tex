@@ -206,6 +206,7 @@ While \gls{VMC} is a powerful tool, the quality of the solution is constrained b
 
 The form of the trial wave function is typically chosen based on a Jastrow factor, as already introduced in section \ref{sec:tc}. Generally,\supercite{jastrowManyBody1955}
 \begin{equation}
+    \label{eq:slater-jastrow}
     \Psi_\mathrm{trial} = \e^J\Phi.
 \end{equation}
 
@@ -213,28 +214,33 @@ For computational efficiency, the Jastrow factor typically only retains one- and
 \begin{equation}
     J = \sum_i \chi(\bm x_i) - \frac 12 \sum_{i\neq j} u(\bm x_i, \bm x_j),
 \end{equation}
-where $\chi$ describes electron-nuclear correlation and $u$ describes two-electron correlation. There exist a number of more specific forms for $J$,\supercite{lopezriosFrameworkConstructingGeneric2012} though one unifying principle is for them to adhere to expected short-range (cusp conditions) and long-range ($1/r$) behaviour.
+where $\chi$ describes electron-nuclear correlation and $u$ describes two-electron correlation (including e.g. electron-electron-nuclear correlation). There exist a number of more specific forms for $J$,\supercite{lopezriosFrameworkConstructingGeneric2012} though one unifying principle is for them to adhere to expected short-range (cusp conditions) and long-range ($1/r$) behaviour.
 
 $\Phi$ is typically chosen to be a single Slater determinant.\supercite{foulkesQuantum,fahyVariational1988,liCohesive1991,rajagopalQuantum1994,malatestaVariational1997}
 In particular, by choosing the \gls{HF} determinant, typically only a small portion of the energy (that is, the correlation energy) is left for the Jastrow factor to describe, and typically even simple Jastrow factors can do this.\supercite{foulkesQuantum}
 However, sometimes this is not enough, for example, when the HF determinant is not sufficient to describe all symmetries of the true wave function.\supercite{harrisonQuantum1985,lesterRecent1997,umrigarDiffusion1993}
 
 \section{Diffusion Monte Carlo}
-\Gls{DMC} starts by performing a Wick rotation (that is, substitute $t\to i\tau$) in the time-dependent Schr\"odinger equation, equation \ref{eq:schrodinger}, we get the imaginary-time Schr\"odinger equation
+\Gls{DMC} starts by performing a Wick rotation (that is, substitute $t\to i\tau$) on the time-dependent Schr\"odinger equation, equation \ref{eq:schrodinger}. We then get the imaginary-time Schr\"odinger equation
 \begin{equation}
     \label{eq:imag_time_schrodinger}
-    \frac{\partial}{\partial\tau}\Psi(\bm r, \tau) = -\hat H \Psi(\bm r, \tau)
+    \frac{\partial}{\partial\tau}\Psi(\bm r, \tau) = -\hat H \Psi(\bm r, \tau).
 \end{equation}
-This equation is a diffusion (or heat) equation, and $\Psi$ may be interpreted as the density distribution for a large number of independent particles (walkers).\supercite{fickLiquid1995}
-More specifically, the kinetic energy term, being second order, describes the movement of the particles whereas the potential energy term describes generation or annihilation of walkers. The solution of this equation is
+This equation is a diffusion (or heat) equation, and $\Psi$ may be interpreted as the density distribution for a large number of independent particles\footnote{Note that the particles, henceforth referred to as walkers, are not the particles being described by the Hamiltonian. One walker represents a configuration of all the particles described by the Hamiltonian.} (walkers).\supercite{fickLiquid1995}
+More specifically, the kinetic energy term, being second order, describes the movement of the walkers whereas the potential energy term describes generation or annihilation of walkers. The solution of this equation is
 \begin{equation}
-    \Psi(\bm r, \tau) = \e^{-(H-S)\tau}\Psi(\bm r, 0),
+    \Psi(\bm r, \tau) = \e^{-(\hat H-S)\tau}\Psi(\bm r, 0),
 \end{equation}
-where we have introduced the energy shift $S$ which is adapted to estimate the ground state energy.\supercite{kosztinIntroduction1996}
+where we have introduced the energy shift $S$ which is adapted throughout the simulation every $n$ steps to keep the number of walkers constant, and to estimate the ground state energy.\supercite{kosztinIntroduction1996} In particular, if we expand $\Psi(\bm r, 0)$ in terms of the eigenfunctions of $\hat H$, $\{\psi_i\}$, labeled in such a way that $i>j\implies E_i>E_j$, we get
+\begin{equation}
+    \label{eq:imag-time-decay}
+    \Psi(\bm r, \tau) = \sum_{i}a_i\e^{-(\hat E_i-S)\tau}\psi(\bm r).
+\end{equation}
+Here, $a_i$ is the coefficient of the $i$th eigenfunction, and $\hat E_i$ is the corresponding eigenvalue. After the excited-state solutions have decayed, the only possible value of $S$ that stabilises the simulation is $S=E_0$. It is also clear from equation \ref{eq:imag-time-decay} that when $S=E_0$, all excited states decay exponentially to zero, and we are left with the ground state for large $\tau$.
 
 We may also express $\Psi$ in terms of its Green's function, in order to get a form that expresses a small time step,
 \begin{equation}
-\Psi(\bm r, \tau+\Delta\tau) = \int\d^{3N}r' \ G(\bm r, \bm r'; \Delta\tau),
+\Psi(\bm r, \tau+\Delta\tau) = \int\d^{3N}r' \ G(\bm r, \bm r'; \Delta\tau)\Psi(\bm r, \tau),
 \end{equation}
 where the Green's function
 \begin{equation}
@@ -281,8 +287,8 @@ More concretely, in pseudocode, the basic \gls{DMC} algorithm is:
 \end{lstlisting}
 \end{minipage}
 
-Notice that in contrast to \gls{VMC}, \gls{DMC} does not rely on a variational principle, nor a trial wave function. There is also a discretisation error incurred by the operator decomposition, though this can be handled via an application of the Metropolis-Hastings alogirthm.\cite{thijssenComputational2007}
-However, in practice a trial wave function is actually necessary for fermions, as we consider in electronic structure. The walker distribution is positive, but for fermions this is not the case due to their exchange statistics. In order to still practically use DMC, an approximation called the fixed node approximation is made, where the nodal structure (i.e. the roots of $\Psi$) of the distribution is determined by a trial function. Thus, the accuracy of DMC is still limited by the quality of the trial wave function (or more precisely, by its nodal surface).
+Notice that in contrast to \gls{VMC}, \gls{DMC} does not rely a trial wave function. There is also a discretisation error incurred by the operator decomposition, though this can be handled via an application of the Metropolis-Hastings alogirthm.\cite{thijssenComputational2007}
+However, in practice a trial wave function is actually necessary for fermions in order to improve the statistics. Since in electronic structure, we focus on fermions (electrons), this is an important feature. The walker distribution is positive, but for fermions this is not the case due to their exchange statistics. In order to still practically use DMC,\footnote{Other simple solutions such as assigning a sign to each walker leads to large errors.} an approximation called the fixed node approximation is made, where the nodal structure (i.e. the roots of $\Psi$) of the distribution is determined by a trial function. Thus, the accuracy of DMC is still limited by the quality of the trial wave function (or more precisely, by its nodal surface). In a Slater-Jastrow-type trial wave function like equation \ref{eq:slater-jastrow}, only the Slater-component will affect the nodal surface (and hence the accuracy). Thus, the choice of orbitals as well as the number of determinants can be important considerations.
 
 % While \gls{DMC} does not rely on the variational principle, the convergence of its practical variants still relies on a trial wave function.
 
@@ -320,7 +326,7 @@ Like \gls{FCI}, the wave function is expanded in some basis. Throughout this dis
     \ket{\Psi(\tau)} = \sum_i c_i(\tau)\ket{D_i}.
 \end{equation}
 
-Like in \gls{DMC}, we adjust $S$ to approximate the ground state energy $E_0$, as $S=E_0$ would project out all states other than the ground state, as long as $\braket{\Psi(\tau=0)}{\Psi_0}\neq 0$ where $\ket{\Psi_0}$ is the ground state. Similarly, $S$ affects the walker population. In particular, for walker population $N_w$, if $S>E_0$ then the population grows, and if $S<E_0$ it decays. If we have a target population $N_w$ then we keep $S>E_0$ (typically, just by setting $S=0$) and ``turn on'' the shift once $N_w$ is reached. However, unlike DMC, \gls{FCIQMC} walks can have either negative or positive weight. These weights correspond to the $c_i$, and the walkers ``diffuse'' across \gls{SD} (or \gls{CSF}) space. The walker population is reported in terms of absolute values, i.e.
+Like in \gls{DMC}, we adjust $S$ to approximate the ground state energy $E_0$, as $S=E_0$ would project out all states other than the ground state, as long as $\braket{\Psi(\tau=0)}{\Psi_0}\neq 0$ where $\ket{\Psi_0}$ is the ground state. Similarly, $S$ affects the walker population. In particular, for walker population $N_w$, if $S>E_0$ then the population grows, and if $S<E_0$ it decays. If we have a target population $N_w^\mathrm{target}$ then we keep $S>E_0$ (typically, just by setting $S=0$) and ``turn on'' the shift once $N_w^\mathrm{target}$ is reached. However, unlike DMC, \gls{FCIQMC} walks can have either negative or positive weight. These weights correspond to the $c_i$, and the walkers ``diffuse'' across \gls{SD} (or \gls{CSF}) space. The walker population is reported in terms of absolute values, i.e.
 \begin{equation}
     N_w = \sum_{i\in\{SDs\}}|N_i|,
 \end{equation}
