@@ -8,7 +8,11 @@ The size of these basis sets scale as $M\in\mathcal{O}(X^3)$, and since for stan
 
 Meanwhile, the \gls{CBS} correlation error scales as $\epsilon\in\mathcal{O}(X^{-3})$ \cite{helgakerBasisset1997,halkierBasisset1998} or $\epsilon\in\mathcal{O}(M^{-1})$,\cite{klopperInitio1995} resulting in $t\in\mathcal{O}(M^{-\frac 14})$. Thus, the methods discussed so far come with the painful cost of requiring very large basis sets to approach high-accuracy results.
 
-Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling by explicitly including the interelectronic distance $r_{12}$, and is the subject of this chapter. As the R12/F12 family of methods is the most mature of the explicitly correlated electronic structure methods, many reviews focusing on this topic already exist. This chapter in particular is in large part based on three reviews: references \citenum{klopperR122007}, \citenum{gruneisPerspective2017} and \citenum{hattigExplicitly2012}.
+Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling by explicitly including the interelectronic distance $r_{12}$, and is the subject of this chapter. As the R12/F12 family of methods is the most mature of the explicitly correlated electronic structure methods, many reviews focusing on this topic already exist. This chapter in particular is in large part based on references \parencite{klopperR122007,gruneisPerspective2017,hattigExplicitly2012,shiozakiMultireference2013}.
+
+% \textcite{klopperR122007,gruneisPerspective2017,hattigExplicitly2012,shiozakiMultireference2013}.
+
+% three reviews: references \citenum{klopperR122007}, \citenum{gruneisPerspective2017} and \citenum{hattigExplicitly2012}.
 
 
 \section{The Cusp Conditions}
@@ -87,13 +91,27 @@ While not as popular as F12 methods (see section \ref{sec:f12}), \glspl{ECG} hav
 
 The most influential class of explicitly correlated methods to date are the F12 methods. The core principle of these methods is to augment the wave function from a conventional (typically \gls{SD}) basis with an explicitly-correlated correction, called the F12 (or R12) correction. The original formulation\todo{cite Kutzelnigg} parametrised a two-electron system (such as helium) wave function as
 \begin{equation}
-    \ket\Psi = (1+tQ_{12}r_12)\ket{\Psi_0}+\sum_{p}t_{p}\ket{\Psi_{p}}
+    \ket\Psi = (1+tQ_{12}r_{12})\ket{\Psi_0}+\sum_{p}t_{p}\ket{\Psi_{p}}
 \end{equation}
 where $\Psi_0$ is a reference wave function (such as \gls{HF}), $\ket{\Psi_{p}}$ are excited-state \glspl{SD}, $t,t_{p}$ are parameters (``amplitudes'') to be optimised, and
 \begin{equation}
     Q_{12} \mathdef \sum_{\alpha\beta}\ket{\alpha\beta}\bra{\alpha\beta}
 \end{equation}
-is referred to as a ``strong orthogonality projector'', which ensures the $r_{12}$ term is orthogonal to the reference and singly-excited determinants. Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. The fact that, due to $Q_{12}$, the $r_{12}$ term commutes with the standard excitation operators aids in including this explicit correlation into conventional electron correlation methods.
+is referred to as a ``strong orthogonality projector'', which ensures the $r_{12}$ term is orthogonal to the reference and singly-excited determinants. Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. The fact that, due to $Q_{12}$, the $r_{12}$ term commutes with the standard excitation operators aids in including this explicit correlation into conventional electron correlation methods. This geminal term is added a correction to the standard wave function.
+
+\subsection{MP2-F12}
+
+Following the discussion in reference \citenum{shiozakiMultireference2013}, and adopting their notation, we consider the MP2-F12 method as an illustrative example.
+
+Using the notation of reference \citenum{shiozakiMultireference2013}
+
+\subsection{Higher-Order F12 Theories}
+
+\todo{change in definition of excitation operators}
+
+\subsection{Excited States}
+
+\todo{different "target" -- don't remember, see paper}
 
 % I think for this section I will largely be pulling from section 4 of \supercite{shiozakiMultireference2013}
 
