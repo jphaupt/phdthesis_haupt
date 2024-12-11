@@ -91,19 +91,60 @@ While not as popular as F12 methods (see section \ref{sec:f12}), \glspl{ECG} hav
 
 The most influential class of explicitly correlated methods to date are the F12 methods. The core principle of these methods is to augment the wave function from a conventional (typically \gls{SD}) basis with an explicitly-correlated correction, called the F12 (or R12) correction. The original formulation\todo{cite Kutzelnigg} parametrised a two-electron system (such as helium) wave function as
 \begin{equation}
-    \ket\Psi = (1+tQ_{12}r_{12})\ket{\Psi_0}+\sum_{p}t_{p}\ket{\Psi_{p}}
+    \label{eq:first-r12}
+    \ket\Psi = (1+tQ_{12}F_{12}(r_{12}))\ket{\Psi_0}+\sum_{p}t_{p}\ket{\Psi_{p}}
 \end{equation}
 where $\Psi_0$ is a reference wave function (such as \gls{HF}), $\ket{\Psi_{p}}$ are excited-state \glspl{SD}, $t,t_{p}$ are parameters (``amplitudes'') to be optimised, and
 \begin{equation}
     Q_{12} \mathdef \sum_{\alpha\beta}\ket{\alpha\beta}\bra{\alpha\beta}
 \end{equation}
-is referred to as a ``strong orthogonality projector'', which ensures the $r_{12}$ term is orthogonal to the reference and singly-excited determinants. Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. The fact that, due to $Q_{12}$, the $r_{12}$ term commutes with the standard excitation operators aids in including this explicit correlation into conventional electron correlation methods. This geminal term is added a correction to the standard wave function.
+is referred to as a ``strong orthogonality projector'', which ensures the $F_{12}(r_{12})$ term is orthogonal to the reference and singly-excited determinants.
+Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. The fact that, due to $Q_{12}$, the $F_{12}(r_{12})$ term commutes with the standard excitation operators aids in including this explicit correlation into conventional electron correlation methods. This geminal term is added a correction to the standard wave function.
+
+In the original formulation, $F_{12}(r_{12})=r_{12}$ (hence the name ``R12'' or ``F12'' for the more general methodology). However, another popular choice is a Slater-type geminal\todo{cite Tenno}, fitted to a linear combination of gaussians,\todo{citations}
+\begin{equation}
+    F_{12}(r_{12})=-\gamma^{-1}\e^{-\gamma r_{12}} = -\gamma^{-1}+r_{12}-\frac 12\gamma r_{12}^2+\cdots \approx \sum_i c_i\e^{-\alpha_ir_{12}^2}.
+\end{equation}
 
 \subsection{MP2-F12}
 
 Following the discussion in reference \citenum{shiozakiMultireference2013}, and adopting their notation, we consider the MP2-F12 method as an illustrative example.
 
-Using the notation of reference \citenum{shiozakiMultireference2013}
+An alternative derivation of the \gls{MP2} equations from section \ref{sec:perturbation-theory} is to minimise the Hylleraas functional\todo{citations}
+\begin{equation}
+    E^{(2)} = \min_\Psi\bra{\Psi^{(1)}}(H_0-E^{(0)})\ket{\Psi^{(1)}}+2\bra{\Psi^{(1)}}H\ket{\Psi^{(0)}}
+\end{equation}
+where $H_0$ is the unperturbed Hamiltonians, and the $(i)$ superscript denotes the order of the correction, as introduced in section \ref{sec:perturbation-theory}.
+
+The earliest generalisation of equation \ref{eq:first-r12} was an ansatz for MP2,\todo{citations}
+\begin{equation}
+    \label{eq:mp2-f12-firstorder}
+    \ket{\Psi^{(1)}} = \frac 12\sum_{ij}\left( \sum_{ab}t_{ij}^{ab}\ket{\Psi_{ij}^{ab}} + \sum_{kl}t_{ij}^{kl}\sum_{\alpha\beta}\bra{\alpha\beta}Q_{12}F_{12}(r_{12})\ket{kl}\ket{\Psi_{ij}^{\alpha\beta}} \right),
+\end{equation}
+\begin{equation}
+    Q_{12} = (1-o_1)(1-o_2) - v_1v_2
+\end{equation}
+where we define the one-electron projection operators
+\begin{equation}
+    o_m = \sum_i\ket{\phi_i(\bm r_m)}\bra{\phi_i(\bm r_m)}
+\end{equation}
+and
+\begin{equation}
+    v_m = \sum_a\ket{\phi_a(\bm r_m)}\bra{\phi_a(\bm r_m)}
+\end{equation}
+such that $o_m$ and $v_m$ project onto the occupied and virtual orbitals, respectively, with
+\begin{equation}
+    \bra{\phi_i(\bm r_m)}\Omega\ket{jk} = \int\d^3r_m\ \phi_i^*(\bm r_m)\Omega\phi_j(\bm r_1)\phi_k(\bm r_2)
+\end{equation}
+for operator $\Omega$. The first term in brackets in equation \ref{eq:mp2-f12-firstorder} are from the conventional MP2 wave function correction, and the extra term is a contraction of a formally-infinite set of double excitations, representing the F12 correction (again, orthogonal to the conventional wave function thanks to $Q_{12}$).
+
+\todo{... also mention how some parameters can be found directly from the cusp conditions}
+
+\subsection{Many-Electron Integrals}
+
+\todo{...}
+
+\todo{also describe how the exponential Slater F12 function also improves the results}
 
 \subsection{Higher-Order F12 Theories}
 
