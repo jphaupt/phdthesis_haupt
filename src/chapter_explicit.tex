@@ -204,18 +204,42 @@ The core concept is to similarity-transform the Hamiltonian using some invertibl
 \begin{equation}
     \htc = P^{-1}\hat HP.
 \end{equation}
-For any eigenvalue and eigenfunction pair $(E_i,\Psi)$ of $\hat H$, the transformed Hamiltonian $\htc$ has eigenfunction $\Phi\mathdef P\Psi$ with the same eigenvalue $E_i$. This is called isospectrality.
+For any eigenvalue and eigenfunction pair $(E_i,\Psi)$ of $\hat H$, the transformed Hamiltonian $\htc$ has eigenfunction $\Phi\mathdef P\Psi$ with the same eigenvalue $E_i$. This is called isospectrality, and it allows us to solve $\htc$ to get the spectrum of $\hat H$.
 
-However, note that there is no requirement that $\htc$ is Hermitian, and in fact it typically is not. Recall from section \ref{sec:variational_principle} that the variational relies on the Hermiticity of the operator. It is therefore nontrivial to make \gls{TC} variational, and not all conventional methods can be used to treat $\htc$ (although, as discussed in section \ref{sec:fciqmc}, projector methods such as FCIQMC and CC may be used).
+However, note that there is no requirement that $\htc$ is Hermitian, and in fact it typically is not. Recall from section \ref{sec:variational_principle} that the variational principle relies on the Hermiticity of the operator. It is therefore nontrivial to make \gls{TC} variational, and not all conventional methods can be used to treat $\htc$ (although, as discussed in section \ref{sec:fciqmc}, projector methods such as FCIQMC and CC may be used).
 
 \subsection{The Method of Boys and Handy}
-uses some ideas from \gls{VMC}, discussed more in section \ref{sec:vmc}.
 
-\todo{describe pseudoenergy and why we don't use it (HTC not Hermitian), then describe the variance and how we can derive self-consistent ways to derive HTC}
+One of the earliest practical approaches, on which most modern variations build, is that of Boys and Handy.\todo{citation} In this methodology, we start with a Jastrow ansatz\cite{jastrowManyBody1955}
+\begin{equation}
+    \label{eq:jastrow-ansatz}
+    \Psi = \e^J\Phi.
+\end{equation}
+In this way, TC shares similarities with \gls{VMC}, to be discussed in section \ref{sec:vmc}. Inserting \ref{eq:jastrow-ansatz} into the Schrödinger equation, we get
+\begin{equation}
+    \hat H \e^J\Phi = E\e^J\Phi \implies \underbrace{\e^{-J}\hat H\e^J}_{\htc}\Phi = E\Phi,
+\end{equation}
+i.e. the similarity-transforming operator $P=\e^J$.
+
+In the original formulation, $\Phi$ was chosen to be a single \gls{SD} (\gls{HF}), and $J$ was chosen such that
+\begin{equation}
+    \label{eq:jastrow-two-elec}
+    J = \sum_{i<j}u(\bm r_i, \bm r_j)
+\end{equation}
+where $u(\bm r_i, \bm r_j) = u(\bm r_j, \bm r_i)$ is a symmetric two-electron correlation function.
+
+When $J$ is chosen this way, the \gls{BCH} expansion of $\htc$ truncates exactly to second order (due to $u$ depending on two coordinates), i.e.
+\begin{equation}
+    \htc \mathdef \e^{-J}\hat H\e^J= \hat H + \frac 12[\hat H, J] + \frac 12[\hat H, [\hat H, J]].
+\end{equation}
+
+\todo{see Aron's paper to write out the original method}
+
+\todo{...}
+
+\todo{describe pseudoenergy and why we don't use it (HTC not Hermitian), then describe the variance and how we can derive self-consistent ways to derive HTC (refinement from Handy).}
 
 \subsection{Modern Resurgence}
-\todo{Also cite Werner and quantum computing people}
-
 
 
 recent renewal of interest (lots and lots of citations) with various applications, including DMRG, quantum computing, etc.
@@ -224,9 +248,11 @@ will talk in more detail about the Jastrow factor in section \ref{sec:jastrow} s
 
 \todo{also mention biorthogonal orbitals etc.}
 
+\todo{Also cite Werner and quantum computing people}
+
 \todo{also briefly discuss the forms of the Jastrow factors}
 
-\subsection{Comparison to F12/R12}
+\subsection{Comparison to F12}
 
 discuss additive vs multiplicative ansatz
 
