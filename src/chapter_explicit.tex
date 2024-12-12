@@ -105,6 +105,7 @@ In the original formulation, $F_{12}(r_{12})=r_{12}$ (hence the name ``R12'' or 
 \begin{equation}
     F_{12}(r_{12})=-\gamma^{-1}\e^{-\gamma r_{12}} = -\gamma^{-1}+r_{12}-\frac 12\gamma r_{12}^2+\cdots \approx \sum_i c_i\e^{-\alpha_ir_{12}^2}.
 \end{equation}
+The choice of the length scale $\gamma$ can either be optimised or (more typically) kept fix, although formally it is orbital dependent and a poor choice may result in a loss of accuracy.\supercite{tewRelaxing2018} Other choices for the correlation factor also exist.\todo{citations}
 
 \subsection{MP2-F12}
 
@@ -138,7 +139,10 @@ such that $o_m$ and $v_m$ project onto the occupied and virtual orbitals, respec
 \end{equation}
 for operator $\Omega$. The first term in brackets in equation \ref{eq:mp2-f12-firstorder} are from the conventional MP2 wave function correction, and the extra term is a contraction of a formally-infinite set of double excitations, representing the F12 correction (again, orthogonal to the conventional wave function thanks to $Q_{12}$).
 
-\todo{... also mention how some parameters can be found directly from the cusp conditions}
+It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided\todo{citation}, and they tend to also be more accurate\todo{citations}, derived from the cusp conditions,
+\begin{equation}
+    t_{ij}^{kl} = \frac 38\delta_{ik}\delta_{jl}+\frac 18\delta_{il}\delta_{jk}.
+\end{equation}
 
 \subsection{Many-Electron Integrals}
 
