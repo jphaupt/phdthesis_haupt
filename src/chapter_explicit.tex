@@ -193,35 +193,30 @@ where $\ket{\Psi_\text{conv}}$ is the conventional wave function. In this way, w
 
 These F12 methodologies have been particularly successful for large systems, proving only marginally more expensive than the conventional methods in some cases.\todo{citations}
 
-Since F12 methods work directly on the wave function, it is also natural to extend to excited states, particularly for multireference methods.\todo{citations: see haettig} However, since the geminal terms include only occupied orbitals, there is an inherent bias to the ground state.\todo{citations} Several means of ameliorating this have been proposed,\todo{citations} including extending the geminal basis to include virtual orbitals.\todo{citations}
-
-% \subsection{Excited States}
-
-% \todo{different "target" -- don't remember, see paper}
-
-% % I think for this section I will largely be pulling from section 4 of \supercite{shiozakiMultireference2013}
-
-% % \subsection{A Historial Perspective: R12 Methods}
-% \todo{... see review papers haettig pg 30 for basic intro then 35 - 50 then excited state papers}
-
-% \todo{revisit}
-% brief mention of how it builds on gaussian-type geminals
-
-% \subsection{}
-
-% \todo{make sure to include some excited state information}
-
-% \todo{mention but maybe don't go into too much detail on MR-F12 methods}
+Since F12 methods work directly on the wave function, it is also natural to extend to excited states, particularly for multireference methods.\todo{citations: see haettig pg 62 (71)} However, since the geminal terms include only occupied orbitals, there is an inherent bias to the ground state.\todo{citations} Several means of ameliorating this have been proposed,\todo{citations} including extending the geminal basis to include virtual orbitals.\todo{citations}
 
 \section{The Transcorrelated Method}
 \label{sec:tc}
-\todo{brief recap of Boys-Handy method, some extensions by other people, and how it is used in our group}
 
-Hirschfelder first introduced a similarity transform method \cite{hirschfelderRemoval1963}
+One of the main focuses of this dissertation is \gls{TC}. Hirschfelder was the first to propose a similarity-transformed Hamiltonian method in the 1960s,\cite{hirschfelderRemoval1963} which was further developed by Jankowski,\todo{citations} and later by Boys and Handy.\todo{citations}
 
-then was worked on by Boys and Handy \todo{cite}, to be discussed here
+The core concept is to similarity-transform the Hamiltonian using some invertible operator $P$, such that
+\begin{equation}
+    \htc = P^{-1}\hat HP.
+\end{equation}
+For any eigenvalue and eigenfunction pair $(E_i,\Psi)$ of $\hat H$, the transformed Hamiltonian $\htc$ has eigenfunction $\Phi\mathdef P\Psi$ with the same eigenvalue $E_i$. This is called isospectrality.
 
-uses ideas from \gls{VMC}, discussed more in section \ref{sec:vmc}.
+However, note that there is no requirement that $\htc$ is Hermitian, and in fact it typically is not. Recall from section \ref{sec:variational_principle} that the variational relies on the Hermiticity of the operator. It is therefore nontrivial to make \gls{TC} variational, and not all conventional methods can be used to treat $\htc$ (although, as discussed in section \ref{sec:fciqmc}, projector methods such as FCIQMC and CC may be used).
+
+\subsection{The Method of Boys and Handy}
+uses some ideas from \gls{VMC}, discussed more in section \ref{sec:vmc}.
+
+\todo{describe pseudoenergy and why we don't use it (HTC not Hermitian), then describe the variance and how we can derive self-consistent ways to derive HTC}
+
+\subsection{Modern Resurgence}
+\todo{Also cite Werner and quantum computing people}
+
+
 
 recent renewal of interest (lots and lots of citations) with various applications, including DMRG, quantum computing, etc.
 
@@ -229,17 +224,7 @@ will talk in more detail about the Jastrow factor in section \ref{sec:jastrow} s
 
 \todo{also mention biorthogonal orbitals etc.}
 
-\todo{short proof of isospectrality}
-
-\todo{reference section \ref{sec:variational_principle} and how it is not trivial to make TC variational since the proof of the variational principle uses the Hermiticity of the operator}
-
-\subsection{The Method of Boys and Handy}
-
-\todo{describe pseudoenergy and why we don't use it (HTC not Hermitian), then describe the variance and how we can derive self-consistent ways to derive HTC}
-
-\subsection{Modern Resurgence}
-\todo{Also cite Werner and quantum computing people}
-
+\todo{also briefly discuss the forms of the Jastrow factors}
 
 \subsection{Comparison to F12/R12}
 
