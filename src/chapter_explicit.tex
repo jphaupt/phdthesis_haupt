@@ -113,6 +113,7 @@ Following the discussion in reference \citenum{shiozakiMultireference2013}, and 
 
 An alternative derivation of the \gls{MP2} equations from section \ref{sec:perturbation-theory} is to minimise the Hylleraas functional\todo{citations}
 \begin{equation}
+    \label{eq:hyllerass-functional}
     E^{(2)} = \min_\Psi\bra{\Psi^{(1)}}(H_0-E^{(0)})\ket{\Psi^{(1)}}+2\bra{\Psi^{(1)}}H\ket{\Psi^{(0)}}
 \end{equation}
 where $H_0$ is the unperturbed Hamiltonians, and the $(i)$ superscript denotes the order of the correction, as introduced in section \ref{sec:perturbation-theory}.
@@ -123,6 +124,7 @@ The earliest generalisation of equation \ref{eq:first-r12} was an ansatz for MP2
     \ket{\Psi^{(1)}} = \frac 12\sum_{ij}\left( \sum_{ab}t_{ij}^{ab}\ket{\Psi_{ij}^{ab}} + \sum_{kl}t_{ij}^{kl}\sum_{\alpha\beta}\bra{\alpha\beta}Q_{12}F_{12}(r_{12})\ket{kl}\ket{\Psi_{ij}^{\alpha\beta}} \right),
 \end{equation}
 \begin{equation}
+    \label{eq:mp2-f12-projector}
     Q_{12} = (1-o_1)(1-o_2) - v_1v_2
 \end{equation}
 where we define the one-electron projection operators
@@ -145,6 +147,24 @@ It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided\t
 \end{equation}
 
 \subsection{Many-Electron Integrals}
+
+The Hylleraas functional, equation \ref{eq:hyllerass-functional}, will contain terms such as
+\begin{equation}
+    \sum_{\alpha\beta}\bra{\Phi_0}H\ket{\Psi_{ij}^{\alpha\beta}} \bra{\alpha\beta}Q_{12}F_{12}(r_{12})\ket{kl} = 2\bra{ij}r_{12}^{-1}Q_{12}F_{12}(r_{12})\ket{kl} - \bra{jl}r_{12}^{-1}Q_{12}F_{12}(r_{12})\ket{kl}.
+\end{equation}
+Plugging in the form for $Q_{12}$ from equation \ref{eq:mp2-f12-projector}, we get integrals of the form
+\begin{equation}
+    \bra{ij}r_{12}^{-1}o_1F_{12}(r_{12})\ket{kl}.
+\end{equation}
+For $F_{12}(r_{12})=r_{12}$, this is equal to
+\begin{equation}
+    \sum_o\bra{ijo}r_{12}^{-1}r_{23}\ket{olk},
+\end{equation}
+which is a three-electron integral. Clearly, with more operators multiplied together in the kernel of these integrals, we might expect even higher-order integrals. This may seem distrastrous, as this would be a massive bottleneck.
+
+However, it was found that by insertion of the \gls{RI},
+
+$\varphi \varPhi\Phi$
 
 \todo{...}
 
