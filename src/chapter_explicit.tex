@@ -232,6 +232,52 @@ When $J$ is chosen this way, the \gls{BCH} expansion of $\htc$ truncates exactly
 \begin{equation}
     \htc \mathdef \e^{-J}\hat H\e^J= \hat H + \frac 12[\hat H, J] + \frac 12[\hat H, [\hat H, J]].
 \end{equation}
+This may be rewritten
+\begin{equation}
+    \htc = \hat H - \sum_{i<j}\hat K(\bm r_i, \bm r_j) - \sum_{i<j<k}\hat L(\bm r_i, \bm r_j, \bm r_k),
+\end{equation}
+where, using the shorthand $u_{ij} \mathdef u(\bm r_i, \bm r_j)$,
+\begin{equation}
+\begin{split}
+    \hat{K}(\bm{r}_i, \bm{r}_j) = \frac{1}{2} \Bigg(
+        \nabla_i^2 u_{ij} + \nabla_j^2 u_{ij} +
+        \big(\nabla_i u_{ij}\big)^2
+        + \big(\nabla_j u_{ij}\big)^2\Bigg)
+        + \big(\nabla_i u_{ij} \cdot \nabla_i\big)
+        + \big(\nabla_j u_{ij} \cdot \nabla_j\big)
+        ,
+\end{split}
+\end{equation}
+and
+\begin{equation}
+\begin{split}
+\hat{L}(\bm{r}_i, \bm{r}_j, \bm{r}_k) =
+\nabla_i u_{ij} \cdot \nabla_i u_{ik} +
+\nabla_j u_{ji} \cdot \nabla_j u_{jk} +
+\nabla_k u_{ki} \cdot \nabla_k u_{kj}.
+\end{split}
+\end{equation}
+
+In second quantisation, the TC Hamiltonian can then be written
+\begin{equation}
+    \htc = \sum_{pq} h_q^p a_p^\dagger a_q
+    + \frac{1}{2} \sum_{pqrs} \big(V_{rs}^{pq} - K_{rs}^{pq}\big)
+    a_p^\dagger a_q^\dagger a_s a_r
+    - \frac{1}{6} \sum_{pqrstu} L_{stu}^{pqr}
+    a_p^\dagger a_q^\dagger a_r^\dagger a_u a_t a_s,
+\end{equation}
+where
+\begin{equation}
+\begin{split}
+    h_q^p &= \bra{p}h\ket{q}, \\
+    V_{rs}^{pq} &= \bra{p q } r_{12}^{-1} \ket{ r s}, \\
+    K_{rs}^{pq} &= \bra{p q } \hat{K} \ket{ r s}, \\
+    L_{stu}^{pqr} &= \bra{p q r } \hat{L} \ket{s t u}.
+\end{split}
+\end{equation}
+Particularly noteworthy are the three-electron integrals from $\hat L$ and the non-Hermitian terms from $\hat K$.
+
+\todo{now describe the form of $u$}
 
 \todo{see Aron's paper to write out the original method}
 
