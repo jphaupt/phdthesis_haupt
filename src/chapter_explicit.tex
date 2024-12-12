@@ -103,6 +103,7 @@ Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. Th
 
 In the original formulation, $F_{12}(r_{12})=r_{12}$ (hence the name ``R12'' or ``F12'' for the more general methodology). However, another popular choice is a Slater-type geminal\todo{cite Tenno}, fitted to a linear combination of gaussians,\todo{citations}
 \begin{equation}
+    \label{eq:f12-exponential}
     F_{12}(r_{12})=-\gamma^{-1}\e^{-\gamma r_{12}} = -\gamma^{-1}+r_{12}-\frac 12\gamma r_{12}^2+\cdots \approx \sum_i c_i\e^{-\alpha_ir_{12}^2}.
 \end{equation}
 The choice of the length scale $\gamma$ can either be optimised or (more typically) kept fix, although formally it is orbital dependent and a poor choice may result in a loss of accuracy.\supercite{tewRelaxing2018} Other choices for the correlation factor also exist.\todo{citations}
@@ -160,19 +161,37 @@ For $F_{12}(r_{12})=r_{12}$, this is equal to
 \begin{equation}
     \sum_o\bra{ijo}r_{12}^{-1}r_{23}\ket{olk},
 \end{equation}
-which is a three-electron integral. Clearly, with more operators multiplied together in the kernel of these integrals, we might expect even higher-order integrals. This may seem distrastrous, as this would be a massive bottleneck.
+which is a three-electron integral. Here, $o$ is an occupied orbital. Clearly, with more operators multiplied together in the kernel of these integrals, we might expect even higher-order integrals. This may seem distrastrous, as this would be a massive bottleneck.
 
-However, it was found that by insertion of the \gls{RI},
+However, it was found that by insertion of the \gls{RI},\todo{citation} these integrals can be reduced to a linear combination of two-electron integrals. In particular, the strong projection operator becomes
+\begin{equation}
+\begin{split}
+    Q_{12} =& 1 - \sum_o\sum_\alpha (\ket{o\alpha}\bra{o\alpha} + \ket{\alpha o}\bra{\alpha o})
+            + \sum_{o,o'}\ket{oo'}\bra{oo'} - \sum_{a,b}\ket{ab}\bra{ab},
+\end{split}
+\end{equation}
+and the discussed three-body integral becomes
+\begin{equation}
+\begin{split}
+    \sum_o\bra{ijo}r_{12}^{-1}r_{23}\ket{olk} =& \delta_{ik}\delta_{kl} \\
+    &- \sum_{o}\sum_\alpha(\bra{ij}r_{12}^{-1}\ket{o\alpha}\bra{o\alpha}r_{12}\ket{kl} + \bra{ij}r_{12}^{-1}\ket{\alpha o}\bra{\alpha o}r_{12}\ket{kl}) \\
+    &+ \sum_{o,o'}\bra{ij}r_{12}^{-1}\ket{oo'}\bra{oo'}r_{12}\ket{kl}
+    - \sum_{a,b}\bra{ij}r_{12}^{-1}\ket{ab}\bra{ab}r_{12}\ket{kl}.
+\end{split}
+\end{equation}
+In the \gls{RI} approximation, the summation over the additional orbitals $\alpha$ is in principle infinite. In practice, of course, these must be finite. Initially, the basis in the \gls{RI} expansion was set equal to the orbital basis (dubbed the ``standard approximation'').\todo{citation} However, normally larger bases are used, such as in the \gls{CABS} approach, where the \gls{RI} basis is equal to the orbital basis, plus some ``auxiliary'' basis functions that are orthogonal to the orbital basis.\todo{citations} More efficient RI methods and ways of generating intermediate values have also been developed.\todo{citations}
 
-$\varphi \varPhi\Phi$
-
-\todo{...}
-
-\todo{also describe how the exponential Slater F12 function also improves the results}
+Moreover, it has been found that the original $F_{12}(r_{12})=r_{12}$ form requires larger auxiliary basis functions, since its long-range behaviour is unphysical.\todo{citations} Instead, functions such as that in equation \ref{eq:f12-exponential} is used.
 
 \subsection{Higher-Order F12 Theories}
 
-\todo{change in definition of excitation operators}
+F12 theory has been extended to many other theories besides MP2, such as \gls{CC}, \gls{CASSCF}, \gls{MRCI}, \gls{CASPT2}, \gls{DMRG}, and \gls{FCIQMC}.\todo{citations} The key change compared to conventional methods such as those in chapter \ref{chap:intro} is in the excitation operators, particularly the double excitations $E_{ij}^{ab}$. In particular, for reference determinants $\ket{\Phi_I}$, the wave function may be parametrised as
+\begin{equation}
+    \ket\Psi = \ket{\Psi_\text{conv}} + \frac 12\sum_{I}\sum_{ijkl}t^{ij}_{klI}\sum_{\alpha\beta}\bra{\alpha\beta}Q_{12}^IF_{12}(r_{12})\ket{kl}E_{ij}^{\alpha\beta}\ket{\Phi_I},
+\end{equation}
+where $\ket{\Psi_\text{conv}}$ is the conventional wave function. In this way, we extend the excitations to include geminal terms in the (formally complete) auxiliary basis.
+
+These F12 methodologies have been particularly successful for large systems, proving only marginally more expensive than the conventional methods in some cases.\todo{citations}
 
 \subsection{Excited States}
 
@@ -213,6 +232,8 @@ will talk in more detail about the Jastrow factor in section \ref{sec:jastrow} s
 \todo{reference section \ref{sec:variational_principle} and how it is not trivial to make TC variational since the proof of the variational principle uses the Hermiticity of the operator}
 
 \subsection{The Method of Boys and Handy}
+
+\todo{describe pseudoenergy and why we don't use it (HTC not Hermitian), then describe the variance and how we can derive self-consistent ways to derive HTC}
 
 \subsection{Modern Resurgence}
 \todo{Also cite Werner and quantum computing people}
