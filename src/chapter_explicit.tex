@@ -197,6 +197,7 @@ Since F12 methods work directly on the wave function, it is also natural to exte
 
 \section{The Transcorrelated Method}
 \label{sec:tc}
+% Based on Haettig review, Cohen paper, Tsuneyuki paper, a tiny bit Lee paper
 
 One of the main focuses of this dissertation is \gls{TC}. Hirschfelder was the first to propose a similarity-transformed Hamiltonian method in the 1960s,\cite{hirschfelderRemoval1963} which was further developed by Jankowski,\todo{citations} and later by Boys and Handy.\todo{citations}
 
@@ -219,7 +220,7 @@ In this way, TC shares similarities with \gls{VMC}, to be discussed in section \
 \begin{equation}
     \hat H \e^J\Phi = E\e^J\Phi \implies \underbrace{\e^{-J}\hat H\e^J}_{\htc}\Phi = E\Phi,
 \end{equation}
-i.e. the similarity-transforming operator $P=\e^J$.
+i.e. similarity-transforming $H\hat H$ with the operator $P\equiv\e^J$.
 
 In the original formulation, $\Phi$ was chosen to be a single \gls{SD} (\gls{HF}), and $J$ was chosen such that
 \begin{equation}
@@ -277,9 +278,15 @@ where
 \end{equation}
 Particularly noteworthy are the three-electron integrals from $\hat L$ and the non-Hermitian terms from $\hat K$.
 
-\todo{now describe the form of $u$}
-
-\todo{see Aron's paper to write out the original method}
+Boys and Handy's original choice for the form of $u$ was
+\begin{equation}
+    u(\bm r_i, \bm r_j) = \sum_{l,m,n}^{l+m+n\leq S} c_{lmn}\bar r_{ij}^l(\bar r_{Ii}^m\bar r_{Jj}^n + \bar r_{Ij}^m\bar r_{Ji}^n)
+\end{equation}
+where $S$ is some integer (typically 6)\todo{cite Aron} and
+\begin{equation}
+    \bar r = \frac{r}{1+r}.
+\end{equation}
+In this form, electron-electron (e-e), electron-nucleus (e-n), electron-electron-nucleus (e-e-n) and electron-electron-nucleus-nucleus (e-e-n-n) terms appears when $m=n=0$ and $l>0$, $m,n>0$ and $l=0$, one of $m,n>0$ and $l>0$, or $m,n,l>0$ respectively.
 
 \todo{...}
 
