@@ -197,7 +197,7 @@ Since F12 methods work directly on the wave function, it is also natural to exte
 
 \section{The Transcorrelated Method}
 \label{sec:tc}
-% Based on Haettig review, Cohen paper, Tsuneyuki paper, a tiny bit Lee paper
+% Based on Haettig review, Cohen paper, Tsuneyuki paper, a tiny bit Lee paper, tiny bit from Thomasle
 
 One of the main focuses of this dissertation is \gls{TC}. Hirschfelder was the first to propose a similarity-transformed Hamiltonian method in the 1960s,\cite{hirschfelderRemoval1963} which was further developed by Jankowski,\todo{citations} and later by Boys and Handy.\todo{citations}
 
@@ -280,6 +280,7 @@ Particularly noteworthy are the three-electron integrals from $\hat L$ and the n
 
 Boys and Handy's original choice for the form of $u$ was
 \begin{equation}
+    \label{eq:boys-handy-jastrow}
     u(\bm r_i, \bm r_j) = \sum_{l,m,n}^{l+m+n\leq S} c_{lmn}\bar r_{ij}^l(\bar r_{Ii}^m\bar r_{Jj}^n + \bar r_{Ij}^m\bar r_{Ji}^n)
 \end{equation}
 where $S$ is some integer (typically 6)\todo{cite Aron} and
@@ -288,12 +289,33 @@ where $S$ is some integer (typically 6)\todo{cite Aron} and
 \end{equation}
 In this form, electron-electron (e-e), electron-nucleus (e-n), electron-electron-nucleus (e-e-n) and electron-electron-nucleus-nucleus (e-e-n-n) terms appears when $m=n=0$ and $l>0$, $m,n>0$ and $l=0$, one of $m,n>0$ and $l>0$, or $m,n,l>0$ respectively.
 
-\todo{...}
+In the original formulation,\todo{cite boys 1969} the following equations are approximately solved via quadrature for the orbital coefficients $a_i$ and the coefficients $c_{lmn}$ in $u$.
+\begin{equation}
+    \bra\Phi(\htc - E)\ket\Phi = 0
+\end{equation}
+\begin{equation}
+    \bra{\partial\Phi/\partial a_i}(\htc - E)\ket\Phi = 0
+\end{equation}
+\begin{equation}
+    \label{eq:almost-hermitian}
+    \bra\Phi(\htc - \htc^\dag)\ket\Phi = 0,
+\end{equation}
+and the energy is calculated via projection,
+\begin{equation}
+    \bra\Phi\htc\ket\Phi.
+\end{equation}
+Equation \ref{eq:almost-hermitian} in particular is to make the TC Hamiltonian as close to Hermitian as possible for orbital optimisation.
 
-\todo{describe pseudoenergy and why we don't use it (HTC not Hermitian), then describe the variance and how we can derive self-consistent ways to derive HTC (refinement from Handy).}
+This formulation was further refined by Handy\todo{cite}. We notice that since $\htc$ is non-Hermitian, we cannot directly minimise the energy. Instead, he minimised the transcorrelated variance,
+\begin{equation}
+    \sigma^2 = \langle [(\htc - E)\Phi]^2\rangle.
+\end{equation}
+Furthermore, equation \ref{eq:boys-handy-jastrow} is not the only possible choice for the Jastrow factor, and in particular Handy choice a form with simpler analytical integrals.
+
 
 \subsection{Modern Resurgence}
 
+\todo{mention biorthogonal orbitals}
 
 recent renewal of interest (lots and lots of citations) with various applications, including DMRG, quantum computing, etc.
 
