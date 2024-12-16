@@ -36,7 +36,7 @@ This is illustrated in figure \ref{fig:darts}, and captures the core philosophy 
     \label{fig:darts}
 \end{figure}
 
-Controlling the stochastic error is critical in \gls{MC} methods. To estimate the reliability of our estimate, we can determined the standard deviation of the estimate. Our sampling scheme is a binomial distribution, with $p=\pi/4$. Hence,
+Controlling the stochastic error is critical in \gls{MC} methods. To estimate the reliability of our estimate, we can determine the standard deviation of the estimate. Our sampling scheme is a binomial distribution, with $p=\pi/4$. Hence,
 \begin{equation}
     \sigma^2_{\pi} = \mathrm{Var}(4P(\text{inside circle})) = \frac{16p(1-p)}{N}
 \end{equation}
@@ -469,6 +469,7 @@ In FCIQMC, we have the \gls{CI} coefficients $c_i$ and $c_j$ by the walker distr
 Note also that by inserting the Hamiltonian (energy) operator into equation \ref{eq:rdm-expectation} and using the replica trick to obtain the RDMs, we can also obtain yet another energy measure in FCIQMC.
 
 \subsection{Combining TC with Modern Electronic Structure}
+\label{sec:tc-fciqmc}
 
 The \gls{FCIQMC} algorithm may also be combined with the \gls{TC} method described in section \ref{sec:tc}.\supercite{Luo_tc_fciqmc_2018} Consider solving for the eigenstates $\Phi$ of the TC Hamiltonian $\htc$ using the imaginary-time Schr\"odinger equation,
 \begin{equation}
