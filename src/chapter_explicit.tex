@@ -36,8 +36,6 @@ However, further study found that the correlation error from a bad description o
 
 To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation,\cite{kongExplicitly2012} but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful due to their lack of practicality.
 
-% \todo{would be nice to think of other ways to add images}
-
 \begin{figure}[htbp]
     \centering
     \includegraphics{figures/explicit/cusp.pdf}
@@ -203,7 +201,7 @@ However, since the geminal terms include only occupied orbitals, there is an inh
 \label{sec:tc}
 % Based on Haettig review, Cohen paper, Tsuneyuki paper, a tiny bit Lee paper, tiny bit from Thomasle
 
-One of the main focuses of this dissertation is \gls{TC}. Hirschfelder was the first to propose a similarity-transformed Hamiltonian method in the 1960s,\cite{hirschfelderRemoval1963} which was further developed by Jankowski,\supercite{Jankowski1967,Jankowski1970} and later by Boys and Handy.\todo{citations}
+One of the main focuses of this dissertation is \gls{TC}. Hirschfelder was the first to propose a similarity-transformed Hamiltonian method in the 1960s,\cite{hirschfelderRemoval1963} which was further developed by Jankowski,\supercite{Jankowski1967,Jankowski1970} and later by Boys and Handy.\supercite{boysCalculation1969,boysCondition1969,boysDetermination1969,boysFirst1969}
 
 The core concept is to similarity-transform the Hamiltonian using some invertible operator $P$, such that
 \begin{equation}
@@ -215,7 +213,7 @@ However, note that there is no requirement that $\htc$ is Hermitian, and in fact
 
 \subsection{The Method of Boys and Handy}
 
-One of the earliest practical approaches, on which most modern variations build, is that of Boys and Handy.\todo{citation} In this methodology, we start with a Jastrow ansatz\cite{jastrowManyBody1955}
+One of the earliest practical approaches, on which most modern variations build, is that of Boys and Handy.\supercite{boysCalculation1969,boysCondition1969,boysDetermination1969,boysFirst1969} In this methodology, we start with a Jastrow ansatz\cite{jastrowManyBody1955}
 \begin{equation}
     \label{eq:jastrow-ansatz}
     \Psi = \e^J\Phi.
@@ -287,13 +285,13 @@ Boys and Handy's original choice for the form of $u$ was
     \label{eq:boys-handy-jastrow}
     u(\bm r_i, \bm r_j) = \sum_{l,m,n}^{l+m+n\leq S} c_{lmn}\bar r_{ij}^l(\bar r_{Ii}^m\bar r_{Jj}^n + \bar r_{Ij}^m\bar r_{Ji}^n)
 \end{equation}
-where $S$ is some integer ($S=6$ in reference \todo{citenum boys and handy})\supercite{cohenSimilarity2019} and
+where $S$ is some integer ($S=6$ in reference \citenum{boysCalculation1969})\supercite{cohenSimilarity2019} and
 \begin{equation}
     \bar r = \frac{r}{1+r}.
 \end{equation}
 In this form, electron-electron (e-e), electron-nucleus (e-n), electron-electron-nucleus (e-e-n) and electron-electron-nucleus-nucleus (e-e-n-n) terms appears when $m=n=0$ and $l>0$, $m,n>0$ and $l=0$, one of $m,n>0$ and $l>0$, or $m,n,l>0$ respectively.
 
-In the original formulation,\todo{cite boys 1969} the following equations are approximately solved via quadrature for the orbital coefficients $a_i$ and the coefficients $c_{lmn}$ in $u$.
+In the original formulation,\supercite{boysCalculation1969} the following equations are approximately solved via quadrature for the orbital coefficients $a_i$ and the coefficients $c_{lmn}$ in $u$.
 \begin{equation}
     \bra\Phi(\htc - E)\ket\Phi = 0
 \end{equation}
@@ -310,7 +308,7 @@ and the energy is calculated via projection,
 \end{equation}
 Equation \ref{eq:almost-hermitian} in particular is to make the TC Hamiltonian as close to Hermitian as possible for orbital optimisation.
 
-This formulation was further refined by Handy\todo{cite}. We notice that since $\htc$ is non-Hermitian, we cannot directly minimise the energy. Instead, he minimised the transcorrelated variance,
+This formulation was further refined by Handy.\supercite{handy_be_1969} We notice that since $\htc$ is non-Hermitian, we cannot directly minimise the energy. Instead, he minimised the transcorrelated variance,
 \begin{equation}
     \sigma^2 = \langle [(\htc - E)\Phi]^2\rangle.
 \end{equation}
@@ -319,7 +317,7 @@ Furthermore, equation \ref{eq:boys-handy-jastrow} is not the only possible choic
 
 \subsection{Modern Resurgence}
 
-For several decades TC received little attention, though some more developments were made, such as a fixed Jastrow\todo{cite Nooijen}, more effiicent integration\todo{cite tenno, multiple times}, multi-reference $\Phi$\todo{citations}, among others\todo{citations}. More recently, there has been a renewal of interest in TC,\todo{a bajillion million gazillion citations} notably the demonstrations that the TC Hamiltonian may be treated by various electronic structure methods, to be discussed more in section \ref{sec:tc-fciqmc}.\todo{citations: luo original, cohen, dmrg, cc, ?} TC has since been applied to a variety of systems, including model systems\todo{citations} and in the context of quantum computing.\todo{citation(s)} After an overview of stochastic methods, the rest of this dissertation will be focused on discussing recent developments in TC.
+For several decades TC received little attention, though some more developments were made, such as calculations using a fixed Jastrow factor,\todo{cite Nooijen} more effiicent integration\todo{cite tenno, multiple times}, multi-reference $\Phi$\todo{citations}, among others\todo{citations}. More recently, there has been a renewal of interest in TC,\todo{a bajillion million gazillion citations} notably the demonstrations that the TC Hamiltonian may be treated by various electronic structure methods, to be discussed more in section \ref{sec:tc-fciqmc}.\todo{citations: luo original, cohen, dmrg, cc, ?} TC has since been applied to a variety of systems, including model systems\todo{citations} and in the context of quantum computing.\todo{citation(s)} After an overview of stochastic methods, the rest of this dissertation will be focused on discussing recent developments in TC.
 
 In typical modern TC workflows, $\Phi$ is initially kept fixed (e.g. to the \gls{HF} determinant, though it need not be this), and then the parameters of the Jastrow factor, $J$, are optimised. The integrals for the similarity-transformed Hamiltonian $\htc$ are then calculated, and finally an electronic structure method such as \gls{FCIQMC} is applied to $\htc$, solving for $E$ and in effect ``recalculating'' $\Phi$, which was previously kept fixed. The choice of $J$ has ranged from especially simple\todo{citations} to much more sophisticated.\supercite{drummondJastrow2004,lopezriosFrameworkConstructingGeneric2012,cohenSimilarity2019}
 
