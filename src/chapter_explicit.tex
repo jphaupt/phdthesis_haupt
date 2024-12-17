@@ -112,14 +112,14 @@ The choice of the length scale $\gamma$ can either be optimised or (more typical
 
 Following the discussion in reference \citenum{shiozakiMultireference2013}, and adopting their notation, we consider the MP2-F12 method as an illustrative example.
 
-An alternative derivation of the \gls{MP2} equations from section \ref{sec:perturbation-theory} is to minimise the Hylleraas functional\todo{citations}
+An alternative derivation of the \gls{MP2} equations from section \ref{sec:perturbation-theory} is to minimise the Hylleraas functional\supercite{hylleraasUeber1930,betheQuantum1957}
 \begin{equation}
     \label{eq:hyllerass-functional}
     E^{(2)} = \min_\Psi\bra{\Psi^{(1)}}(H_0-E^{(0)})\ket{\Psi^{(1)}}+2\bra{\Psi^{(1)}}H\ket{\Psi^{(0)}}
 \end{equation}
 where $H_0$ is the unperturbed Hamiltonians, and the $(i)$ superscript denotes the order of the correction, as introduced in section \ref{sec:perturbation-theory}.
 
-The earliest generalisation of equation \ref{eq:first-r12} was an ansatz for MP2,\todo{citations}
+The earliest generalisation of equation \ref{eq:first-r12} was an ansatz for MP2,\supercite{klopperMollerplesset1987,kutzelniggWave1991,klopperOrbitalinvariant1991,tewOpenshell2010,bokhanImplementation2008}
 \begin{equation}
     \label{eq:mp2-f12-firstorder}
     \ket{\Psi^{(1)}} = \frac 12\sum_{ij}\left( \sum_{ab}t_{ij}^{ab}\ket{\Psi_{ij}^{ab}} + \sum_{kl}t_{ij}^{kl}\sum_{\alpha\beta}\bra{\alpha\beta}Q_{12}F_{12}(r_{12})\ket{kl}\ket{\Psi_{ij}^{\alpha\beta}} \right),
@@ -142,7 +142,7 @@ such that $o_m$ and $v_m$ project onto the occupied and virtual orbitals, respec
 \end{equation}
 for operator $\Omega$. The first term in brackets in equation \ref{eq:mp2-f12-firstorder} are from the conventional MP2 wave function correction, and the extra term is a contraction of a formally-infinite set of double excitations, representing the F12 correction (again, orthogonal to the conventional wave function thanks to $Q_{12}$).
 
-It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided\todo{citation}, and they tend to also be more accurate\todo{citations}, and can instead be derived from the cusp conditions to give
+It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided,\supercite{ten-noNew2007,tewComparison2006,wernerGeneral2007,klopperExplicitly2002,petersonBenchmark1994} and they tend to also be more accurate, and can instead be derived from the cusp conditions to give
 \begin{equation}
     t_{ij}^{kl} = \frac 38\delta_{ik}\delta_{jl}+\frac 18\delta_{il}\delta_{jk}.
 \end{equation}
@@ -315,7 +315,7 @@ Furthermore, equation \ref{eq:boys-handy-jastrow} is not the only possible choic
 
 \subsection{Modern Resurgence}
 
-For several decades TC received little attention, though some more developments were made, such as a fixed Jastrow\todo{cite Nooijen}, more effiicent integration\todo{cite tenno, multiple times}, multi-reference $\Phi$\todo{citations}, among others\todo{citations}. More recently, there has been a renewal of interest in TC,\todo{a bajillion million gazillion citations} notably the demonstrations that the TC Hamiltonian may be treated by various electronic structure methods, to be discussed more in section \ref{sec:tc-fciqmc}.\todo{citations: luo original, cohen, dmrg, cc, ?} TC has since been applied to a variety of systems, including model systems\todo{citations} and in the context of quantum computing.\todo{citation(s)} Chapters \ref{chap:opt}, \ref{chap:binding} and \ref{chap:pytchint} will all further discuss recent developments in TC.
+For several decades TC received little attention, though some more developments were made, such as a fixed Jastrow\todo{cite Nooijen}, more effiicent integration\todo{cite tenno, multiple times}, multi-reference $\Phi$\todo{citations}, among others\todo{citations}. More recently, there has been a renewal of interest in TC,\todo{a bajillion million gazillion citations} notably the demonstrations that the TC Hamiltonian may be treated by various electronic structure methods, to be discussed more in section \ref{sec:tc-fciqmc}.\todo{citations: luo original, cohen, dmrg, cc, ?} TC has since been applied to a variety of systems, including model systems\todo{citations} and in the context of quantum computing.\todo{citation(s)} After an overview of stochastic methods, the rest of this dissertation will be focused on discussing recent developments in TC.
 
 In typical modern TC workflows, $\Phi$ is initially kept fixed (e.g. to the \gls{HF} determinant, though it need not be this), and then the parameters of the Jastrow factor, $J$, are optimised. The integrals for the similarity-transformed Hamiltonian $\htc$ are then calculated, and finally an electronic structure method such as \gls{FCIQMC} is applied to $\htc$, solving for $E$ and in effect ``recalculating'' $\Phi$, which was previously kept fixed. The choice of $J$ has ranged from especially simple\todo{citations} to much more sophisticated.\supercite{drummondJastrow2004,lopezriosFrameworkConstructingGeneric2012,cohenSimilarity2019}
 
