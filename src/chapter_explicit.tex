@@ -89,7 +89,7 @@ While not as popular as F12 methods (see section \ref{sec:f12}), \glspl{ECG} hav
 \section{F12 Methods}
 \label{sec:f12}
 
-The most influential class of explicitly correlated methods to date are the F12 methods. The core principle of these methods is to augment the wave function from a conventional (typically \gls{SD}) basis with an explicitly-correlated correction, called the F12 (or R12) correction. The original formulation\todo{cite Kutzelnigg} parametrised a two-electron system (such as helium) wave function as
+The most influential class of explicitly correlated methods to date are the F12 methods. The core principle of these methods is to augment the wave function from a conventional (typically \gls{SD}) basis with an explicitly-correlated correction, called the F12 (or R12) correction. The original formulation\supercite{kutzelnigg12Dependent1985} parametrised a two-electron system (such as helium) wave function as
 \begin{equation}
     \label{eq:first-r12}
     \ket\Psi = (1+tQ_{12}F_{12}(r_{12}))\ket{\Psi_0}+\sum_{p}t_{p}\ket{\Psi_{p}}
@@ -101,12 +101,12 @@ where $\Psi_0$ is a reference wave function (such as \gls{HF}), $\ket{\Psi_{p}}$
 is referred to as a ``strong orthogonality projector'', which ensures the $F_{12}(r_{12})$ term is orthogonal to the reference and singly-excited determinants.
 Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. The fact that, due to $Q_{12}$, the $F_{12}(r_{12})$ term commutes with the standard excitation operators aids in including this explicit correlation into conventional electron correlation methods. This geminal term is added a correction to the standard wave function.
 
-In the original formulation, $F_{12}(r_{12})=r_{12}$ (hence the name ``R12'' or ``F12'' for the more general methodology). However, another popular choice is a Slater-type geminal\todo{cite Tenno}, fitted to a linear combination of gaussians,\todo{citations}
+In the original formulation, $F_{12}(r_{12})=r_{12}$ (hence the name ``R12'' or ``F12'' for the more general methodology). However, another popular choice is a Slater-type geminal\supercite{ten-noInitiation2004} fitted to a linear combination of gaussians,\supercite{wernerGeneral2007}
 \begin{equation}
     \label{eq:f12-exponential}
     F_{12}(r_{12})=-\gamma^{-1}\e^{-\gamma r_{12}} = -\gamma^{-1}+r_{12}-\frac 12\gamma r_{12}^2+\cdots \approx \sum_i c_i\e^{-\alpha_ir_{12}^2}.
 \end{equation}
-The choice of the length scale $\gamma$ can either be optimised or (more typically) kept fix, although formally it is orbital dependent and a poor choice may result in a loss of accuracy.\supercite{tewRelaxing2018} Other choices for the correlation factor also exist.\todo{citations}
+The choice of the length scale $\gamma$ can either be optimised or (more typically) kept fix, although formally it is orbital dependent and a poor choice may result in a loss of accuracy.\supercite{tewRelaxing2018} Other choices for the correlation factor also exist.\supercite{johnsonExplicit2017}
 
 \subsection{MP2-F12}
 
@@ -142,7 +142,7 @@ such that $o_m$ and $v_m$ project onto the occupied and virtual orbitals, respec
 \end{equation}
 for operator $\Omega$. The first term in brackets in equation \ref{eq:mp2-f12-firstorder} are from the conventional MP2 wave function correction, and the extra term is a contraction of a formally-infinite set of double excitations, representing the F12 correction (again, orthogonal to the conventional wave function thanks to $Q_{12}$).
 
-It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided\todo{citation}, and they tend to also be more accurate\todo{citations}, derived from the cusp conditions,
+It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided\todo{citation}, and they tend to also be more accurate\todo{citations}, and can instead be derived from the cusp conditions to give
 \begin{equation}
     t_{ij}^{kl} = \frac 38\delta_{ik}\delta_{jl}+\frac 18\delta_{il}\delta_{jk}.
 \end{equation}
@@ -310,36 +310,13 @@ This formulation was further refined by Handy\todo{cite}. We notice that since $
 \begin{equation}
     \sigma^2 = \langle [(\htc - E)\Phi]^2\rangle.
 \end{equation}
-Furthermore, equation \ref{eq:boys-handy-jastrow} is not the only possible choice for the Jastrow factor, and in particular Handy choice a form with simpler analytical integrals.
+Furthermore, equation \ref{eq:boys-handy-jastrow} is not the only possible choice for the Jastrow factor, and in particular Handy chose a form with simpler analytical integrals.
 
 
 \subsection{Modern Resurgence}
 
-For a few decades TC received little attention, though some more developments were made, such as a fixed Jastrow\todo{cite Nooijen}, more effiicent integration\todo{cite tenno, multiple times}, multi-reference $\Phi$\todo{citations}, among others\todo{citations}. TODO: applications to model systems, several methods to treat the hamiltonian, also mention applications to quantum computing, optimisation strategy to be discussed in ch 4
+For several decades TC received little attention, though some more developments were made, such as a fixed Jastrow\todo{cite Nooijen}, more effiicent integration\todo{cite tenno, multiple times}, multi-reference $\Phi$\todo{citations}, among others\todo{citations}. More recently, there has been a renewal of interest in TC,\todo{a bajillion million gazillion citations} notably the demonstrations that the TC Hamiltonian may be treated by various electronic structure methods, to be discussed more in section \ref{sec:tc-fciqmc}.\todo{citations: luo original, cohen, dmrg, cc, ?} TC has since been applied to a variety of systems, including model systems\todo{citations} and in the context of quantum computing.\todo{citation(s)} Chapters \ref{chap:opt}, \ref{chap:binding} and \ref{chap:pytchint} will all further discuss recent developments in TC.
 
-TODO: brief discussion of a comparison to F12 -- still behind with decades less work, but progress is being made. Additive vs multiplicative ansatz, very flexible, at most three-electron integrals (actually onl 2 due to xTC, discussed later) vs many-electron integrals (but using RI to get to 2)
+In typical modern TC workflows, $\Phi$ is initially kept fixed (e.g. to the \gls{HF} determinant, though it need not be this), and then the parameters of the Jastrow factor, $J$, are optimised. The integrals for the similarity-transformed Hamiltonian $\htc$ are then calculated, and finally an electronic structure method such as \gls{FCIQMC} is applied to $\htc$, solving for $E$ and in effect ``recalculating'' $\Phi$, which was previously kept fixed. The choice of $J$ has ranged from especially simple\todo{citations} to much more sophisticated.\supercite{drummondJastrow2004,lopezriosFrameworkConstructingGeneric2012,cohenSimilarity2019}
 
-\todo{mention biorthogonal orbitals}
-
-recent renewal of interest (lots and lots of citations) with various applications, including DMRG, quantum computing, etc.
-
-will talk in more detail about the Jastrow factor in section \ref{sec:jastrow} since it is also used in vmc
-
-\todo{also mention biorthogonal orbitals etc.}
-
-\todo{Also cite Werner and quantum computing people}
-
-\todo{also briefly discuss the forms of the Jastrow factors}
-
-\subsection{Comparison to F12}
-
-\todo{maybe just make this discussion part of the previous section}
-
-discuss additive vs multiplicative ansatz
-
-have some performance comparison plots, maybe can ask permission to reproduce from Evelin or someone else
-
-also discuss many-body integrals for f12 vs at most 3-body for tc
-
-
-\todo{Maybe have a picture of basis set convergence? Maybe even just HF, compare F12 vs TC vs Hyl(?) vs standard}
+TC is still behind F12 in terms of its performance and cost ratio, but F12 is ahead several decades of development. However, TC shows promise thanks in part to the high degree of flexibility owing to the Jastrow factor. Moreover, the additive ansatz of F12 leads to many-electron integrals, whereas the multiplicative ansatz of TC leads to at most three-electron integrals.\footnote{This assumes the Jastrow factor may be written $J=\sum_iu_i(\bm r_i, \bm r_j)$.} This is ameliorated in F12 via the use of \gls{RI} approximations and in TC via other approximations, like discussed in section \ref{sec:xtc}.
