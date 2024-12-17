@@ -195,7 +195,7 @@ In principle, the algorithm is doable with just a single walker, but in practice
 \end{lstlisting}
 % \end{minipage}
 
-The energy is then calculated as the expectation value of the local energy, averaged over the samples generated in this procedure. Steps at the beginning (before equilibrium) are discarded in a process called equilibration,\supercite{casino} and a blocking procedure should be employed. The decision to stop is generally based on compute time and/or precision required.
+The energy is then calculated as the expectation value of the local energy, averaged over the samples generated in this procedure. Steps at the beginning (before equilibrium) are discarded in a process called equilibration,\supercite{needsVariational2020} and a blocking procedure should be employed. The decision to stop is generally based on compute time and/or precision required.
 
 \subsection{Trial Wave Functions}
 \label{sec:jastrow}
@@ -212,7 +212,7 @@ For computational efficiency, the Jastrow factor typically only retains one- and
 \begin{equation}
     J = \sum_i \chi(\bm x_i) - \frac 12 \sum_{i\neq j} u(\bm x_i, \bm x_j),
 \end{equation}
-where $\chi$ describes electron-nuclear correlation and $u$ describes two-electron correlation (including e.g. electron-electron-nuclear correlation). There exist a number of more specific forms for $J$,\supercite{lopezriosFrameworkConstructingGeneric2012} though one unifying principle is for them to adhere to expected short-range (cusp conditions) and long-range ($1/r$) behaviour.
+where $\chi$ describes electron-nuclear correlation and $u$ describes two-electron correlation (including e.g. electron-electron-nuclear correlation). There exist a number of more specific forms for $J$,\supercite{lopezriosFramework2012} though one unifying principle is for them to adhere to expected short-range (cusp conditions) and long-range ($1/r$) behaviour.
 
 $\Phi$ is typically chosen to be a single Slater determinant.\supercite{foulkesQuantum,fahyVariational1988,liCohesive1991,rajagopalQuantum1994,malatestaVariational1997}
 In particular, by choosing the \gls{HF} determinant, typically only a small portion of the energy (that is, the correlation energy) is left for the Jastrow factor to describe, and typically even simple Jastrow factors can do this.\supercite{foulkesQuantum}
@@ -300,7 +300,11 @@ However, in practice a trial wave function is actually necessary for fermions in
 \section{Full Configuration Interaction Quantum Monte Carlo}
 \label{sec:fciqmc}
 
-The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.\supercite{booth_fciqmc_2009} For this, there exist a few different implementations,\cite{Guther_neci_2020,spencerHANDEQMC2019b,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.\cite{Guther_neci_2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains exponential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\supercite{dobrautzSpinPure2021,weserStochastic2022}
+The main post-Hartree-Fock method used throughout this dissertation is the \gls{FCIQMC} algorithm.
+\supercite{boothFermion2009}
+For this, there exist a few different implementations,
+\supercite{gutherNECI2020,spencerHANDEQMC2019,brandRimujl2024,andersonRobertanderson2024} but we focus on \neci.
+\supercite{gutherNECI2020} As the name implies, \gls{FCIQMC} combines concepts from \gls{FCI} (discussed in section \ref{sec:ci}) and \gls{QMC} concepts already discussed in this chapter. In particular, it implements FCI, retaining many of its desirable properties such as size consistency and accuracy while being able to handle much larger systems thanks to its stochastic framework (however, the scaling remains exponential, like FCI). Like FCI, it is non-perturbative, and so can handle multi-reference problems, and unlike other QMC methods, it does not rely on a trial wave function. It can also be used as a solver in place of FCI, like in a \gls{MCSCF} calculation.\supercite{dobrautzSpinPure2021,weserStochastic2022}
 
 \subsection{Main Concepts}
 
@@ -405,19 +409,19 @@ After spawning and death/cloning, we may have walkers of opposite sign on the sa
 \subsection{Energy Estimators}
 \label{sec:fciqmc_energy_estimators}
 
-The shift $S$ is updated to approximate $E_0$, so we already have an estimator for the energy. However, since $S$ is used to also control the population, this estimator can be noisy.\supercite{booth_fciqmc_2009}
+The shift $S$ is updated to approximate $E_0$, so we already have an estimator for the energy. However, since $S$ is used to also control the population, this estimator can be noisy.\supercite{boothFermion2009}
 
 A more commonly used energy estimator is the projected energy,
 \begin{equation}
     \label{eq:projected_energy}
     E_\mathrm{proj} = \frac{\bra{D_\mathrm{ref}}\hat H\ket{\Psi}}{\braket{D_\mathrm{ref}}{\Psi}},
 \end{equation}
-where we project onto the reference (most occupied) determinant.\footnote{While it may be tempting to instead use the energy estimator $\bra{\Psi}\hat H\ket{\Psi}/\braket{\Psi}{\Psi}$, this comes with a prohibitive cost, and has a bias.\supercite{bluntDensitymatrix2014,booth_fciqmc_2009}
+where we project onto the reference (most occupied) determinant.\footnote{While it may be tempting to instead use the energy estimator $\bra{\Psi}\hat H\ket{\Psi}/\braket{\Psi}{\Psi}$, this comes with a prohibitive cost, and has a bias.\supercite{bluntDensitymatrix2014,boothFermion2009}
 }
 
 In principle, any wave function could be used in place of the trial determinant in equation \ref{eq:projected_energy} (so long as it has nonzero overlap with $\ket\Psi$). The choice of the reference determinant is for ease of computation, and because the larger the overlap with $\ket\Psi$, the smaller the error in the stochastic sampling. Since the reference determinant (by definition) has the largest number of walkers on it, it is the sensible choice for a single-determinant projected energy.
 
-Another energy estimator is the ``trial energy'',\supercite{bluntSemistochastic2015,petruzieloSemistochastic2012} which is just the projected energy on a multi-determinant wave function instead of $\ket{D_\mathrm{ref}}$. In this method, after some time in variable shift mode, a ``trial space'' is constructed based on the top $N_T$ determinants. The Hamiltonian spanned within the trial space is diagonalised exactly (sparsely or densely), and the eigenvector $\ket{\Psi_\mathrm{trial}}$ is stored. Then, the trial projected energy can be calculated as
+Another energy estimator is the ``trial energy'',\supercite{Blunt,Petruzielo} which is just the projected energy on a multi-determinant wave function instead of $\ket{D_\mathrm{ref}}$. In this method, after some time in variable shift mode, a ``trial space'' is constructed based on the top $N_T$ determinants. The Hamiltonian spanned within the trial space is diagonalised exactly (sparsely or densely), and the eigenvector $\ket{\Psi_\mathrm{trial}}$ is stored. Then, the trial projected energy can be calculated as
 \begin{equation}
     E_\mathrm{trial} = \frac{\bra{\Psi_\mathrm{trial}}\hat H\ket{\Psi}}{\braket{\Psi_\mathrm{trial}}{\Psi}}.
 \end{equation}
@@ -435,7 +439,7 @@ An example of these energy estimators is shown in figure \ref{fig:fciqmc_energy_
 
 \subsection{Annihilation Plateaus}
 
-\gls{FCIQMC} has its own kind of sign problem in the form of resolving the correct relative sign structure of the sampled states in the \gls{CI} vector.\supercite{spencerSignProblemPopulation2012} This manifests in the form of a so-called ``annihilation plateau'', illustrated in figure \ref{fig:annihilation_plateau}.
+\gls{FCIQMC} has its own kind of sign problem in the form of resolving the correct relative sign structure of the sampled states in the \gls{CI} vector.\supercite{spencerSign2012} This manifests in the form of a so-called ``annihilation plateau'', illustrated in figure \ref{fig:annihilation_plateau}.
 
 In this stage of the simulation, walkers are being spawned with incoherent signs, causing a massive amount of walker annihilation. This causes the population to stay relatively constant, until the sign structure is finally resolved and the population continues to grow again. The height of the plateau (i.e. the constant number of walkers where the simulation stagnates) quantifies the difficulty of the sign problem. In particular, for certain large systems, it can be prohibitively expensive to overcome. If we are below the annihilation plateau, then the original formulation of \gls{FCIQMC} is not reliable, as the correct sign structure is not yet resolved.
 
@@ -448,7 +452,7 @@ In this stage of the simulation, walkers are being spawned with incoherent signs
 
 \subsection{The Initiator Approximation}
 
-Since incoherent walker proliferation is a major source of the annihilation plateau, a sensible strategy to overcome this is by forcing growth to be coherent. This is achieved by the initiator approximation.\supercite{Cleland_initiator_2010} An \gls{FCIQMC} calculation with the initiator approximation is sometimes referred to as i-FCIQMC; however, since the approximation is so useful and ubiqituous, we simply referred to it as FCIQMC. Indeed, in this dissertation all FCIQMC calculations used the initiator approximation, unless otherwise specified.
+Since incoherent walker proliferation is a major source of the annihilation plateau, a sensible strategy to overcome this is by forcing growth to be coherent. This is achieved by the initiator approximation.\supercite{clelandCommunications2010} An \gls{FCIQMC} calculation with the initiator approximation is sometimes referred to as i-FCIQMC; however, since the approximation is so useful and ubiqituous, we simply referred to it as FCIQMC. Indeed, in this dissertation all FCIQMC calculations used the initiator approximation, unless otherwise specified.
 
 The initiator approximation allows only those determinants (dubbed ``initiators'') with at least $N_\mathrm{thresh}$ walkers to spawn new walkers on unoccupied determinants. If the population is greater than this threshold, the assumption is that the (relative) sign of that state is correct, and hence the spawning event should produce the correct sign.
 
@@ -471,7 +475,7 @@ Note also that by inserting the Hamiltonian (energy) operator into equation \ref
 \subsection{Combining TC with Modern Electronic Structure}
 \label{sec:tc-fciqmc}
 
-The \gls{FCIQMC} algorithm may also be combined with the \gls{TC} method described in section \ref{sec:tc}.\supercite{Luo_tc_fciqmc_2018} Consider solving for the eigenstates $\Phi$ of the TC Hamiltonian $\htc$ using the imaginary-time Schr\"odinger equation,
+The \gls{FCIQMC} algorithm may also be combined with the \gls{TC} method described in section \ref{sec:tc}.\supercite{luoCombining2018} Consider solving for the eigenstates $\Phi$ of the TC Hamiltonian $\htc$ using the imaginary-time Schr\"odinger equation,
 \begin{equation}
     -\frac{\partial}{\partial\tau}\Phi = (\htc - S)\Phi.
 \end{equation}

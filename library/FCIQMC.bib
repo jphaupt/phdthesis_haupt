@@ -15,7 +15,7 @@
   doi = {10.1063/1.4920975},
   url = {http://dx.doi.org/10.1063/1.4920975]},
   abstract = {We expand upon the recent semi-stochastic adaptation to full configuration interaction quantum Monte Carlo (FCIQMC). We present an alternate method for generating the deterministic space without a priori knowledge of the wave function and present stochastic efficiencies for a variety of both molecular and lattice systems. The algorithmic details of an efficient semi-stochastic implementation are presented, with particular consideration given to the effect that the adaptation has on parallel performance in FCIQMC. We further demonstrate the benefit for calculation of reduced density matrices in FCIQMC through replica sampling, where the semi-stochastic adaptation seems to have even larger efficiency gains. We then combine these ideas to produce explicitly correlated corrected FCIQMC energies for the beryllium dimer, for which stochastic errors on the order of wavenumber accuracy are achievable. C 2015 AIP Publishing LLC. [http://dx.},
-  file = {/home/jph/Zotero/storage/5733PJ6C/full-text.pdf}
+  file = {/home/jph/Zotero/storage/5733PJ6C/full-text.pdf;/home/jph/Zotero/storage/6PIIYSHD/Blunt et al. - 2015 - Semi-stochastic full configuration interaction quantum Monte Carlo Developments and application.pdf;/home/jph/Zotero/storage/PW3IXMDS/Semi-stochastic-full-configuration-interaction.html}
 }
 
 @article{bluntDensitymatrix2014,
@@ -48,25 +48,23 @@
   file = {/home/jph/Zotero/storage/R5CZAEKJ/full-text.pdf}
 }
 
-@article{bluntSemistochastic2015,
-  title = {Semi-Stochastic Full Configuration Interaction Quantum {{Monte Carlo}}: {{Developments}} and Application},
-  shorttitle = {Semi-Stochastic Full Configuration Interaction Quantum {{Monte Carlo}}},
-  author = {Blunt, N. S. and Smart, Simon D. and Kersten, J. A. F. and Spencer, J. S. and Booth, George H. and Alavi, Ali},
-  date = {2015-05-14},
-  journaltitle = {The Journal of Chemical Physics},
-  shortjournal = {The Journal of Chemical Physics},
-  volume = {142},
-  number = {18},
-  pages = {184107},
-  issn = {0021-9606},
-  doi = {10.1063/1.4920975},
-  url = {https://doi.org/10.1063/1.4920975},
-  urldate = {2024-12-04},
-  abstract = {We expand upon the recent semi-stochastic adaptation to full configuration interaction quantum Monte Carlo (FCIQMC). We present an alternate method for generating the deterministic space without a priori knowledge of the wave function and present stochastic efficiencies for a variety of both molecular and lattice systems. The algorithmic details of an efficient semi-stochastic implementation are presented, with particular consideration given to the effect that the adaptation has on parallel performance in FCIQMC. We further demonstrate the benefit for calculation of reduced density matrices in FCIQMC through replica sampling, where the semi-stochastic adaptation seems to have even larger efficiency gains. We then combine these ideas to produce explicitly correlated corrected FCIQMC energies for the beryllium dimer, for which stochastic errors on the order of wavenumber accuracy are achievable.},
-  file = {/home/jph/Zotero/storage/6PIIYSHD/Blunt et al. - 2015 - Semi-stochastic full configuration interaction quantum Monte Carlo Developments and application.pdf;/home/jph/Zotero/storage/PW3IXMDS/Semi-stochastic-full-configuration-interaction.html}
+@article{Booth2014,
+  title = {Linear-Scaling and Parallelisable Algorithms for Stochastic Quantum Chemistry},
+  author = {Booth, George H and Smart, Simon D and Alavi, Ali},
+  date = {2014},
+  journaltitle = {Molecular Physics},
+  volume = {112},
+  number = {14},
+  pages = {1855--1869},
+  issn = {1362-3028},
+  doi = {10.1080/00268976.2013.877165},
+  url = {https://www.tandfonline.com/action/journalInformation?journalCode=tmph20},
+  abstract = {For many decades, quantum chemical method development has been dominated by algorithms which involve increasingly complex series of tensor contractions over one-electron orbital spaces. Procedures for their derivation and implementation have evolved to require the minimum amount of logic and rely heavily on computationally efficient library-based matrix algebra and optimised paging schemes. In this regard, the recent development of exact stochastic quantum chemical algorithms to reduce computational scaling and memory overhead requires a contrasting algorithmic philosophy, but one which when implemented efficiently can achieve higher accuracy/cost ratios with small random errors. Additionally, they can exploit the continuing trend for massive parallelisation which hinders the progress of deterministic high-level quantum chemical algorithms. In the Quantum Monte Carlo community, stochastic algorithms are ubiquitous but the discrete Fock space of quantum chemical methods is often unfamiliar, and the methods introduce new concepts required for algorithmic efficiency. In this paper, we explore these concepts and detail an algorithm used for Full Configuration Interaction Quantum Monte Carlo (FCIQMC), which is implemented and available in MOLPRO and as a standalone code, and is designed for high-level parallelism and linear-scaling with walker number. Many of the algorithms are also in use in, or can be transferred to, other stochastic quantum chemical methods and implementations. We apply these algorithms to the strongly correlated chromium dimer to demonstrate their efficiency and parallelism.},
+  keywords = {full configuration interaction,quantum chemistry,quantum Monte Carlo,stochastic coupled cluster},
+  file = {/home/jph/Zotero/storage/LNBKL9JD/full-text.pdf}
 }
 
-@article{booth_fciqmc_2009,
+@article{boothFermion2009,
   title = {Fermion Monte Carlo without Fixed Nodes: {{A}} Game of Life, Death, and Annihilation in {{Slater}} Determinant Space},
   author = {Booth, George H. and Thom, Alex J.W. and Alavi, Ali},
   date = {2009-08-04},
@@ -84,23 +82,7 @@
   file = {/home/jph/Zotero/storage/DW7NG45H/full-text.pdf}
 }
 
-@article{Booth2014,
-  title = {Linear-Scaling and Parallelisable Algorithms for Stochastic Quantum Chemistry},
-  author = {Booth, George H and Smart, Simon D and Alavi, Ali},
-  date = {2014},
-  journaltitle = {Molecular Physics},
-  volume = {112},
-  number = {14},
-  pages = {1855--1869},
-  issn = {1362-3028},
-  doi = {10.1080/00268976.2013.877165},
-  url = {https://www.tandfonline.com/action/journalInformation?journalCode=tmph20},
-  abstract = {For many decades, quantum chemical method development has been dominated by algorithms which involve increasingly complex series of tensor contractions over one-electron orbital spaces. Procedures for their derivation and implementation have evolved to require the minimum amount of logic and rely heavily on computationally efficient library-based matrix algebra and optimised paging schemes. In this regard, the recent development of exact stochastic quantum chemical algorithms to reduce computational scaling and memory overhead requires a contrasting algorithmic philosophy, but one which when implemented efficiently can achieve higher accuracy/cost ratios with small random errors. Additionally, they can exploit the continuing trend for massive parallelisation which hinders the progress of deterministic high-level quantum chemical algorithms. In the Quantum Monte Carlo community, stochastic algorithms are ubiquitous but the discrete Fock space of quantum chemical methods is often unfamiliar, and the methods introduce new concepts required for algorithmic efficiency. In this paper, we explore these concepts and detail an algorithm used for Full Configuration Interaction Quantum Monte Carlo (FCIQMC), which is implemented and available in MOLPRO and as a standalone code, and is designed for high-level parallelism and linear-scaling with walker number. Many of the algorithms are also in use in, or can be transferred to, other stochastic quantum chemical methods and implementations. We apply these algorithms to the strongly correlated chromium dimer to demonstrate their efficiency and parallelism.},
-  keywords = {full configuration interaction,quantum chemistry,quantum Monte Carlo,stochastic coupled cluster},
-  file = {/home/jph/Zotero/storage/LNBKL9JD/full-text.pdf}
-}
-
-@article{Cleland_initiator_2010,
+@article{clelandCommunications2010,
   title = {Communications: {{Survival}} of the Fittest: {{Accelerating}} Convergence in Full Configuration-Interaction Quantum {{Monte Carlo}}},
   author = {Cleland, Deidre and Booth, George H. and Alavi, Ali},
   date = {2010-01-28},
@@ -172,7 +154,7 @@
   file = {/home/jph/Zotero/storage/4BN9737L/full-text.pdf}
 }
 
-@article{Guther_neci_2020,
+@article{gutherNECI2020,
   title = {{{NECI}}: {{N}} -{{Electron Configuration Interaction}} with an Emphasis on State-of-the-Art Stochastic Methods},
   author = {Guther, Kai and Anderson, Robert J. and Blunt, Nick S. and Bogdanov, Nikolay A. and Cleland, Deidre and Dattani, Nike and Dobrautz, Werner and Ghanem, Khaldoon and Jeszenszki, Peter and Liebermann, Niklas and Manni, Giovanni Li and Lozovoi, Alexander Y. and Luo, Hongjun and Ma, Dongxia and Merz, Florian and Overy, Catherine and Rampp, Markus and Samanta, Pradipta Kumar and Schwarz, Lauretta R. and Shepherd, James J. and Smart, Simon D. and Vitale, Eugenio and Weser, Oskar and Booth, George H. and Alavi, Ali},
   date = {2020-07-21},
@@ -210,41 +192,22 @@
 
 @article{neufeldExciting2019,
   title = {Exciting {{Determinants}} in {{Quantum Monte Carlo}}: {{Loading}} the {{Dice}} with {{Fast}}, {{Low-Memory Weights}}},
-  shorttitle = {Exciting {{Determinants}} in {{Quantum Monte Carlo}}},
-  author = {Neufeld, Verena A. and Thom, Alex J. W.},
-  date = {2019-01-08},
+  author = {Neufeld, Verena A. and Thom, Alex J.W.},
+  date = {2019},
   journaltitle = {Journal of Chemical Theory and Computation},
-  shortjournal = {J. Chem. Theory Comput.},
   volume = {15},
   number = {1},
+  eprint = {30359533},
+  eprinttype = {pmid},
   pages = {127--140},
-  publisher = {American Chemical Society},
-  issn = {1549-9618},
+  issn = {15499626},
   doi = {10.1021/acs.jctc.8b00844},
-  url = {https://doi.org/10.1021/acs.jctc.8b00844},
-  urldate = {2024-12-04},
-  abstract = {High-quality excitation generators are crucial to the effectiveness of coupled cluster Monte Carlo (CCMC) and full configuration interaction Quantum Monte Carlo (FCIQMC) calculations. The heat bath sampling of Holmes et al. [Holmes, A. A.; Changlani, H. J.; Umrigar, C. J. J. Chem. Theory Comput. 2016, 12, 1561–1571.] dramatically increases the efficiency of the spawn step of such algorithms but requires memory storage scaling quartically with system size which can be prohibitive for large systems. Alternatively, Alavi et al. [Smart, S. D.; Booth, G. H.; Alavi, A. Unpublished results.] approximated these weights with weights based on Cauchy–Schwarz-like inequalities calculated on-the-fly. While reducing the memory cost, this algorithm scales linearly in system size computationally. We combine both of these ideas with the single-reference nature of many systems studied and introduce a spawn-sampling algorithm that has low memory requirements (quadratic in basis set size) compared to the heat bath algorithm and only scales either independently of system size (CCMC) or linearly in the number of electrons (FCIQMC) that works especially well on localized orbitals. Tests on small water chains with localized orbitals with CCMC and with an initiator point sample in FCIQMC indicate that it can be equally efficient as the other excitation generators. As the system gets larger, calculations with our new algorithm converge faster than the on-the-fly weight algorithm while having a much more favorable memory scaling than the heat bath algorithm.},
-  file = {/home/jph/Zotero/storage/IYF3W3VQ/Neufeld and Thom - 2019 - Exciting Determinants in Quantum Monte Carlo Loading the Dice with Fast, Low-Memory Weights.pdf}
+  abstract = {High-quality excitation generators are crucial to the effectiveness of coupled cluster Monte Carlo (CCMC) and full configuration interaction Quantum Monte Carlo (FCIQMC) calculations. The heat bath sampling of Holmes et al. [Holmes, A. A.; Changlani, H. J.; Umrigar, C. J. J. Chem. Theory Comput. 2016, 12, 1561-1571.] dramatically increases the efficiency of the spawn step of such algorithms but requires memory storage scaling quartically with system size which can be prohibitive for large systems. Alternatively, Alavi et al. [Smart, S. D.; Booth, G. H.; Alavi, A. Unpublished results.] approximated these weights with weights based on Cauchy-Schwarz-like inequalities calculated on-the-fly. While reducing the memory cost, this algorithm scales linearly in system size computationally. We combine both of these ideas with the single-reference nature of many systems studied and introduce a spawn-sampling algorithm that has low memory requirements (quadratic in basis set size) compared to the heat bath algorithm and only scales either independently of system size (CCMC) or linearly in the number of electrons (FCIQMC) that works especially well on localized orbitals. Tests on small water chains with localized orbitals with CCMC and with an initiator point sample in FCIQMC indicate that it can be equally efficient as the other excitation generators. As the system gets larger, calculations with our new algorithm converge faster than the on-the-fly weight algorithm while having a much more favorable memory scaling than the heat bath algorithm.},
+  keywords = {★},
+  file = {/home/jph/Zotero/storage/IYF3W3VQ/Neufeld and Thom - 2019 - Exciting Determinants in Quantum Monte Carlo Loading the Dice with Fast, Low-Memory Weights.pdf;/home/jph/Zotero/storage/NCKHG6XQ/1808.05093v1.pdf}
 }
 
 @article{overyUnbiased2014,
-  title = {Unbiased Reduced Density Matrices and Electronic Properties from Full Configuration Interaction Quantum {{Monte Carlo}}},
-  author = {Overy, Catherine and Booth, George H. and Blunt, N. S. and Shepherd, James J. and Cleland, Deidre and Alavi, Ali},
-  date = {2014-12-31},
-  journaltitle = {The Journal of Chemical Physics},
-  shortjournal = {The Journal of Chemical Physics},
-  volume = {141},
-  number = {24},
-  pages = {244117},
-  issn = {0021-9606},
-  doi = {10.1063/1.4904313},
-  url = {https://doi.org/10.1063/1.4904313},
-  urldate = {2024-12-04},
-  abstract = {Properties that are necessarily formulated within pure (symmetric) expectation values are difficult to calculate for projector quantum Monte Carlo approaches, but are critical in order to compute many of the important observable properties of electronic systems. Here, we investigate an approach for the sampling of unbiased reduced density matrices within the full configuration interaction quantum Monte Carlo dynamic, which requires only small computational overheads. This is achieved via an independent replica population of walkers in the dynamic, sampled alongside the original population. The resulting reduced density matrices are free from systematic error (beyond those present via constraints on the dynamic itself) and can be used to compute a variety of expectation values and properties, with rapid convergence to an exact limit. A quasi-variational energy estimate derived from these density matrices is proposed as an accurate alternative to the projected estimator for multiconfigurational wavefunctions, while its variational property could potentially lend itself to accurate extrapolation approaches in larger systems.},
-  file = {/home/jph/Zotero/storage/XWRZJRJD/Overy et al. - 2014 - Unbiased reduced density matrices and electronic properties from full configuration interaction quan.pdf;/home/jph/Zotero/storage/GW8HQMPP/Unbiased-reduced-density-matrices-and-electronic.html}
-}
-
-@article{overyUnbiasedReducedDensity2014,
   title = {Unbiased Reduced Density Matrices and Electronic Properties from Full Configuration Interaction Quantum {{Monte Carlo}}},
   author = {Overy, Catherine and Booth, George H and Blunt, N S and Shepherd, James J and Cleland, Deidre and Alavi, Ali},
   date = {2014},
@@ -254,7 +217,7 @@
   doi = {10.1063/1.4904313},
   url = {http://dx.doi.org/10.1063/1.4904313]},
   abstract = {Properties that are necessarily formulated within pure (symmetric) expectation values are difficult to calculate for projector quantum Monte Carlo approaches, but are critical in order to compute many of the important observable properties of electronic systems. Here, we investigate an approach for the sampling of unbiased reduced density matrices within the full configuration interaction quantum Monte Carlo dynamic, which requires only small computational overheads. This is achieved via an independent replica population of walkers in the dynamic, sampled alongside the original population. The resulting reduced density matrices are free from systematic error (beyond those present via constraints on the dynamic itself) and can be used to compute a variety of expectation values and properties, with rapid convergence to an exact limit. A quasi-variational energy estimate derived from these density matrices is proposed as an accurate alternative to the projected estimator for multiconfigurational wavefunctions, while its variational property could potentially lend itself to accurate extrapolation approaches in larger systems. C 2014 AIP Publishing LLC. [http://dx.},
-  file = {/home/jph/Zotero/storage/2H6YNUWD/full-text.pdf}
+  file = {/home/jph/Zotero/storage/2H6YNUWD/full-text.pdf;/home/jph/Zotero/storage/XWRZJRJD/Overy et al. - 2014 - Unbiased reduced density matrices and electronic properties from full configuration interaction quan.pdf;/home/jph/Zotero/storage/GW8HQMPP/Unbiased-reduced-density-matrices-and-electronic.html}
 }
 
 @article{Petruzielo,
@@ -263,24 +226,7 @@
   doi = {10.1103/PhysRevLett.109.230201},
   abstract = {We introduce a semistochastic implementation of the power method to compute, for very large matrices, the dominant eigenvalue and expectation values involving the corresponding eigenvector. The method is semistochastic in that the matrix multiplication is partially implemented numerically exactly and partially stochastically with respect to expectation values only. Compared to a fully stochastic method, the semistochastic approach significantly reduces the computational time required to obtain the eigenvalue to a specified statistical uncertainty. This is demonstrated by the application of the semistochastic quantum Monte Carlo method to systems with a sign problem: the fermion Hubbard model and the carbon dimer.},
   keywords = {3110+z,3115VÀ,7115Àm,numbers: 0270Ss},
-  file = {/home/jph/Zotero/storage/MV3MTUHC/full-text.pdf}
-}
-
-@article{petruzieloSemistochastic2012,
-  title = {Semistochastic {{Projector Monte Carlo Method}}},
-  author = {Petruzielo, F. R. and Holmes, A. A. and Changlani, Hitesh J. and Nightingale, M. P. and Umrigar, C. J.},
-  date = {2012-12-04},
-  journaltitle = {Physical Review Letters},
-  shortjournal = {Phys. Rev. Lett.},
-  volume = {109},
-  number = {23},
-  pages = {230201},
-  publisher = {American Physical Society},
-  doi = {10.1103/PhysRevLett.109.230201},
-  url = {https://link.aps.org/doi/10.1103/PhysRevLett.109.230201},
-  urldate = {2024-12-04},
-  abstract = {We introduce a semistochastic implementation of the power method to compute, for very large matrices, the dominant eigenvalue and expectation values involving the corresponding eigenvector. The method is semistochastic in that the matrix multiplication is partially implemented numerically exactly and partially stochastically with respect to expectation values only. Compared to a fully stochastic method, the semistochastic approach significantly reduces the computational time required to obtain the eigenvalue to a specified statistical uncertainty. This is demonstrated by the application of the semistochastic quantum Monte Carlo method to systems with a sign problem: the fermion Hubbard model and the carbon dimer.},
-  file = {/home/jph/Zotero/storage/E29ZYP3G/Petruzielo et al. - 2012 - Semistochastic Projector Monte Carlo Method.pdf;/home/jph/Zotero/storage/AKUHIEAZ/PhysRevLett.109.html}
+  file = {/home/jph/Zotero/storage/E29ZYP3G/Petruzielo et al. - 2012 - Semistochastic Projector Monte Carlo Method.pdf;/home/jph/Zotero/storage/JKLA3CLP/Petruzielo et al. - 2012 - Semistochastic Projector Monte Carlo Method.pdf;/home/jph/Zotero/storage/MV3MTUHC/full-text.pdf;/home/jph/Zotero/storage/VP95GV5G/Petruzielo et al. - 2012 - Semistochastic Projector Monte Carlo Method.pdf;/home/jph/Zotero/storage/5JK64CXS/PhysRevLett.109.html;/home/jph/Zotero/storage/AKUHIEAZ/PhysRevLett.109.html;/home/jph/Zotero/storage/RELX5WEX/PhysRevLett.109.html}
 }
 
 @article{spencerSign2012,
@@ -288,16 +234,17 @@
   author = {Spencer, J. S. and Blunt, N. S. and Foulkes, W. M.C.},
   date = {2012-02-06},
   journaltitle = {The Journal of Chemical Physics},
-  shortjournal = {The Journal of Chemical Physics},
   volume = {136},
   number = {5},
   pages = {054110},
+  publisher = {American Institute of PhysicsAIP},
   issn = {0021-9606},
   doi = {10.1063/1.3681396},
-  url = {https://doi.org/10.1063/1.3681396},
-  urldate = {2024-12-04},
-  abstract = {The recently proposed full configuration interaction quantum Monte Carlo method allows access to essentially exact ground-state energies of systems of interacting fermions substantially larger than previously tractable without knowledge of the nodal structure of the ground-state wave function. We investigate the nature of the sign problem in this method and how its severity depends on the system studied. We explain how cancellation of the positive and negative particles sampling the wave function ensures convergence to a stochastic representation of the many-fermion ground state and accounts for the characteristic population dynamics observed in simulations.},
-  file = {/home/jph/Zotero/storage/W76BFV5L/Spencer et al. - 2012 - The sign problem and population dynamics in the full configuration interaction quantum Monte Carlo m.pdf;/home/jph/Zotero/storage/MC6QE8W5/The-sign-problem-and-population-dynamics-in-the.html}
+  url = {https://aip.scitation.org/doi/abs/10.1063/1.3681396},
+  urldate = {2021-10-29},
+  abstract = {The recently proposed full configuration interaction quantum Monte Carlo method allows access to essentially exact ground-state energies of systems of interacting fermions substantially larger than...},
+  keywords = {★,configuration interactions,fermion systems,ground states,Monte Carlo methods,wave functions},
+  file = {/home/jph/Zotero/storage/LCH3XFKX/full-text.pdf;/home/jph/Zotero/storage/W76BFV5L/Spencer et al. - 2012 - The sign problem and population dynamics in the full configuration interaction quantum Monte Carlo m.pdf;/home/jph/Zotero/storage/MC6QE8W5/The-sign-problem-and-population-dynamics-in-the.html}
 }
 
 @article{weserExploiting2023,

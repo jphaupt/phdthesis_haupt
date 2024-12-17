@@ -29,27 +29,10 @@
   keywords = {exact-diagonalization,fciqmc,projector-quantum-monte-carlo}
 }
 
-@article{casino,
-  title = {Variational and Diffusion Quantum {{Monte Carlo}} Calculations with the {{CASINO}} Code},
-  author = {Needs, R. J. and Towler, M. D. and Drummond, N. D. and López Ríos, P. and Trail, J. R.},
-  date = {2020-04},
-  journaltitle = {Journal of Chemical Physics},
-  volume = {152},
-  number = {15},
-  eprint = {2003.06506},
-  eprinttype = {arXiv},
-  pages = {154106},
-  publisher = {American Institute of Physics Inc.},
-  issn = {00219606},
-  doi = {10.1063/1.5144288},
-  abstract = {We present an overview of the variational and diffusion quantum Monte Carlo methods as implemented in the casino program. We particularly focus on developments made in the last decade, describing state-of-the-art quantum Monte Carlo algorithms and software and discussing their strengths and weaknesses. We review a range of recent applications of casino.},
-  file = {/home/jph/Zotero/storage/7ATV85Z4/full-text.pdf}
-}
-
-@article{Guther_neci_2020,
+@article{gutherNECI2020,
   title = {{{NECI}}: {{N}} -{{Electron Configuration Interaction}} with an Emphasis on State-of-the-Art Stochastic Methods},
   author = {Guther, Kai and Anderson, Robert J. and Blunt, Nick S. and Bogdanov, Nikolay A. and Cleland, Deidre and Dattani, Nike and Dobrautz, Werner and Ghanem, Khaldoon and Jeszenszki, Peter and Liebermann, Niklas and Manni, Giovanni Li and Lozovoi, Alexander Y. and Luo, Hongjun and Ma, Dongxia and Merz, Florian and Overy, Catherine and Rampp, Markus and Samanta, Pradipta Kumar and Schwarz, Lauretta R. and Shepherd, James J. and Smart, Simon D. and Vitale, Eugenio and Weser, Oskar and Booth, George H. and Alavi, Ali},
-  date = {2020-07},
+  date = {2020-07-21},
   journaltitle = {Journal of Chemical Physics},
   volume = {153},
   number = {3},
@@ -59,8 +42,10 @@
   publisher = {American Institute of Physics Inc.},
   issn = {10897690},
   doi = {10.1063/5.0005754},
+  url = {https://doi.org/10.1063/5.0005754},
+  urldate = {2020-10-21},
   abstract = {We present NECI, a state-of-the-art implementation of the Full Configuration Interaction Quantum Monte Carlo (FCIQMC) algorithm, a method based on a stochastic application of the Hamiltonian matrix on a sparse sampling of the wave function. The program utilizes a very powerful parallelization and scales efficiently to more than 24 000 central processing unit cores. In this paper, we describe the core functionalities of NECI and its recent developments. This includes the capabilities to calculate ground and excited state energies, properties via the one- and two-body reduced density matrices, as well as spectral and Green's functions for ab initio and model systems. A number of enhancements of the bare FCIQMC algorithm are available within NECI, allowing us to use a partially deterministic formulation of the algorithm, working in a spin-adapted basis or supporting transcorrelated Hamiltonians. NECI supports the FCIDUMP file format for integrals, supplying a convenient interface to numerous quantum chemistry programs, and it is licensed under GPL-3.0.},
-  file = {/home/jph/Zotero/storage/PXZY2WQS/full-text.pdf}
+  file = {/home/jph/Zotero/storage/I2NX6S2U/full-text.pdf}
 }
 
 @article{KAAHP91,
@@ -81,17 +66,6 @@
   pages = {315--321}
 }
 
-@article{KH89,
-  title = {A Determinant Based Full Configuration Interaction Program},
-  author = {Knowles, Peter J. and Handy, Nicholas C},
-  date = {1989},
-  journaltitle = {cpc},
-  volume = {54},
-  pages = {75--83},
-  doi = {10.1016/0010-4655(89)90033-7},
-  url = {http://dx.doi.org/10.1016/0010-4655(89)90033-7}
-}
-
 @article{KHW93,
   title = {Coupled Cluster Theory for High Spin Open Shell Reference Wavefunctions},
   author = {Knowles, Peter J. and Hampel, Claudia and Werner, H.-J.},
@@ -103,6 +77,21 @@
   doi = {10.1063/1.465990},
   url = {http://dx.doi.org/10.1063/1.465990},
   abstract = {The coupled cluster method restricted to single and double excitations (CCSD) is considered for the case of a spin restricted Hartree-Fock open shell reference determinant. A spin orbital based formulation, in which the cluster operator spans exactly the minimal first order interacting space, is presented, and computationally optimal working equations are given. In the limit of a large number of closed shell orbitals, the cost is identical to that of an optimum treatment of an equivalent closed shell problem, which is obtained as a special case of the formulation presented. The theory is applied to the calculation of a number of diatomic potential energ y functions, and compared with spin-unrestricted theory.}
+}
+
+@article{knowlesDeterminant1989,
+  title = {A Determinant Based Full Configuration Interaction Program},
+  author = {Knowles, Peter J. and Handy, Nicholas C.},
+  date = {1989-04-01},
+  journaltitle = {Computer Physics Communications},
+  volume = {54},
+  number = {1},
+  pages = {75--83},
+  publisher = {North-Holland},
+  issn = {00104655},
+  doi = {10.1016/0010-4655(89)90033-7},
+  abstract = {The program FCI solves the Full Configuration Interaction (Full CI) problem of quantum chemistry, in which the electronic Schrödinger equation is solved exactly within a given one particle basis set. The Slater determinant based algorithm leads to highly efficient implementation on a vector computer, and has enabled Full CI calculations of dimension more than 107 to be performed. © 1989.},
+  file = {/home/jph/Zotero/storage/8SPU7JGM/full-text.pdf}
 }
 
 @article{KW85,
@@ -136,78 +125,28 @@
   pages = {95--103}
 }
 
-@article{libcint,
-  title = {Libcint: {{An}} Efficient General Integral Library for {{Gaussian}} Basis Functions},
-  author = {Sun, Qiming},
-  date = {2015-08},
-  journaltitle = {Journal of Computational Chemistry},
-  volume = {36},
-  number = {22},
-  pages = {1664--1671},
-  publisher = {John Wiley \& Sons, Ltd},
-  issn = {1096-987X},
-  doi = {10.1002/JCC.23981},
-  url = {https://onlinelibrary.wiley.com/doi/full/10.1002/jcc.23981 https://onlinelibrary.wiley.com/doi/abs/10.1002/jcc.23981 https://onlinelibrary.wiley.com/doi/10.1002/jcc.23981},
-  abstract = {An efficient integral library Libcint was designed to automatically implement general integrals for Gaussian-type scalar and spinor basis functions. The library is able to evaluate arbitrary integral expressions on top of p, r and σ operators with one-electron overlap and nuclear attraction, two-electron Coulomb and Gaunt operators for segmented contracted and/or generated contracted basis in Cartesian, spherical or spinor form. Using a symbolic algebra tool, new integrals are derived and translated to C code programmatically. The generated integrals can be used in various types of molecular properties. To demonstrate the capability of the integral library, we computed the analytical gradients and NMR shielding constants at both nonrelativistic and 4-component relativistic Hartree-Fock level in this work. Due to the use of kinetically balanced basis and gauge including atomic orbitals, the relativistic analytical gradients and shielding constants requires the integral library to handle the fifth-order electron repulsion integral derivatives. The generality of the integral library is achieved without losing efficiency. On the modern multi-CPU platform, Libcint can easily reach the overall throughput being many times of the I/O bandwidth. On a 20-core node, we are able to achieve an average output 8.3 GB/s for C¡inf¿60¡/inf¿ molecule with cc-pVTZ basis.},
-  keywords = {Gaussian type basis,integral,Libcint}
+@article{needsVariational2020,
+  title = {Variational and Diffusion Quantum {{Monte Carlo}} Calculations with the {{CASINO}} Code},
+  author = {Needs, R. J. and Towler, M. D. and Drummond, N. D. and López Ríos, P. and Trail, J. R.},
+  date = {2020-04-21},
+  journaltitle = {Journal of Chemical Physics},
+  volume = {152},
+  number = {15},
+  eprint = {2003.06506},
+  eprinttype = {arXiv},
+  pages = {154106},
+  publisher = {American Institute of Physics Inc.},
+  issn = {00219606},
+  doi = {10.1063/1.5144288},
+  url = {https://doi.org/10.1063/1.5144288},
+  urldate = {2021-04-30},
+  abstract = {We present an overview of the variational and diffusion quantum Monte Carlo methods as implemented in the casino program. We particularly focus on developments made in the last decade, describing state-of-the-art quantum Monte Carlo algorithms and software and discussing their strengths and weaknesses. We review a range of recent applications of casino.},
+  file = {/home/jph/Zotero/storage/DGIDVUXG/full-text.pdf}
 }
 
-@misc{molpro1,
-  title = {{{MOLPRO}}, Version , a Package of Ab Initio Programs},
-  author = {Werner, H.-J. and family=P. Celani, given=P. J. Knowles, prefix=and, useprefix=true and Györffy, W. and Hesselmann, A. and Kats, D. and Knizia, G. and Köhn, A. and Korona, T. and Kreplin, D. and Lindh, R. and Ma, Q. and Manby, F. R. and Mitrushenkov, A. and Rauhut, G. and Schütz, M. and family=T. B. Adler, given=K. R. Shamasundar, prefix=and, useprefix=true and Amos, R. D. and Bennie, S. J. and Bernhardsson, A. and Berning, A. and Black, J. A. and Bygrave, P. J. and Cimiraglia, R. and Cooper, D. L. and Coughtrie, D. and Deegan, M. J. O. and Dobbyn, A. J. and Doll, K. and Dornbach, M. and Eckert, F. and Erfort, S. and Goll, E. and Hampel, C. and Hetzer, G. and Hill, J. G. and Hodges, M. and Hrenar, T. and Jansen, G. and Köppl, C. and Kollmar, C. and Lee, S. J. R. and Liu, Y. and Lloyd, A. W. and Mata, R. A. and May, A. J. and Mussard, B. and McNicholas, S. J. and Meyer, W. and Miller III, T. F. and Mura, M. E. and Nicklass, A. and O'Neill, D. P. and Palmieri, P. and Peng, D. and Peterson, K. A. and Pflüger, K. and Pitzer, R. and Polyak, I. and Reiher, M. and Richardson, J. O. and Robinson, J. B. and Schröder, B. and Schwilk, M. and Shiozaki, T. and Sibaev, M. and Stoll, H. and Stone, A. J. and Tarroni, R. and Thorsteinsson, T. and Toulouse, J. and Wang, M. and Welborn, M. and Ziegler, B.},
-  location = {Stuttgart, Germany}
-}
-
-@article{molpro2,
-  title = {Molpro: A General-Purpose Quantum Chemistry Program Package},
-  author = {Werner, H.-J. and Knowles, P. J. and Knizia, G. and Manby, F. R. and Schütz, M.},
-  date = {2012},
-  journaltitle = {Wiley Interdisciplinary Reviews: Computational Molecular Science},
-  shortjournal = {WIREs Comput Mol Sci},
-  volume = {2},
-  pages = {242--253}
-}
-
-@misc{molpro3,
-  title = {{{MOLPRO}}, Version , a Package of Ab Initio Programs},
-  author = {Werner, H.-J. and Knowles, P. J. and others},
-  location = {Stuttgart, Germany}
-}
-
-@article{pyscf1,
-  title = {{{PySCF}}: The {{Python-based}} Simulations of Chemistry Framework},
-  author = {Sun, Qiming and Berkelbach, Timothy C. and Blunt, Nick S. and Booth, George H. and Guo, Sheng and Li, Zhendong and Liu, Junzi and McClain, James D. and Sayfutyarova, Elvira R. and Sharma, Sandeep and Wouters, Sebastian and Chan, Garnet Kin Lic},
-  date = {2018-01},
-  journaltitle = {Wiley Interdisciplinary Reviews: Computational Molecular Science},
-  volume = {8},
-  number = {1},
-  pages = {e1340},
-  publisher = {John Wiley \& Sons, Ltd},
-  issn = {1759-0884},
-  doi = {10.1002/WCMS.1340},
-  url = {https://onlinelibrary.wiley.com/doi/full/10.1002/wcms.1340 https://onlinelibrary.wiley.com/doi/abs/10.1002/wcms.1340 https://wires.onlinelibrary.wiley.com/doi/10.1002/wcms.1340},
-  abstract = {Python-based simulations of chemistry framework (PySCF) is a general-purpose electronic structure platform designed from the ground up to emphasize code simplicity, so as to facilitate new method development and enable flexible computational workflows. The package provides a wide range of tools to support simulations of finite-size systems, extended systems with periodic boundary conditions, low-dimensional periodic systems, and custom Hamiltonians, using mean-field and post-mean-field methods with standard Gaussian basis functions. To ensure ease of extensibility, PySCF uses the Python language to implement almost all of its features, while computationally critical paths are implemented with heavily optimized C routines. Using this combined Python/C implementation, the package is as efficient as the best existing C or Fortran-based quantum chemistry programs. In this paper, we document the capabilities and design philosophy of the current version of the PySCF package. WIREs Comput Mol Sci 2018, 8:e1340. doi: 10.1002/wcms.1340. This article is categorized under: Structure and Mechanism ¿ Computational Materials Science Electronic Structure Theory ¿ Ab Initio Electronic Structure Methods Software ¿ Quantum Chemistry.}
-}
-
-@article{pyscf2,
-  title = {Recent Developments in the {{PySCF}} Program Package},
-  author = {Sun, Qiming and Zhang, Xing and Banerjee, Samragni and Bao, Peng and Barbry, Marc and Blunt, Nick S. and Bogdanov, Nikolay A. and Booth, George H. and Chen, Jia and Cui, Zhi Hao and Eriksen, Janus J. and Gao, Yang and Guo, Sheng and Hermann, Jan and Hermes, Matthew R. and Koh, Kevin and Koval, Peter and Lehtola, Susi and Li, Zhendong and Liu, Junzi and Mardirossian, Narbe and McClain, James D. and Motta, Mario and Mussard, Bastien and Pham, Hung Q. and Pulkin, Artem and Purwanto, Wirawan and Robinson, Paul J. and Ronca, Enrico and Sayfutyarova, Elvira R. and Scheurer, Maximilian and Schurkus, Henry F. and Smith, James E.T. and Sun, Chong and Sun, Shi Ning and Upadhyay, Shiv and Wagner, Lucas K. and Wang, Xiao and White, Alec and Whitfield, James Daniel and Williamson, Mark J. and Wouters, Sebastian and Yang, Jun and Yu, Jason M. and Zhu, Tianyu and Berkelbach, Timothy C. and Sharma, Sandeep and Sokolov, Alexander Yu and Chan, Garnet Kin Lic},
-  date = {2020-07},
-  journaltitle = {The Journal of Chemical Physics},
-  volume = {153},
-  number = {2},
-  eprint = {32668948},
-  eprinttype = {pmid},
-  pages = {024109},
-  publisher = {AIP Publishing LLCAIP Publishing},
-  issn = {0021-9606},
-  doi = {10.1063/5.0006074},
-  url = {https://aip.scitation.org/doi/abs/10.1063/5.0006074},
-  abstract = {PySCF is a Python-based general-purpose electronic structure platform that supports first-principles simulations of molecules and solids as well as accelerates the development of new methodology an...}
-}
-
-@article{spencerHANDEQMC2019b,
+@article{spencerHANDEQMC2019,
   title = {The {{HANDE-QMC Project}}: {{Open-Source Stochastic Quantum Chemistry}} from the {{Ground State Up}}},
+  shorttitle = {The {{HANDE-QMC Project}}},
   author = {Spencer, James S. and Blunt, Nick S. and Choi, Seonghoon and Etrych, Jiří and Filip, Maria-Andreea and Foulkes, W. M. C. and Franklin, Ruth S. T. and Handley, Will J. and Malone, Fionn D. and Neufeld, Verena A. and Di Remigio, Roberto and Rogers, Thomas W. and Scott, Charles J. C. and Shepherd, James J. and Vigor, William A. and Weston, Joseph and Xu, RuQing and Thom, Alex J. W.},
   date = {2019-03-12},
   journaltitle = {Journal of Chemical Theory and Computation},
@@ -218,24 +157,84 @@
   publisher = {American Chemical Society},
   issn = {1549-9618},
   doi = {10.1021/acs.jctc.8b01217},
-  url = {https://doi.org/10.1021/acs.jctc.8b01217}
+  url = {https://doi.org/10.1021/acs.jctc.8b01217},
+  urldate = {2024-11-28},
+  abstract = {Building on the success of Quantum Monte Carlo techniques such as diffusion Monte Carlo, alternative stochastic approaches to solve electronic structure problems have emerged over the past decade. The full configuration interaction quantum Monte Carlo (FCIQMC) method allows one to systematically approach the exact solution of such problems, for cases where very high accuracy is desired. The introduction of FCIQMC has subsequently led to the development of coupled cluster Monte Carlo (CCMC) and density matrix quantum Monte Carlo (DMQMC), allowing stochastic sampling of the coupled cluster wave function and the exact thermal density matrix, respectively. In this Article, we describe the HANDE-QMC code, an open-source implementation of FCIQMC, CCMC and DMQMC, including initiator and semistochastic adaptations. We describe our code and demonstrate its use on three example systems; a molecule (nitric oxide), a model solid (the uniform electron gas), and a real solid (diamond). An illustrative tutorial is also included.}
 }
 
-@article{wernerMolproGeneralpurposeQuantum2012,
+@article{sunLibcint2015,
+  title = {Libcint: {{An}} Efficient General Integral Library for {{Gaussian}} Basis Functions},
+  author = {Sun, Qiming},
+  date = {2015-08-15},
+  journaltitle = {Journal of Computational Chemistry},
+  volume = {36},
+  number = {22},
+  eprint = {1412.0649},
+  eprinttype = {arXiv},
+  pages = {1664--1671},
+  publisher = {John Wiley \& Sons, Ltd},
+  issn = {1096-987X},
+  doi = {10.1002/JCC.23981},
+  url = {https://onlinelibrary.wiley.com/doi/full/10.1002/jcc.23981},
+  urldate = {2022-10-05},
+  abstract = {An efficient integral library Libcint was designed to automatically implement general integrals for Gaussian-type scalar and spinor basis functions. The library is able to evaluate arbitrary integral expressions on top of p, r and σ operators with one-electron overlap and nuclear attraction, two-electron Coulomb and Gaunt operators for segmented contracted and/or generated contracted basis in Cartesian, spherical or spinor form. Using a symbolic algebra tool, new integrals are derived and translated to C code programmatically. The generated integrals can be used in various types of molecular properties. To demonstrate the capability of the integral library, we computed the analytical gradients and NMR shielding constants at both nonrelativistic and 4-component relativistic Hartree-Fock level in this work. Due to the use of kinetically balanced basis and gauge including atomic orbitals, the relativistic analytical gradients and shielding constants requires the integral library to handle the fifth-order electron repulsion integral derivatives. The generality of the integral library is achieved without losing efficiency. On the modern multi-CPU platform, Libcint can easily reach the overall throughput being many times of the I/O bandwidth. On a 20-core node, we are able to achieve an average output 8.3 GB/s for C{$<$}inf{$>$}60{$<$}/inf{$>$} molecule with cc-pVTZ basis.},
+  keywords = {Gaussian type basis,integral,Libcint}
+}
+
+@article{sunPySCF2018,
+  title = {{{PySCF}}: The {{Python-based}} Simulations of Chemistry Framework},
+  author = {Sun, Qiming and Berkelbach, Timothy C. and Blunt, Nick S. and Booth, George H. and Guo, Sheng and Li, Zhendong and Liu, Junzi and McClain, James D. and Sayfutyarova, Elvira R. and Sharma, Sandeep and Wouters, Sebastian and Chan, Garnet Kin Lic},
+  date = {2018-01-01},
+  journaltitle = {Wiley Interdisciplinary Reviews: Computational Molecular Science},
+  volume = {8},
+  number = {1},
+  pages = {e1340},
+  publisher = {John Wiley \& Sons, Ltd},
+  issn = {1759-0884},
+  doi = {10.1002/WCMS.1340},
+  url = {https://onlinelibrary.wiley.com/doi/full/10.1002/wcms.1340},
+  urldate = {2022-10-05},
+  abstract = {Python-based simulations of chemistry framework (PySCF) is a general-purpose electronic structure platform designed from the ground up to emphasize code simplicity, so as to facilitate new method development and enable flexible computational workflows. The package provides a wide range of tools to support simulations of finite-size systems, extended systems with periodic boundary conditions, low-dimensional periodic systems, and custom Hamiltonians, using mean-field and post-mean-field methods with standard Gaussian basis functions. To ensure ease of extensibility, PySCF uses the Python language to implement almost all of its features, while computationally critical paths are implemented with heavily optimized C routines. Using this combined Python/C implementation, the package is as efficient as the best existing C or Fortran-based quantum chemistry programs. In this paper, we document the capabilities and design philosophy of the current version of the PySCF package. WIREs Comput Mol Sci 2018, 8:e1340. doi: 10.1002/wcms.1340. This article is categorized under: Structure and Mechanism {$>$} Computational Materials Science Electronic Structure Theory {$>$} Ab Initio Electronic Structure Methods Software {$>$} Quantum Chemistry.}
+}
+
+@article{sunRecent2020,
+  title = {Recent Developments in the {{PySCF}} Program Package},
+  author = {Sun, Qiming and Zhang, Xing and Banerjee, Samragni and Bao, Peng and Barbry, Marc and Blunt, Nick S. and Bogdanov, Nikolay A. and Booth, George H. and Chen, Jia and Cui, Zhi Hao and Eriksen, Janus J. and Gao, Yang and Guo, Sheng and Hermann, Jan and Hermes, Matthew R. and Koh, Kevin and Koval, Peter and Lehtola, Susi and Li, Zhendong and Liu, Junzi and Mardirossian, Narbe and McClain, James D. and Motta, Mario and Mussard, Bastien and Pham, Hung Q. and Pulkin, Artem and Purwanto, Wirawan and Robinson, Paul J. and Ronca, Enrico and Sayfutyarova, Elvira R. and Scheurer, Maximilian and Schurkus, Henry F. and Smith, James E.T. and Sun, Chong and Sun, Shi Ning and Upadhyay, Shiv and Wagner, Lucas K. and Wang, Xiao and White, Alec and Whitfield, James Daniel and Williamson, Mark J. and Wouters, Sebastian and Yang, Jun and Yu, Jason M. and Zhu, Tianyu and Berkelbach, Timothy C. and Sharma, Sandeep and Sokolov, Alexander Yu and Chan, Garnet Kin Lic},
+  date = {2020-07-09},
+  journaltitle = {The Journal of Chemical Physics},
+  volume = {153},
+  number = {2},
+  eprint = {32668948},
+  eprinttype = {pmid},
+  pages = {024109},
+  publisher = {AIP Publishing LLCAIP Publishing},
+  issn = {0021-9606},
+  doi = {10.1063/5.0006074},
+  url = {https://aip.scitation.org/doi/abs/10.1063/5.0006074},
+  urldate = {2022-10-05},
+  abstract = {PySCF is a Python-based general-purpose electronic structure platform that supports first-principles simulations of molecules and solids as well as accelerates the development of new methodology an...}
+}
+
+@misc{wernerMOLPRO,
+  title = {{{MOLPRO}}, Version , a Package of Ab Initio Programs},
+  author = {Werner, H.-J. and family=P. Celani, given=P. J. Knowles, prefix=and, useprefix=true and Györffy, W. and Hesselmann, A. and Kats, D. and Knizia, G. and Köhn, A. and Korona, T. and Kreplin, D. and Lindh, R. and Ma, Q. and Manby, F. R. and Mitrushenkov, A. and Rauhut, G. and Schütz, M. and family=T. B. Adler, given=K. R. Shamasundar, prefix=and, useprefix=true and Amos, R. D. and Bennie, S. J. and Bernhardsson, A. and Berning, A. and Black, J. A. and Bygrave, P. J. and Cimiraglia, R. and Cooper, D. L. and Coughtrie, D. and Deegan, M. J. O. and Dobbyn, A. J. and Doll, K. and Dornbach, M. and Eckert, F. and Erfort, S. and Goll, E. and Hampel, C. and Hetzer, G. and Hill, J. G. and Hodges, M. and Hrenar, T. and Jansen, G. and Köppl, C. and Kollmar, C. and Lee, S. J. R. and Liu, Y. and Lloyd, A. W. and Mata, R. A. and May, A. J. and Mussard, B. and McNicholas, S. J. and Meyer, W. and Miller III, T. F. and Mura, M. E. and Nicklass, A. and O'Neill, D. P. and Palmieri, P. and Peng, D. and Peterson, K. A. and Pflüger, K. and Pitzer, R. and Polyak, I. and Reiher, M. and Richardson, J. O. and Robinson, J. B. and Schröder, B. and Schwilk, M. and Shiozaki, T. and Sibaev, M. and Stoll, H. and Stone, A. J. and Tarroni, R. and Thorsteinsson, T. and Toulouse, J. and Wang, M. and Welborn, M. and Ziegler, B.},
+  location = {Stuttgart, Germany}
+}
+
+@article{wernerMolpro2012,
   title = {Molpro: A General-Purpose Quantum Chemistry Program Package},
-  shorttitle = {Molpro},
   author = {Werner, Hans-Joachim and Knowles, Peter J. and Knizia, Gerald and Manby, Frederick R. and Schütz, Martin},
-  date = {2012},
-  journaltitle = {WIREs Computational Molecular Science},
+  date = {2012-03-01},
+  journaltitle = {Wiley Interdisciplinary Reviews: Computational Molecular Science},
   volume = {2},
   number = {2},
   pages = {242--253},
-  issn = {1759-0884},
+  publisher = {John Wiley \& Sons, Ltd},
+  issn = {17590876},
   doi = {10.1002/wcms.82},
-  url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/wcms.82},
-  urldate = {2024-09-20},
-  abstract = {Molpro (available at http://www.molpro.net) is a general-purpose quantum chemical program. The original focus was on high-accuracy wave function calculations for small molecules, but using local approximations combined with explicit correlation treatments, highly accurate coupled-cluster calculations are now possible for molecules with up to approximately 100 atoms. Recently, multireference correlation treatments were also made applicable to larger molecules. Furthermore, an efficient implementation of density functional theory is available. © 2011 John Wiley \& Sons, Ltd. This article is categorized under: Software {$>$} Quantum Chemistry},
-  langid = {english},
+  url = {http://doi.wiley.com/10.1002/wcms.82},
+  urldate = {2021-03-29},
+  abstract = {Molpro (available at) is a general-purpose quantum chemical program. The original focus was on high-accuracy wave function calculations for small molecules, but using local approximations combined with explicit correlation treatments, highly accurate coupled-cluster calculations are now possible for molecules with up to approximately 100 atoms. Recently, multireference correlation treatments were also made applicable to larger molecules. Furthermore, an efficient implementation of density functional theory is available. © 2011 John Wiley \& Sons, Ltd.},
   file = {/home/jph/Zotero/storage/BE7YFC63/wcms.html}
 }
 
