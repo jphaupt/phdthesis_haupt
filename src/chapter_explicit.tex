@@ -163,7 +163,7 @@ For $F_{12}(r_{12})=r_{12}$, this is equal to
 \end{equation}
 which is a three-electron integral. Here, $o$ is an occupied orbital. Clearly, with more operators multiplied together in the kernel of these integrals, we might expect even higher-order integrals. This may seem distrastrous, as this would be a massive bottleneck.
 
-However, it was found that by insertion of the \gls{RI},\todo{citation} these integrals can be reduced to a linear combination of two-electron integrals. In particular, the strong projection operator becomes
+However, it was found that by insertion of the \gls{RI},\supercite{kutzelniggR12DependentTermsWave1985,klopperMollerplesset1987,kutzelniggWave1991} these integrals can be reduced to a linear combination of two-electron integrals. In particular, the strong projection operator becomes
 \begin{equation}
 \begin{split}
     Q_{12} =& 1 - \sum_o\sum_\alpha (\ket{o\alpha}\bra{o\alpha} + \ket{\alpha o}\bra{\alpha o})
@@ -179,7 +179,7 @@ and the discussed three-body integral becomes
     - \sum_{a,b}\bra{ij}r_{12}^{-1}\ket{ab}\bra{ab}r_{12}\ket{kl}.
 \end{split}
 \end{equation}
-In the \gls{RI} approximation, the summation over the additional orbitals $\alpha$ is in principle infinite. In practice, of course, these must be finite. Initially, the basis in the \gls{RI} expansion was set equal to the orbital basis (dubbed the ``standard approximation'').\todo{citation} However, normally larger bases are used, such as in the \gls{CABS} approach, where the \gls{RI} basis is equal to the orbital basis, plus some ``auxiliary'' basis functions that are orthogonal to the orbital basis.\todo{citations} More efficient RI methods and ways of generating intermediate values have also been developed.\todo{citations}
+In the \gls{RI} approximation, the summation over the additional orbitals $\alpha$ is in principle infinite. In practice, of course, these must be finite. Initially, the basis in the \gls{RI} expansion was set equal to the orbital basis (dubbed the ``standard approximation'').\supercite{kutzelniggR12DependentTermsWave1985,klopperOrbitalinvariant1991,klopperMollerplesset1987,klopperMP2R12,kutzelniggWave1991,termathWave1991,windSecondorder2002,valeevImproving2004,klopperWave1991} However, normally larger bases are used, such as in the \gls{CABS} approach, where the \gls{RI} basis is equal to the orbital basis, plus some ``auxiliary'' basis functions that are orthogonal to the orbital basis.\supercite{klopperExplicitly2002,valeevImproving2004} Many more important advances were since made, such as more efficient RI methods and ways of generating intermediate values have also been developed.\supercite{manbyDensity2003,wernerGeneral2007,ten-noDensity2003,kedzuchAlternative2005,shiozakiExplicitly2008,kohnImplementation2008,shiozakiHigherorder2009,wernerExplicitly2006,manbyExplicitly2006,wernerEliminating2008,petersonSystematically2008,yousafOptimized2008,yousafOptimized2009,ten-noInitiation2004,ten-noExplicitly2004,klopperExplicitly2002,ten-noNew2007,shiozakiEvaluation2009,mayExplicitly2004,adlerLocal2009,klopperHybrid2004}
 
 Moreover, it has been found that the original $F_{12}(r_{12})=r_{12}$ form requires larger auxiliary basis functions, since its long-range behaviour is unphysical.\todo{citations} Instead, functions such as that in equation \ref{eq:f12-exponential} is used.
 
@@ -193,7 +193,7 @@ where $\ket{\Psi_\text{conv}}$ is the conventional wave function. In this way, w
 
 These F12 methodologies have been particularly successful for large systems, proving only marginally more expensive than the conventional methods in some cases.\todo{citations}
 
-Since F12 methods work directly on the wave function, it is also natural to extend to excited states, particularly for multireference methods.\todo{citations: see haettig pg 62 (71)} However, since the geminal terms include only occupied orbitals, there is an inherent bias to the ground state.\todo{citations} Several means of ameliorating this have been proposed,\todo{citations} including extending the geminal basis to include virtual orbitals.\todo{citations}
+Since F12 methods work directly on the wave function, it is also natural to extend to excited states, particularly for multireference methods.\todo{citations: see haettig pg 62 (71)} However, since the geminal terms include only occupied orbitals, there is an inherent bias to the ground state.\todo{citations} Several means of ameliorating this have been proposed, such as combining F12 with response theory,\todo{citations} or by including extending the geminal basis to include virtual orbitals.\todo{citations}
 
 \section{The Transcorrelated Method}
 \label{sec:tc}
