@@ -1,0 +1,83 @@
+##SQUARE
+
+# Get benchmark values.
+kcalmol=0.001593601438
+stats 'benchmark_Etot.dat' u (strcol(1) eq 'c' ? Etot_C_bmark=column(2) : 1/0)
+stats 'benchmark_Etot.dat' u (strcol(1) eq 'n' ? Etot_N_bmark=column(2) : 1/0)
+stats 'benchmark_Etot.dat' u (strcol(1) eq 'o' ? Etot_O_bmark=column(2) : 1/0)
+
+# Total energy vs 1/norb for C, N, O.
+set lmargin 10
+set multiplot
+set border lw 3
+set pointintervalbox 0.01
+set size 1,0.41
+set tics front
+set xlabel '$n_{\rm orb}^{-1}$'
+set xtics ("$\\infty^{-1}$" 0.      0,\
+           "$    140^{-1}$" 1./140. 1,\
+           "$     91^{-1}$" 1./91.  0,\
+           "$     55^{-1}$" 1./55.  1,\
+           "$     30^{-1}$" 1./30.  0,\
+           "$     14^{-1}$" 1./14.  0)
+set ylabel '~'
+set format y "$%.2f$"
+set label 1 at graph 0.05,0.85
+
+# Plot panel 1.
+set origin 0,0
+set ytics autofreq 0.02
+set mytics 2
+set key at graph 0.75,0.93 samplen 0 spacing 1.05 reverse Left
+set label 1 "O"
+plot [0:0.08][-75.09:-75.01] \
+   'xrange.dat' u 1:(Etot_O_bmark-kcalmol):(Etot_O_bmark+kcalmol)\
+      w filledcurves lc rgb "#CCCCCC" t '',\
+   'xrange.dat' u 1:(Etot_O_bmark) w l dashtype "-" lw 2\
+      lc rgb "#555555" t '',\
+   'fciqmc_1shot_o_tc.dat' u (1/$2):4:5 w errorlines lw 3\
+      lc rgb "#FF0000" pt 7 ps 0.7 t '\scriptsize Variance-minimized $J$',\
+   'fciqmc_1shot_o_tc_emin.dat' u (1/$2):4:5 w errorlines lw 3\
+      lc rgb "#0000FF" pt 8 ps 0.9 dashtype '.'\
+      t '\scriptsize Energy-minimized $J$'
+
+# Plot panel 2.
+set xlabel '~'
+set xtics ("~" 0.      0,\
+           "~" 1./140. 1,\
+           "~" 1./91.  0,\
+           "~" 1./55.  1,\
+           "~" 1./30.  0,\
+           "~" 1./14.  0)
+set ylabel 'Total energy (Ha)' #offset -1,0
+set origin 0,0.295
+set ytics autofreq 0.02
+set mytics 2
+set label 1 "N"
+plot [0:0.08][-54.605:-54.545] \
+   'xrange.dat' u 1:(Etot_N_bmark-kcalmol):(Etot_N_bmark+kcalmol)\
+      w filledcurves lc rgb "#CCCCCC" t '',\
+   'xrange.dat' u 1:(Etot_N_bmark) w l dashtype "-" lw 2\
+      lc rgb "#555555" t '',\
+   'fciqmc_1shot_n_tc.dat' u (1/$2):4:5 w errorlines lw 3\
+      lc rgb "#FF0000" pt 7 ps 0.7 t '',\
+   'fciqmc_1shot_n_tc_emin.dat' u (1/$2):4:5 w errorlines\
+      lw 3 lc rgb "#0000FF" pt 8 ps 0.9 dashtype '.' t ''
+
+# Plot panel 3.
+set origin 0,0.59
+set ytics autofreq 0.01
+set ylabel '~' #offset -1,0
+set mytics 2
+set label 1 "C"
+plot [0:0.08][-37.855:-37.825] \
+   'xrange.dat' u 1:(Etot_C_bmark-kcalmol):(Etot_C_bmark+kcalmol)\
+      w filledcurves lc rgb "#CCCCCC" t '',\
+   'xrange.dat' u 1:(Etot_C_bmark) w l dashtype "-" lw 2\
+      lc rgb "#555555" t '',\
+   'fciqmc_1shot_c_tc.dat' u (1/$2):4:5 w errorlines\
+      lw 3 lc rgb "#FF0000" pt 7 ps 0.7 t '',\
+   'fciqmc_1shot_c_tc.dat' u (1/$2-0.0007):($4+0.0022):(\
+      sprintf('\\color[rgb]{0,0,0}\\scriptsize %d', $0+2)) with labels t '',\
+   'fciqmc_1shot_c_tc_emin.dat' u (1/$2):4:5 w errorlines\
+      lw 3 lc rgb "#0000FF" pt 8 ps 0.9 dashtype '.' t ''

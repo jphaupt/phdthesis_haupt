@@ -1,0 +1,95 @@
+##TALL
+set lmargin 9
+set multiplot
+set border lw 3
+
+kcalmol=0.001593601438
+
+# For each atom, get total energy extrapolated to infinite grid density.
+do for [jj=1:3] {
+  j=3*jj-2
+  do for [ii=1:3] {
+    i=1+ii*2
+    e0=0
+    b=0
+    f(x)=e0+b*x
+    fit f(x) 'E_atoms.dat' index (j) u ($0>1 ? 1/$2 : 1/0):i:i+1 via e0,b
+    if (jj==1) {
+      if (ii==1) { etot_c_d=e0 ; }
+      if (ii==2) { etot_c_t=e0 ; }
+      if (ii==3) { etot_c_q=e0 ; }
+    }
+    if (jj==2) {
+      if (ii==1) { etot_n_d=e0 ; }
+      if (ii==2) { etot_n_t=e0 ; }
+      if (ii==3) { etot_n_q=e0 ; }
+    }
+    if (jj==3) {
+      if (ii==1) { etot_o_d=e0 ; }
+      if (ii==2) { etot_o_t=e0 ; }
+      if (ii==3) { etot_o_q=e0 ; }
+    }
+  }
+}
+
+# Make plot.
+set size 1,0.45
+set tics front
+set xlabel '$n_{\rm grid}^{-1}$'
+set format x "$10^{%T}$"
+set ylabel '~'
+set format y "$10^{%T}$"
+set logscale xy
+set label 1 at graph 0.05,0.8 front
+
+# Plot panel 1.
+set origin 0,0
+set label 1 "O"
+plot [0.000007:0.0015][0.00002:0.02]\
+  'Ethres.dat' i 0 u 1:($2*1e-4):($2*1e-3) w filledcurves\
+     lc rgb "#F0F0F0" t '',\
+  'Ethres.dat' i 0 u 1:($2*1e-7):($2*1e-4) w filledcurves\
+     lc rgb "#E5E5E5" t '',\
+  'E_atoms.dat' i 7 u (1/$2):(abs($3-etot_o_d)):4 w errorlines\
+     lw 3 lc rgb "#FF0000" pt 7 ps 0.7 t '',\
+  'E_atoms.dat' i 7 u (1/$2):(abs($5-etot_o_t)):6 w errorlines\
+     lw 3 lc rgb "#0000FF" pt 5 ps 0.7  t '',\
+  'E_atoms.dat' i 7 u (1/$2):(abs($7-etot_o_q)):8 w errorlines\
+     lw 3 lc rgb "#00AA00" pt 9 ps 0.9  t ''
+
+# Plot panel 2.
+set origin 0,0.275
+set xlabel '~'
+set format x "~"
+set ylabel '\small Abs.\ integration error in total energy (Ha)'
+set label 1 "N"
+set key at graph 0.983,0.58 samplen 2 spacing 0.85 reverse Left width -3.0
+plot [0.000007:0.0015][0.000007:0.007]\
+  'Ethres.dat' i 0 u 1:($2*1e-4):($2*1e-3) w filledcurves\
+     lc rgb "#F0F0F0" t '',\
+  'Ethres.dat' i 0 u 1:($2*1e-7):($2*1e-4) w filledcurves\
+     lc rgb "#E5E5E5" t '',\
+  'E_atoms.dat' i 4 u (1/$2):(abs($3-etot_n_d)):4 w errorlines\
+     lw 3 lc rgb "#FF0000" pt 7 ps 0.7 t '\scriptsize cc-pVDZ',\
+  'E_atoms.dat' i 4 u (1/$2):(abs($5-etot_n_t)):6 w errorlines\
+     lw 3 lc rgb "#0000FF" pt 5 ps 0.7  t '\scriptsize cc-pVTZ',\
+  'E_atoms.dat' i 4 u (1/$2):(abs($7-etot_n_q)):8 w errorlines\
+     lw 3 lc rgb "#00AA00" pt 9 ps 0.9  t '\scriptsize cc-pVQZ'
+
+# Plot panel 3.
+set origin 0,0.55
+set ylabel '~'
+set label 1 "C"
+plot [0.000007:0.0015][0.000005:0.005]\
+  'Ethres.dat' i 0 u 1:($2*1e-4):($2*1e-3) w filledcurves\
+     lc rgb "#F0F0F0" t '',\
+  'Ethres.dat' i 0 u 1:($2*1e-7):($2*1e-4) w filledcurves\
+     lc rgb "#E5E5E5" t '',\
+  'E_atoms.dat' i 1 u (1/$2):(abs($3-etot_c_d)):4 w errorlines\
+     lw 3 lc rgb "#FF0000" pt 7 ps 0.7 t '',\
+  'E_atoms.dat' i 1 u (1/$2):(abs($5-etot_c_t)):6 w errorlines\
+     lw 3 lc rgb "#0000FF" pt 5 ps 0.7  t '',\
+  'E_atoms.dat' i 1 u (1/$2):(abs($7-etot_c_q)):8 w errorlines\
+     lw 3 lc rgb "#00AA00" pt 9 ps 0.9  t '',\
+  'E_atoms.dat' i 1 u (1.1/$2):(0.5*abs($7-etot_c_q)):(\
+      sprintf('\\color[rgb]{0,0,0}\\scriptsize %d', $1)) with labels t ''

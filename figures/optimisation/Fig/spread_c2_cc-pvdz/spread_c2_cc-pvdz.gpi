@@ -1,0 +1,18 @@
+# Spread of Eref and Etot.
+set xlabel '$E_{\rm ref}$ (Ha)'
+set format x "$%.2f$"
+set xtics autofreq 0.01
+set mxtics 2
+set ylabel 'Total energy (Ha)' #offset -1,0
+set format y "$%.2f$"
+set ytics autofreq 0.01
+set mytics 2
+set key at graph 0.97,0.28 samplen 0 spacing 1.05 reverse Left
+set border lw 3
+
+# Plot.
+plot [-75.615:-75.597][-75.891:-75.878]\
+   'spread.dat' i 0 u 4:5 w p\
+                    pt 3 ps 0.5 lc rgb '#77aa77' t '10,000 VMC configs',\
+   '' i 2 u 4:5 w p pt 5 ps 0.7 lc rgb '#4444ff' t '100,000 VMC configs',\
+   '' i 4 u 4:5 w p pt 7 ps 1.0 lc rgb '#000000' t '1,000,000 VMC configs'

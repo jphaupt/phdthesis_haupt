@@ -1,0 +1,17 @@
+# Energy ranges.
+ymax_c2=0.0035
+ymin_c2=-0.0001
+yfreq_c2=0.001
+ymtics_c2=2
+ymax_cn=0.0050
+ymin_cn=-0.0001
+yfreq_cn=0.002
+ymtics_cn=2
+ymax_n2=0.0028
+ymin_n2=-0.0001
+yfreq_n2=0.001
+ymtics_n2=2
+ymax_o2=0.0022
+ymin_o2=-0.0001
+yfreq_o2=0.001
+ymtics_o2=2

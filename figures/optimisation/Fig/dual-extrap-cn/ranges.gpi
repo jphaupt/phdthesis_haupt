@@ -1,0 +1,17 @@
+# Energy ranges (so we can keep main .gpi file common to all plots).
+ymax_v5z=-92.66400
+ymin_v5z=-92.67300
+yfreq_v5z=0.005
+ymtics_v5z=5
+ymax_vqz=-92.64700
+ymin_vqz=-92.65300
+yfreq_vqz=0.002
+ymtics_vqz=2
+ymax_vtz=-92.59350
+ymin_vtz=-92.59550
+yfreq_vtz=0.0010
+ymtics_vtz=1
+ymax_vdz=-92.49590
+ymin_vdz=-92.49710
+yfreq_vdz=0.0010
+ymtics_vdz=1

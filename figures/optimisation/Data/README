@@ -1,0 +1,48 @@
+This directory contains (s=c,n,o,c2,cn,n2,o2):
+
+* Files with benchmark data from the literature:
+  benchmark_Eat.dat
+  benchmark_Etot.dat
+* Files with data obtained directly from calculations:
+  fciqmc_${s}.dat
+  fciqmc_${s}_tc.dat
+  fciqmc_${s}_tc_no3.dat
+  fciqmc_${s}_tc_emin.dat
+  shci_${s}.dat
+
+* A script to process the files above into the files below:
+    run.sh
+
+* Temporary processed data files, which are automatically deleted at
+  the end of run.sh unless one specifies the '--keep' command-line
+  option (some are copied to plot directories under ../Figs, as given
+  in parenthesis):
+  * Selected result from single-pop runs:
+    fciqmc_1shot_${s}.dat
+    fciqmc_1shot_${s}_tc.dat         (fig:bsdep-atoms-emin)
+    fciqmc_1shot_${s}_tc_no3.dat
+    fciqmc_1shot_${s}_tc_emin.dat    (fig:bsdep-atoms-emin)
+  * Energies extrapolated to the FCI limit:
+    fciqmc_Eext_${s}.dat
+    fciqmc_Eext_${s}_tc.dat          (fig:extrap-dimers-tc)
+    shci_Eext_${s}.dat
+  * Atomization energies in the FCI limit:
+    fciqmc_Eat_${s}.dat              (fig:bsdep-dimers-nontc)
+    fciqmc_Eat_${s}_tc.dat           (fig:bsdep-dimers-emin,bsdep-dimers-nontc)
+    fciqmc_Eat_${s}_tc_emin.dat      (fig:bsdep-dimers-emin)
+  * Plots of the extrapolation of the total energy:
+    shci_${s}.plot                   (fig:dual-extrap-n2)
+    fciqmc_Etot_${s}.plot            (fig:dual-extrap-n2)
+    fciqmc_Etot_${s}_tc.plot         (fig:extrap-dimers-tc)
+  * Plots of the extrapolation of the total energy relative to FCI limit:
+    fciqmc_Erel_${s}.plot
+    fciqmc_Erel_${s}_tc.plot
+  * Extrapolation logs:
+    fciqmc_${s}.log
+    fciqmc_${s}_tc.log
+    shci_${s}.log
+
+* Formatted data for tables in the paper:
+  table_no3_bias.txt
+  table_Etot.txt
+  table_Eat.txt

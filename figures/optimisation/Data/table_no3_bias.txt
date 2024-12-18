@@ -1,0 +1,13 @@
+#sys-- -basis- bias/mHa
+c2     cc-pvdz -0.62(2)
+c2     cc-pvtz -0.36(5)
+c2     cc-pvqz -0.45(6)
+cn     cc-pvdz -0.46(0)
+cn     cc-pvtz -0.30(2)
+cn     cc-pvqz -0.21(2)
+n2     cc-pvdz -0.56(2)
+n2     cc-pvtz -0.32(5)
+n2     cc-pvqz -0.32(7)
+o2     cc-pvdz -0.55(2)
+o2     cc-pvtz -0.20(3)
+o2     cc-pvqz -0.27(5)

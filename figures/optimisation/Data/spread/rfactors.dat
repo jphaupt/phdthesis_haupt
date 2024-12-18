@@ -1,0 +1,79 @@
+#C cc-pvdz
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+  10000   3.74   2.40   8.97  0.008673  0.002318  0.000967
+  30000   3.46   2.23   7.71  0.005008  0.001449  0.000649
+ 100000   5.20   1.24   6.47  0.002743  0.000527  0.000424
+ 300000   4.16   1.49   6.19  0.001584  0.000380  0.000256
+1000000   3.05   1.84   5.62  0.000867  0.000285  0.000154
+
+
+#C cc-pvtz
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+  10000   4.51   2.28  10.29  0.007064  0.001566  0.000686
+  30000   3.61   2.77   9.99  0.004078  0.001129  0.000408
+ 100000   3.53   2.74   9.68  0.002234  0.000632  0.000231
+ 300000   3.34   2.34   7.83  0.001290  0.000386  0.000165
+1000000   5.15   1.80   9.24  0.000706  0.000137  0.000076
+
+
+#N cc-pvdz                     
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   3.92   1.63   6.39  0.004299  0.001095  0.000673
+
+
+#N cc-pvtz                     
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   3.11   1.44   4.48  0.003335  0.001071  0.000745
+
+
+#O cc-pvdz                     
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   2.03   2.41   4.89  0.006329  0.003114  0.001295
+
+
+#O cc-pvtz                     
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   4.65   2.96  13.76  0.004787  0.001030  0.000348
+
+
+#C2 cc-pvdz
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+  10000   2.75   2.08   5.73  0.013573  0.004930  0.002368
+  30000   2.56   1.80   4.62  0.007836  0.003057  0.001697
+ 100000   2.59   1.78   4.60  0.004292  0.001658  0.000932
+ 300000   2.03   2.61   5.29  0.002478  0.001221  0.000468
+1000000   2.57   1.81   4.66  0.001357  0.000528  0.000291
+
+
+#C2 cc-pvtz
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   2.60   2.32   6.05  0.003618  0.001390  0.000598
+
+#CN cc-pvdz
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   2.19   1.55   3.40  0.005419  0.002472  0.001595
+
+
+#CN cc-pvtz
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   3.80   1.81   6.87  0.004469  0.001177  0.000651
+
+
+#N2 cc-pvdz
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   3.32   1.85   6.14  0.006471  0.001948  0.001054
+
+
+#N2 cc-pvtz                    
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   1.92   2.91   5.59  0.005187  0.002698  0.000928
+
+
+#O2 cc-pvdz                    
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   3.41   1.57   5.35  0.009234  0.002711  0.001727
+
+
+#O2 cc-pvtz                    
+#  nopt    r1     r2     r    stderr(Eref) stddev(Eref) stddev(Etot)
+ 100000   2.26   4.37   9.88  0.007043  0.003116  0.000713

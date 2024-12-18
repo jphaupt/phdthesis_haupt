@@ -1,0 +1,119 @@
+##TALL
+set lmargin 9
+set multiplot
+set border lw 3
+
+# Plot definitions.
+r=0.15
+vc1="#FFAAAA"
+vc2="#FF5555"
+rc1="#AAAAFF"
+rc2="#5555FF"
+ec1="#99AA99"
+ec2="#33AA33"
+vt='\scriptsize Minimizing var.\ of VMC energy'
+rt='\scriptsize Minimizing var.\ of ref.\ energy'
+et='\scriptsize Minimizing VMC energy'
+
+# Get reference energy for each system.
+stats 'results.dat' i 1 u (column(0)==0 ? e0=column(3) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==1 ? e1=column(3) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==2 ? e2=column(3) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==3 ? e3=column(3) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==4 ? e4=column(3) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==5 ? e5=column(3) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==6 ? e6=column(3) : 1/0) nooutput
+
+# Get reference variance for each system.
+stats 'results.dat' i 1 u (column(0)==0 ? v0=column(5) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==1 ? v1=column(5) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==2 ? v2=column(5) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==3 ? v3=column(5) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==4 ? v4=column(5) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==5 ? v5=column(5) : 1/0) nooutput
+stats 'results.dat' i 1 u (column(0)==6 ? v6=column(5) : 1/0) nooutput
+
+# Plot size.
+set size 1,0.58
+
+# Plot E_VMC (bottom).
+set xlabel 'System'
+set xtics ("C"     0 0,\
+           "N"     1 0,\
+           "O"     2 0,\
+           "C$_2$" 3 0,\
+           "CN"    4 0,\
+           "N$_2$" 5 0,\
+           "O$_2$" 6 0)
+set mxtics 1
+set ylabel '$E_{\rm VMC}$ (Ha)'
+set format y "$%.1f$"
+set ytics autofreq 0.1
+set ytics add ("$0$" 0 0)
+set mytics 2
+plot [-0.5:6.5][-0.12:0.17]\
+  'rawdata.dat'\
+     i  7 u (0-1*r):( $4-e0) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i  8 u (1-1*r):( $4-e1) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i  9 u (2-1*r):( $4-e2) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i 10 u (3-1*r):( $4-e3) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i 11 u (4-1*r):( $4-e4) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i 12 u (5-1*r):( $4-e5) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i 13 u (6-1*r):( $4-e6) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i  7 u (0+0*r):( $8-e0) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i  8 u (1+0*r):( $8-e1) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i  9 u (2+0*r):( $8-e2) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i 10 u (3+0*r):( $8-e3) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i 11 u (4+0*r):( $8-e4) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i 12 u (5+0*r):( $8-e5) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i 13 u (6+0*r):( $8-e6) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i  7 u (0+1*r):($20-e0) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i  8 u (1+1*r):($20-e1) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i  9 u (2+1*r):($20-e2) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i 10 u (3+1*r):($20-e3) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i 11 u (4+1*r):($20-e4) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i 12 u (5+1*r):($20-e5) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i 13 u (6+1*r):($20-e6) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t ''
+
+# Plot sigma_VMC^2 (top).
+set ylabel '$\sigma_{\rm VMC}^2$ (arb.\ units)'
+set xlabel '~'
+set origin 0,0.42
+set xtics ("~" 0 0,\
+           "~" 1 0,\
+           "~" 2 0,\
+           "~" 3 0,\
+           "~" 4 0,\
+           "~" 5 0,\
+           "~" 6 0)
+set format y "$%.1f$"
+set ytics autofreq 0.2
+set mytics 2
+set key at graph 0.88,0.93 reverse Left samplen 0 spacing 0.8
+plot [-0.5:6.5][0.9:1.65] \
+  'results.dat' \
+     i 1 u 0:(1/0):(0) w p pt  5 ps 0.4 lw 5 lc rgb vc2 t vt,\
+  '' i 1 u 0:(1/0):(0) w p pt  7 ps 0.4 lw 5 lc rgb rc2 t rt,\
+  '' i 1 u 0:(1/0):(0) w p pt 13 ps 0.5 lw 5 lc rgb ec2 t et,\
+  'rawdata.dat'\
+     i  7 u (0-1*r):( $6/v0) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i  8 u (1-1*r):( $6/v1) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i  9 u (2-1*r):( $6/v2) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i 10 u (3-1*r):( $6/v3) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i 11 u (4-1*r):( $6/v4) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i 12 u (5-1*r):( $6/v5) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i 13 u (6-1*r):( $6/v6) w p pt  5 ps 0.3 lw 2 lc rgb vc2 t '',\
+  '' i  7 u (0+0*r):($10/v0) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i  8 u (1+0*r):($10/v1) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i  9 u (2+0*r):($10/v2) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i 10 u (3+0*r):($10/v3) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i 11 u (4+0*r):($10/v4) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i 12 u (5+0*r):($10/v5) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i 13 u (6+0*r):($10/v6) w p pt  7 ps 0.3 lw 2 lc rgb rc2 t '',\
+  '' i  7 u (0+1*r):($22/v0) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i  8 u (1+1*r):($22/v1) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i  9 u (2+1*r):($22/v2) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i 10 u (3+1*r):($22/v3) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i 11 u (4+1*r):($22/v4) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i 12 u (5+1*r):($22/v5) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t '',\
+  '' i 13 u (6+1*r):($22/v6) w p pt 13 ps 0.4 lw 2 lc rgb ec2 t ''

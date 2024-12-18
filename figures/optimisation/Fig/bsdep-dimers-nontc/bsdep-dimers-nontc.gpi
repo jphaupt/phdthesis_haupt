@@ -1,0 +1,99 @@
+##VTALL
+
+# Get benchmark values.
+kcalmol=0.001593601438
+stats 'benchmark_Eat.dat' u (strcol(1) eq 'c2' ? Eat_C2_bmark=column(2) : 1/0)
+stats 'benchmark_Eat.dat' u (strcol(1) eq 'c2-alt' ?\
+                             Eat_C2_bmark2=column(2) : 1/0)
+stats 'benchmark_Eat.dat' u (strcol(1) eq 'cn' ? Eat_CN_bmark=column(2) : 1/0)
+stats 'benchmark_Eat.dat' u (strcol(1) eq 'n2' ? Eat_N2_bmark=column(2) : 1/0)
+stats 'benchmark_Eat.dat' u (strcol(1) eq 'o2' ? Eat_O2_bmark=column(2) : 1/0)
+
+# Atomization energy vs 1/norb for C2, CN, N2, O2.
+set lmargin 9
+set multiplot
+set border lw 3
+set pointintervalbox 0.01
+set size 1,0.32
+set tics front
+set xlabel '$n_{\rm orb}^{-1}$'
+set xtics ("$\\infty^{-1}$" 0.      0,\
+           "$    182^{-1}$" 1./182. 1,\
+           "$    110^{-1}$" 1./110. 0,\
+           "$     60^{-1}$" 1./60.  0,\
+           "$     28^{-1}$" 1./28.  0)
+set format y "$%.2f$"
+set ytics autofreq 0.02
+set mytics 2
+set label 1 at graph 0.05,0.2
+
+# Plot panel 1.
+set origin 0,0
+set ylabel '~'
+set key at graph 0.75,0.40 samplen 0 spacing 1.0 reverse Left
+set label 1 "O$_2$"
+plot [0:0.042][0.155:0.205]\
+   'xrange.dat' u 1:(Eat_O2_bmark-kcalmol):(Eat_O2_bmark+kcalmol)\
+      w filledcurves lc rgb "#CCCCCC" t '',\
+   'xrange.dat' u 1:(Eat_O2_bmark) w l dashtype "-" lw 2\
+      lc rgb "#555555" t '',\
+   'fciqmc_Eat_o2_tc.dat' u (1/$2):3:4 w errorlines lw 3\
+      lc rgb "#FF0000" pt 7 ps 0.7 t '\scriptsize TC Hamiltonian',\
+   'fciqmc_Eat_o2.dat' u (1/$2):3:4 w errorlines lw 3\
+      lc rgb "#AA00AA" pt 12 ps 0.9 dashtype '.'\
+      t '\scriptsize Non-TC Hamiltonian'
+
+# Plot panel 2.
+set origin 0,0.22666667
+set xlabel '~'
+set xtics ("$$" 0.      0,\
+           "$$" 1./182. 1,\
+           "$$" 1./110. 0,\
+           "$$" 1./60.  0,\
+           "$$" 1./28.  0)
+set ylabel 'Atomization energy (Ha)' offset 0,4
+set format y "$%.2f$"
+set label 1 "N$_2$"
+plot [0:0.042][0.31:0.37]\
+   'xrange.dat' u 1:(Eat_N2_bmark-kcalmol):(Eat_N2_bmark+kcalmol)\
+      w filledcurves lc rgb "#CCCCCC" t '',\
+   'xrange.dat' u 1:(Eat_N2_bmark) w l dashtype "-" lw 2\
+      lc rgb "#555555" t '',\
+   'fciqmc_Eat_n2_tc.dat' u (1/$2):3:4 w errorlines lw 3\
+      lc rgb "#FF0000" pt 7 ps 0.7 t '',\
+   'fciqmc_Eat_n2.dat' u (1/$2):3:4 w errorlines lw 3\
+      lc rgb "#AA00AA" pt 12 ps 0.9 dashtype '.' t ''
+
+# Plot panel 3.
+set origin 0,0.45333333
+set ylabel '~'
+set label 1 "CN"
+plot [0:0.042][0.245:0.295]\
+   'xrange.dat' u 1:(Eat_CN_bmark-kcalmol):(Eat_CN_bmark+kcalmol)\
+      w filledcurves lc rgb "#CCCCCC" t '',\
+   'xrange.dat' u 1:(Eat_CN_bmark) w l dashtype "-" lw 2\
+      lc rgb "#555555" t '',\
+   'fciqmc_Eat_cn_tc.dat' u (1/$2):3:4 w errorlines lw 3\
+      lc rgb "#FF0000" pt 7 ps 0.7 t '',\
+   'fciqmc_Eat_cn.dat' u (1/$2):3:4 w errorlines lw 3\
+      lc rgb "#AA00AA" pt 12 ps 0.9 dashtype '.' t ''
+
+# Plot panel 4.
+set origin 0,0.68
+set ytics autofreq 0.01
+set label 1 "C$_2$"
+plot [0:0.042][0.202:0.242]\
+   'xrange.dat' u 1:(Eat_C2_bmark-kcalmol):(Eat_C2_bmark+kcalmol)\
+      w filledcurves lc rgb "#CCCCCC" t '',\
+   'xrange.dat' u 1:(Eat_C2_bmark) w l dashtype "-" lw 2\
+      lc rgb "#555555" t '',\
+   'xrange.dat' u 1:(Eat_C2_bmark2-kcalmol):(Eat_C2_bmark2+kcalmol)\
+      w filledcurves lc rgb "#CCCCCC" t '',\
+   'xrange.dat' u 1:(Eat_C2_bmark2) w l dashtype "-" lw 2\
+      lc rgb "#555555" t '',\
+   'fciqmc_Eat_c2_tc.dat' u (1/$2):3:4 w errorlines lw 3\
+      lc rgb "#FF0000" pt 7 ps 0.7 t '',\
+   'fciqmc_Eat_c2.dat' u (1/$2):3:4 w errorlines lw 3\
+      lc rgb "#AA00AA" pt 12 ps 0.9 dashtype '.' t '',\
+   'fciqmc_Eat_c2.dat' u (1/$2-0.0010):($3-0.0020):(\
+      sprintf('\\color[rgb]{0,0,0}\\scriptsize %d', $0+2)) with labels t ''

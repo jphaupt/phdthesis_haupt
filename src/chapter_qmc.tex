@@ -421,7 +421,7 @@ where we project onto the reference (most occupied) determinant.\footnote{While 
 
 In principle, any wave function could be used in place of the trial determinant in equation \ref{eq:projected_energy} (so long as it has nonzero overlap with $\ket\Psi$). The choice of the reference determinant is for ease of computation, and because the larger the overlap with $\ket\Psi$, the smaller the error in the stochastic sampling. Since the reference determinant (by definition) has the largest number of walkers on it, it is the sensible choice for a single-determinant projected energy.
 
-Another energy estimator is the ``trial energy'',\supercite{Blunt,Petruzielo} which is just the projected energy on a multi-determinant wave function instead of $\ket{D_\mathrm{ref}}$. In this method, after some time in variable shift mode, a ``trial space'' is constructed based on the top $N_T$ determinants. The Hamiltonian spanned within the trial space is diagonalised exactly (sparsely or densely), and the eigenvector $\ket{\Psi_\mathrm{trial}}$ is stored. Then, the trial projected energy can be calculated as
+Another energy estimator is the ``trial energy'',\supercite{Blunt2015,Petruzielo} which is just the projected energy on a multi-determinant wave function instead of $\ket{D_\mathrm{ref}}$. In this method, after some time in variable shift mode, a ``trial space'' is constructed based on the top $N_T$ determinants. The Hamiltonian spanned within the trial space is diagonalised exactly (sparsely or densely), and the eigenvector $\ket{\Psi_\mathrm{trial}}$ is stored. Then, the trial projected energy can be calculated as
 \begin{equation}
     E_\mathrm{trial} = \frac{\bra{\Psi_\mathrm{trial}}\hat H\ket{\Psi}}{\braket{\Psi_\mathrm{trial}}{\Psi}}.
 \end{equation}
