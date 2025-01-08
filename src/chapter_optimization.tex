@@ -9,13 +9,24 @@ Images have been reused from this paper (with permission).
 
 \section{Introduction}
 
+In this chapter, we investigate the use of flexible Jastrow factors and a novel optimisation strategy for use in \gls{TC} as introduced in section \ref{sec:tc}. As a brief recapitulation, the TC method amounts to a similarity transformation of the Hamiltonian $\hat H$, $\htc = \e^{-J}\hat H\e^J$. However, as this is a non-unitary trasformation, methods used to solve $\htc$ are in general not variational, and hence we are not guaranteed to converge to the \gls{CBS} limit from above. It is therefore important to choose $J$ wisely, as otherwise the method may be highly non-variational, and we may suffer from poor error cancellation.
+
 \todo{...}
 
 \section{Jastrow Factor}
 
+In continuum quantum Monte Carlo methods, the Jastrow factor for a molecule is typically expressed as the sum of electron-electron, electron-nucleus, and electron-electron-nucleus terms,\footnote{Of course, these are not all the possible terms. We may, for example, also choose to include electron-nucleus-nucleus terms.}
+\begin{equation}
+    \label{eq:jastrow}
+    J = \sum_{i<j}^Nu(r_{ij}) + \sum_i^N\sum_I^{N_A}\chi(r_{iI}) + \sum_{i<j}^N\sum_I^{N_A}f(r_{ij}, r_{iI}, r_{jI}),
+\end{equation}
+where $N_A$ is the number of nuclei, $N$ the number of electrons, and each of $u$, $\chi$, and $f$ are expressed as natural power expansions. That is,
+
 \todo{...}
 
 \section{Optimisation Strategy}
+
+We optimise $J$ using \gls{VMC}.
 
 \todo{...}
 
@@ -31,6 +42,7 @@ Images have been reused from this paper (with permission).
 \subsection{Neglecting Three-Body Excitations}
 
 \todo{...}
+\todo{mention Pauli exclusion principle as an argument for why this is a valid approximation (maybe use a figure?)}
 
 \subsection{Basis Set Convergence}
 
