@@ -4,9 +4,12 @@
 With the advent of modern computers combined with a vast array of sophisticated algorithms from which to choose, \emph{ab initio} quantum chemistry has become a tremendously powerful tool, going beyond the study of small atoms, to molecules and solids, and are among the most effective and systematically improvable techniques to date. Nevertheless, convergence to the \gls{CBS} limit is notoriously slow.
 
 In particular, consider the popular basis set family developed by Dunning and coworkers, \gls{cc-pV$X$Z}.\cite{dunningGaussian1989,woonGaussian1993,woonGaussian1994,petersonBenchmark1994,wilsonGaussian1996}
-The size of these basis sets scale as $M\in\mathcal{O}(X^3)$, and since for standard post-Hartree-Fock discussed in chapter \ref{sec:post-hf} we require four-index integrals, our computation time will scale at least as $t\in\mathcal{O}(X^{12})$.\cite{klopperR122007}
+The size of these basis sets scale as $M\in\mathcal{O}(X^3)$, and since for standard post-Hartree-Fock discussed in chapter \ref{sec:post-hf} we require four-index integrals, our computation time will scale at best as $t\in\mathcal{O}(X^{12})$.\cite{klopperR122007}
+% TODO ? should I include this equation?
+% $$\sum_{n=1}^X \sum_{l=0}^{n-1} (2l+1) = \frac{X(X+1)(2X+1)}{6}$$
+% explains the scaling
 
-Meanwhile, the \gls{CBS} correlation error scales as $\epsilon\in\mathcal{O}(X^{-3})$ \cite{helgakerBasisset1997,halkierBasisset1998} or $\epsilon\in\mathcal{O}(M^{-1})$,\cite{klopperInitio1995} resulting in $t\in\mathcal{O}(M^{-\frac 14})$. Thus, the methods discussed so far come with the painful cost of requiring very large basis sets to approach high-accuracy results.
+Meanwhile, the \gls{CBS} correlation error scales as $\epsilon\in\mathcal{O}(X^{-3})$ \cite{helgakerBasisset1997,halkierBasisset1998} or $\epsilon\in\mathcal{O}(M^{-1})$,\cite{klopperInitio1995} resulting in time $t\in\mathcal{O}(M^{-\frac 14})$. Thus, the methods discussed so far come with the painful cost of requiring very large basis sets to approach high-accuracy results.
 
 Explicitly correlated methods are a class of electronic structure methods specifically designed to address this unfavourable scaling by explicitly including the interelectronic distance $r_{12}$, and is the subject of this chapter. As the R12/F12 family of methods is the most mature of the explicitly correlated electronic structure methods, many reviews focusing on this topic already exist. This chapter in particular is in large part based on references \parencite{klopperR122007,gruneisPerspective2017,hattigExplicitly2011,shiozakiMultireference2013}.
 
@@ -34,7 +37,7 @@ This cusp condition was also later generalised.\cite{packCuspConditionsMolecular
 Early literature on the subject suggested that the success of explicitly correlated methods were due to the superior description of short-range correlation effects, and in particular in their much more faithful capturing of the cusp conditions like equation \ref{sec:cusp}.\cite{roothaanAnalytical1960,watsonApproximate1960,weissConfiguration1961,schwartzGround1962}
 However, further study found that the correlation error from a bad description of the wave function around a small sphere centred on the cusp is actually negligible.\cite{coulsonElectron1961,gilbertInterpretation1963,prendergastImpact2001,klopperR122007} Instead, the success of explicitly correlated methods is actually due to the superior description of the overall shape and size of the Coulomb hole, which has a radius on the order of the atomic radius.
 
-To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation,\cite{kongExplicitly2011} but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful due to their lack of practicality.
+To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation,\cite{kongExplicitly2011} but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful due to their lack of practicality.\footnote{Note that \glspl{STO} do not suffer from the electron-nuclear cusp, which is in any case not the focus of many explicitly correlated methods, such as F12, as discussed later in this chapter. Even with \glspl{STO}, we have electron-electron cusps.}
 
 \begin{figure}[htbp]
     \centering
@@ -77,8 +80,8 @@ Boys\cite{boysIntegral1960} and Singer\cite{singerUse1960} independently introdu
 \begin{equation}
     g(\bm r_1, \bm r_2) = \exp(-\zeta_1|\bm r_1 - \bm R_1|^2 - \zeta_2|\bm r_2 - \bm R_2|^2 - \gamma|\bm r_1 - \bm r_2|^2).
 \end{equation}
-This can be interpreted as two $s$-type orbitals and an interelectronic correlation factor $\e^{-\gamma r_{12}}$.
-While they do not have the correct cusp behaviour, much like how gaussian basis functions approximately capture the electron-nuclear cusp, a linear combination of \glspl{GTG} approximatelycapture the electron-electron cusp.
+This can be interpreted as two $s$-type orbitals and an interelectronic correlation factor $\e^{-\gamma r_{12}^2}$.
+While they do not have the correct cusp behaviour, a linear combination of \glspl{GTG} approximately capture the electron-electron cusp. This is similar to how gaussian basis functions do not individually capture the electron-nuclear cusp, but a linear combination of them approximately does.
 
 One major strength of this approach is that all integrals have closed-form algebraic expressions,\cite{lesterGaussian1964} and avoids nonlinear optimisation.\cite{bukowskiNew1994,perssonAccurate1996} \Gls{ECG} methods have been extended to post-Hartre-Fock methods, such as MP2\cite{panGaussian1970,panElectron1972}, and methods to avoid its many difficult integrals have also been developed.\cite{szalewiczNew1982,szalewiczAtomic1983,wenzelAtomic1986,szalewiczAtomic1984,tewWeak2007}
 
@@ -98,6 +101,7 @@ where $\Psi_0$ is a reference wave function (such as \gls{HF}), $\ket{\Psi_{p}}$
 \end{equation}
 is referred to as a ``strong orthogonality projector'', which ensures the $F_{12}(r_{12})$ term is orthogonal to the reference and singly-excited determinants.
 Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. The fact that, due to $Q_{12}$, the $F_{12}(r_{12})$ term commutes with the standard excitation operators aids in including this explicit correlation into conventional electron correlation methods. This geminal term is added a correction to the standard wave function.
+% NOTE TO self: when defending, might want to review Joachim Werner's F12 review to properly understand this form of writing Q12
 
 In the original formulation, $F_{12}(r_{12})=r_{12}$ (hence the name ``R12'' or ``F12'' for the more general methodology). However, another popular choice is a Slater-type geminal\supercite{ten-noInitiation2004} fitted to a linear combination of gaussians,\supercite{wernerGeneral2007}
 \begin{equation}
@@ -140,10 +144,11 @@ such that $o_m$ and $v_m$ project onto the occupied and virtual orbitals, respec
 \end{equation}
 for operator $\Omega$. The first term in brackets in equation \ref{eq:mp2-f12-firstorder} are from the conventional MP2 wave function correction, and the extra term is a contraction of a formally-infinite set of double excitations, representing the F12 correction (again, orthogonal to the conventional wave function thanks to $Q_{12}$).
 
-It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided,\supercite{ten-noNew2007,tewComparison2006,wernerGeneral2007,klopperExplicitly2002,petersonBenchmark1994} and they tend to also be more accurate, and can instead be derived from the cusp conditions to give
+It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided,\supercite{ten-noNew2007,tewComparison2006,wernerGeneral2007,klopperExplicitly2002,petersonBenchmark1994} and can instead be derived from the cusp conditions to give
 \begin{equation}
     t_{ij}^{kl} = \frac 38\delta_{ik}\delta_{jl}+\frac 18\delta_{il}\delta_{jk}.
 \end{equation}
+This also tends to be more accurate, as it avoids the geminal basis set superposition error.\supercite{tewComparison2006,adlerSimple2007}
 
 \subsection{Many-Electron Integrals}
 
@@ -185,7 +190,7 @@ Moreover, it has been found that the original $F_{12}(r_{12})=r_{12}$ form requi
 
 F12 theory has been extended to many other theories besides MP2, such as \gls{CC}, \gls{CASSCF}, \gls{MRCI}, \gls{CASPT2}, \gls{DMRG}, and \gls{FCIQMC}.
 \supercite{shiozakiMultireference2013,nogaCCR121992,nogaCoupled1994,gdanitzFormulation1993,gdanitzAccurately1998,flieglCoupledcluster2006,neissExtensions2006,kohnModified2009,bokhanCommunications2010,hofenerExtended2019,kedzuchMultireference2011,manbyExplicitly2006,neeseEfficient2009,wernerExplicitly2017,varganovVariational2010,ten-noSimple2007,shiozakiCommunication2010,sharmaSpectroscopic2014}
-The key change compared to conventional methods such as those in chapter \ref{chap:intro} is in the excitation operators, particularly the double excitations $E_{ij}^{ab}$. In particular, for reference determinants $\ket{\Phi_I}$, the wave function may be parametrised as
+The key change compared to conventional methods such as those in chapter \ref{chap:intro} is in the excitation operators, particularly the double excitations $E_{ij}^{ab}$. In particular, for a multireference method with reference determinants $\ket{\Phi_I}$, the wave function may be parametrised as
 \begin{equation}
     \ket\Psi = \ket{\Psi_\text{conv}} + \frac 12\sum_{I}\sum_{ijkl}t^{ij}_{klI}\sum_{\alpha\beta}\bra{\alpha\beta}Q_{12}^IF_{12}(r_{12})\ket{kl}E_{ij}^{\alpha\beta}\ket{\Phi_I},
 \end{equation}
@@ -222,7 +227,7 @@ In this way, TC shares similarities with \gls{VMC}, to be discussed in section \
 \begin{equation}
     \hat H \e^J\Phi = E\e^J\Phi \implies \underbrace{\e^{-J}\hat H\e^J}_{\htc}\Phi = E\Phi,
 \end{equation}
-i.e. similarity-transforming $H\hat H$ with the operator $P\equiv\e^J$.
+i.e. similarity-transforming $\hat H$ with the operator $P\equiv\e^J$.
 
 In the original formulation, $\Phi$ was chosen to be a single \gls{SD} (\gls{HF}), and $J$ was chosen such that
 \begin{equation}
@@ -233,7 +238,7 @@ where $u(\bm r_i, \bm r_j) = u(\bm r_j, \bm r_i)$ is a symmetric two-electron co
 
 When $J$ is chosen this way, the \gls{BCH} expansion of $\htc$ truncates exactly to second order (due to $u$ depending on two coordinates), i.e.
 \begin{equation}
-    \htc \mathdef \e^{-J}\hat H\e^J= \hat H + \frac 12[\hat H, J] + \frac 12[\hat H, [\hat H, J]].
+    \htc \mathdef \e^{-J}\hat H\e^J= \hat H + [\hat H, J] + \frac 12[[\hat H,J],J].
 \end{equation}
 This may be rewritten
 \begin{equation}
@@ -289,7 +294,7 @@ where $S$ is some integer ($S=6$ in reference \citenum{boysCalculation1969})\sup
 \begin{equation}
     \bar r = \frac{r}{1+r}.
 \end{equation}
-In this form, electron-electron (e-e), electron-nucleus (e-n), electron-electron-nucleus (e-e-n) and electron-electron-nucleus-nucleus (e-e-n-n) terms appears when $m=n=0$ and $l>0$, $m,n>0$ and $l=0$, one of $m,n>0$ and $l>0$, or $m,n,l>0$ respectively.
+In this form, electron-electron (e-e), electron-nucleus (e-n), electron-electron-nucleus (e-e-n) and electron-electron-nucleus-nucleus (e-e-n-n) terms appear when $m=n=0$ and $l>0$, $m,n>0$ and $l=0$, one of $m,n>0$ and $l>0$, or $m,n,l>0$ respectively.
 
 In the original formulation,\supercite{boysCalculation1969} the following equations are approximately solved via quadrature for the orbital coefficients $a_i$ and the coefficients $c_{lmn}$ in $u$.
 \begin{equation}
