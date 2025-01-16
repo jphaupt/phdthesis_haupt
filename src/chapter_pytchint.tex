@@ -1,29 +1,59 @@
 \chapter{The PyTCHInt Library}
 \label{chap:pytchint}
-\todo{...}
 
 \todo{this might become an appendix, and instead we have a chapter about universal or quasi-universal Jastrow factors}
 
-This chapter is based on the following software:\\
+This chapter is based on the following software, to be released:\\
 \fullcite{tchint}
 
 The basis for how the library works is partially discussed in the following paper and its supplementary material: \\
-\todo{Aron's tchint paper}
-
-\todo{May want to move this chapter closer to the start, i.e. just before the two other ``original'' chapters, to illustrate the tools used for those. Not sure yet.}
+\fullcite{cohenSimilarity2019}
 
 \section{Introduction}
+
+All transcorrelated matrix element calculations presented in this dissertation have been performed using the group's \tchint library or its Python extension, \pytchint. This library works by either producing transformed integral files, dubbed \fcidump files for four-index integrals,\todo{citation} or \tcdump files for the \gls{TC} six-index integrals. Note that since the \gls{TC} transformation is non-Hermitian, we do not have the same symmetries in these files as we do with conventional methods, or by interfacing with another program (such as \neci) or the Python interpreter (in the case of \pytchint).
+
+As described in section \ref{sec:tc},
+\begin{equation}
+    \htc = \sum_{pq} h_q^p a_p^\dagger a_q
+    + \frac{1}{2} \sum_{pqrs} \big(V_{rs}^{pq} - K_{rs}^{pq}\big)
+    a_p^\dagger a_q^\dagger a_s a_r
+    - \frac{1}{6} \sum_{pqrstu} L_{stu}^{pqr}
+    a_p^\dagger a_q^\dagger a_r^\dagger a_u a_t a_s,
+\end{equation}
+where
+\begin{equation}
+\begin{split}
+    h_q^p &= \bra{p}h\ket{q}, \\
+    V_{rs}^{pq} &= \bra{p q } r_{12}^{-1} \ket{ r s}, \\
+    K_{rs}^{pq} &= \bra{p q } \hat{K} \ket{ r s}, \\
+    L_{stu}^{pqr} &= \bra{p q r } \hat{L} \ket{s t u}.
+\end{split}
+\end{equation}
+$h_q^p$ and $V_{rs}^{pq}$ are the one- and two-body terms from the electronic Schr\"odinger equation, familiar from conventional methods. Therefore, the key quantities to be evaluated by \tchint are the non-Hermitian two-body integrals $K_{rs}^{pq}$ and the Hermitian three-body integrals $L_{stu}^{pqr}$.
+
+Once these integrals are evaluated, as long as we take care about using the correct bra and ket (a detail not important for Hermitian problems), many different methodologies can be applied with these integrals, such as the frozen-core approximation,\todo{citation(s)} or \gls{xTC}.\todo{citation}
 
 \section{Matrix Element Evaluation}
 \todo{mention the different ``intermediate'' quantities, RI (no longer really used), xTC}
 
+\todo{mention the existence of many different options}
+
 \section{Deterministic Optimisation}
 
-\section{Performance}
-\todo{not really sure how I'll write this section, since I don't really have a performance metric to go up against}
-\todo{memory requirements, e.g. full TC, no-3-body, xTC}
+\todo{maybe just mention it briefly in the interface section}
 
 \section{Interface}
 \todo{NECI interface, M7 interface, pytchint and interactive HPC}
 
+\section{Performance}
+\todo{not really sure how I'll write this section, since I don't really have a performance metric to go up against}
+\todo{parallel efficiency}
+\todo{memory requirements, with vs without xTC}
+\todo{mention other smaller details, such as never calculating the L matrix during xTC}
+\todo{memory requirements, e.g. full TC, no-3-body, xTC}
+\todo{pytchint vs tchint performance}
+\todo{mention use of BLAS routines}
+
 \section{Conclusion and Outlook}
+\todo{mention GPU acceleration, Python libraries, JAX, ...}

@@ -9,14 +9,38 @@ Images have been reused from this paper (with permission).
 
 \section{Introduction}
 
+In this chapter, we apply the new framework for the transcorrated method described in chapter \ref{chap:opt} to problems of multireference character and find these methods may yield non-physical results. We propose an updated workflow wherein we use conventional FCIQMC as input to Jastrow optimisation for TC-FCIQMC. Results suggest size-consistent results and rapid basis set convergence compared to conventional methods, with the binding curve of N$_2$ at \avtz being within chemical accuracy of experiment.
+
+\section{Motivation}
+
+Consider the methodology outlined in chapter \ref{chap:opt}. If we again use the same Jastrow factors,
+\todo{write Jastrow factor down again}
+with the same objective function,
+\todo{write variance of reference with a single(!) reference}
+\begin{equation}
+\label{eq:varref_hf}
+TODO
+\end{equation}
+and we use the workflow to calculate points along the binding curve of N$_2$, we find a non-physical ``bump'', as shown in figure \ref{fig:binding-dip}.
+
+\begin{figure}[htbp]
+    \centering
+
+    \caption{\todo{figure showing a plot of the binding curve(s) with a single reference!}}
+    \label{fig:binding-dip}
+\end{figure}
+
 \todo{problem description, including the ``dip''}
 
 \section{Size Consistency}
 
 \subsection{Jastrow Factor Forms}
 
-\section{CASSCF Ansatz}
-\todo{present the bad data :( -- mention might hint at needing the core (I think Andreea's paper corroborated this)}
+\subsection{Multireference Ansatzes}
+
+\todo{Present: "circular" approach, CASCI, CASSCF}
+
+% \todo{present the bad data :( -- mention might hint at needing the core (I think Andreea's paper corroborated this)}
 
 \section{Transcorrelated Trial Wavefunction}
 
