@@ -64,30 +64,20 @@ Here, $\{\alpha_l\}$ are parameters determining the shape of the
 corrected orbital and the shift $C$ is only set to a non-zero value in
 the presence of nodes of $\phi(r)$ near the nucleus. More precisely, the shift $C$ is chosen such that $\tilde\phi(r_c)-C$ is of one sign within the radius $r_c$. This is necessary since we wish to impose an exponential correction, which is necessarily of one sign.
 
-Following \onlinecite{maScheme2005}, we impose the cusp condition at $r=r_c$, as well as twice continuous differentiability at $r=r_c$. This leaves only $\alpha_0$ and $r_c$ as free parameters from equations \ref{eq:cusp-corr-1} and \ref{eq:cusp-corr-2}. $r_c$ is chosen to be small but within the same sign, as described above, while $\alpha_0$ is determined by enforcing
+Following \onlinecite{maScheme2005}, we impose the cusp condition at $r=r_c$, as well as twice continuous differentiability at $r=r_c$. This leaves only $\alpha_0$ and $r_c$ as free parameters from equations \ref{eq:cusp-corr-1} and \ref{eq:cusp-corr-2}. $r_c$ is chosen to be small but within the same sign, as described above, while $\alpha_0$ is determined by enforcing smoothness for the so-call ``effective one-electron local energy'',
+\begin{equation}
+    E_L^s(r) \mathdef \tilde\phi(r)^{-1}\left[-\frac 12\nabla^2-\frac{Z_{\mathrm{eff}}}r\right]\tilde\phi(r).
+\end{equation}
+Here, the effective nuclear charge $Z_\mathrm{eff}$,
+\begin{equation}
+    Z_\mathrm{eff} = Z\left(1 + \frac{\eta(0)}{\tilde\phi(0)}\right)
+\end{equation}
+ensures that $E_L^s$ is finite at the origin, and is derived from the cusp condition. $\eta$ is the rest of the orbital, leftover from removing the $s$-type component.
 
 \todo{get cusp conditions from Ma}
 
 % \begin{comment}
 
-% \begin{equation}\label{eq:cusp-corr-2}
-%   \tilde \phi(r) = e^{\sum_{l=0}^4 \lambda_l r^l} + C
-%                    \quad,\quad r<r_{\rm c} \;.
-% \end{equation}
-% %
-% Here, $\{\lambda_l\}$ are parameters determining the shape of the
-% corrected orbital and parameter $C$ is only set to a non-zero value in
-% the presence of nodes of $\phi(r)$ near the nucleus.
-
-% Applying continuity and differentiability conditions (see Eq.\ 14 of
-% Ref.\ \onlinecite{Ma_cusp_2005}) leaves $\lambda_0$ and $r_{\rm c}$ as
-% the only free parameters in Eqs.\ \ref{eq:cusp-corr-1} and
-% \ref{eq:cusp-corr-2}.
-% %
-% Reference \onlinecite{Ma_cusp_2005} describes an approach to obtain
-% reasonable values for these parameters, which we use as initial values
-% to be refined by the subsequent VMC optimization procedure.
-% %
 % In practice we evaluate $\phi(r)$ in $\Lambda(r)$ by spline
 % interpolation of tabulated data.
 % %
