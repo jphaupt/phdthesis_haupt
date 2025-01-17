@@ -20,7 +20,7 @@ In continuum quantum Monte Carlo methods, the Jastrow factor for a molecule is t
     \label{eq:jastrow}
     J = \sum_{i<j}^Nv(r_{ij}) + \sum_i^N\sum_I^{N_A}\chi(r_{iI}) + \sum_{i<j}^N\sum_I^{N_A}f(r_{ij}, r_{iI}, r_{jI}),
 \end{equation}
-where $N_A$ is the number of nuclei, $N$ the number of electrons, and each of $u$, $\chi$, and $f$ are expressed as natural power expansions.\todo{citation} That is,
+where $N_A$ is the number of nuclei, $N$ the number of electrons, and each of $u$, $\chi$, and $f$ are expressed as natural power expansions.\supercite{drummondJastrow} That is,
 \begin{equation}
     \label{eq:dtn-jastrow-ee}
     v(r_{ij})    = t(r_{ij},L_v)
@@ -90,7 +90,20 @@ For the calculations in this chapter, we use a total of $44$ optimisable Jastrow
 
 We optimise $J$ using \gls{VMC}.
 
+\todo{some of these equations were wrong...}
+
+\todo{Zulip:  the equations 20-22 from the 2023 paper are correct and the eq 19 is wrong.}
+
 \todo{...}
+
+\todo{this part in the optimization paper is wrong, here is the corrected version!}
+We refer to its associated variance,
+%
+\begin{equation}
+  \label{eq:var_eref_1}
+  \sigma_{\mathrm ref}^2 =
+    \bra{D_\mathrm{HF}}\e^{-J} (\hat H^\dag-E_\mathrm{ref})(\hat H-E_\mathrm{ref}) \e^J\ket{D_\mathrm{HF}}
+\end{equation}
 
 \subsection{Choosing an Appropriate Sample Size}
 
