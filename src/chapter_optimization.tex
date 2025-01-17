@@ -12,6 +12,12 @@ In this chapter, we investigate the use of flexible Jastrow factors and a novel 
 
 As an illustration of the method, we compute the all-electron atomisation energies for the challenging first-row molecules C$_2$, CN, N$_2$ and O$_2$ and find that the \gls{TC} method yields chemically accurate results using only a \vtz basis, which requires a much larger \vxz{5} basis for non-TC.
 
+\section{Computational Details}
+\todo{mention details about integration will be in the appendix}
+
+For details pertaining to how we calculate the matrix elements and the associated \tchint library more generally, see appendix \ref{chap:pytchint}.
+\todo{mention we use a walker number extrapolation already described in another dissertation (cite Muhammedreza)}
+\todo{include information presented in section III before section III.A in the optimisation paper}
 
 \section{Jastrow Factor}
 
@@ -90,6 +96,8 @@ For the calculations in this chapter, we use a total of $44$ optimisable Jastrow
 
 We optimise $J$ using \gls{VMC}.
 
+\subsection{Variance of the Reference Energy Minimisation}
+
 \todo{some of these equations were wrong...}
 
 \todo{Zulip:  the equations 20-22 from the 2023 paper are correct and the eq 19 is wrong.}
@@ -109,19 +117,25 @@ We refer to its associated variance,
 
 \todo{...}
 
-\section{Results}
-\todo{mention details about integration will be in a separate chapter}
-\todo{mention we use a walker number extrapolation already described in another dissertation (cite Muhammedreza)}
+\subsection{Energy Minimisation}
+
 \todo{...}
 
-\subsection{Neglecting Three-Body Excitations}
+
+\section{Grid Sizes}
+\todo{discuss the grid size (section III.C)}
+\todo{...}
+
+
+\section{Compactification of the CI Vector}
+\todo{talk about compactness}
+
+\section{Atomisation Energies}
+
+\section{Neglecting Three-Body Excitations}
 
 \todo{...}
 \todo{mention Pauli exclusion principle as an argument for why this is a valid approximation (maybe use a figure?)}
-
-\subsection{Basis Set Convergence}
-
-\todo{...}
 
 \section{Conclusion and Outlook}
 \todo{mention this is the way we now optimise Jastrow factors, but there is an important extension to the no-3-body approximation, xTC. Briefly describe.}
