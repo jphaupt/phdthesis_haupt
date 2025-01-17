@@ -10,14 +10,40 @@ Images have been reused from this paper (with permission).
 
 In this chapter, we investigate the use of flexible Jastrow factors and a novel optimisation strategy for use in \gls{TC} as introduced in section \ref{sec:tc}. As a brief recapitulation, the TC method amounts to a similarity transformation of the Hamiltonian $\hat H$, $\htc = \e^{-J}\hat H\e^J$. However, as this is a non-unitary trasformation, methods used to solve $\htc$ are in general not variational, and hence we are not guaranteed to converge to the \gls{CBS} limit from above. It is therefore important to choose $J$ wisely, as otherwise the method may be highly non-variational, and we may suffer from poor error cancellation.
 
-As an illustration of the method, we compute the all-electron atomisation energies for the challenging first-row molecules C$_2$, CN, N$_2$ and O$_2$ and find that the \gls{TC} method yields chemically accurate results using only a \vtz basis, which requires a much larger \vxz{5} basis for non-TC.
+As an illustration of the method, we compute the all-electron atomisation energies for the challenging first-row molecules C$_2$, CN, N$_2$ and O$_2$ and find that \gls{TC}-\gls{FCIQMC} (that is, \gls{FCIQMC} performed on a transcorrelated Hamiltonian) yields chemically accurate results using only a \vtz basis, which requires a much larger \vxz{5} basis for non-TC.
 
 \section{Computational Details}
-\todo{mention details about integration will be in the appendix}
-
-For details pertaining to how we calculate the matrix elements and the associated \tchint library more generally, see appendix \ref{chap:pytchint}.
-\todo{mention we use a walker number extrapolation already described in another dissertation (cite Muhammedreza)}
 \todo{include information presented in section III before section III.A in the optimisation paper}
+
+We comput the ground-state energies of the all-electron C, N, and O atoms, as well as that for the C$_2$, CN, N$_2$ and O$_2$ molecules at their equilibrium geometries,\todo{citations} listed in table
+% \ref{table:bond_lengths}.
+TC- and non-TC-FCIQMC calculations used \gls{HF} orbitals (restricted open-shell in the case of open-shell systems) expanded in the standard \vxz{X} family of basis sets.\todo{cite dunning 1992}
+
+
+\begin{table}[htbp]
+    \centering
+      \caption{
+      Electronic ground states and equilibrium bond lengths used for the
+      molecules considered in this work, following Ref.\
+      \todo{citation}.
+    }
+    \label{table:bond_lengths}
+    \begin{tabular}{ccc}
+      System & State & $r_\mathrm{eq}$ (\AA) \\
+    \hline \hline
+      C$_2$ & ${}^1\Sigma_g^+$ & $1.2425$ \\
+      CN    & ${}^2\Sigma^+$   & $1.1718$ \\
+      N$_2$ & ${}^1\Sigma_g^+$ & $1.0977$ \\
+      O$_2$ & ${}^3\Sigma_g^-$ & $1.2075$ \\
+    \hline
+    \end{tabular}
+\end{table}
+
+The quality of the energy differences is assessed using the atomisation energies of these molecules. In order to determine if our methodology yields chemically-accurate, i.e. within an error of $1$ kcal/mol $\approx 1.6$ mHa, we also keep each individual error to be well within this threshold. We expect a total bias in our resulting relative energies of not more than $0.5$ mHa.
+
+For all our calculations, we generate our orbitals and integration grids using \pyscf,\supercite{sunPySCF2018} optimise the Jastrow factors using the \casino continuum \gls{QMC} package,\supercite{needsVariational2020}, compute TC matrix elements using the \tchint library, for which more details are presented in appendix \ref{chap:pytchint}, and perform (TC-)FCIQMC calculations using the \neci package.\supercite{gutherNECI2020} FCIQMC energies reported are the standard HF-projected energies.
+
+(TC-)FCIQMC values presented here were produced using a walker-number extrapolation scheme presented in another dissertation.\todo{cite Mohammadreza}
 
 \section{Jastrow Factor}
 
@@ -52,7 +78,7 @@ As described in chapter \ref{chap:explicit}, accurately describing the (electron
 
 The most obvious way to enforce the electron-electron and electron-nucleus cusp conditions is by enforcing them in the form of the Jastrow factor through the relevant terms, namely $v$ (equation \ref{eq:dtn-jastrow-ee}) for the electron-electron cusp, and $\chi$ (equation \ref{eq:dtn-jastrow-en}) for the electron-nucleus cusp. However, in the context of continuum \gls{QMC}, it has been found to be better\supercite{drummondJastrow,needsVariational2020,maScheme2005} to enforce the electron-nucleus cusp by modifying the $l=0$ ($s$-type) component of the cuspless molecular orbitals, $\phi(r)$, such that they exhibit a cusp.
 
-Since we are interested in performing a post-Hartree-Fock calculation on $\htc$, such as \gls{FCIQMC} (which we shall call \gls{TC}-\gls{FCIQMC} when performed on a transcorrelated Hamiltonian), it is preferable to use unmodified molecular orbitals from standard basis sets during the optimisation process. If we optimise the Jastrow factor in \gls{VMC} in the presence of cusp-corrected orbitals and then use them in TC-FCIQMC without the cusp-corrected orbitals, the Jastrow factor would be sub-optimal for the Hamiltonian, by construction.
+Since we are interested in performing a post-Hartree-Fock calculation on $\htc$, such as \gls{FCIQMC}, it is preferable to use unmodified molecular orbitals from standard basis sets during the optimisation process. If we optimise the Jastrow factor in \gls{VMC} in the presence of cusp-corrected orbitals and then use them in TC-FCIQMC without the cusp-corrected orbitals, the Jastrow factor would be sub-optimal for the Hamiltonian, by construction.
 
 Instead, we recast the cusp-correction scheme of \onlinecite{maScheme2005} as an electron-nucleus Jastrow factor term, called $\Lambda$, to be added (rather than replacing) the $\chi$ term of equation \ref{eq:dtn-jastrow-en}. We construct this term as
 
