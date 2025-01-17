@@ -1,4 +1,4 @@
-\chapter{Optimizing Jastrow Factors for the Transcorrelated Method}
+\chapter{Optimising Jastrow Factors for the Transcorrelated Method}
   \label{chap:opt}
 
 This chapter is based in large part on the following paper:\\
@@ -72,7 +72,7 @@ $L_v$, $L_\chi$, and $L_f$ are cut-off lengths, $t(r,L) = (1-r/L)^3
 \Theta(r-L)$ is a cut-off function, and $\Theta(r-L)$ is the Heaviside
 step function.
 
-As described in chapter \ref{chap:explicit}, accurately describing the (electron-electron and electron-nucleus) Kato cusp conditions\supercite{katoEigenfunctionsManyparticleSystems1957a} substationally improves the accuracy of our method. Also, as described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\mathbf R\}$ from a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\mathbf R)$ to produce a variational estimate of the total energy as an average of the local energy, $E_{\mathrm L}({\mathbf R}) = \tilde\Psi_{\mathrm T}^{-1}({\mathbf R}) \hat H({\mathbf R}) \tilde\Psi_{\mathrm T}({\mathbf R})$ over the sampled configurations. In the case of \gls{VMC}, accurate description of the electron-electron and electron-nucleus Kato cusp conditions suppresses extreme outliers in the local energy sampling, allowing meaningful wave function parameters.
+As described in chapter \ref{chap:explicit}, accurately describing the (electron-electron and electron-nucleus) Kato cusp conditions\supercite{katoEigenfunctionsManyparticleSystems1957a} substationally improves the accuracy of our method. Also, as described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\bm R\}$ from a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\bm R)$ to produce a variational estimate of the total energy as an average of the local energy, $E_{\mathrm L}({\bm R}) = \tilde\Psi_{\mathrm T}^{-1}({\bm R}) \hat H({\bm R}) \tilde\Psi_{\mathrm T}({\bm R})$ over the sampled configurations. In the case of \gls{VMC}, accurate description of the electron-electron and electron-nucleus Kato cusp conditions suppresses extreme outliers in the local energy sampling, allowing meaningful wave function parameters.
 
 The most obvious way to enforce the electron-electron and electron-nucleus cusp conditions is by enforcing them in the form of the Jastrow factor through the relevant terms, namely $v$ (equation \ref{eq:dtn-jastrow-ee}) for the electron-electron cusp, and $\chi$ (equation \ref{eq:dtn-jastrow-en}) for the electron-nucleus cusp. However, in the context of continuum \gls{QMC}, it has been found to be better\supercite{drummondJastrow,needsVariational2020,maScheme2005} to enforce the electron-nucleus cusp by modifying the $l=0$ ($s$-type) component of the cuspless molecular orbitals, $\phi(r)$, such that they exhibit a cusp.
 
@@ -118,24 +118,106 @@ For the calculations in this chapter, we use a total of $44$ optimisable Jastrow
 
 \section{Optimisation Strategy}
 
-We optimise $J$ using \gls{VMC}.
+We optimise $J$ using \gls{VMC}. VMC provides a variational framework in which parameters $\bm \alpha$ present in a trial wave function $\Psi_\mathrm{T}$ can be optimised. In this chapter, $\ket{\Psi_\mathrm{T}} = \e^{J(\bm\alpha)}\ket{D_\mathrm{HF}}$.
+
+Wave function optimisation is usually carried out using a correlated-sampling approach in which a set of $n_mathrm{opt}$ electronic real-space configurations ${\{\bm R}_{i}\}_{i=1}^{n_\mathrm{opt}}$ distributed according to the initial wave function squared, $|\Psi_\mathrm{T}({\bm R}; {\bm \alpha}_0)|^2$ is generated, and then a target function is minimised by varying $\bm\alpha$ at fixed ${\{\bm R}_{i}\}$.
+
+The variational energy estimate for this trial wave function may be written
+\begin{equation}
+    E_\mathrm{VMC} = \frac{\bra{\Psi_\mathrm{T}} \hat H \ket{\Psi_\mathrm{T}} }{ \braket{\Psi_\mathrm{T}}{\Psi_\mathrm{T}} },
+\end{equation}
+which may be used as a target function, as presented in section \ref{sec:vmc}.
+
+Another popular target function is the ``variance of the VMC energy,''\todo{citations}
+\begin{equation}
+\sigma_\mathrm{VMC}^2 = \frac{\bra{\Psi_\mathrm{T}}(\hat H - E_\mathrm{VMC})^2\ket{\Psi_\mathrm{T}}}{\braket{\Psi_\mathrm{T}}},
+\end{equation}
+which reaches its minimum of zero when the trial wave function is an eigenstate of the Hamiltonian. In practice, minimising $\sigma_\mathrm{VMC}^2$ yields variational energies, but is affected by large fluctuations, as shown in this chapter.
+
+In continuum QMC methods, modifications have been devised to
+circumvent this problem, such as weight limiting, unreweighted
+variance minimization, or the minimization of other measures of spread
+such as the median absolute deviation from the median energy.\supercite{needsVariational2020}
+
+The computational cost of optimizing Jastrow factors within VMC scales
+as a small power of system size, typically estimated to be ${\mathcal
+O}(N^3)$.
 
 \subsection{Variance of the Reference Energy Minimisation}
 
-\todo{some of these equations were wrong...}
+In the context of TC, the reference energy
+\begin{equation}
+    E_\mathrm{ref} = \bra{D_\mathrm{HF}}\e^{-J}\hat H\e^J\ket{D_\mathrm{HF}}
+\end{equation}
+is of particular significance since it represents the starting point of a TC-FCIQMC calculation (i.e. the walker distributions at imaginary time $\tau=0$ has this energy). It is also the zeroth-order contribution to the TC-\gls{CC} energy.
 
-\todo{Zulip:  the equations 20-22 from the 2023 paper are correct and the eq 19 is wrong.}
-
-\todo{...}
-
-\todo{this part in the optimization paper is wrong, here is the corrected version!}
 We refer to its associated variance,
-%
 \begin{equation}
   \label{eq:var_eref_1}
-  \sigma_{\mathrm ref}^2 =
+  \sigma_\mathrm{ref}^2 =
     \bra{D_\mathrm{HF}}\e^{-J} (\hat H^\dag-E_\mathrm{ref})(\hat H-E_\mathrm{ref}) \e^J\ket{D_\mathrm{HF}}
 \end{equation}
+as the ``variance of the reference energy,'' which is easily evaluated for a finite VMC sample of size $n_\mathrm{opt}$ as the sample variance of the Slater-Jastrow energy over the HF distribution,
+\begin{equation}
+    S_\mathrm{ref}^2 =
+      \frac 1 {n_\mathrm{opt}-1}
+      \sum_{n=1}^{n_\mathrm{opt}}
+        \left| \frac {\hat H({\bm R}_n) \Psi_\mathrm{SJ}({\bm R}_n)}
+                     {\Psi_\mathrm{SJ}({\bm R}_n)} - {\bar E}_\mathrm{ref}
+        \right|^2,
+\end{equation}
+% TODO : you will want to practice proving this, just in case for your defence
+which tends to $\sigma_\mathrm{ref}^2$ as $n_\mathrm{opt}\to\infty$, where $\Psi_\mathrm{SJ}\mathdef \e^JD_\mathrm{HF}$ is the Slater-Jastrow wave function, $\{{\bm R}_n\}_{n=1}^{n_\mathrm{opt}}$ are electronic
+configurations distributed according to $D_\mathrm{HF}^2$, and the VMC
+estimate of the reference energy is
+\begin{equation}
+    {\bar E}_\mathrm{ref} =
+      \frac 1 {n_\mathrm{opt}}
+      \sum_{n=1}^{n_\mathrm{opt}}
+        \frac {\hat H({\bm R}_n) \Psi_\mathrm{SJ}({\bm R}_n)}
+              {\Psi_\mathrm{SJ}({\bm R}_n)}.
+\end{equation}
+
+% TODO: you will want to familiarise yourself with these papers
+The variance of the reference energy has been used as a target function for optimising Jastrow factors for the TC method before, albeit in different theoretical frameworks.\todo{citations}
+
+To understand the physical significance of the variance of the reference energy, note that equation \ref{eq:var_eref_1} may be rewritten as
+\begin{equation}
+    \label{eq:varref-connectivity}
+    \sigma_\mathrm{ref}^2 = \sum_{I\neq \mathrm{HF}}\bra{D_I}\htc\ket{D_\mathrm{HF}},
+\end{equation}
+where $I$ runs over a complete basis set.\footnote{Here we have a complete basis set because we are optimising with continuum Monte Carlo. If we were to optimise this by directly calculating the matrix elements in equation \ref{eq:varref-connectivity}, then the sum must be truncated. This is the subject of ongoing work.}
+
+As evident by equation \ref{eq:varref-connectivity}, minimising $\sigma_\mathrm{ref}^2$ essentially amounts to minimising the coupling of the reference determinant with the remainder of the space, which in the context of FCIQMC translates to a reduced spawning rate from the reference determinant to its connected excited-state determinants, thereby increasing the amplitude of the reference determinant in the resulting CI vector.
+
+Note also that if the Slater-Jastrow wave function were an exact eigenstate of $\hat H$, then a TC-FCIQMC simulation starting from the HF determinant would immediately converge to a strictly single-determinant solution. Although this ideal scenario cannot be achieved in practice, it nevertheless illustrates the potential benefits of obtaining a relatively single-reference CI solution by minimising this target function. We expect that this increased single-reference character will also benefit other approaches, particularly those based on single references, such as TC-CC.
+
+We therefore investigate the performance of minimising the variance of the reference as an alternative to minimising the variance of the VMC energy. In figure \ref{fig:varmin-E-Eref}, we compare the VMC energy and variance obtained by variance minimisation methods along with energy-minimised \todo{citations} results for reference, for the systems considerd in this chapter, using $n_\mathrm{opt}=10^5$ VMC configurations.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/optimisation/Fig/varmin-E-Eref}
+    \caption{Variance of the VMC energy (top) and VMC energy (bottom) of the systems considered in this chapter using the \vtz basis and Jastrow factors obtained by minimising the variance of the VMC energy (red squares), the variance of the reference energy (blue circles), or the VMC energy (green diamonds) in each of ten independent optimisation runs with $n_\mathrm{opt}=10^5$ VMC configurations. To ease comparisons, variances have been rescaled and energies shifted by their average values from minimising the variance of the VMC energy (i.e. the red squares average to a variance of $1$ and an energy of $0$ in the plot). The subpar ability of VMC energy variance minimisation to yield consistent VMC energies is evident in the bottom panel, suggesting to use the variance of the reference.}
+    \label{fig:varmin-E-Eref}
+\end{figure}
+%
+Minimizing the variance of the VMC energy produces lower average
+values of $\sigma_\mathrm{VMC}^2$, as one would expect, but also erratic
+VMC energies with very large standard deviations (up to $\sim50$ mHa
+in our tests).
+%
+Minimizing the variance of the reference energy, on the other hand,
+produces values of $\sigma_\mathrm{VMC}^2$ which are only slightly higher
+on average than those obtained from minimizing the variance of the VMC
+energy ($1$--$5\%$ in our tests), while producing more stable VMC
+energies with much smaller standard deviations (up to $\sim3$ mHa in
+our tests).
+%
+We therefore do not use ``regular'' variance minimization since it
+introduces large stochastic noise, making it unsuitable for optimizing
+Jastrow factors, and from this point on we use the term ``variance
+minimization'' to refer to the minimization of the variance of the
+reference energy.
 
 \subsection{Choosing an Appropriate Sample Size}
 
