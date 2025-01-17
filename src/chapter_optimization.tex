@@ -42,25 +42,12 @@ $L_v$, $L_\chi$, and $L_f$ are cut-off lengths, $t(r,L) = (1-r/L)^3
 \Theta(r-L)$ is a cut-off function, and $\Theta(r-L)$ is the Heaviside
 step function.
 
-As described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\mathbf R\}$ from on a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\mathbf R)$ to produce a variational estimate of the total energy as an average of the local energy, $E_{\mathrm L}({\mathbf R}) = \tilde\Psi_{\mathrm T}^{-1}({\mathbf R}) \hat H({\mathbf R}) \tilde\Psi_{\mathrm T}({\mathbf R})$ over the sampled configurations.
+As described in chapter \ref{chap:explicit}, accurately describing the (electron-electron and electron-nucleus) Kato cusp conditions\supercite{katoEigenfunctionsManyparticleSystems1957a} substationally improves the accuracy of our method. Also, as described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\mathbf R\}$ from a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\mathbf R)$ to produce a variational estimate of the total energy as an average of the local energy, $E_{\mathrm L}({\mathbf R}) = \tilde\Psi_{\mathrm T}^{-1}({\mathbf R}) \hat H({\mathbf R}) \tilde\Psi_{\mathrm T}({\mathbf R})$ over the sampled configurations. In the case of \gls{VMC}, accurate description of the electron-electron and electron-nucleus Kato cusp conditions suppresses extreme outliers in the local energy sampling, allowing meaningful wave function parameters.
 
-As described in chapter \ref{chap:explicit}, accurately describing the (electron-electron and electron-nucleus) Kato cusp conditions\supercite{katoEigenfunctionsManyparticleSystems1957a} substationally improves the accuracy of our method. Additionally, in the case of \gls{VMC}, this suppresses extreme outliers in the local energy sampling, allowing meaningful wave function parameters.
-
-
+The most obvious way to enforce the electron-electron and electron-nucleus cusp conditions is by enforcing them in the form of the Jastrow factor through the relevant terms, namely $v$ (equation \ref{eq:dtn-jastrow-ee}) for the electron-electron cusp, and $\chi$ (equation \ref{eq:dtn-jastrow-en}) for the electron-nucleus cusp. However, in the context of continuum \gls{QMC}, it has been found to be better\supercite{drummondJastrow,needsVariational2020,maScheme2005} to enforce the electron-nucleus cusp by modifying the $l=0$ component of the cuspless molecular orbitals, $\phi(r)$, such that they exhibit a cusp.
 
 % \begin{comment}
 %     from paper...
-
-% It is standard practice to apply the electron-electron cusp condition
-% on the $u$ term of the Jastrow factor, while the electron-nucleus cusp
-% condition is enforced by modifying the $l=0$ component, $\phi(r)$, of
-% cuspless molecular orbitals near nuclei so that they exhibit a cusp.
-% \cite{Ma_cusp_2005}
-% %
-% This has been found to be a better approach than applying the
-% electron-nucleus cusp condition via the parameters in the $\chi$ term
-% of the Jastrow factor. \cite{Drummond_Jastrow_2004, Ma_cusp_2005,
-% Needs_casino_2020}
 
 % However, in TC-FCIQMC it is preferable to use unmodified molecular
 % orbitals obtained from standard basis sets.
