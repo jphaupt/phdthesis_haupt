@@ -1,6 +1,5 @@
 \chapter{Optimizing Jastrow Factors for the Transcorrelated Method}
   \label{chap:opt}
-\todo{...}
 
 This chapter is based in large part on the following paper:\\
 \fullcite{hauptOptimizing2023}
@@ -11,7 +10,8 @@ Images have been reused from this paper (with permission).
 
 In this chapter, we investigate the use of flexible Jastrow factors and a novel optimisation strategy for use in \gls{TC} as introduced in section \ref{sec:tc}. As a brief recapitulation, the TC method amounts to a similarity transformation of the Hamiltonian $\hat H$, $\htc = \e^{-J}\hat H\e^J$. However, as this is a non-unitary trasformation, methods used to solve $\htc$ are in general not variational, and hence we are not guaranteed to converge to the \gls{CBS} limit from above. It is therefore important to choose $J$ wisely, as otherwise the method may be highly non-variational, and we may suffer from poor error cancellation.
 
-\todo{...}
+As an illustration of the method, we compute the all-electron atomisation energies for the challenging first-row molecules C$_2$, CN, N$_2$ and O$_2$ and find that the \gls{TC} method yields chemically accurate results using only a \vtz basis, which requires a much larger \vxz{5} basis for non-TC.
+
 
 \section{Jastrow Factor}
 
@@ -74,37 +74,17 @@ Here, the effective nuclear charge $Z_\mathrm{eff}$,
 \end{equation}
 ensures that $E_L^s$ is finite at the origin, and is derived from the cusp condition. $\eta$ is the rest of the orbital, leftover from removing the $s$-type component.
 
-\todo{get cusp conditions from Ma}
+Figure \ref{fig:cusp-term} illustrates the effect of using a $\Lambda$
+term in practice.
 
-% \begin{comment}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{figures/optimisation/Fig/cusp-term-eps-converted-to}
+    \caption{\gls{HF} wave function value and local energy as a function of the $x$ coordinate of an electron in a carbon atom as it crosses the nucleus at $x=0$, both with and without the $\Lambda$ cusp-correcting Jastrow factor term. This is in the \vdz basis.}
+    \label{fig:cusp-term}
+\end{figure}
 
-% In practice we evaluate $\phi(r)$ in $\Lambda(r)$ by spline
-% interpolation of tabulated data.
-% %
-% Figure \ref{fig:cusp-term} illustrates the effect of using a $\Lambda$
-% term in practice.
-% %
-% \begin{figure}[!hbt]
-%   \begin{center}
-%     \includegraphics[width=\columnwidth]{Fig/cusp-term}
-%     \caption{
-%       Wave function value and local energy as a function of the $x$
-%       coordinate of an electron in a carbon atom as it crosses the
-%       nucleus at $x=0$, both without and with a cusp-correcting
-%       $\Lambda$ Jastrow factor term applied to a HF wave function
-%       using the cc-pVDZ basis.
-%     }
-%     \label{fig:cusp-term}
-%   \end{center}
-% \end{figure}
-
-% For reference, in our calculations we optimize a total of $44$ Jastrow
-% factor parameters for the atoms and homonuclear dimers, and $80$
-% parameters for the CN dimer; we keep the $L_u$, $L_\chi$, and $L_f$
-% cut-off lengths fixed at sensible values for simplicity.
-% \end{comment}
-
-\todo{...}
+For the calculations in this chapter, we use a total of $44$ optimisable Jastrow factor parameters for the atoms and homonuclear dimers, and $88$ parameters for CN. We keep the $L_v$, $L_\chi$ and $L_f$ cutoff lengths fixed at $4.5$, $4$, and $4$, for simplicity.
 
 \section{Optimisation Strategy}
 
