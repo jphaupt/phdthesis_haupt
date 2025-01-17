@@ -44,38 +44,32 @@ step function.
 
 As described in chapter \ref{chap:explicit}, accurately describing the (electron-electron and electron-nucleus) Kato cusp conditions\supercite{katoEigenfunctionsManyparticleSystems1957a} substationally improves the accuracy of our method. Also, as described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\mathbf R\}$ from a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\mathbf R)$ to produce a variational estimate of the total energy as an average of the local energy, $E_{\mathrm L}({\mathbf R}) = \tilde\Psi_{\mathrm T}^{-1}({\mathbf R}) \hat H({\mathbf R}) \tilde\Psi_{\mathrm T}({\mathbf R})$ over the sampled configurations. In the case of \gls{VMC}, accurate description of the electron-electron and electron-nucleus Kato cusp conditions suppresses extreme outliers in the local energy sampling, allowing meaningful wave function parameters.
 
-The most obvious way to enforce the electron-electron and electron-nucleus cusp conditions is by enforcing them in the form of the Jastrow factor through the relevant terms, namely $v$ (equation \ref{eq:dtn-jastrow-ee}) for the electron-electron cusp, and $\chi$ (equation \ref{eq:dtn-jastrow-en}) for the electron-nucleus cusp. However, in the context of continuum \gls{QMC}, it has been found to be better\supercite{drummondJastrow,needsVariational2020,maScheme2005} to enforce the electron-nucleus cusp by modifying the $l=0$ component of the cuspless molecular orbitals, $\phi(r)$, such that they exhibit a cusp.
+The most obvious way to enforce the electron-electron and electron-nucleus cusp conditions is by enforcing them in the form of the Jastrow factor through the relevant terms, namely $v$ (equation \ref{eq:dtn-jastrow-ee}) for the electron-electron cusp, and $\chi$ (equation \ref{eq:dtn-jastrow-en}) for the electron-nucleus cusp. However, in the context of continuum \gls{QMC}, it has been found to be better\supercite{drummondJastrow,needsVariational2020,maScheme2005} to enforce the electron-nucleus cusp by modifying the $l=0$ ($s$-type) component of the cuspless molecular orbitals, $\phi(r)$, such that they exhibit a cusp.
+
+Since we are interested in performing a post-Hartree-Fock calculation on $\htc$, such as \gls{FCIQMC} (which we shall call \gls{TC}-\gls{FCIQMC} when performed on a transcorrelated Hamiltonian), it is preferable to use unmodified molecular orbitals from standard basis sets during the optimisation process. If we optimise the Jastrow factor in \gls{VMC} in the presence of cusp-corrected orbitals and then use them in TC-FCIQMC without the cusp-corrected orbitals, the Jastrow factor would be sub-optimal for the Hamiltonian, by construction.
+
+Instead, we recast the cusp-correction scheme of \onlinecite{maScheme2005} as an electron-nucleus Jastrow factor term, called $\Lambda$, to be added (rather than replacing) the $\chi$ term of equation \ref{eq:dtn-jastrow-en}. We construct this term as
+
+\begin{equation}
+    \label{eq:cusp-corr-1}
+    \Lambda(r)  = \left[ \ln \tilde \phi(r) - \ln \phi(r) \right]\Theta(r-r_{c}),
+\end{equation}
+where, adopting the notation of \onlinecite{maScheme2005}, $r_c$ is a cutoff radius, $\phi(r)$ is the $s$-type component of the target orbital, and $\tilde \phi(r)$ is its cusp-corrected counterpart,
+\begin{equation}
+    \label{eq:cusp-corr-2}
+  \tilde \phi(r) = \e^{\sum_{l=0}^4 \alpha_l r^l} + C \quad,\quad r<r_{c}.
+\end{equation}
+
+Here, $\{\alpha_l\}$ are parameters determining the shape of the
+corrected orbital and the shift $C$ is only set to a non-zero value in
+the presence of nodes of $\phi(r)$ near the nucleus. More precisely, the shift $C$ is chosen such that $\tilde\phi(r_c)-C$ is of one sign within the radius $r_c$. This is necessary since we wish to impose an exponential correction, which is necessarily of one sign.
+
+Following \onlinecite{maScheme2005}, we impose the cusp condition at $r=r_c$, as well as twice continuous differentiability at $r=r_c$. This leaves only $\alpha_0$ and $r_c$ as free parameters from equations \ref{eq:cusp-corr-1} and \ref{eq:cusp-corr-2}. $r_c$ is chosen to be small but within the same sign, as described above, while $\alpha_0$ is determined by enforcing
+
+\todo{get cusp conditions from Ma}
 
 % \begin{comment}
-%     from paper...
 
-% However, in TC-FCIQMC it is preferable to use unmodified molecular
-% orbitals obtained from standard basis sets.
-% %
-% It would be possible to optimize the Jastrow factor parameters in VMC
-% in the presence of cusp-corrected orbitals and use them in TC-FCIQMC
-% with a cusp-uncorrected orbital basis, but the Jastrow factor would
-% then be sub-optimal by construction in the latter calculation.
-% %
-% Instead, we recast the cusp-correction scheme of Ref.\
-% \onlinecite{Ma_cusp_2005} as an electron-nucleus Jastrow factor term
-% $\Lambda$, to be added to (rather than replacing) the $\chi$ term in
-% Eq.\ \ref{eq:jastrow}.
-
-% We construct our cusp-correcting Jastrow factor term as
-% %
-% \begin{equation}\label{eq:cusp-corr-1}
-%   \begin{split}
-%     \Lambda(r) & = \left[ \ln \tilde \phi(r) - \ln \phi(r) \right]
-%                    \Theta(r-r_{\rm c}) \;,
-%   \end{split}
-% \end{equation}
-% %
-% where, using the notation of Ref.\ \onlinecite{Ma_cusp_2005}, $r_{\rm
-% c}$ is a cut-off radius, $\phi(r)$ is the $l=0$ component of the
-% target orbital at the desired nucleus, and $\tilde \phi(r)$ is its
-% cusp-corrected counterpart,
-% %
 % \begin{equation}\label{eq:cusp-corr-2}
 %   \tilde \phi(r) = e^{\sum_{l=0}^4 \lambda_l r^l} + C
 %                    \quad,\quad r<r_{\rm c} \;.
