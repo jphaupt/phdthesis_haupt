@@ -18,42 +18,39 @@ In this chapter, we investigate the use of flexible Jastrow factors and a novel 
 In continuum quantum Monte Carlo methods, the Jastrow factor for a molecule is typically expressed as the sum of electron-electron, electron-nucleus, and electron-electron-nucleus terms,\footnote{Of course, these are not all the possible terms. We may, for example, also choose to include electron-nucleus-nucleus terms.}
 \begin{equation}
     \label{eq:jastrow}
-    J = \sum_{i<j}^Nu(r_{ij}) + \sum_i^N\sum_I^{N_A}\chi(r_{iI}) + \sum_{i<j}^N\sum_I^{N_A}f(r_{ij}, r_{iI}, r_{jI}),
+    J = \sum_{i<j}^Nv(r_{ij}) + \sum_i^N\sum_I^{N_A}\chi(r_{iI}) + \sum_{i<j}^N\sum_I^{N_A}f(r_{ij}, r_{iI}, r_{jI}),
 \end{equation}
 where $N_A$ is the number of nuclei, $N$ the number of electrons, and each of $u$, $\chi$, and $f$ are expressed as natural power expansions.\todo{citation} That is,
 \begin{equation}
-\begin{split}
-    u(r_{ij})    & = t(r_{ij},L_u)
-                    \sum_{k} a_k r_{ij}^k \;, \\
-    \chi(r_{iI}) & = t(r_{iI},L_\chi)
-                    \sum_{k} b_k r_{iI}^k \;, \\
-    f(r_{ij}, r_{i}, r_{j}) & = t(r_{iI},L_f) t(r_{jI},L_f)
-                    \sum_{k,l,m} c_{klm}
-                        r_{ij}^k r_{iI}^l r_{jI}^m \;, \\
-\end{split}
+    \label{eq:dtn-jastrow-ee}
+    v(r_{ij})    = t(r_{ij},L_v)
+                    \sum_{k} a_k r_{ij}^k ,
+\end{equation}
+\begin{equation}
+    \label{eq:dtn-jastrow-en}
+    \chi(r_{iI}) = t(r_{iI},L_\chi)
+    \sum_{k} b_k r_{iI}^k ,
+\end{equation}
+\begin{equation}
+    \label{eq:dtn-jastrow-een}
+    f(r_{ij}, r_{i}, r_{j}) = t(r_{iI},L_f) t(r_{jI},L_f)
+    \sum_{k,l,m} c_{klm}
+    r_{ij}^k r_{iI}^l r_{jI}^m ,
 \end{equation}
 where $\{a_k\}$, $\{b_k\}$, and $\{c_{klm}\}$ are linear parameters,
-$L_u$, $L_\chi$, and $L_f$ are cut-off lengths, $t(r,L) = (1-r/L)^3
+$L_v$, $L_\chi$, and $L_f$ are cut-off lengths, $t(r,L) = (1-r/L)^3
 \Theta(r-L)$ is a cut-off function, and $\Theta(r-L)$ is the Heaviside
 step function.
 
-As described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\mathbf R\}$ from on a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\mathbf R)$,
+As described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\mathbf R\}$ from on a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\mathbf R)$ to produce a variational estimate of the total energy as an average of the local energy, $E_{\mathrm L}({\mathbf R}) = \tilde\Psi_{\mathrm T}^{-1}({\mathbf R}) \hat H({\mathbf R}) \tilde\Psi_{\mathrm T}({\mathbf R})$ over the sampled configurations.
+
+As described in chapter \ref{chap:explicit}, accurately describing the (electron-electron and electron-nucleus) Kato cusp conditions\supercite{katoEigenfunctionsManyparticleSystems1957a} substationally improves the accuracy of our method. Additionally, in the case of \gls{VMC}, this suppresses extreme outliers in the local energy sampling, allowing meaningful wave function parameters.
+
 
 
 % \begin{comment}
 %     from paper...
-% In essence, the VMC and DMC methods sample real-space electronic
-% configurations $\{\bf R\}$ following an appropriate distribution based
-% on an analytic trial wave function $\Psi_{\rm T}({\bf R})$ and produce
-% a variational estimate of the total energy which is an average of the
-% local energy, $E_{\rm L} ({\bf R})= \Psi_{\rm T}^{-1}({\bf R}) \hat
-% H({\bf R}) \Psi_{\rm T}({\bf R})$, at the sampled configurations.
-% %
-% Both the electron-electron and electron-nucleus Kato cusp conditions
-% \cite{kato_cusp_1957} are of crucial importance in suppressing extreme
-% outliers in the local energy samples, making it possible to obtain
-% meaningful wave-function parameter sets from VMC-based optimization.
-% %
+
 % It is standard practice to apply the electron-electron cusp condition
 % on the $u$ term of the Jastrow factor, while the electron-nucleus cusp
 % condition is enforced by modifying the $l=0$ component, $\phi(r)$, of
