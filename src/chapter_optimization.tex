@@ -221,7 +221,22 @@ reference energy.
 
 \subsection{Choosing an Appropriate Sample Size}
 
-\todo{...}
+While expectation values relevant for most continuum QMC calculations converge using relatively few VMC configurations, it has also been known\todo{citation Spink} that in order to converge other quantities, far more configurations are needed. That is, $n_\mathrm{opt}$ is larger. In the spirit of \gls{MC}, we may estimate the convergence of the expectation value for some quantity by performing multiple optimisation runs with different random number seeds but otherwise the same inputs. This would give us a standard deviation.
+
+The value we want to converge in this case is not the VMC energy, nor the reference energy, but instead the TC-FCI energy. In practice, we use the uncertainty of the VMC estimate of the reference energy $\bar E_\mathrm{ref}$ as a proxy for the standard deviation of the TC-FCIQMC energy. This is justified because:
+\begin{itemize}
+    \item The standard deviation of the TC-FCIQMC energy is not larger than the standard deviation of the reference energy, as illustrated in figure \ref{fig:spread_c2_cc-pvdz}. It is usually significantly smaller thanks to the ability of TC-FCIQMC to conpensate for the presence of a bias in $E_\mathrm{ref}$ via the correlation energy.
+    \item The standard deviation of the reference energy is not larger than the statistical uncertainty of the VMC estimate of the reference energy obtained with $n_\mathrm{opt}$ configurations. It is usually significantly smaller due to the use of variance reduction techniques in QMC.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/optimisation/Fig/spread_c2_cc-pvdz}
+    \caption{TC-FCIQMC energy of the C$_2$ molecule using $10^6$ walkers with the \vdz basis as a function of the reference energy for multiple independent Jastrow factor parameter sets obtained by variance minimisation using three different VMC sample sizes. The horizonal spread is about $1.8$ times larger than the vertical spread, in line with the expectation that the standard deviation of the TC-FCIQMC energy is smaller than that of the reference energy.}
+    \label{fig:spread_c2_cc-pvdz}
+\end{figure}
+
+For the atoms and molecules considered in this chapter, we use $n_\mathrm{opt}=2\times 10^7$ to yield TC-FCIQMC energies with standard deviations of less than $0.1$ mHa.
 
 \subsection{Energy Minimisation}
 
