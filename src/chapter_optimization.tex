@@ -328,12 +328,68 @@ From reference \todo{citation}, TC yields a maximum of $\xi=0.64$ for the 18-sit
     \label{table:l2_norms}
   \end{table}
 
-\section{Atomisation Energies}
-
 \section{Neglecting Three-Body Excitations}
 
+As described in section \ref{sec:fciqmc}, sampling in FCIQMC involves spawning walkers from occupied determinants onto connected determinants. The $\hat L$ matrix, that is the three-body operator arising from the similarity transformation in TC, results in TC also connecting determinants by three-body excitations. This represents a huge increase in the connectivity of the Hilbert space compared to non-TC-FCIQMC.
+
+These three-body excitations are represented by $L_{ijk}^{abc}$ where each index is distinct. These have been found to typically be small\todo{citation}. Moreoever, simultaneous interaction of three electrons is unlikely due to Pauli repulsion (as necessarily at least two of the electrons will be of the same spin). Therefore, we neglect these contributions. The only distinct six-index integrals that we must keep are those occupied in the HF determinant, as these matrix elements are necessary to evaluate the projected energy.
+
+Neglecting pure three-body excitations reduces the amount of storage needed to hold $\hat L$ from $\mathcal{O}(M^6)$ to $\mathcal{O}(M^5+N^3M^3)$, where $M$ is the number of orbitals and $N$ is the number of electrons. Reduction factors obtains for the molecules studied in this chapter are reported in table \ref{table:no3_memory}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{cccccccc}
+            & C      & N      & O      &
+              C$_2$  & CN     & N$_2$  & O$_2$  \\
+    \hline \hline
+    cc-pVDZ & $1.23$ & $1.17$ & $1.17$ &
+              $1.87$ & $1.78$ & $1.78$ & $1.58$ \\
+    cc-pVTZ & $2.04$ & $2.02$ & $1.93$ &
+              $3.72$ & $3.66$ & $3.66$ & $3.46$ \\
+    cc-pVQZ & $3.31$ & $3.44$ & $3.13$ &
+              $6.60$ & $6.54$ & $6.57$ & $6.41$ \\
+    \hline
+    \end{tabular}
+    \caption{
+      $\hat L$ matrix storage reduction factor from neglecting
+      pure three-body excitations, computed as the number of
+      non-zero matrix elements in a the full $\hat L$ matrix
+      divided by the number of non-zero matrix elements with
+      repeated indices or three or more indices corresponding to
+      orbitals occupied in the HF determinant.
+    }
+    \label{table:no3_memory}
+\end{table}
+
+The effect of neglecting these pure three-body excitations on atomisation energy is also small, as shown in table \ref{table:no3_Eat_error}. We find that this approximation results in errors of the order of
+$\sim0.3$ mHa at the cc-pVTZ level, which is a relatively small bias
+considering the substantial storage and cost benefits of the
+approximation.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{cllll}
+                              &
+    \multicolumn{1}{c}{C$_2$} &
+    \multicolumn{1}{c}{CN   } &
+    \multicolumn{1}{c}{N$_2$} &
+    \multicolumn{1}{c}{O$_2$} \\
+    \hline \hline
+    cc-pVDZ   & $-0.62(2)$ & $-0.46(0)$ & $-0.56(2)$ & $-0.55(2)$ \\
+    cc-pVTZ   & $-0.36(5)$ & $-0.30(2)$ & $-0.32(5)$ & $-0.20(3)$ \\
+    cc-pVQZ   & $-0.45(6)$ & $-0.21(2)$ & $-0.32(7)$ & $-0.27(5)$ \\
+    \hline
+    \end{tabular}
+    \caption{
+      Error in the atomization energy of the molecules considered in this
+      work incurred by neglecting pure three-body excitations from the
+      FCIQMC dynamics, in mHa.
+      %
+      \label{table:no3_Eat_error}}
+  \end{table}
+
+\section{Atomisation Energies}
 \todo{...}
-\todo{mention Pauli exclusion principle as an argument for why this is a valid approximation (maybe use a figure?)}
 
 \section{Conclusion and Outlook}
 \todo{mention this is the way we now optimise Jastrow factors, but there is an important extension to the no-3-body approximation, xTC. Briefly describe.}
