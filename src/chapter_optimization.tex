@@ -361,6 +361,29 @@ Neglecting pure three-body excitations reduces the amount of storage needed to h
     \label{table:no3_memory}
 \end{table}
 
+Since two-body excitations are typically more expensive to attempt in practice compared to triple excitations, neglecting the latter actually increases the cost per step of the calculation. However, neglecting pure three-body excitations allows the TC-FCIQMC time step to be larger, thereby resulting in reduced serial correlation in the statistics, which enables reaching the target accuracy in fewer time steps, so one can expect a net cost reduction thanks to this approximation. Walltime reduction factors for the molecules studied in this chapter are reported in table \ref{table:no3_cost}.
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{cccccccc}
+            & C     & N     & O     &
+              C$_2$ & CN    & N$_2$ & O$_2$ \\
+    \hline \hline
+    cc-pVDZ & $0.9$ & $1.0$ & $1.1$ &
+              $1.7$ & $1.2$ & $1.5$ & $1.6$ \\
+    cc-pVTZ & $1.0$ & $1.0$ & $0.8$ &
+              $2.4$ & $1.0$ & $1.8$ & $2.0$ \\
+    cc-pVQZ & $1.5$ & $1.5$ & $1.0$ &
+              $3.1$ & $0.9$ & $1.9$ & $2.3$ \\
+    \hline
+    \end{tabular}
+    \caption{
+      Reduction factor in the walltime required to advance one unit of
+      imaginary time at fixed population from neglecting pure three-body
+      excitations in the TC-FCIQMC calculation.
+      %
+      \label{table:no3_cost}}
+\end{table}
+
 The effect of neglecting these pure three-body excitations on atomisation energy is also small, as shown in table \ref{table:no3_Eat_error}. We find that this approximation results in errors of the order of
 $\sim0.3$ mHa at the cc-pVTZ level, which is a relatively small bias
 considering the substantial storage and cost benefits of the
@@ -389,14 +412,168 @@ approximation.
   \end{table}
 
 \section{Atomisation Energies}
-\todo{...}
+
+In this section, we compare results of TC-FCIQMC with individually variance-optimised Jastrow factors as a function of basis-set size with the corresponding non-TC results and with benchmark \gls{CBS} values from references \todo{citations}.
+
+Table \ref{table:total_energies} shows a list of total energies obtained for each system and basis set.
+\begin{table*}[htbp!]
+    \centering
+    \begin{tabular}{c|cccc}
+      \multicolumn{2}{c}{~} &
+      \multicolumn{1}{c}{C} &
+      \multicolumn{1}{c}{N} &
+      \multicolumn{1}{c}{O} \\
+      \hline \hline
+      \multicolumn{4}{c}{~} \\[-0.4cm]
+      \parbox[t]{2mm}{\multirow{5}{*}{\rotatebox[origin=c]{90}{non-TC}}}
+      &cc-pVDZ& $ -37.7619$ & $ -54.4801$ & $ -74.9117$ \\
+      &cc-pVTZ& $ -37.7900$ & $ -54.5252$ & $ -74.9853$ \\
+      &cc-pVQZ& $ -37.8126$ & $ -54.5535$ & $ -75.0236$ \\
+      &cc-pV5Z& $ -37.8199$ & $ -54.5627$ & $ -75.0369$ \\
+      &cc-pV6Z& $ -37.8263$ & $ -54.5697$ & $ -75.0447$ \\
+      \multicolumn{4}{c}{~} \\[-0.3cm]
+      \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{TC}}}
+      &cc-pVDZ& $ -37.8293$ & $ -54.5622$ & $ -75.0226$ \\
+      &cc-pVTZ& $ -37.8427$ & $ -54.5842$ & $ -75.0572$ \\
+      &cc-pVQZ& $ -37.8459$ & $ -54.5896$ & $ -75.0665$ \\
+      &cc-pV5Z& $ -37.8457$ & $ -54.5898$ & $ -75.0678$ \\
+      \multicolumn{4}{c}{~} \\[-0.3cm]
+      \multicolumn{2}{c}{Ref.\ byta!!} % \todo{citationBytautas2005}
+              & $ -37.8450$ & $ -54.5893$ & $ -75.0674$ \\
+      \multicolumn{2}{c}{Ref.\ hard!!} % \todo{citationHardingHEAT2008}
+              & $ -37.8450$ & $ -54.5893$ & $ -75.0674$ \\
+      \hline
+    \end{tabular}
+
+    \vspace{1em}
+
+    \begin{tabular}{c|ccccc}
+      \multicolumn{2}{c}{~} &
+      \multicolumn{1}{c}{C$_2$} &
+      \multicolumn{1}{c}{CN} &
+      \multicolumn{1}{c}{N$_2$} &
+      \multicolumn{1}{c}{O$_2$} \\
+      \hline \hline
+      \multicolumn{5}{c}{~} \\[-0.4cm]
+      \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{non-TC}}}
+      &cc-pVDZ& $ -75.7320$ & $ -92.4970$ & $-109.2809$ & $-149.9915$ \\
+      &cc-pVTZ& $ -75.8094$ & $ -92.5954$ & $-109.4014$ & $-150.1554$ \\
+      &cc-pVQZ& $ -75.8578$ & $ -92.6517$ & $-109.4653$ & $-150.2362$ \\
+      &cc-pV5Z& $ -75.8752$ & $ -92.6717$ & $-109.4881$ & $-150.2655$ \\
+      \multicolumn{5}{c}{~} \\[-0.3cm]
+      \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{TC}}}
+      &cc-pVDZ& $ -75.8844$ & $ -92.6671$ & $-109.4727$ & $-150.2216$ \\
+      &cc-pVTZ& $ -75.9197$ & $ -92.7152$ & $-109.5312$ & $-150.3078$ \\
+      &cc-pVQZ& $ -75.9272$ & $ -92.7247$ & $-109.5428$ & $-150.3244$ \\
+      \multicolumn{5}{c}{~} \\[-0.3cm]
+      \multicolumn{2}{c}{Ref.\ fell!!} % \todo{citationFeller2008}
+              & $ -75.9240$ & $ -92.7232$ & $-109.5425$ & $-150.3273$ \\
+    \multicolumn{2}{c}{Ref.\ byta!!} % \todo{citationBytautas2005}
+      & $ -75.9265$ &             & $-109.5427$ & $-150.3274$ \\
+      \multicolumn{2}{c}{Ref.\ hard!!} % \todo{citationHardingHEAT2008}
+      &             & $ -92.7229$ & $-109.5425$ & $-150.3275$ \\
+      \hline
+    \end{tabular}
+
+    \caption{Total energies in Ha obtained for atoms (top) and molecules (bottom) considered in this work, along with benchmark non-relativistic results. Statistical uncertainties from Monte Carlo sampling are smaller than $0.0001$ Ha.}
+    \label{table:total_energies}
+\end{table*}
+%
+We find the TC total energies to be remarkably accurate already at the
+cc-pVQZ basis set level, differing by less than $2$ mHa per atom from
+benchmark CBS values, while the non-TC total energies still miss the
+benchmarks by $25$--$30$ mHa per atom with the cc-pV5Z basis set, and
+$20$ mHa per atom at the cc-pV6Z level. The TC total energies exhibit slightly non-variational convergence, with the atomic energies reaching values $0.5$ mHa below the benchmark before increasing again towards it for larger basis-set sizes. While non-variationality is undesirable in a method, the amount by which the TC results dip below the \gls{CBS} limit is sufficiently small for this not to be an issue in practice.
+
+From a chemical perspective, relative energies are more important than totaly energies. The atomisation energies of the C$_2$, CN, N$_2$, and O$_2$ molecules
+obtained from the total energies in table \ref{table:total_energies}
+are given in table \ref{table:atomization}
+and plotted in figure
+\ref{fig:bsdep-dimers-nontc}.
+%
+\begin{table}[htbp!]
+  \centering
+  \begin{tabular}{c@{\;\;}|@{\;\;}crrrr}
+    \multicolumn{2}{c}{}      &
+    \multicolumn{1}{c}{C$_2$} &
+    \multicolumn{1}{c}{CN}    &
+    \multicolumn{1}{c}{N$_2$} &
+    \multicolumn{1}{c}{O$_2$} \\
+    \hline \hline
+    \multicolumn{6}{c}{} \\[-0.4cm]
+    \parbox[t]{2mm}{\multirow{4}{*}{\rotatebox[origin=c]{90}{non-TC}}}
+    &cc-pVDZ& $208.2$ & $255.0$ & $320.7$ & $168.0$ \\
+    &cc-pVTZ& $229.4$ & $280.1$ & $351.0$ & $184.9$ \\
+    &cc-pVQZ& $232.6$ & $285.6$ & $358.4$ & $189.0$ \\
+    &cc-pV5Z& $235.5$ & $289.2$ & $362.6$ & $191.7$ \\
+    \multicolumn{6}{c}{} \\[-0.3cm]
+    \parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{TC}}}
+    &cc-pVDZ& $225.9$ & $275.6$ & $348.4$ & $176.4$ \\
+    &cc-pVTZ& $234.3$ & $288.2$ & $362.7$ & $193.4$ \\
+    &cc-pVQZ& $235.5$ & $289.3$ & $363.6$ & $191.4$ \\
+    \multicolumn{6}{c}{} \\[-0.3cm]
+    \multicolumn{2}{c}{Ref.\ \todo{...}} % \onlinecite{Feller_molecules_2008}
+            & $234.0$ & $288.9$ & $363.9$ & $192.5$ \\
+    \multicolumn{2}{c}{Ref.\ \todo{...}} % onlinecite{Bytautas_diatomic_2005}
+            & $236.5$ &         & $364.1$ & $192.6$ \\
+    \multicolumn{2}{c}{Ref.\ \todo{...}} % \onlinecite{Harding_HEAT_2008}
+            &         & $288.6$ & $363.9$ & $192.7$ \\
+    \hline
+  \end{tabular}
+  \caption{Atomisation energies in mHa obtained for the molecules
+    considered in this chapter, along with benchmark non-relativistic
+    results.
+    %
+    Statistical uncertainties arising from Monte Carlo sampling
+    are smaller than $0.1$ mHa in all cases.
+  }
+  \label{table:atomization}
+\end{table}
+%
+\begin{figure}[!hbt]
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/optimisation/Fig/bsdep-dimers-nontc}
+    \caption{
+      Atomisation energy of the C$_2$, CN, N$_2$, and O$_2$ molecules
+      obtained with FCIQMC and TC-FCIQMC as a function of the
+      reciprocal of the number of molecular orbitals using the
+      \vxz{X} family of basis sets.
+      %
+      Points in the top panel are annotated with the basis set
+      cardinal number $X$.
+      %
+      The shaded areas represent $\pm 1$ kcal/mol around the
+      theoretical estimate of the non-relativistic atomisation energy
+      of \todo{Feller citation}; the distinct
+      estimate of \todo{Bytautas citation} is also
+      shown for C$_2$.
+    }
+    \label{fig:bsdep-dimers-nontc}
+  \end{center}
+\end{figure}
+
+As with the total energies, we find that the TC atomisation energies converge much faster with respect to basis-set size compared to the non-TC calculations. In fact, the TC results are already chemically accurate at the \vtz basis-set level, matching accuracy of \vxz{5} non-TC results. The application of the TC method to quantum chemical methods in
+general could be presumed to be problematic because any theoretical
+guarantee of cancellation of errors in energy differences disappears
+with the introduction of separately-optimized Jastrow factors for each
+system.
+%
+However, the fact that in our results the relative energy converges at
+smaller basis-set sizes than the total energy implies that substantial
+error cancellation is at play in practice.
 
 \section{Conclusion and Outlook}
-\todo{mention this is the way we now optimise Jastrow factors, but there is an important extension to the no-3-body approximation, xTC. Briefly describe.}
-\todo{...}
+
+In this chapter, we presented a new method to optimise flexible Jastrow factors of a form common in continuum QMC methods for applications to TC. We tested these within the TC-FCIQMC framework. Minimising the variance of the reference energy is shown to be especially good for the TC method, since it maximises the single-reference character of the CI wave function.
+
+These results show that this workflow can provide remarkably accurate total and relative energies, with relative energies at \vtz rivalling non-TC results at \vxz{5}. These results also provide better energy estimates compared to other promising methods, such as neural-network based trial wave functions.\todo{citations}
+
+Future work on this topic have focused on technical advancements and efficient approximations for dealing with the three-body integrals.
 
 \subsection{The xTC Approximation}
 
-\todo{...}
+One particularly significant refinement of this method is the so-called ``xTC approximation''.\cite{christlmaierXTC2023}
+
+\todo{...look at your discussion of this in the paper draft}
 
 \label{sec:xtc}
