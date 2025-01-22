@@ -1,7 +1,7 @@
 \chapter{Optimising Jastrow Factors for the Transcorrelated Method}
   \label{chap:opt}
 
-This chapter is based in large part on the following paper:\\
+This chapter is based in large part on the following paper, and most of the following discussion can already be found there:\\
 \fullcite{hauptOptimizing2023}
 
 Images have been reused from this paper (with permission).
@@ -264,12 +264,69 @@ In figure \ref{fig:bsdep-dimers-emin} we plot the atomisation energies of the di
 Considering this evidence, we choose to use variance minimisation to optimise the Jastrow factors for subsequent post-HF calculations.
 
 \section{Grid Sizes}
-\todo{discuss the grid size (section III.C)}
-\todo{...}
+
+How matrix elements are evaluated is presented in appendix \ref{chap:pytchint}. As mentioned there, we use Treutler-Ahlrichs integration grids,
+\todo{citations} which are atom-centred
+grids constructed as the combination of a radial grid running up to
+the Bragg radius and a Lebedev angular grid. These are obtained using \pyscf, which provides an integer parameter $l_\mathrm{grid}$ to control the grid density. Here we test grid errors by evaluating TC-FCIQMC energies at $l_\mathrm{grid}=1$--$5$ and defining the integration error as the difference of each of these results with the value obtained by linear extrapolation to the $1/n_\mathrm{grid}\to 0$ limit.
+
+In figure \ref{fig:griderr-atoms} we plot the absolute integration error in the total energy of the atoms as a function of $1/n_\mathrm{grid}$ for \vdz, \vtz and \vqz basis sets. We find that the basis set size has little to no effect on the integration error.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/optimisation/Fig/griderr-atoms}
+    \caption{Absolute integration errors in the total energy for the C, N, and O atoms as a function of the reciprocal of grid size using basis sets in the \vxz{X} family. The gray areas correspond to integration errors of less than $1$ and $0.1$ mHa. Points in the top panel are annotated with the value of \pyscf's grid density parameter.}
+    \label{fig:griderr-atoms}
+\end{figure}
+
+In figure \ref{fig:griderr-dimers} we plot the absolute integration error in the total energies of the molecules, the atoms that conform them, and atomisation energies using the \vdz basis. We find integration-error cancellation in energy differences, with atomisation energy for all four molecules reaching $0.1$ mHa for $l_\mathrm{grid}=2$. This represents a $60$-point radial grid combined with a $302$-point angular grid, for a total of $18120$ grid points per atom. We use this throughout this dissertation.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/optimisation/Fig/griderr-dimers}
+    \caption{Absolute integration error in the energy as a function of the reciprocal number of grid points used for the evaluation of TC integrals. The shaded areas correspond to integration errors of less than $1$ and $0.1$ mHa. Points in the top panel are annotated with the value of \pyscf's grid density parameter. These results demonstrate that $l_\mathrm{grid}=2$ is sufficient to achieve sub-mHa accuracy in total energies and sub-$0.1$-mHa accuracy in relative energies.}
+    \label{fig:griderr-dimers}
+\end{figure}
 
 
 \section{Compactification of the CI Vector}
-\todo{talk about compactness}
+The more compact the CI wave function is, the easier it is for FCIQMC to sample the wave function accurately and the smaller the initiator error becomes. The TC method has already been shown to make CI wave functions more compact for the two-dimensional Hubbard model.\todo{citation} Let $\{c_I\}$ be the $L^2$-normalized coefficients of the CI wave
+function such that $\sum_I c_I^2=1$.
+%
+The quantity
+%
+\begin{equation}
+  \label{eq:xi_compactness}
+  \xi = \frac { c^\mathrm{(TC)}_\mathrm{HF} - c^\mathrm{(non-TC)}_\mathrm{HF} }{ 1 - c^\mathrm{(non-TC)}_\mathrm{HF} }
+\end{equation}
+%
+is then a measure of the enhancement in the compactness of the wave
+function, going from $0$ for no enhancement to $1$ if the TC wave
+function becomes exactly single-determinantal.
+
+From reference \todo{citation}, TC yields a maximum of $\xi=0.64$ for the 18-site 2D Hubbard model. We find that the values of $\xi$ for atomic and molecular systems are not dissimilar from this, as shown in table \ref{table:l2_norms}.
+%
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{cccccccc}
+            & C      & N      & O      &
+              C$_2$  & CN     & N$_2$  & O$_2$  \\
+    \hline \hline
+    cc-pVDZ & $0.46$ & $0.63$ & $0.71$
+            & $0.14$ & $0.23$ & $0.38$ & $0.53$ \\
+    cc-pVTZ & $0.45$ & $0.61$ & $0.69$
+            & $0.15$ & $0.24$ & $0.40$ & $0.55$ \\
+    cc-pVQZ & $0.44$ & $0.60$ & $0.69$
+            & $0.15$ & $0.24$ & $0.41$ & $0.57$ \\
+    \hline
+    \end{tabular}
+    \caption{
+      Enhancement of the compactness of the CI wave function, $\xi$ in
+      Eq.\ \ref{eq:xi_compactness}, between our non-TC and TC-FCIQMC
+      calculations.
+    }
+    \label{table:l2_norms}
+  \end{table}
 
 \section{Atomisation Energies}
 
