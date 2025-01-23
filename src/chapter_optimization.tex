@@ -13,17 +13,16 @@ In this chapter, we investigate the use of flexible Jastrow factors and a novel 
 As an illustration of the method, we compute the all-electron atomisation energies for the challenging first-row molecules C$_2$, CN, N$_2$ and O$_2$ and find that \gls{TC}-\gls{FCIQMC} (that is, \gls{FCIQMC} performed on a transcorrelated Hamiltonian) yields chemically accurate results using only a \vtz basis, which requires a much larger \vxz{5} basis for non-TC.
 
 \section{Computational Details}
-We compute the ground-state energies of the all-electron C, N, and O atoms, as well as that for the C$_2$, CN, N$_2$ and O$_2$ molecules at their equilibrium geometries,\todo{citations} listed in table
+We compute the ground-state energies of the all-electron C, N, and O atoms, as well as that for the C$_2$, CN, N$_2$ and O$_2$ molecules at their equilibrium geometries,\supercite{fellerSurvey2008,bytautasCorrelation2005,hardingHighaccuracy2008} listed in table
 \ref{table:bond_lengths}.
-TC- and non-TC-FCIQMC calculations used \gls{HF} orbitals (restricted open-shell in the case of open-shell systems) expanded in the standard \vxz{X} family of basis sets.\todo{cite dunning 1992}
+TC- and non-TC-FCIQMC calculations used \gls{HF} orbitals (restricted open-shell in the case of open-shell systems) expanded in the standard \vxz{X} family of basis sets.\supercite{dunningGaussian1989a}
 
 
 \begin{table}[htbp]
     \centering
       \caption{
       Electronic ground states and equilibrium bond lengths used for the
-      molecules considered in this work, following Ref.\
-      \todo{citation}.
+      molecules considered in this work, following reference \citenum{fellerSurvey2008}.
     }
     \label{table:bond_lengths}
     \begin{tabular}{ccc}
@@ -41,7 +40,7 @@ The quality of the energy differences is assessed using the atomisation energies
 
 For all our calculations, we generate our orbitals and integration grids using \pyscf,\supercite{sunPySCF2018} optimise the Jastrow factors using the \casino continuum \gls{QMC} package,\supercite{needsVariational2020}, compute TC matrix elements using the \tchint library, for which more details are presented in appendix \ref{chap:pytchint}, and perform (TC-)FCIQMC calculations using the \neci package.\supercite{gutherNECI2020} FCIQMC energies reported are the standard HF-projected energies.
 
-(TC-)FCIQMC values presented here were produced using a walker-number extrapolation scheme presented in another dissertation.\todo{cite Mohammadreza}
+(TC-)FCIQMC values presented here were produced using a walker-number extrapolation scheme presented in another dissertation.\supercite{hosseiniCombining2024}
 
 \section{Jastrow Factor}
 
@@ -128,7 +127,7 @@ The variational energy estimate for this trial wave function may be written
 \end{equation}
 which may be used as a target function, as presented in section \ref{sec:vmc}.
 
-Another popular target function is the ``variance of the VMC energy,''\todo{citations}
+Another popular target function is the ``variance of the VMC energy,''\supercite{umrigarOptimized1988,kentMonte1999}
 \begin{equation}
 \sigma_\mathrm{VMC}^2 = \frac{\bra{\Psi_\mathrm{T}}(\hat H - E_\mathrm{VMC})^2\ket{\Psi_\mathrm{T}}}{\braket{\Psi_\mathrm{T}}},
 \end{equation}
@@ -179,7 +178,7 @@ estimate of the reference energy is
 \end{equation}
 
 % TODO: you will want to familiarise yourself with these papers
-The variance of the reference energy has been used as a target function for optimising Jastrow factors for the TC method before, albeit in different theoretical frameworks.\todo{citations}
+The variance of the reference energy has been used as a target function for optimising Jastrow factors for the TC method before, albeit in different theoretical frameworks.\supercite{handyMinimization1971,umezawaTranscorrelated2003}
 
 To understand the physical significance of the variance of the reference energy, note that equation \ref{eq:var_eref_1} may be rewritten as
 \begin{equation}
@@ -192,7 +191,7 @@ As evident by equation \ref{eq:varref-connectivity}, minimising $\sigma_\mathrm{
 
 Note also that if the Slater-Jastrow wave function were an exact eigenstate of $\hat H$, then a TC-FCIQMC simulation starting from the HF determinant would immediately converge to a strictly single-determinant solution. Although this ideal scenario cannot be achieved in practice, it nevertheless illustrates the potential benefits of obtaining a relatively single-reference CI solution by minimising this target function. We expect that this increased single-reference character will also benefit other approaches, particularly those based on single references, such as TC-CC.
 
-We therefore investigate the performance of minimising the variance of the reference as an alternative to minimising the variance of the VMC energy. In figure \ref{fig:varmin-E-Eref}, we compare the VMC energy and variance obtained by variance minimisation methods along with energy-minimised \todo{citations} results for reference, for the systems considerd in this chapter, using $n_\mathrm{opt}=10^5$ VMC configurations.
+We therefore investigate the performance of minimising the variance of the reference as an alternative to minimising the variance of the VMC energy. In figure \ref{fig:varmin-E-Eref}, we compare the VMC energy and variance obtained by variance minimisation methods along with energy-minimised\supercite{nightingaleOptimization2001,toulouseOptimization2007,umrigarAlleviation2007} results for reference, for the systems considerd in this chapter, using $n_\mathrm{opt}=10^5$ VMC configurations.
 
 \begin{figure}[htbp]
     \centering
@@ -221,7 +220,7 @@ reference energy.
 
 \subsection{Choosing an Appropriate Sample Size}
 
-While expectation values relevant for most continuum QMC calculations converge using relatively few VMC configurations, it has also been known\todo{citation Spink} that in order to converge other quantities, far more configurations are needed. That is, $n_\mathrm{opt}$ is larger. In the spirit of \gls{MC}, we may estimate the convergence of the expectation value for some quantity by performing multiple optimisation runs with different random number seeds but otherwise the same inputs. This would give us a standard deviation.
+While expectation values relevant for most continuum QMC calculations converge using relatively few VMC configurations, it has also been known\supercite{spinkTrion2016} that in order to converge other quantities, far more configurations are needed. That is, $n_\mathrm{opt}$ is larger. In the spirit of \gls{MC}, we may estimate the convergence of the expectation value for some quantity by performing multiple optimisation runs with different random number seeds but otherwise the same inputs. This would give us a standard deviation.
 
 The value we want to converge in this case is not the VMC energy, nor the reference energy, but instead the TC-FCI energy. In practice, we use the uncertainty of the VMC estimate of the reference energy $\bar E_\mathrm{ref}$ as a proxy for the standard deviation of the TC-FCIQMC energy. This is justified because:
 \begin{itemize}
@@ -240,15 +239,15 @@ For the atoms and molecules considered in this chapter, we use $n_\mathrm{opt}=2
 
 \subsection{Energy Minimisation}
 
-The obvious alternative to variance minimisation is minimising the VMC energy,\todo{citations} which, as already demonstrated in figure \ref{fig:varmin-E-Eref}, results in lower VMC energies but higher VMC variances.
-Energy minimisation yields wave functions which minimise the statistical fluctuations of the local energy in DMC calculations\todo{citation} and is the typical choice for continuum QMC. However, for our purposes, it is unclear whether the resulting wave functions provide a better description of the system than those produced by variance minimisation.
+The obvious alternative to variance minimisation is minimising the VMC energy,\supercite{nightingaleOptimization2001,toulouseOptimization2007,umrigarAlleviation2007} which, as already demonstrated in figure \ref{fig:varmin-E-Eref}, results in lower VMC energies but higher VMC variances.
+Energy minimisation yields wave functions which minimise the statistical fluctuations of the local energy in DMC calculations\supercite{ceperleyStatistical1986} and is the typical choice for continuum QMC. However, for our purposes, it is unclear whether the resulting wave functions provide a better description of the system than those produced by variance minimisation.
 
 In figure \ref{fig:bsdep-atoms-emin}, we compare the convergence with basis-set size of TC-FCIQMC total energies of the C, N, and O atoms using energy- and variance-minimised Jastrow factors. Variance minimisation appears to produce wave functions which converge quickly and largely variationally to the basis set limit, which energy-minimised wave functions tend to yield non-variational TC-FCIQMC energies which converge more slowly to the basis set limit.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/optimisation/Fig/bsdep-atoms-emin}
-    \caption{Total energy of the C, N, and O atoms as a function of the reciprocal number of molecular orbitals in the \vxz{X} basis set family. The non-variational behaviour of up to about $5$ mHa is evident for the energy-minimised Jastrow factors, for which convergence to the exact energy as a function of basis-set size is slow. The shaded areas represent $\pm 1$ kcal/mol (so-call ``chemical accuracy'') around the exact non-relativistic total energy from reference \todo{citation}. Points in the top panel are annotated with the basis set cardinal number $X$.}
+    \caption{Total energy of the C, N, and O atoms as a function of the reciprocal number of molecular orbitals in the \vxz{X} basis set family. The non-variational behaviour of up to about $5$ mHa is evident for the energy-minimised Jastrow factors, for which convergence to the exact energy as a function of basis-set size is slow. The shaded areas represent $\pm 1$ kcal/mol (so-call ``chemical accuracy'') around the exact non-relativistic total energy from reference \citenum{bytautasCorrelation2005}. Points in the top panel are annotated with the basis set cardinal number $X$.}
     \label{fig:bsdep-atoms-emin}
 \end{figure}
 
@@ -257,7 +256,7 @@ In figure \ref{fig:bsdep-dimers-emin} we plot the atomisation energies of the di
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/optimisation/Fig/bsdep-dimers-emin}
-    \caption{Atomisation energy of the C$_2$, CN, N$_2$, and O$_2$ molecules as a function of the reciprocal of the number of molecular orbitals using the \vxz{X} family of basis sets and Jastrow factors obtained by variance and energy minimisation. The shaded areas represent $\pm 1$ kcal/mol around the theoretical estimate of the exact non-relativistic atomisation energies from references \todo{citations}}.
+    \caption{Atomisation energy of the C$_2$, CN, N$_2$, and O$_2$ molecules as a function of the reciprocal of the number of molecular orbitals using the \vxz{X} family of basis sets and Jastrow factors obtained by variance and energy minimisation. The shaded areas represent $\pm 1$ kcal/mol around the theoretical estimate of the exact non-relativistic atomisation energies from references \parencite{fellerSurvey2008,bytautasCorrelation2005}}.
     \label{fig:bsdep-dimers-emin}
 \end{figure}
 
@@ -266,7 +265,7 @@ Considering this evidence, we choose to use variance minimisation to optimise th
 \section{Grid Sizes}
 
 How matrix elements are evaluated is presented in appendix \ref{chap:pytchint}. As mentioned there, we use Treutler-Ahlrichs integration grids,
-\todo{citations} which are atom-centred
+\supercite{beckeMulticenter1988,treutlerEfficient1995} which are atom-centred
 grids constructed as the combination of a radial grid running up to
 the Bragg radius and a Lebedev angular grid. These are obtained using \pyscf, which provides an integer parameter $l_\mathrm{grid}$ to control the grid density. Here we test grid errors by evaluating TC-FCIQMC energies at $l_\mathrm{grid}=1$--$5$ and defining the integration error as the difference of each of these results with the value obtained by linear extrapolation to the $1/n_\mathrm{grid}\to 0$ limit.
 
@@ -290,7 +289,7 @@ In figure \ref{fig:griderr-dimers} we plot the absolute integration error in the
 
 
 \section{Compactification of the CI Vector}
-The more compact the CI wave function is, the easier it is for FCIQMC to sample the wave function accurately and the smaller the initiator error becomes. The TC method has already been shown to make CI wave functions more compact for the two-dimensional Hubbard model.\todo{citation} Let $\{c_I\}$ be the $L^2$-normalized coefficients of the CI wave
+The more compact the CI wave function is, the easier it is for FCIQMC to sample the wave function accurately and the smaller the initiator error becomes. The TC method has already been shown to make CI wave functions more compact for the two-dimensional Hubbard model.\supercite{dobrautzCompact2019} Let $\{c_I\}$ be the $L^2$-normalized coefficients of the CI wave
 function such that $\sum_I c_I^2=1$.
 %
 The quantity
@@ -304,7 +303,7 @@ is then a measure of the enhancement in the compactness of the wave
 function, going from $0$ for no enhancement to $1$ if the TC wave
 function becomes exactly single-determinantal.
 
-From reference \todo{citation}, TC yields a maximum of $\xi=0.64$ for the 18-site 2D Hubbard model. We find that the values of $\xi$ for atomic and molecular systems are not dissimilar from this, as shown in table \ref{table:l2_norms}.
+From reference \citenum{dobrautzCompact2019}, TC yields a maximum of $\xi=0.64$ for the 18-site 2D Hubbard model. We find that the values of $\xi$ for atomic and molecular systems are not dissimilar from this, as shown in table \ref{table:l2_norms}.
 %
 \begin{table}[htbp]
     \centering
