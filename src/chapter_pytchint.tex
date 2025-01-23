@@ -33,6 +33,34 @@ $h_q^p$ and $V_{rs}^{pq}$ are the one- and two-body terms from the electronic Sc
 Once these integrals are evaluated, as long as we take care about using the correct bra and ket (a detail not important for Hermitian problems), many different methodologies can be applied with these integrals, such as the frozen-core approximation,\todo{citation(s)} or \gls{xTC}.\todo{citation}
 
 \section{Matrix Element Evaluation}
+The matrix elements not present in conventional methods are $K_{rs}^{pq}$ and $L_{stu}^{pqr}$. For these, we integrate on a grid, typically Treutler-Ahlrichs integration grids,
+\supercite{beckeMulticenter1988,treutlerEfficient1995} which are atom-centred grids commonly used in density functional theory. These grids are obtained via \pyscf.
+
+The two-electron matrix elements we need to evaluate are:
+\begin{align}
+    K_{rs}^{pq(1)} &= \bra{pq}\nabla_1u(\bm r_1, \bm r_2)\cdot\nabla_1\ket{rs}\\
+    K_{rs}^{pq(2)} &= \bra{pq}\nabla_1^2u(\bm r_1, \bm r_2)\ket{rs}\\
+    K_{rs}^{pq(3)} &= \bra{pq}(\nabla_1u(\bm r_1, \bm r_2))^2\ket{rs}.
+\end{align}
+Discretising on a grid of $N_\mathrm{grid}$ points with weights $w$, we have
+\begin{equation}
+    K_{rs}^{pq(1)} = \sum_{mn}^{N_\mathrm{grid}}
+    \phi_p(\bm r_m)\nabla_{\bm r_m}\phi_r(\bm r_m)\cdot \nabla_{\bm r_m}u(\bm r_m, \bm r_n)\phi_q(\bm r_n)\phi_s(\bm r_n)w(\bm r_m)w(\bm r_n).
+\end{equation}
+Naive integration of this value yields $\mathcal{O}(N_\mathrm{grid}M^4)$ performance (where $M$ is the number of basis functions). However, we may improve this by first integrating over one coordinate and storing the intermediate value. Moreover, for $K_{rs}^{pq(2)}$, it is more efficient to integrate by parts. Therefore, for the full $K$ matrix, we calculate the intermediate value
+\begin{align}
+    X_s^q(\bm r_2) =& \int\d r_1\ \nabla_1u(\bm r_1, \bm r_2)\cdot[\phi_p(\bm r_1) \nabla_1\phi_r(\bm r_1) - \phi_r(\bm r_1)
+\nabla_1\phi_p(\bm r_1)]  \\
+&+ \int\d r_1\ \phi_p(\bm r_1)(\nabla u(\bm r_1, \bm r_2))^2 \phi_r(\bm r_1).
+\end{align}
+We can then obtain the $K$ matrix by
+\begin{equation}
+    K_{rs}^{pq} = \int\d r_2\ \phi_q(\bm r_2)X_s^q(\bm r_2)\phi_s(\bm r_2)
+\end{equation}
+for a cost of $\mathcal{O}(N_\mathrm{grid}^2M^2+N_\mathrm{grid}M^4)$.
+
+\gls{MPI}\todo{citations} and OpenMP\todo{citations}
+
 \todo{mention the different ``intermediate'' quantities, RI (no longer really used), xTC}
 
 \todo{mention the existence of many different options, sprase L, xtc, periodic solids, etc}
