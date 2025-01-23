@@ -1,0 +1,18 @@
+# N2 avqz at a separation of R=2.08 Bohr
+# num-cores walltime
+1 14017
+2 7367
+4 3800
+8 2032
+16 1195
+32 719
+64 512
+# Fortran : 468
+128 465
+# values below required more nodes
+256 607
+512 698
+# reference energies
+# xtc -109.25166958466771
+# 3bera -109.25166875484805
+# full -109.25166875484805

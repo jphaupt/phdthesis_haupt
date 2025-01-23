@@ -47,41 +47,78 @@ Discretising on a grid of $N_\mathrm{grid}$ points with weights $w$, we have
     K_{rs}^{pq(1)} = \sum_{mn}^{N_\mathrm{grid}}
     \phi_p(\bm r_m)\nabla_{\bm r_m}\phi_r(\bm r_m)\cdot \nabla_{\bm r_m}u(\bm r_m, \bm r_n)\phi_q(\bm r_n)\phi_s(\bm r_n)w(\bm r_m)w(\bm r_n).
 \end{equation}
-Naive integration of this value yields $\mathcal{O}(N_\mathrm{grid}M^4)$ performance (where $M$ is the number of basis functions). However, we may improve this by first integrating over one coordinate and storing the intermediate value. Moreover, for $K_{rs}^{pq(2)}$, it is more efficient to integrate by parts. Therefore, for the full $K$ matrix, we calculate the intermediate value
+Naive integration of this value yields $\mathcal{O}(N_\mathrm{grid}^2M^4)$ performance (where $M$ is the number of basis functions). However, we may improve this by first integrating over one coordinate and storing the intermediate value. Moreover, for $K_{rs}^{pq(2)}$, it is more efficient to integrate by parts. Therefore, for the full $K$ matrix, we calculate the intermediate value
 \begin{align}
-    X_s^q(\bm r_2) =& \int\d r_1\ \nabla_1u(\bm r_1, \bm r_2)\cdot[\phi_p(\bm r_1) \nabla_1\phi_r(\bm r_1) - \phi_r(\bm r_1)
+    X_s^q(\bm r_2) =& \int\d^3 r_1\ \nabla_1u(\bm r_1, \bm r_2)\cdot[\phi_p(\bm r_1) \nabla_1\phi_r(\bm r_1) - \phi_r(\bm r_1)
 \nabla_1\phi_p(\bm r_1)]  \\
-&+ \int\d r_1\ \phi_p(\bm r_1)(\nabla u(\bm r_1, \bm r_2))^2 \phi_r(\bm r_1).
+&+ \int\d^3 r_1\ \phi_p(\bm r_1)(\nabla u(\bm r_1, \bm r_2))^2 \phi_r(\bm r_1).
 \end{align}
 We can then obtain the $K$ matrix by
 \begin{equation}
-    K_{rs}^{pq} = \int\d r_2\ \phi_q(\bm r_2)X_s^q(\bm r_2)\phi_s(\bm r_2)
+    K_{rs}^{pq} = \int\d^3 r_2\ \phi_q(\bm r_2)X_s^q(\bm r_2)\phi_s(\bm r_2)
 \end{equation}
 for a cost of $\mathcal{O}(N_\mathrm{grid}^2M^2+N_\mathrm{grid}M^4)$.
 
-\gls{MPI}\todo{citations} and OpenMP\todo{citations}
+The three-body matrix,
+\begin{equation}
+    L^{pqr}_{stu} = \bra{pqr}\nabla_1u(\bm r_1, \bm r_2)\cdot \nabla u_1(\bm r_1, \bm r_3)\ket{stu}
+\end{equation}
+may similarly be resolved by calculating the intermediate value
+\begin{equation}
+    \bm Y_{qt}(\bm r_1) = \int\d^3 r_2\phi_q(\bm r_2)\nabla_1u(\bm r_1, \bm r_2)\phi_t(\bm r_2)
+\end{equation}
+to give
+\begin{equation}
+    L^{pqr}_{stu} = \int\d^3 r_1\ \phi_p(\bm r_1)\bm Y_{qt}(\bm r_1)\cdot\bm Y_{ru}(\bm r_1)\phi_s(\bm r_1).
+\end{equation}
 
-\todo{mention the different ``intermediate'' quantities, RI (no longer really used), xTC}
-
-\todo{mention the existence of many different options, sprase L, xtc, periodic solids, etc}
-
-\todo{mention that with xtc we no longer need }
+These integrations are simply parallelisable, and \tchint takes advantage of this by leveraging distributed memory with the \gls{MPI}\todo{citation} standard and the OpenMP\todo{citation} \gls{API}. Moreover, we take advantage of the fact that $L$ is Hermitian, substantially reducing storage requirements. We may also store $L$ sparsely since many elements are small, or use the \gls{xTC} approximation to bypass storing $L$ altogether and instead calculating modified four-index integrals and outputting a non-Hermitian \fcidump.
 
 \section{Interface}
-\todo{NECI interface, M7 interface, pytchint and interactive HPC}
 
-\section{Deterministic Optimisation}
+\tchint is predominantly written in Fortran, but most of the important interfacing subroutines (such as returning given matrix elements) have C bindings. This allows \tchint to be easily interfaced with other libraries, notably for \gls{TC}-\gls{FCIQMC} in \neci\supercite{gutherNECI2020} and \mseven.\supercite{andersonRobertanderson2024} By using this interface, these programs may be used to perform transcorrelated calculations, with all the features present in \tchint.
+
+\tchint has also been given a Python interface called \pytchint by making use of the Cython language extension.\todo{citation} Cython features C-like performance with easy integration in Python to allow for interactive computing and interfacing with the vast scientific package ecosystem available in Python. Python is typically also easier for rapid prototyping, a crucial feature in the world of scientific research, while Cython provides efficiency and a comprehensive profiling toolset.
+
+With \pytchint, a user might interactively work with transcorrelated integrals by first calculating them,
+\begin{lstlisting}[language=Python,escapeinside={(*}{*)}]
+import pytchint
+options = pytchint.options.TcOptions(yaml_input="tchint.yml")
+options.eval_mode_str = "xtc"
+solver = pytchint.solver.Solver(options=options)
+solver.run()
+\end{lstlisting}
+and then query individual matrix elements calculated via Slater-Condon rules with \texttt{solver.sltcnd} or return the variance of the reference with \texttt{solver.refconn}.
+
+\subsection{Deterministic Optimisation}
+
+One of the major motivations for developing the Python interface
 
 \todo{mention it uses the interface for existing high-performing optimisation packages, rapid prototyping}
 
-\section{Performance}
+\section{Parallel Efficiency}
+
+\todo{...}
+As a benchmark, we consider the N$_2$ molecule at
+
+AMD EPYC 9554 64-Core processors
+
+Figure \ref{fig:parallel-performance} shows the elapsed
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/pytchint/ncore_walltime}
+    \caption{\todo{\dots note logarithmic x axis}}
+    \label{fig:parallel-performance}
+\end{figure}
+
 \todo{not really sure how I'll write this section, since I don't really have a performance metric to go up against}
 \todo{parallel efficiency}
-\todo{memory requirements, with vs without xTC}
+\todo{memory requirements, with vs without xTC vs no-3b -- mention already covered in optimisation chapter}
 \todo{mention other smaller details, such as never calculating the L matrix during xTC}
-\todo{memory requirements, e.g. full TC, no-3-body, xTC}
 \todo{pytchint vs tchint performance}
+\todo{accuracy of full vs 3bera vs xtc}
 \todo{mention use of BLAS routines}
 
 \section{Conclusion and Outlook}
-\todo{mention GPU acceleration, Python libraries, JAX (+ AD?), deterministic optimisation, interfacing with other QMC libraries ...}
+\todo{mention GPU acceleration, Python libraries, JAX (+ AD?), deterministic optimisation with universal Jastrow factors, interfacing with other QMC libraries, more studies with solids ...}
