@@ -38,7 +38,7 @@ TC- and non-TC-FCIQMC calculations used \gls{HF} orbitals (restricted open-shell
 
 The quality of the energy differences is assessed using the atomisation energies of these molecules. In order to determine if our methodology yields chemically-accurate, i.e. within an error of $1$ kcal/mol $\approx 1.6$ mHa, we also keep each individual error to be well within this threshold. We expect a total bias in our resulting relative energies of not more than $0.5$ mHa.
 
-For all our calculations, we generate our orbitals and integration grids using \pyscf,\supercite{sunPySCF2018} optimise the Jastrow factors using the \casino continuum \gls{QMC} package,\supercite{needsVariational2020}, compute TC matrix elements using the \tchint library, for which more details are presented in appendix \ref{chap:pytchint}, and perform (TC-)FCIQMC calculations using the \neci package.\supercite{gutherNECI2020} FCIQMC energies reported are the standard HF-projected energies.
+For all our calculations, we generate our orbitals and integration grids using \pyscf,\supercite{sunPySCF2018} optimise the Jastrow factors using the \casino continuum \gls{QMC} package,\supercite{needsVariational2020}, compute TC matrix elements using the \tchint library, for which more details are presented in \autoref{chap:pytchint}, and perform (TC-)FCIQMC calculations using the \neci package.\supercite{gutherNECI2020} FCIQMC energies reported are the standard HF-projected energies.
 
 (TC-)FCIQMC values presented here were produced using a walker-number extrapolation scheme presented in another dissertation.\supercite{hosseiniCombining2024}
 
@@ -264,7 +264,7 @@ Considering this evidence, we choose to use variance minimisation to optimise th
 
 \section{Grid Sizes}
 
-How matrix elements are evaluated is presented in appendix \ref{chap:pytchint}. As mentioned there, we use Treutler-Ahlrichs integration grids,
+How matrix elements are evaluated is presented in \autoref{chap:pytchint}. As mentioned there, we use Treutler-Ahlrichs integration grids,
 \supercite{beckeMulticenter1988,treutlerEfficient1995} which are atom-centred
 grids constructed as the combination of a radial grid running up to
 the Bragg radius and a Lebedev angular grid. These are obtained using \pyscf, which provides an integer parameter $l_\mathrm{grid}$ to control the grid density. Here we test grid errors by evaluating TC-FCIQMC energies at $l_\mathrm{grid}=1$--$5$ and defining the integration error as the difference of each of these results with the value obtained by linear extrapolation to the $1/n_\mathrm{grid}\to 0$ limit.
@@ -331,7 +331,7 @@ From reference \citenum{dobrautzCompact2019}, TC yields a maximum of $\xi=0.64$ 
 
 As described in section \ref{sec:fciqmc}, sampling in FCIQMC involves spawning walkers from occupied determinants onto connected determinants. The $\hat L$ matrix, that is the three-body operator arising from the similarity transformation in TC, results in TC also connecting determinants by three-body excitations. This represents a huge increase in the connectivity of the Hilbert space compared to non-TC-FCIQMC.
 
-These three-body excitations are represented by $L_{ijk}^{abc}$ where each index is distinct. These have been found to typically be small\todo{citation}. Moreoever, simultaneous interaction of three electrons is unlikely due to Pauli repulsion (as necessarily at least two of the electrons will be of the same spin). Therefore, we neglect these contributions. The only distinct six-index integrals that we must keep are those occupied in the HF determinant, as these matrix elements are necessary to evaluate the projected energy.
+These three-body excitations are represented by $L_{ijk}^{abc}$ where each index is distinct. These have been found to typically be small.\supercite{dobrautzPerformance2022} Moreoever, simultaneous interaction of three electrons is unlikely due to Pauli repulsion (as necessarily at least two of the electrons will be of the same spin). Therefore, we neglect these contributions. The only distinct six-index integrals that we must keep are those occupied in the HF determinant, as these matrix elements are necessary to evaluate the projected energy.
 
 Neglecting pure three-body excitations reduces the amount of storage needed to hold $\hat L$ from $\mathcal{O}(M^6)$ to $\mathcal{O}(M^5+N^3M^3)$, where $M$ is the number of orbitals and $N$ is the number of electrons. Reduction factors obtains for the molecules studied in this chapter are reported in table \ref{table:no3_memory}.
 
@@ -412,7 +412,7 @@ approximation.
 
 \section{Atomisation Energies}
 
-In this section, we compare results of TC-FCIQMC with individually variance-optimised Jastrow factors as a function of basis-set size with the corresponding non-TC results and with benchmark \gls{CBS} values from references \todo{citations}.
+In this section, we compare results of TC-FCIQMC with individually variance-optimised Jastrow factors as a function of basis-set size with the corresponding non-TC results and with benchmark \gls{CBS} values from references \parencite{fellerSurvey2008,bytautasCorrelation2005,hardingHighaccuracy2008}.
 
 Table \ref{table:total_energies} shows a list of total energies obtained for each system and basis set.
 \begin{table*}[htbp!]
@@ -437,9 +437,9 @@ Table \ref{table:total_energies} shows a list of total energies obtained for eac
       &cc-pVQZ& $ -37.8459$ & $ -54.5896$ & $ -75.0665$ \\
       &cc-pV5Z& $ -37.8457$ & $ -54.5898$ & $ -75.0678$ \\
       \multicolumn{4}{c}{~} \\[-0.3cm]
-      \multicolumn{2}{c}{Ref.\ byta!!} % \todo{citationBytautas2005}
+      \multicolumn{2}{c}{Ref. \citenum{bytautasCorrelation2005}}
               & $ -37.8450$ & $ -54.5893$ & $ -75.0674$ \\
-      \multicolumn{2}{c}{Ref.\ hard!!} % \todo{citationHardingHEAT2008}
+      \multicolumn{2}{c}{Ref. \citenum{hardingHighaccuracy2008}}
               & $ -37.8450$ & $ -54.5893$ & $ -75.0674$ \\
       \hline
     \end{tabular}
@@ -465,11 +465,11 @@ Table \ref{table:total_energies} shows a list of total energies obtained for eac
       &cc-pVTZ& $ -75.9197$ & $ -92.7152$ & $-109.5312$ & $-150.3078$ \\
       &cc-pVQZ& $ -75.9272$ & $ -92.7247$ & $-109.5428$ & $-150.3244$ \\
       \multicolumn{5}{c}{~} \\[-0.3cm]
-      \multicolumn{2}{c}{Ref.\ fell!!} % \todo{citationFeller2008}
+      \multicolumn{2}{c}{Ref. \citenum{fellerSurvey2008}}
               & $ -75.9240$ & $ -92.7232$ & $-109.5425$ & $-150.3273$ \\
-    \multicolumn{2}{c}{Ref.\ byta!!} % \todo{citationBytautas2005}
+    \multicolumn{2}{c}{Ref. \citenum{bytautasCorrelation2005}}
       & $ -75.9265$ &             & $-109.5427$ & $-150.3274$ \\
-      \multicolumn{2}{c}{Ref.\ hard!!} % \todo{citationHardingHEAT2008}
+      \multicolumn{2}{c}{Ref. \citenum{hardingHighaccuracy2008}}
       &             & $ -92.7229$ & $-109.5425$ & $-150.3275$ \\
       \hline
     \end{tabular}
@@ -511,11 +511,11 @@ and plotted in figure
     &cc-pVTZ& $234.3$ & $288.2$ & $362.7$ & $193.4$ \\
     &cc-pVQZ& $235.5$ & $289.3$ & $363.6$ & $191.4$ \\
     \multicolumn{6}{c}{} \\[-0.3cm]
-    \multicolumn{2}{c}{Ref.\ \todo{...}} % \onlinecite{Feller_molecules_2008}
+    \multicolumn{2}{c}{Ref. \citenum{fellerSurvey2008}}
             & $234.0$ & $288.9$ & $363.9$ & $192.5$ \\
-    \multicolumn{2}{c}{Ref.\ \todo{...}} % onlinecite{Bytautas_diatomic_2005}
+    \multicolumn{2}{c}{Ref. \citenum{bytautasCorrelation2005}}
             & $236.5$ &         & $364.1$ & $192.6$ \\
-    \multicolumn{2}{c}{Ref.\ \todo{...}} % \onlinecite{Harding_HEAT_2008}
+    \multicolumn{2}{c}{Ref. \citenum{hardingHighaccuracy2008}}
             &         & $288.6$ & $363.9$ & $192.7$ \\
     \hline
   \end{tabular}
@@ -543,8 +543,8 @@ and plotted in figure
       %
       The shaded areas represent $\pm 1$ kcal/mol around the
       theoretical estimate of the non-relativistic atomisation energy
-      of \todo{Feller citation}; the distinct
-      estimate of \todo{Bytautas citation} is also
+      of reference \citenum{fellerSurvey2008}; the distinct
+      estimate of reference \citenum{bytautasCorrelation2005} is also
       shown for C$_2$.
     }
     \label{fig:bsdep-dimers-nontc}
@@ -565,7 +565,7 @@ error cancellation is at play in practice.
 
 In this chapter, we presented a new method to optimise flexible Jastrow factors of a form common in continuum QMC methods for applications to TC. We tested these within the TC-FCIQMC framework. Minimising the variance of the reference energy is shown to be especially good for the TC method, since it maximises the single-reference character of the CI wave function.
 
-These results show that this workflow can provide remarkably accurate total and relative energies, with relative energies at \vtz rivalling non-TC results at \vxz{5}. These results also provide better energy estimates compared to other promising methods, such as neural-network based trial wave functions.\todo{citations}
+These results show that this workflow can provide remarkably accurate total and relative energies, with relative energies at \vtz rivalling non-TC results at \vxz{5}. These results also provide better energy estimates compared to other promising methods, such as neural-network based trial wave functions.\supercite{pfauInitio2020,hermannDeepneuralnetwork2020}
 
 Future work on this topic have focused on technical advancements and efficient approximations for dealing with the three-body integrals.
 
@@ -573,12 +573,12 @@ Future work on this topic have focused on technical advancements and efficient a
 
 One particularly significant refinement of this method is the so-called ``xTC approximation,''\supercite{christlmaierXTC2023} wherein upon neglecting explicit three-body contributions, the remaining three-body terms are ``folded'' into the remaining lower-order terms.
 
-The Hamiltonian is normal-ordered with respect to $\Phi$ (where $\Psi=\e^J\Phi$, with $\Phi$ being the HF determinant in this chapter)\todo{citations}
+The Hamiltonian is normal-ordered with respect to $\Phi$ (where $\Psi=\e^J\Phi$, with $\Phi$ being the HF determinant in this chapter)\supercite{kutzelniggNormal1997,kutzelniggCumulant1999}
 
 \begin{equation}
     H_N = \htc - \bra{\Phi}\htc\ket\Phi = F_N + V_N + L_N
 \end{equation}
-where the one-, two-, and three-body operators are (using Einstein summation)\todo{check these equations}
+where the one-, two-, and three-body operators are (using Einstein summation)
 \begin{align}
 F_N =& [h_q^p + (U_{qs}^{pr}-U_{sq}^{pr})\gamma_s^r \\
 &- \frac 12 (L_{qsu}^{prt} - L_{qus}^{prt}-L_{usq}^{prt})\gamma_{us}^{rt}]
