@@ -574,10 +574,10 @@ Future work on this topic have focused on technical advancements and efficient a
 
 One particularly significant refinement of this method is the so-called ``xTC approximation,''\supercite{christlmaierXTC2023} wherein upon neglecting explicit three-body contributions, the remaining three-body terms are ``folded'' into the remaining lower-order terms.
 
-The Hamiltonian is normal-ordered with respect to $\Phi$ (where $\Psi=\e^J\Phi$, $\Phi$ being the HF determinant in this chapter)\todo{citations}
+The Hamiltonian is normal-ordered with respect to $\Phi$ (where $\Psi=\e^J\Phi$, with $\Phi$ being the HF determinant in this chapter)\todo{citations}
 
 \begin{equation}
-    H_N = \htc - \bra{\Phi}\HTC\ket\Phi = F_N + V_N + L_N
+    H_N = \htc - \bra{\Phi}\htc\ket\Phi = F_N + V_N + L_N
 \end{equation}
 where the one-, two-, and three-body operators are (using Einstein summation)\todo{check these equations}
 \begin{align}
@@ -587,7 +587,7 @@ F_N =& [h_q^p + (U_{qs}^{pr}-U_{sq}^{pr})\gamma_s^r \\
 V_N =& \frac 12[U_{qs}^{pr} - (L_{qsu}^{prt} - L_{qus}^{prt}-L_{usq}^{prt})]\tilde a_{qs}^{pr}, \\
 L_N =& \frac 16L_{qsu}^{prt}\tilde a_{qsu}^{prt}
 \end{align}
-and $U=V-K$, $\tilde a_{p\dots}^{q\dots}$ are the normal ordered
+and $U=V-K$, $\tilde a_{p\dots}^{q\dots}$ are the normal-ordered
 excitation operators, and $\gamma_{p\dots}^{q\dots}=\bra\Phi a_{p\dots}^{q\dots}\ket\Phi$ are the density matrices.
 
 Ignoring the three-body terms $L_N$ leads to an improved scaling with respect to basis set size while directly contracting intermediates to the lower-body corrections obviates the necessity to calculate $L$ and results in excellent energy agreement.\supercite{christlmaierXTC2023} Once the integrals are calculated, $\htc$ has, like $\hat H$, at most two-body interactions and therefore needs storage for four indices (albeit we no longer have Hermiticity). This means that calculations done on these integrals (in principle) are not much more expensive than the conventional non-TC calculations.
