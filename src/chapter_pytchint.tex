@@ -30,7 +30,7 @@ where
 \end{equation}
 $h_q^p$ and $V_{rs}^{pq}$ are the one- and two-body terms from the electronic Schr\"odinger equation, familiar from conventional methods. Therefore, the key quantities to be evaluated by \tchint are the non-Hermitian two-body integrals $K_{rs}^{pq}$ and the Hermitian three-body integrals $L_{stu}^{pqr}$.
 
-Once these integrals are evaluated, as long as we take care about using the correct bra and ket (a detail not important for Hermitian problems), many different methodologies can be applied with these integrals, such as the frozen-core approximation,\todo{citation(s)} or \gls{xTC}.\todo{citation}
+Once these integrals are evaluated, as long as we take care about using the correct bra and ket (a detail not important for Hermitian problems), many different methodologies can be applied with these integrals, such as the frozen-core approximation,\todo{citation(s)} or \gls{xTC}.\supercite{christlmaierXTC2023}
 
 \section{Matrix Element Evaluation}
 The matrix elements not present in conventional methods are $K_{rs}^{pq}$ and $L_{stu}^{pqr}$. For these, we integrate on a grid, typically Treutler-Ahlrichs integration grids,
@@ -72,7 +72,7 @@ to give
     L^{pqr}_{stu} = \int\d^3 r_1\ \phi_p(\bm r_1)\bm Y_{qt}(\bm r_1)\cdot\bm Y_{ru}(\bm r_1)\phi_s(\bm r_1).
 \end{equation}
 
-These integrations are simply parallelisable, and \tchint takes advantage of this by leveraging distributed memory with the \gls{MPI}\todo{citation} standard and the OpenMP\todo{citation} \gls{API}. Moreover, we take advantage of the fact that $L$ is Hermitian, substantially reducing storage requirements. We may also store $L$ sparsely since many elements are small, or use the \gls{xTC} approximation to bypass storing $L$ altogether and instead calculating modified four-index integrals and outputting a non-Hermitian \fcidump.
+These integrations are simply parallelisable, and \tchint takes advantage of this by leveraging distributed memory with the \gls{MPI}\todo{citation} standard and the OpenMP\todo{citation} \gls{API}. We also make liberal use of BLAS\todo{citation} routines for further performance gains. Moreover, we take advantage of the fact that $L$ is Hermitian, substantially reducing storage requirements. We may also store $L$ sparsely since many elements are small, or use the \gls{xTC} approximation to bypass storing $L$ altogether and instead calculating modified four-index integrals and outputting a non-Hermitian \fcidump.
 
 \section{Interface}
 
@@ -84,43 +84,43 @@ With \pytchint, a user might interactively work with transcorrelated integrals b
 \begin{lstlisting}[language=Python,escapeinside={(*}{*)}]
 import pytchint
 options = pytchint.options.TcOptions(yaml_input="tchint.yml")
-options.eval_mode_str = "xtc"
+options.eval_mode = "xtc"
 solver = pytchint.solver.Solver(options=options)
 solver.run()
 \end{lstlisting}
-and then query individual matrix elements calculated via Slater-Condon rules with \texttt{solver.sltcnd} or return the variance of the reference with \texttt{solver.refconn}.
+and then e.g. query individual matrix elements calculated via Slater-Condon rules with \texttt{solver.sltcnd} or return the variance of the reference with \texttt{solver.refconn}.
 
 \subsection{Deterministic Optimisation}
 
-One of the major motivations for developing the Python interface
+One of the major motivations for developing the Python interface is removing VMC from the Jastrow optimisation pipeline, as this can be a particularly expensive step, especially for larger systems. Thanks to the Python interface, we can interact directly with Python's large ecosystem of optimisation packages, such as SciPy.\todo{citation} This allows for rapid prototyping and ease of development.
 
-\todo{mention it uses the interface for existing high-performing optimisation packages, rapid prototyping}
+For each optimisation step, we pass the Jastrow parameters in Python, then calculate the relevant integrals for the variance of the reference (see \autoref{chap:opt}) by passing them to Fortran, and update the parameters according to an optimisation algorithm by passing the parameters back to Python. All that is needed to be added are gradients for the variance of the reference with respect to Jastrow factor parameters. As the Jastrow factors are linear in their parameters, this is a tractible problem.
+
+However, as calculations are done entirely in \pytchint, we are restricted to a basis set and do not enjoy the \gls{CBS} optimisation as we do in continuum \gls{VMC}. Using the variance of the reference as an objective function, values for the single-parameter Jastrow function,
+
+\todo{Jastrow factor form}
+
+are presented in figure \ref{fig:det-opt}. As illustrated, the minimum may shift based on basis set, so a careful selection is necessary for obtaining the optimal Jastrow factor.
+
+\begin{figure}[htbp]
+    \centering
+    \todo{figure/data from Andreea}
+    \caption{Variance of the reference and reference energy values with a single-parameter Jastrow factor, for the \todo{basis sets} basis sets. The location of the minimum may by different compared to that obtained by continuum VMC, resulting in a suboptimal Jastrow factor. Data courtesy of Maria-Andreea Filip, who is leading this investigation.}
+    \label{fig:det-opt}
+\end{figure}
 
 \section{Parallel Efficiency}
 
-\todo{...}
-As a benchmark, we consider the N$_2$ molecule at
+As a benchmark, we calculate N$_2$ with the \avqz basis (14 electrons in 160 orbitals) with the \gls{xTC} approximation. Elapsed time is plotted as a function of the number of compute cores used in figure \ref{fig:parallel-performance}, with favourable scaling. This illustrations the parallel performance of the \pytchint library.
 
-AMD EPYC 9554 64-Core processors
-
-Figure \ref{fig:parallel-performance} shows the elapsed
-
-Fortran 468 seconds vs Python 465 seconds
+Moreover, thanks to the use of Cython, performance when directly running Fortran when compared to running via Python is roughly identical (468 seconds or 465 seconds with 128 cores for Fortran and Python, respectively).
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/pytchint/ncore_walltime}
-    \caption{\todo{\dots note logarithmic x axis}}
+    \caption{Elapsed real time (or walltime) of calculating all-electron transcorrelated integrals under the \gls{xTC} approximation for N$_2$ with the \avqz basis. Note the logarithmic axes. Performance improves drastically when given additional cores, highlighting the parallel capabilities of the \pytchint library. The dotted red line indicates ideal scaling. The dotted vertical line at $2^7$ cores indicates additional nodes. Introducing more nodes, walltime slightly increases, indicating the additional MPI overhead of internode communication is not sufficiently compensated for by the additional cores for this size problem. However, it is worth noting that due to the distributed memory model, these calculations offer similar time performance but the memory load per node is reduced by roughly a factor equal to the number of nodes. Calculations were performed on AMD EPYC 9554 64-Core processors, and each node used 128 cores.}
     \label{fig:parallel-performance}
 \end{figure}
 
-\todo{not really sure how I'll write this section, since I don't really have a performance metric to go up against}
-\todo{parallel efficiency}
-\todo{memory requirements, with vs without xTC vs no-3b -- mention already covered in optimisation chapter}
-\todo{mention other smaller details, such as never calculating the L matrix during xTC}
-\todo{pytchint vs tchint performance}
-\todo{accuracy of full vs 3bera vs xtc}
-\todo{mention use of BLAS routines}
-
 \section{Conclusion and Outlook}
-\todo{mention GPU acceleration, Python libraries, JAX (+ AD?), deterministic optimisation with universal Jastrow factors, interfacing with other QMC libraries, more studies with solids ...}
+\todo{mention GPU acceleration, Python libraries, JAX (+ AD?), deterministic optimisation with universal Jastrow factors, interfacing with other QMC libraries, more studies with solids, VMC python, det opt as a "fine tuning" of vmc jastrow ...}

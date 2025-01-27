@@ -37,14 +37,21 @@ def plot_log2_x_axis(x, y):
         y (np.ndarray): Array of y values.
     """
     plt.figure(figsize=(8, 6))
-    plt.axvline(x=2**7, color='k', linestyle='--', label='x=2^7')
-    plt.plot(x, y/60, marker='o', linestyle='-', label='Data')
+    plt.axvline(x=2**7, color='k', linestyle='--', label=r'$x=2^7$')
+    y = y/60
+    y_min, y_max = min(y), max(y)
+    plt.ylim(y_min * 0.9, y_max * 1.1)
+    plt.plot(x, y, marker='o', linestyle='-', label='Computation Time')
+    # Create a linear reference line in log-log space
+    y_reference = y[0] * (x / x[0])**-1  # y = C * x^(-1), where C is set to match the first y value
+    plt.plot(x, y_reference, linestyle=':', color='r', label=r'Reference: $y \propto 1/x$')
     plt.xscale('log', base=2)
+    plt.yscale('log', base=2)
     plt.xlabel('Number of Cores')
     plt.ylabel('Elapsed Real Time (Min)')
     # plt.title('Plot of Y vs X (log2 scale for X)')
     plt.grid(True, which="both", linestyle='--', linewidth=0.5)
-    # plt.legend()
+    plt.legend()
     plt.show()
 
 def main():
