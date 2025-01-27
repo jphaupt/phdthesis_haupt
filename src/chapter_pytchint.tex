@@ -9,7 +9,7 @@ The basis for how the library works is partially discussed in the following pape
 
 \section{Introduction}
 
-All transcorrelated matrix element calculations presented in this dissertation have been performed using the group's \tchint library or its Python extension, \pytchint. This library works by either producing transformed integral files, dubbed \fcidump files for four-index integrals,\todo{citation} or \tcdump files for the \gls{TC} six-index integrals. Note that since the \gls{TC} transformation is non-Hermitian, we do not have the same symmetries in these files as we do with conventional methods, or by interfacing with another program (such as \neci) or the Python interpreter (in the case of \pytchint).
+All transcorrelated matrix element calculations presented in this dissertation have been performed using the group's \tchint library or its Python extension, \pytchint. This library works by either producing transformed integral files, dubbed \fcidump files for four-index integrals,\supercite{knowlesDeterminant1989} or \tcdump files for the \gls{TC} six-index integrals. Note that since the \gls{TC} transformation is non-Hermitian, we do not have the same symmetries in these files as we do with conventional methods, or by interfacing with another program (such as \neci) or the Python interpreter (in the case of \pytchint).
 
 As described in section \ref{sec:tc},
 \begin{equation}
@@ -30,7 +30,7 @@ where
 \end{equation}
 $h_q^p$ and $V_{rs}^{pq}$ are the one- and two-body terms from the electronic Schr\"odinger equation, familiar from conventional methods. Therefore, the key quantities to be evaluated by \tchint are the non-Hermitian two-body integrals $K_{rs}^{pq}$ and the Hermitian three-body integrals $L_{stu}^{pqr}$.
 
-Once these integrals are evaluated, as long as we take care about using the correct bra and ket (a detail not important for Hermitian problems), many different methodologies can be applied with these integrals, such as the frozen-core approximation,\todo{citation(s)} or \gls{xTC}.\supercite{christlmaierXTC2023}
+Once these integrals are evaluated, as long as we take care about using the correct bra and ket (a detail not important for Hermitian problems), many different methodologies can be applied with these integrals, such as the frozen-core approximation,\supercite{finkApproach1972,baerendsSelfconsistent1973,sachsFrozen1975} or \gls{xTC}.\supercite{christlmaierXTC2023}
 
 \section{Matrix Element Evaluation}
 The matrix elements not present in conventional methods are $K_{rs}^{pq}$ and $L_{stu}^{pqr}$. For these, we integrate on a grid, typically Treutler-Ahlrichs integration grids,
@@ -65,20 +65,20 @@ The three-body matrix,
 \end{equation}
 may similarly be resolved by calculating the intermediate value
 \begin{equation}
-    \bm Y_{qt}(\bm r_1) = \int\d^3 r_2\phi_q(\bm r_2)\nabla_1u(\bm r_1, \bm r_2)\phi_t(\bm r_2)
+    \bm Y_{qt}(\bm r_1) = \int\d^3 r_2\ \phi_q(\bm r_2)\nabla_1u(\bm r_1, \bm r_2)\phi_t(\bm r_2)
 \end{equation}
 to give
 \begin{equation}
     L^{pqr}_{stu} = \int\d^3 r_1\ \phi_p(\bm r_1)\bm Y_{qt}(\bm r_1)\cdot\bm Y_{ru}(\bm r_1)\phi_s(\bm r_1).
 \end{equation}
 
-These integrations are simply parallelisable, and \tchint takes advantage of this by leveraging distributed memory with the \gls{MPI}\todo{citation} standard and the OpenMP\todo{citation} \gls{API}. We also make liberal use of BLAS\todo{citation} routines for further performance gains. Moreover, we take advantage of the fact that $L$ is Hermitian, substantially reducing storage requirements. We may also store $L$ sparsely since many elements are small, or use the \gls{xTC} approximation to bypass storing $L$ altogether and instead calculating modified four-index integrals and outputting a non-Hermitian \fcidump.
+These integrations are simply parallelisable, and \tchint takes advantage of this by leveraging distributed memory with the \gls{MPI}\supercite{mpi41,dalcinMPI2005,dalcinMPI2008,dalcinParallel2011} standard and the OpenMP\supercite{dagumOpenMP1998} \gls{API}. We also make liberal use of BLAS\supercite{blackford2002updated} routines for further performance gains. Moreover, we take advantage of the fact that $L$ is Hermitian, substantially reducing storage requirements. We may also store $L$ sparsely since many elements are small, or use the \gls{xTC} approximation to bypass storing $L$ altogether and instead calculating modified four-index integrals and outputting a non-Hermitian \fcidump.
 
 \section{Interface}
 
 \tchint is predominantly written in Fortran, but most of the important interfacing subroutines (such as returning given matrix elements) have C bindings. This allows \tchint to be easily interfaced with other libraries, notably for \gls{TC}-\gls{FCIQMC} in \neci\supercite{gutherNECI2020} and \mseven.\supercite{andersonRobertanderson2024} By using this interface, these programs may be used to perform transcorrelated calculations, with all the features present in \tchint.
 
-\tchint has also been given a Python interface called \pytchint by making use of the Cython language extension.\todo{citation} Cython features C-like performance with easy integration in Python to allow for interactive computing and interfacing with the vast scientific package ecosystem available in Python. Python is typically also easier for rapid prototyping, a crucial feature in the world of scientific research, while Cython provides efficiency and a comprehensive profiling toolset.
+\tchint has also been given a Python interface called \pytchint by making use of the Cython language extension.\supercite{behnel2008cython,behnel2011cython,smithCython2015} Cython features C-like performance with easy integration in Python to allow for interactive computing and interfacing with the vast scientific package ecosystem available in Python. Python is typically also easier for rapid prototyping, a crucial feature in the world of scientific research, while Cython provides efficiency and a comprehensive profiling toolset.
 
 With \pytchint, a user might interactively work with transcorrelated integrals by first calculating them,
 \begin{lstlisting}[language=Python,escapeinside={(*}{*)}]
@@ -92,7 +92,7 @@ and then e.g. query individual matrix elements calculated via Slater-Condon rule
 
 \subsection{Deterministic Optimisation}
 
-One of the major motivations for developing the Python interface is removing VMC from the Jastrow optimisation pipeline, as this can be a particularly expensive step, especially for larger systems. Thanks to the Python interface, we can interact directly with Python's large ecosystem of optimisation packages, such as SciPy.\todo{citation} This allows for rapid prototyping and ease of development.
+One of the major motivations for developing the Python interface is removing VMC from the Jastrow optimisation pipeline, as this can be a particularly expensive step, especially for larger systems. Thanks to the Python interface, we can interact directly with Python's large ecosystem of optimisation packages, such as SciPy.\supercite{2020SciPy-NMeth} This allows for rapid prototyping and ease of development.
 
 For each optimisation step, we pass the Jastrow parameters in Python, then calculate the relevant integrals for the variance of the reference (see \autoref{chap:opt}) by passing them to Fortran, and update the parameters according to an optimisation algorithm by passing the parameters back to Python. All that is needed to be added are gradients for the variance of the reference with respect to Jastrow factor parameters. As the Jastrow factors are linear in their parameters, this is a tractible problem.
 
@@ -126,4 +126,4 @@ Moreover, thanks to the use of Cython, performance when directly running Fortran
 
 Our in-house transcorrelated integral evaluation library is already flexible and performant, and is already used for most TC-related publications from the group. For wider adoption, we plan to improve documentation and ease of use through the Python interface, and have a form of Jastrow optimisation or (quasi-)universal Jastrow form such as those described in \autoref{chap:universal}. This way, \pytchint is a standalone library and would not rely on external software.
 
-Additional features we intend to investigate in the near future are: parallism with graphics processing units (as our integrals are easily parallelisable), which is already being investigated in the context of TC\todo{cite Toulouse group}, further support for periodic solids, and implementing more of the code in high-performance Python to allow easier use of additional features such as automatic differentiation\todo{citation} with JAX\todo{citation}, which would allow support for more complex Jastrow factors without the need for manually calculating analytic gradients.
+Additional features we intend to investigate in the near future are: parallism with graphics processing units (as our integrals are easily parallelisable), which is already being investigated in the context of TC, further support for periodic solids, and implementing more of the code in high-performance Python to allow easier use of additional features such as automatic differentiation\supercite{wengertSimple1964} with JAX,\supercite{jax2018github} which would allow support for more complex Jastrow factors without the need for manually calculating analytic gradients.
