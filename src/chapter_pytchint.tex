@@ -105,7 +105,7 @@ are presented in figure \ref{fig:det-opt}. As illustrated, the minimum may shift
 \begin{figure}[htbp]
     \centering
     \todo{figure/data from Andreea}
-    \caption{Variance of the reference and reference energy values with a single-parameter Jastrow factor, for the \todo{basis sets} basis sets. The location of the minimum may by different compared to that obtained by continuum VMC, resulting in a suboptimal Jastrow factor. Data courtesy of Maria-Andreea Filip, who is leading this investigation.}
+    \caption{Variance of the reference and reference energy values with a single-parameter Jastrow factor, for the \todo{basis sets} basis sets. The location of the minimum may by different compared to that obtained by continuum VMC, resulting in a suboptimal Jastrow factor. Data courtesy of Maria-Andreea Filip, who is leading this investigation. Results are preliminary and are intended to be presented in a future publication.}
     \label{fig:det-opt}
 \end{figure}
 
@@ -123,4 +123,7 @@ Moreover, thanks to the use of Cython, performance when directly running Fortran
 \end{figure}
 
 \section{Conclusion and Outlook}
-\todo{mention GPU acceleration, Python libraries, JAX (+ AD?), deterministic optimisation with universal Jastrow factors, interfacing with other QMC libraries, more studies with solids, VMC python, det opt as a "fine tuning" of vmc jastrow ...}
+
+Our in-house transcorrelated integral evaluation library is already flexible and performant, and is already used for most TC-related publications from the group. For wider adoption, we plan to improve documentation and ease of use through the Python interface, and have a form of Jastrow optimisation or (quasi-)universal Jastrow form such as those described in \autoref{chap:universal}. This way, \pytchint is a standalone library and would not rely on external software.
+
+Additional features we intend to investigate in the near future are: parallism with graphics processing units (as our integrals are easily parallelisable), which is already being investigated in the context of TC\todo{cite Toulouse group}, further support for periodic solids, and implementing more of the code in high-performance Python to allow easier use of additional features such as automatic differentiation\todo{citation} with JAX\todo{citation}, which would allow support for more complex Jastrow factors without the need for manually calculating analytic gradients.
