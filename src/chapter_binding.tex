@@ -1,6 +1,5 @@
 \chapter{The Transcorrelated Method for Multi-Reference Problems}
-  \label{chap:binding}
-\todo{...}
+\label{chap:binding}
 
 This chapter is based in large part on the following upcoming publication:\\
 \fullcite{haupt_sizeconsistent}
@@ -9,7 +8,7 @@ Images have been reused from this paper (with permission).
 
 \section{Introduction}
 
-In this chapter, we apply the new framework for the transcorrated method described in chapter \ref{chap:opt} to problems of multireference character and find these methods may yield non-physical results. We propose an updated workflow wherein we use conventional FCIQMC as input to Jastrow optimisation for TC-FCIQMC. Results suggest size-consistent results and rapid basis set convergence compared to conventional methods, with the binding curve of N$_2$ at \avtz being within chemical accuracy of experiment.
+In this chapter, we apply the new framework for the transcorrated method described in chapter \ref{chap:opt} to problems of multireference character and find these methods may yield non-physical results. We propose an updated workflow wherein we use conventional post-Hartree-Fock methods as input to Jastrow optimisation for TC-FCIQMC. Results suggest size-consistent results and rapid basis set convergence compared to conventional methods, with the binding curve of N$_2$ at \avtz being within chemical accuracy of experiment.
 
 \section{Motivation}
 
@@ -52,6 +51,17 @@ and we use the workflow to calculate points along the binding curve of N$_2$, we
 
 \subsection{Excitation Energies}
 \todo{mention can target the exact state(s) in question}
+
+% \begin{table}[htbp]
+%     \centering
+%     \begin{tabular}{c|c|c|c}
+%         Molecule & State & \avdz & \avtz & \avqz \\
+%         \hline
+%         N$_2$ & $^1\Sigma_g^+$ & & & \\
+%     \end{tabular}
+%     \caption{\todo{excitation energies for a couple of molecules, in mHa}}
+%     \label{tbl:excitation-energies}
+% \end{table}
 
 \section{Conclusion and Outlook}
 \todo{make sure to mention the cutoff analysis and constructing Jastrow factors from atomic Jastrow factors. Mention ECPs, since it's already been submitted...}

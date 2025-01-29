@@ -1,0 +1,29 @@
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_enL4_C3_nd100_again_s0_fixparity/ccpvtz
+# R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
+# doesn't seem to give size consistent results?
+1.92    -109.5052714(83)    nan
+2.0     nan     nan
+2.08    -109.5287890(69)     nan
+2.16    nan     nan
+2.24    nan    nan
+2.32    nan     nan
+2.4     nan    nan
+2.48    nan    nan
+2.98    nan     nan
+3.48    nan     nan
+3.98    nan    nan
+4.48    nan    nan
+4.98    nan     nan
+5.48    nan     nan
+5.98    nan    nan
+6.48    nan     nan
+6.98    nan    nan
+7.48    nan     nan
+7.98    nan     nan
+8.48    nan     nan
+8.98    nan     nan
+9.48    nan    nan
+10.0    -109.16891(36)    nan # !!
+# TODO PATH
+# atom: -54.58348085(56)
+# 2*atom: -109.16696170(11)

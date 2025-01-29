@@ -1,0 +1,34 @@
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_enL4_C3_nd100_again_s0_fixparity/augccpvtz
+# R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
+# !!
+# !! only use the 3e+08 walker directory for trial wave functions
+# !! the rest have bad trial wave functions (10) -- not sure if actually a problem
+# !!
+# !! all the below need a more careful study(!)
+1.92    -109.511254(16)    nan
+2.0     -109.529261(18)     nan
+2.08    -109.534692(18)    nan
+2.16    -109.530097(30)     nan
+2.24    -109.519507(15)    nan
+2.32    -109.503306(21)     nan
+2.4     -109.484494(35)    nan
+2.48    -109.463024(24)    nan # !!
+2.98    -109.329112(43)     nan
+3.48    -109.236735(10)     nan
+3.98    -109.19444(19)    nan
+4.48    -109.180259(55)    nan # !!
+4.98    -109.17456(43)     nan
+5.48    -109.172592(23)     nan # !!
+5.98    -109.171495(47)    nan
+6.48    -109.171118(17)     nan
+6.98    -109.171259(14)    nan # !!
+7.48    -109.171187(33)     nan # !!
+7.98    -109.170986(24)     nan
+8.48    -109.171000(44)     nan
+8.98    -109.171137(7)     nan
+9.48    -109.17094(30)    nan
+# 10.0    -109.170877(11)    nan # !!
+10.0    -109.1711912(33)    nan # !!
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_enL4_C3_nd100_s3_fixparity/augccpvtz/04_fciqmc/walker_3e+06
+# atom: -54.5852732(19)
+# 2*atom: -109.1705464(38)

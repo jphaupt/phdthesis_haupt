@@ -1,0 +1,26 @@
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_enL4_C3_nd1_again_s0_fixparity/augccpvtz
+# R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
+# !! means still running
+1.92    -109.512068(20)     nan
+2.0     -109.5299895(87)     nan
+2.08    -109.534900(24)     nan
+2.16    -109.5307816(88)    nan
+2.24    -109.520218(33)    nan # !!
+2.32    -109.513078(23)     nan # !! anomalous, but seems genuine... -- goes away by simply rerunning...
+2.4     -109.485464(25)    nan
+2.48    -109.464634(23)    nan
+2.98    -109.330611(29)    nan # !!
+3.48    -109.23895(10)     nan
+3.98    -109.19859(15)    nan # !!
+4.48    -109.18565(13)     nan # !!
+4.98    -109.18055(44)    nan
+5.48    -109.17957(20)    nan
+5.98    -109.17881(40)     nan
+6.48    -109.17982(52)    nan
+6.98    -109.18081(40)     nan
+7.48    -109.18135(50)    nan
+7.98    -109.18141(44)    nan
+8.48    -109.18283(33)   nan
+8.98    -109.18309(30)      nan
+9.48    -109.18379(21)     nan
+10.0    -109.18359(23)     nan

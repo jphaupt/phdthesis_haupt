@@ -1,0 +1,3 @@
+In the data files, # !! means still running
+
+"circular" approach is not actually size consistent - that was a fluke from incomplete calculation. probably not actually a problem. also not sure since it might be that I was using a bad trial wave function. looks like it is the trial wave function choice, actually... now I need to wait

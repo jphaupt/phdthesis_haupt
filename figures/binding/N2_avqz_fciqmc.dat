@@ -1,0 +1,31 @@
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_enL4_C3_nd100_again_s0_fixparity/augccpvqz
+# !!
+# !! all of these are running for longer...
+# !!
+# R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
+1.92   -109.520586(22)    nan
+2.0    -109.537834(32)      nan
+2.08   -109.541889(23)     nan # !! "should" be around -109.543
+2.16   nan     nan
+2.24   nan    nan
+2.32   nan     nan
+2.4    nan    nan
+2.48   nan    nan
+2.98   nan     nan
+3.48   nan     nan
+3.98   nan    nan
+4.48   nan    nan
+4.98   nan     nan
+5.48   nan     nan
+5.98   nan    nan
+6.48   nan     nan
+6.98   nan    nan
+7.48   nan     nan
+7.98   nan     nan
+8.48   nan     nan
+8.98   nan     nan
+9.48   -109.17797(14)    nan # !!
+10.0   nan    nan
+# TODO PATH
+# atom: -54.5896549(46)
+# 2*atom: -109.1793098(92)
