@@ -1,0 +1,9 @@
+# values are exFCI excitation energies from "mountaineering..." paper
+# values in mHa
+state , avdz  , avtz  , avqz  , exp
+1Pig ,   ,   ,   , 342.1
+1Sigu-,   ,   ,   ,
+1Delu ,   ,   ,   ,
+3Sigu+,   ,   ,   ,
+3Pig ,   ,   ,   ,
+3Delu ,   ,   ,   ,
