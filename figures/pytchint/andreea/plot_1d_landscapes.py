@@ -23,7 +23,7 @@ ax[0][0].plot(cdz[0], cdz[1], label = 'CDZ')
 ax[0][0].plot(ctz[0], ctz[1], label = 'CTZ')
 
 ax[0][0].set_ylabel(r'$\sigma^2_\mathrm{ref}$/Hartree$^2$')
-ax[0][0].set_xlabel(r'$c_{002}$')
+ax[0][0].set_xlabel(r'$c_{ee}$')
 
 ax[0][0].set_yscale('log')
 
@@ -38,7 +38,7 @@ ax[1][0].plot(ctz[0], ctz[2], label = 'cc-pCVTZ')
 ax[1][0].hlines(-7.47806, -3, 3, 'k', label = 'Exact')
 
 ax[1][0].set_ylabel(r'$E_\mathrm{ref}$/Hartree')
-ax[1][0].set_xlabel(r'$c_{002}$')
+ax[1][0].set_xlabel(r'$c_{ee}$')
 
 ax[1][0].legend(fontsize=8)
 casino_dz_v = np.genfromtxt('casino_1param2_variances_dz.dat',  unpack = True)
@@ -61,7 +61,7 @@ ax[0][1].plot(cdz[0], cdz[1], label = 'CDZ')
 ax[0][1].plot(ctz[0], ctz[1], label = 'CTZ')
 
 ax[0][1].set_ylabel(r'$\sigma^2_\mathrm{ref}$/Hartree$^2$')
-ax[0][1].set_xlabel(r'$c_{200}$')
+ax[0][1].set_xlabel(r'$c_{en}$')
 
 ax[0][1].set_yscale('log')
 
@@ -76,7 +76,7 @@ ax[1][1].plot(ctz[0], ctz[2], label = 'CTZ')
 ax[1][1].hlines(-7.47806, -3, 3, 'k')
 
 ax[1][1].set_ylabel(r'$E_\mathrm{ref}$/Hartree')
-ax[1][1].set_xlabel(r'$c_{200}$')
+ax[1][1].set_xlabel(r'$c_{en}$')
 
 ax[0][1].sharey(ax[0][0])
 ax[1][1].sharey(ax[1][0])

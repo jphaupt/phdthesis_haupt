@@ -96,18 +96,27 @@ One of the major motivations for developing the Python interface is removing VMC
 
 For each optimisation step, we pass the Jastrow parameters in Python, then calculate the relevant integrals for the variance of the reference (see \autoref{chap:opt}) by passing them to Fortran, and update the parameters according to an optimisation algorithm by passing the parameters back to Python. All that is needed to be added are gradients for the variance of the reference with respect to Jastrow factor parameters. As the Jastrow factors are linear in their parameters, this is a tractible problem.
 
-However, as calculations are done entirely in \pytchint, we are restricted to a basis set and do not enjoy the \gls{CBS} optimisation as we do in continuum \gls{VMC}. Using the variance of the reference as an objective function, values for the single-parameter Jastrow function,
+However, as calculations are done entirely in \pytchint, we are restricted to a basis set and do not enjoy the \gls{CBS} optimisation as we do in continuum \gls{VMC}. As an example, we consider calculations with the Li atom. Consider, moreover, the simple parameter-free electron-electron-cusp-correcting Jastrow factor
+\begin{equation}
+    J_0 = \frac 12 \bar r_{ij}
+\end{equation}
+with the additional terms for the electron-nucleus cusp described in \autoref{chap:opt}. Here, $\bar r_{ij} = 1 - \exp(-\alpha r_{ij})/\alpha$ with $\alpha=2.0$. Consider two possible additional terms, each with one variational parameter,
+\begin{align}
+    J_{ee} &= c_{ee}\bar r_{ij}^2 \\
+    J_{en} &= c_{en}\bar r_{i}^2
+\end{align}
+where for the electron-nucleus term $\bar r_{i} = 1 - \exp(-\beta r_{ij})/\beta$ with $\beta=2.0$.
 
-\todo{Jastrow factor form}
-
-are presented in figure \ref{fig:det-opt}. As illustrated, the minimum may shift based on basis set, so a careful selection is necessary for obtaining the optimal Jastrow factor.
+Reference energies and variance of the reference values are presented in figure \ref{fig:det-opt}. As illustrated, the minimum may shift based on basis set, so a careful selection is necessary for obtaining the optimal Jastrow factor.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/pytchint/andreea/1parameter}
-    \caption{\todo{update this plot caption} Variance of the reference and reference energy values with a single-parameter Jastrow factor, for the \todo{basis sets} basis sets. The location of the minimum may by different compared to that obtained by continuum VMC, resulting in a suboptimal Jastrow factor. Data courtesy of Maria-Andreea Filip, who is leading this investigation. Results are preliminary and are intended to be presented in a future publication.}
+    \caption{Variance of the reference and reference energy values (top and bottom panels, respectively) with a single-parameter Jastrow factor, for the Li atom with the \vxz{X} basis sets, with $X=$D,T,Q, as well as basis sets core-valence correlation at the double- and triple-zeta level. The left panel introduces an electron-electron term $J_{ee}$ whereas the right panel introduces an electron-nucleus term $J_{en}$. The location of the minimum may be different compared to that obtained by continuum VMC, resulting in a suboptimal Jastrow factor. Data courtesy of Maria-Andreea Filip, who is leading this investigation. Results are preliminary and are intended to be presented in a future publication.}
     \label{fig:det-opt}
 \end{figure}
+
+Preliminary results are promising, and this may prove an interesting alternative to \gls{VMC}, or a way of ``correcting'' smaller VMC calculations, to improve efficiency as well as reproducibility.
 
 \section{Parallel Efficiency}
 
