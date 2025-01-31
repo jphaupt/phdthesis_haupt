@@ -12,7 +12,7 @@ In this chapter, we apply the new framework for the transcorrated method describ
 
 \section{Motivation}
 
-A popular ``stress test'' for quantum chemistry methods is the binding curve of N$_2$. Highly accurate experimental results\supercite{leroyAccurate2006} exist to recreate the curve, allowing for a useful bencharmk. At equilibrium, this system is essentially single reference in character, but as the bond is stretched, the system becomes strongly multireference, making it particularly challenging for many methods. As an example, we might consider standard \gls{CCSD}, which is a single-reference method, compared to FCIQMC which (within stochastic error) is exact. Figure \ref{fig:ccsd-vs-fciqmc-n2} shows the binding curve of N$_2$ with CCSD compared to FCIQMC. We see that CCSD is not stable at large bond lengths.
+A popular ``stress test'' for quantum chemistry methods is the binding curve of N$_2$. Highly accurate experimental results\supercite{leroyAccurate2006} exist to recreate the curve, allowing for a useful benchmark. At equilibrium, this system is essentially single reference in character, but as the bond is stretched, the system becomes strongly multireference, making it particularly challenging for many methods. As an example, we might consider standard \gls{CCSD}, which is a single-reference method, compared to FCIQMC which (within stochastic error) is exact. Figure \ref{fig:ccsd-vs-fciqmc-n2} shows the binding curve of N$_2$ with CCSD compared to FCIQMC, using \avtz. We see that CCSD is not stable at large bond lengths.
 
 \begin{figure}[htbp]
     \centering
@@ -49,14 +49,18 @@ and the same cutoff functions $t(r,L) = (1-r/L)^3
     \label{eq:varref-hf}
     \sigma_\mathrm{ref}^2 = \sum_{I\neq \mathrm{HF}}\bra{D_I}\htc\ket{D_\mathrm{HF}},
 \end{equation}
-and we use the workflow to calculate points along the binding curve of N$_2$, we find a non-physical ``bump'', similar to what CCSD shows exhibits in figure \ref{fig:ccsd-vs-fciqmc-n2}, as shown in figure \ref{fig:binding-dip}.
+Using this workflow with the xTC approximation, we calculate points along the binding curve of N$_2$, and find a non-physical ``dip'', as shown in figure \ref{fig:binding-dip}, similar to what CCSD shows exhibits in figure \ref{fig:ccsd-vs-fciqmc-n2}, albeit much more subtle.
 
 \begin{figure}[htbp]
     \centering
-
-    \caption{\todo{figure showing a plot of the binding curve(s) with a single reference!}}
+    \includegraphics[width=0.8\textwidth]{figures/binding/N2_nontcfciqmc_bind_avtz}
+    \caption{The xTC-FCIQMC binding curve for N$_2$ at the \avtz level of theory. While much smaller than that in figure \ref{fig:ccsd-vs-fciqmc-n2}, a non-physical dip is still present. This is apparent when zooming in on the curve, as shown in the inset.}
     \label{fig:binding-dip}
 \end{figure}
+
+This result has been verified for a few points with full TC, which rules out xTC as the issue. Since the post-Hartree-Fock treatment was essentially at the FCI level, this implies that there is something wrong with the calculation of the Jastrow factors themselves. That is, our Hamiltonian is already ``corrupted'' before we even start the post-HF calculation.
+
+
 
 \todo{problem description, including the ``dip''}
 

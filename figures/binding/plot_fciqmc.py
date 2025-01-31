@@ -63,14 +63,14 @@ def load_data_with_uncertainties(file_path: str, uncertainty_cols: list[int]) ->
 data_all = [
             # "N2_avdz_fciqmc.dat",
             # "N2_avqz_fciqmc.dat",
-            "N2_avtz_casscf.dat",
-            "N2_avtz_fciqmc.dat",
+            # "N2_avtz_casscf.dat",
+            # "N2_avtz_fciqmc.dat",
             "N2_avtz_rhf.dat",
-            "N2_avtz_casci.dat"
+            # "N2_avtz_casci.dat"
             ]
 data_f12_all = [
                 # "N2_avqz_f12.dat",
-                "N2_avtz_f12.dat",
+                # "N2_avtz_f12.dat",
                 # "N2_avtz_dcsdf12.dat"
                 ]
 data_exp = np.genfromtxt('experiment.dat')
@@ -84,9 +84,11 @@ for data_name in data_all:
     data = load_data_with_uncertainties(data_name, [1])
     plt.plot(data[:,0], data[:,1], 'o-', label=data_name)
     # plt.plot(data[:,0], data[:,-1], 's-', label=data_name+"_dcsd")
-plt.legend()
+# plt.legend()
+plt.ylim(-109.190, -109.175)
+plt.xlim(left=4)
 # plt.plot(data_exp[:,0], data_exp[:,1], 'k-', label='Experiment')
-plt.savefig("binding_curves.pdf")
+# plt.savefig("binding_curves.pdf")
 plt.show()
 plt.close()
 
