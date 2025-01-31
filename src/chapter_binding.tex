@@ -17,7 +17,7 @@ A popular ``stress test'' for quantum chemistry methods is the binding curve of 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/N2_avtz_nontc}
-    \caption{The binding curve for N$_2$ at the \avdz level of theory. CCSD starts to decrease near 4 Bohr, which is nonphysical, whereas FCIQMC provides a more accurate curve. FCIQMC was done with 30 million walkers and HF-projected energy. The nonsmooth region in the dissociated region is due to stochastic error, and could be resolved with more walkers and a better trial wave function. CCSD did not converge at bond lengths larger than those shown.}
+    \caption{The binding curve for N$_2$ with the \avdz basis set. CCSD starts to decrease near 4 Bohr, which is nonphysical, whereas FCIQMC provides a more accurate curve. FCIQMC was done with 30 million walkers and HF-projected energy. The nonsmooth region in the dissociated region is due to stochastic error, and could be resolved with more walkers and a better trial wave function. CCSD did not converge at bond lengths larger than those shown.}
     \label{fig:ccsd-vs-fciqmc-n2}
 \end{figure}
 
@@ -53,8 +53,8 @@ Using this workflow with the xTC approximation, we calculate points along the bi
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/binding/N2_nontcfciqmc_bind_avtz}
-    \caption{The xTC-FCIQMC binding curve for N$_2$ at the \avtz level of theory. While much smaller than that in figure \ref{fig:ccsd-vs-fciqmc-n2}, a non-physical dip is still present. This is apparent when zooming in on the curve, as shown in the inset.}
+    \includegraphics[width=0.8\textwidth]{figures/binding/inset_nontcfciqmc}
+    \caption{The xTC-FCIQMC binding curve for N$_2$ with the \avtz basis set. While much smaller than that in figure \ref{fig:ccsd-vs-fciqmc-n2}, a non-physical dip is still present. This is apparent when zooming in on the curve, as shown in the inset.}
     \label{fig:binding-dip}
 \end{figure}
 
