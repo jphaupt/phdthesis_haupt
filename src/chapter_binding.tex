@@ -1,4 +1,4 @@
-\chapter{The Transcorrelated Method for Multi-Reference Problems}
+\chapter{The Transcorrelated Method for Multireference Problems}
 \label{chap:binding}
 
 This chapter is based in large part on the following upcoming publication:\\
@@ -12,15 +12,44 @@ In this chapter, we apply the new framework for the transcorrated method describ
 
 \section{Motivation}
 
-Consider the methodology outlined in chapter \ref{chap:opt}. If we again use the same Jastrow factors,
-\todo{write Jastrow factor down again}
-with the same objective function,
-\todo{write variance of reference with a single(!) reference}
+A popular ``stress test'' for quantum chemistry methods is the binding curve of N$_2$. Highly accurate experimental results\supercite{leroyAccurate2006} exist to recreate the curve, allowing for a useful bencharmk. At equilibrium, this system is essentially single reference in character, but as the bond is stretched, the system becomes strongly multireference, making it particularly challenging for many methods. As an example, we might consider standard \gls{CCSD}, which is a single-reference method, compared to FCIQMC which (within stochastic error) is exact. Figure \ref{fig:ccsd-vs-fciqmc-n2} shows the binding curve of N$_2$ with CCSD compared to FCIQMC. We see that CCSD is not stable at large bond lengths.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/binding/N2_avtz_nontc}
+    \caption{The binding curve for N$_2$ at the \avdz level of theory. CCSD starts to decrease near 4 Bohr, which is nonphysical, whereas FCIQMC provides a more accurate curve. FCIQMC was done with 30 million walkers and HF-projected energy. The nonsmooth region in the dissociated region is due to stochastic error, and could be resolved with more walkers and a better trial wave function. CCSD did not converge at bond lengths larger than those shown.}
+    \label{fig:ccsd-vs-fciqmc-n2}
+\end{figure}
+
+To see how well TC fares against such problems, consider the methodology outlined in chapter \ref{chap:opt}. We again use the same Jastrow factor as in equation \ref{eq:jastrow},
 \begin{equation}
-\label{eq:varref_hf}
-TODO
+    \label{eq:jastrow-again}
+    J = \sum_{i<j}^Nv(r_{ij}) + \sum_i^N\sum_I^{N_A}\chi(r_{iI}) + \sum_{i<j}^N\sum_I^{N_A}f(r_{ij}, r_{iI}, r_{jI}),
 \end{equation}
-and we use the workflow to calculate points along the binding curve of N$_2$, we find a non-physical ``bump'', as shown in figure \ref{fig:binding-dip}.
+with
+\begin{equation}
+    \label{eq:dtn-jastrow-ee-2}
+    v(r_{ij})    = t(r_{ij},L_v)
+                    \sum_{k} a_k r_{ij}^k ,
+\end{equation}
+\begin{equation}
+    \label{eq:dtn-jastrow-en-2}
+    \chi(r_{iI}) = t(r_{iI},L_\chi)
+    \sum_{k} b_k r_{iI}^k ,
+\end{equation}
+\begin{equation}
+    \label{eq:dtn-jastrow-een-2}
+    f(r_{ij}, r_{i}, r_{j}) = t(r_{iI},L_f) t(r_{jI},L_f)
+    \sum_{k,l,m} c_{klm}
+    r_{ij}^k r_{iI}^l r_{jI}^m ,
+\end{equation}
+and the same cutoff functions $t(r,L) = (1-r/L)^3
+\Theta(r-L)$. We also use the same objective function,
+\begin{equation}
+    \label{eq:varref-hf}
+    \sigma_\mathrm{ref}^2 = \sum_{I\neq \mathrm{HF}}\bra{D_I}\htc\ket{D_\mathrm{HF}},
+\end{equation}
+and we use the workflow to calculate points along the binding curve of N$_2$, we find a non-physical ``bump'', similar to what CCSD shows exhibits in figure \ref{fig:ccsd-vs-fciqmc-n2}, as shown in figure \ref{fig:binding-dip}.
 
 \begin{figure}[htbp]
     \centering
@@ -30,6 +59,8 @@ and we use the workflow to calculate points along the binding curve of N$_2$, we
 \end{figure}
 
 \todo{problem description, including the ``dip''}
+
+\todo{mention where things need to change: objective function and sampling, Jastrow ansatz, 1RDM for xTC}
 
 \section{Size Consistency}
 

@@ -38,7 +38,7 @@ TC- and non-TC-FCIQMC calculations used \gls{HF} orbitals (restricted open-shell
 
 The quality of the energy differences is assessed using the atomisation energies of these molecules. In order to determine if our methodology yields chemically-accurate, i.e. within an error of $1$ kcal/mol $\approx 1.6$ mHa, we also keep each individual error to be well within this threshold. We expect a total bias in our resulting relative energies of not more than $0.5$ mHa.
 
-For all our calculations, we generate our orbitals and integration grids using \pyscf,\supercite{sunPySCF2018} optimise the Jastrow factors using the \casino continuum \gls{QMC} package,\supercite{needsVariational2020}, compute TC matrix elements using the \tchint library, for which more details are presented in \autoref{chap:pytchint}, and perform (TC-)FCIQMC calculations using the \neci package.\supercite{gutherNECI2020} FCIQMC energies reported are the standard HF-projected energies.
+For all our calculations, we generate our orbitals and integration grids using \pyscf,\supercite{sunPySCF2018} optimise the Jastrow factors using the \casino continuum \gls{QMC} package,\supercite{needsVariational2020} compute TC matrix elements using the \tchint library, for which more details are presented in \autoref{chap:pytchint}, and perform (TC-)FCIQMC calculations using the \neci package.\supercite{gutherNECI2020} FCIQMC energies reported are the standard HF-projected energies.
 
 (TC-)FCIQMC values presented here were produced using a walker-number extrapolation scheme presented in another dissertation.\supercite{hosseiniCombining2024}
 
@@ -113,13 +113,13 @@ term in practice.
     \label{fig:cusp-term}
 \end{figure}
 
-For the calculations in this chapter, we use a total of $44$ optimisable Jastrow factor parameters for the atoms and homonuclear dimers, and $88$ parameters for CN. We keep the $L_v$, $L_\chi$ and $L_f$ cutoff lengths fixed at $4.5$, $4$, and $4$, for simplicity.
+For the calculations in this chapter, we use a total of $44$ optimisable Jastrow factor parameters for the atoms and homonuclear dimers, and $88$ parameters for CN. We keep the $L_v$, $L_\chi$ and $L_f$ cutoff lengths fixed at $4.5$, $4$, and $4$ Bohr, for simplicity.
 
 \section{Optimisation Strategy}
 
 We optimise $J$ using \gls{VMC}. VMC provides a variational framework in which parameters $\bm \alpha$ present in a trial wave function $\Psi_\mathrm{T}$ can be optimised. In this chapter, $\ket{\Psi_\mathrm{T}} = \e^{J(\bm\alpha)}\ket{D_\mathrm{HF}}$.
 
-In continuum QMC, wave function optimisation is usually carried out using a correlated-sampling approach in which a set of $n_mathrm{opt}$ electronic real-space configurations ${\{\bm R}_{i}\}_{i=1}^{n_\mathrm{opt}}$ distributed according to the initial wave function squared, $|\Psi_\mathrm{T}({\bm R}; {\bm \alpha}_0)|^2$ is generated, and then a target function is minimised by varying $\bm\alpha$ at fixed ${\{\bm R}_{i}\}$.
+In continuum QMC, wave function optimisation is usually carried out using a correlated-sampling approach in which a set of $n_\mathrm{opt}$ electronic real-space configurations ${\{\bm R}_{i}\}_{i=1}^{n_\mathrm{opt}}$ distributed according to the initial wave function squared, $|\Psi_\mathrm{T}({\bm R}; {\bm \alpha}_0)|^2$ is generated, and then a target function is minimised by varying $\bm\alpha$ at fixed ${\{\bm R}_{i}\}$.
 
 The variational energy estimate for this trial wave function may be written
 \begin{equation}
@@ -484,7 +484,7 @@ benchmark CBS values, while the non-TC total energies still miss the
 benchmarks by $25$--$30$ mHa per atom with the cc-pV5Z basis set, and
 $20$ mHa per atom at the cc-pV6Z level. The TC total energies exhibit slightly non-variational convergence, with the atomic energies reaching values $0.5$ mHa below the benchmark before increasing again towards it for larger basis-set sizes. While non-variationality is undesirable in a method, the amount by which the TC results dip below the \gls{CBS} limit is sufficiently small for this not to be an issue in practice.
 
-From a chemical perspective, relative energies are more important than totaly energies. The atomisation energies of the C$_2$, CN, N$_2$, and O$_2$ molecules
+From a chemical perspective, relative energies are more important than total energies. The atomisation energies of the C$_2$, CN, N$_2$, and O$_2$ molecules
 obtained from the total energies in table \ref{table:total_energies}
 are given in table \ref{table:atomization}
 and plotted in figure
