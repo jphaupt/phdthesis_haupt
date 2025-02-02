@@ -49,7 +49,7 @@ and the same cutoff functions $t(r,L) = (1-r/L)^3
     \label{eq:varref-hf}
     \sigma_\mathrm{ref}^2 = \sum_{I\neq \mathrm{HF}}\bra{D_I}\htc\ket{D_\mathrm{HF}},
 \end{equation}
-Using this workflow with the xTC approximation, we calculate points along the binding curve of N$_2$, and find a non-physical ``dip'', as shown in figure \ref{fig:binding-dip}, similar to what CCSD shows exhibits in figure \ref{fig:ccsd-vs-fciqmc-n2}, albeit much more subtle.
+Using this workflow with the xTC approximation, we calculate points along the binding curve of N$_2$, and find a non-physical ``dip'', as shown in figure \ref{fig:binding-dip}, similar to what CCSD exhibits in figure \ref{fig:ccsd-vs-fciqmc-n2}, albeit much more subtle.
 
 \begin{figure}[htbp]
     \centering
@@ -58,25 +58,53 @@ Using this workflow with the xTC approximation, we calculate points along the bi
     \label{fig:binding-dip}
 \end{figure}
 
-This result has been verified for a few points with full TC, which rules out xTC as the issue. Since the post-Hartree-Fock treatment was essentially at the FCI level, this implies that there is something wrong with the calculation of the Jastrow factors themselves. That is, our Hamiltonian is already ``corrupted'' before we even start the post-HF calculation.
+This result has been verified for a few points with full TC (that is, with no approximations), which rules out xTC as the issue. Since the post-Hartree-Fock treatment was essentially at the FCI level, this implies that there is something wrong with the calculation of the Jastrow factors themselves. That is, our Hamiltonian is already ``corrupted'' before we even start the post-HF calculation.
 
 
+\section{Resolving the Problem}
 
-\todo{problem description, including the ``dip''}
+Based on the discussion in the previous section, it is likely that the transcorrelated workflow suffers from a single-reference bias. Indeed, the clear culprit is the Slater-Jastrow ansatz
+\begin{equation}
+    \label{eq:slater-jastrow}
+    \Psi_\mathrm{SJ} = \e^J\Phi_\mathrm{HF},
+\end{equation}
+which affects the Jastrow optimisation and in turn the TC Hamiltonian $\htc = e^{-J}\hat H\e^J$.
 
-\todo{mention where things need to change: objective function and sampling, Jastrow ansatz, 1RDM for xTC}
+We modify equation \ref{eq:slater-jastrow} to optimise for a multireference expansion,
+\begin{equation}
+    \label{eq:general-slater-jastrow}
+    \Psi = \e^J\Phi_0
+\end{equation}
+where $\ket{\Phi_0}=\sum_I\ket{D_I}$. In practice, this modification results in two key changes in the workflow:
+\begin{itemize}
+    \item The objective function used during the VMC optimisation, equation \ref{eq:varref-hf}, needs to reflect the multireference ansatz. In particular, it will need to be changed to
+    \begin{equation}
+        \label{eq:varref-md}
+        \sigma_\mathrm{ref}^2 = \sum_{I}\bra{D_I}\htc\ket{\Phi_0} - \bra{\Phi_0}\htc\ket{\Phi_0},
+    \end{equation}
+    which is evaluated in VMC by sampling
+    \begin{equation}
+        S_\mathrm{ref}^2 =
+          \frac 1 {n_\mathrm{opt}-1}
+          \sum_{n=1}^{n_\mathrm{opt}}
+            \left| \frac {\hat H({\bm R}_n) \Psi({\bm R}_n)}
+                         {\Psi({\bm R}_n)} - {\bar E}_\mathrm{ref}
+            \right|^2.
+    \end{equation}
+    \item The density matrices used for xTC during integration must reflect this change as well. In particular, $\gamma_{p\dots}^{q\dots}=\bra{\Phi_0} a_{p\dots}^{q\dots}\ket{\Phi_0}$ in the equations in section \ref{sec:xtc}.
+\end{itemize}
 
-\section{Size Consistency}
+\subsection{Size Consistency}
 
-\subsection{Jastrow Factor Forms}
-
-\subsection{Multireference Ansatzes}
+\subsection{Choices for Multireference Ansatzes}
 
 \todo{Present: "circular" approach, CASCI, CASSCF}
 
 % \todo{present the bad data :( -- mention might hint at needing the core (I think Andreea's paper corroborated this)}
 
 \section{Transcorrelated Trial Wavefunction}
+
+\section{Computational Details}
 
 \section{Results}
 

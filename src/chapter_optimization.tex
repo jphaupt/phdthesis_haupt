@@ -570,6 +570,7 @@ These results show that this workflow can provide remarkably accurate total and 
 Future work on this topic have focused on technical advancements and efficient approximations for dealing with the three-body integrals.
 
 \subsection{The xTC Approximation}
+\label{sec:xtc}
 
 One particularly significant refinement of this method is the so-called \gls{xTC} approximation,\supercite{christlmaierXTC2023} wherein upon neglecting explicit three-body contributions, the remaining three-body terms are ``folded'' into the remaining lower-order terms.
 
@@ -590,5 +591,3 @@ and $U=V-K$, $\tilde a_{p\dots}^{q\dots}$ are the normal-ordered
 excitation operators, and $\gamma_{p\dots}^{q\dots}=\bra\Phi a_{p\dots}^{q\dots}\ket\Phi$ are the density matrices.
 
 Ignoring the three-body terms $L_N$ leads to an improved scaling with respect to basis set size while directly contracting intermediates to the lower-body corrections obviates the necessity to calculate $L$ and results in excellent energy agreement.\supercite{christlmaierXTC2023} Once the integrals are calculated, $\htc$ has, like $\hat H$, at most two-body interactions and therefore needs storage for four indices (albeit we no longer have Hermiticity). This means that calculations done on these integrals (in principle) are not much more expensive than the conventional non-TC calculations.
-
-\label{sec:xtc}
