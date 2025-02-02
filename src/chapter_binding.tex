@@ -96,13 +96,45 @@ where $\ket{\Phi_0}=\sum_I\ket{D_I}$. In practice, this modification results in 
 
 \subsection{Size Consistency}
 
+One possible concern when studying problems like dissociation is that the method be size consistent. It is worth noting that one of the earliest Jastrow factors used for TC\supercite{boysCalculation1969} as well as in more recent work\supercite{cohenSimilarity2019} is given by
+\begin{equation}
+\label{eq:boyshandyjastrow}
+J = \sum_{i<j} u(\bm r_i, \bm r_j)
+\end{equation}
+where
+\begin{equation}
+u(\bm r_i, \bm r_j) = \sum_{l,m,n}^{m+n+o\leq 6} c_{lmn}(\bar r_{iM}^m\bar r_{jN}^n+\bar r_{jM}^m\bar r_{iN}^n)\bar r_{ij}^l
+\end{equation}
+and $\bar r = r/(1+r)$.
+However, notice that for $l=0$ and $n,m>0$, we can have non-vanishing gradients of $u$ for arbitrary distances between $N$ and $M$, and hence for systems $A$ and $B$ arbitrarily far apart we do not necessarily have
+\begin{equation}
+\label{eq:size-consistency}
+e^{J_{A+B}}\ket{\Phi_{A+B}} = e^{J_0}(e^{J_{A}}\ket{\Phi_{A}})(e^{J_{B}}\ket{\Phi_{B}}),
+\end{equation}
+as $J_A$ will still act on system $B$, and vice versa. Here, $J_0$ is the electron-electron part of the Jastrow factor, $J_A$ the part involving nuclei in system $A$, and $J_B$ terms involving nuclei in system $B$.
+
+In contrast to these previous works, our Jastrow ansatz, equation \ref{eq:jastrow-again}, first presented by Drummond, Towler and Needs,\supercite{drummondJastrow2004} vanishes when systems $A$ and $B$ are far apart due to the presence of the cutoff functions. Therefore, our Jastrow factor form does not suffer from this problem.
+
+We must also ensure size consistency in our optimisation procedure. Assuming $\Phi_0$ is itself size consistent, it follows that for the given $J$, for non-interacting systems $A$ and $B$, the objective function, equation \ref{eq:varref-md}, $\sigma_\mathrm{ref}^2(A+B) = \sigma_\mathrm{ref}^2(A) + \sigma_\mathrm{ref}^2(B)$, where $\sigma_\mathrm{ref}^2(A)$ is the objective function for system $A$, and similarly for $B$. Hence, the parameters of the Jastrow factor should converge to the same values when treated as a non-interacting composite system as they would when treated as individual systems. Hence, our updated workflow is size consistent.
+
 \subsection{Choices for Multireference Ansatzes}
 
-\todo{Present: "circular" approach, CASCI, CASSCF}
-
-% \todo{present the bad data :( -- mention might hint at needing the core (I think Andreea's paper corroborated this)}
+We are now faced with the question of which choice of $\Phi_0$ is best. We present here three choices, and discuss their relative merits:
+\begin{itemize}
+    \item Using a FCIQMC wavefunction ansatz for $\Phi_0$. This is the most accurate one might get to the true solution, being essentially exact, but it is also computationally prohibitive for large systems. However, it is the most ``fool-proof'' proof-of-concept choice, can be treated as a blackbox (no need to choose an active space), and we might simply end the calculation early to get the most important components of the CI vector. In this chapter, we use a ``snapshot'' of the wave function at the end of a non-TC-FCIQMC calculation, and use the associated 1RDM calculated by the ``replica trick'' presented in section \ref{sec:fciqmc_rdm}. In this chapter, since our TC calculation is xTC-FCIQMC, using FCIQMC as the ansatz for $\Phi_0$ might be dubbed ``circular'' and actually does not worsen the computational scaling of the methodology. Of course, if we choose to use e.g. xTC-DCSD as our TC method, then the computational bottleneck is non-TC-FCIQMC, before we even begin transcorrelation.
+    \item Using a CASSCF wavefunction ansatz for $\Phi_0$. In this method, the orbitals are also modified. It is a compromise compared to the FCIQMC approach, though still quite costly, is not a blackbox method, and a greater percentage of the wavefunction might be stored in the CI vector (since only a smaller subset of the orbitals are considered).
+    \item Using a CASCI wavefunction ansatz for $\Phi_0$. Of the methods presented here, this is the least costly while still potentially capturing much of the static correlation needed and being relatively blackbox.\supercite{levineCAS2021} This is probably the most realistic choice for large-scale problems.
+\end{itemize}
 
 \section{Transcorrelated Trial Wavefunction}
+
+Another challenge when studying multireference problems with FCIQMC is noise in the projected energy. Here we generalise the discussion on trial wavefunctions presented in section \ref{sec:fciqmc_energy_estimators}.
+
+
+
+\todo{present the theory}
+
+\todo{present one example at dissociation showcasing the power of the methodology}
 
 \section{Computational Details}
 
