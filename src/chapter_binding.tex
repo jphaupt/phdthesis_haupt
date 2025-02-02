@@ -126,13 +126,33 @@ We are now faced with the question of which choice of $\Phi_0$ is best. We prese
     \item Using a CASCI wavefunction ansatz for $\Phi_0$. Of the methods presented here, this is the least costly while still potentially capturing much of the static correlation needed and being relatively blackbox.\supercite{levineCAS2021} This is probably the most realistic choice for large-scale problems.
 \end{itemize}
 
-\section{Transcorrelated Trial Wavefunction}
-
+\section{Trial Wavefunctions in TC-FCIQMC}
+\begingroup
+\def\trial {\Phi_\mathrm{trial}}
+\def\evec {\Phi_\mathrm{FCIQMC}}
 Another challenge when studying multireference problems with FCIQMC is noise in the projected energy. Here we generalise the discussion on trial wavefunctions presented in section \ref{sec:fciqmc_energy_estimators}.
 
+Consider a TC-FCIQMC calculation, where we wish to solve for the eigenvalue of the ground state $\Phi$ for the TC Hamiltonian $\htc$. Conventionally, the projected energy can be written
+\begin{equation}
+    E_\mathrm{proj} = \frac{\bra\trial\htc\ket\evec}{\braket{\trial}{\evec}}
+\end{equation}
+where $\ket\evec$ is the estimate of the wave function according to the FCIQMC algorithm, and $\ket\trial$ is the trial wave function. If we write $\ket\evec$ as a sum of the exact wave function $\ket{\Phi}$ plus some error $\ket\delta$, we have
+\begin{align}
+    E_\mathrm{proj} &= \frac{\bra\trial\htc\ket{\Phi+\delta}}{\braket{\trial}{\Phi+\delta}} \\
+    &= \frac{E_0\braket{\trial}{\Phi}+\bra\trial\htc\ket{\delta}}{\braket{\trial}{\Phi}+\braket{\trial}{\delta}}
+\end{align}
+where $E_0$ is the exact ground-state energy.
+If $\ket\trial$ is the left eigenvector, then $\bra\trial\htc\ket{\delta}=(\htc^\dag\ket\trial)^\dag\ket{\delta}=E_0\braket{\trial}{\delta}$, so
+\begin{align}
+    E_\mathrm{proj} &= \frac{E_0\braket{\trial}{\Phi}+E_0\braket{\trial}{\delta}}{\braket{\trial}{\Phi}+\braket{\trial}{\delta}}\\&=E_0\frac{\braket{\trial}{\Phi}+\braket{\trial}{\delta}}{\braket{\trial}{\Phi}+\braket{\trial}{\delta}}\\&=E_0,
+\end{align}
+i.e. if our trial wavefunction is the left eigenvector of $\htc$, then $E_\mathrm{proj}=E_0$.
 
+In standard FCIQMC, we take the top $N_T$ determinants at some point of a calculation, form a subspace by constructing a $N_T\times N_T$ trial space $H_\mathrm{trial}$, diagonalise it exactly, and use the eigenvector as an approximation to the exact one, to be used as $\ket\trial$ in the calculation of the projected energy. As $H$ is Hermitian, taking the left or the right eigenvector is irrelevant. To get the left eigenvector in an equivalent way would involve doing a FCIQMC calculation on $\htc^\dag$, but this is costly and instead we find taking the left eigenvector of the subspace from $\htc$ to be a good approximation, as the two typically have similar top determinants. Moreover, this method gives the correct energy as long as the trial wavefunction has nonzero overlap with the true eigenvector, so even if our choice is not perfect, it will still give the correct answer, and likely with a smaller error compared to using the Hartree-Fock determinant.
 
-\todo{present the theory}
+\endgroup
+
+As an example of the effectiveness of this approach,
 
 \todo{present one example at dissociation showcasing the power of the methodology}
 
