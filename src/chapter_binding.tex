@@ -121,9 +121,9 @@ We must also ensure size consistency in our optimisation procedure. Assuming $\P
 
 We are now faced with the question of which choice of $\Phi_0$ is best. We present here three choices, and discuss their relative merits:
 \begin{itemize}
-    \item Using a FCIQMC wavefunction ansatz for $\Phi_0$. This is the most accurate one might get to the true solution, being essentially exact, but it is also computationally prohibitive for large systems. However, it is the most ``fool-proof'' proof-of-concept choice, can be treated as a blackbox (no need to choose an active space), and we might simply end the calculation early to get the most important components of the CI vector. In this chapter, we use a ``snapshot'' of the wave function at the end of a non-TC-FCIQMC calculation, and use the associated 1RDM calculated by the ``replica trick'' presented in section \ref{sec:fciqmc_rdm}. In this chapter, since our TC calculation is xTC-FCIQMC, using FCIQMC as the ansatz for $\Phi_0$ might be dubbed ``circular'' and actually does not worsen the computational scaling of the methodology. Of course, if we choose to use e.g. xTC-DCSD as our TC method, then the computational bottleneck is non-TC-FCIQMC, before we even begin transcorrelation.
-    \item Using a CASSCF wavefunction ansatz for $\Phi_0$. In this method, the orbitals are also modified. It is a compromise compared to the FCIQMC approach, though still quite costly, is not a blackbox method, and a greater percentage of the wavefunction might be stored in the CI vector (since only a smaller subset of the orbitals are considered).
-    \item Using a CASCI wavefunction ansatz for $\Phi_0$. Of the methods presented here, this is the least costly while still potentially capturing much of the static correlation needed and being relatively blackbox.\supercite{levineCAS2021} This is probably the most realistic choice for large-scale problems.
+    \item Using a FCIQMC wavefunction ansatz for $\Phi_0$. This is the most accurate one might get to the true solution, being essentially exact, but it is also computationally prohibitive for large systems. However, it is the most ``fool-proof'' proof-of-concept choice, can be treated as a blackbox (no need to choose an active space), and we might simply end the calculation early to get the most important components of the CI vector. In this chapter, we use a ``snapshot'' of the wave function at the end of a non-TC-FCIQMC calculation, and use the associated 1RDM calculated by the ``replica trick'' presented in section \ref{sec:fciqmc_rdm}. In this chapter, since our TC calculation is xTC-FCIQMC, using FCIQMC as the ansatz for $\Phi_0$ might be dubbed ``circular'' and actually does not worsen the computational scaling of the methodology. Of course, if we choose to use e.g. xTC-DCSD as our TC method, then the computational bottleneck is non-TC-FCIQMC, before we even begin transcorrelation. We will refer to Jastrow factors optimised with this ansatz as ``FCIQMC-Jastrows''.
+    \item Using a CASSCF wavefunction ansatz for $\Phi_0$. In this method, the orbitals are also modified. It is a compromise compared to the FCIQMC approach, though still quite costly, is not a blackbox method, and a greater percentage of the wavefunction might be stored in the CI vector (since only a smaller subset of the orbitals are considered). We will refer to Jastrow factors optimised with this ansatz as ``CASSCF-Jastrows''.
+    \item Using a CASCI wavefunction ansatz for $\Phi_0$. Of the methods presented here, this is the least costly while still potentially capturing much of the static correlation needed and being relatively blackbox.\supercite{levineCAS2021} This is probably the most realistic choice for large-scale problems. We will refer to Jastrow factors optimised with this ansatz as ``CASCI-Jastrows''.
 \end{itemize}
 
 \section{Trial Wavefunctions in TC-FCIQMC}
@@ -152,9 +152,14 @@ In standard FCIQMC, we take the top $N_T$ determinants at some point of a calcul
 
 \endgroup
 
-As an example of the effectiveness of this approach,
-
-\todo{present one example at dissociation showcasing the power of the methodology}
+As an example of the effectiveness of this approach, consider a highly dissociated point in the binding curve of the nitrogen molecule. This is shown in figure \ref{fig:trial_projected_energy}, specifically at $10$ Bohr with the \avtz basis set and $10^8$ walkers. For this calculation, FCIQMC-Jastrows were used.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/binding/trial_v_projE.pdf}
+    \caption{The HF-projected and trial-projected energy trajectories in imaginary time for N$_2$ with a separation of $10$ Bohr with the \avtz basis set and the Jastrow factor optimised for the variance of the FCIQMC energy. The calculation was done with $10^8$ FCIQMC walkers. This is a highly dissociated and hence multireference state. The trial-projected energy uses the top 10 determinants but substantially improves the rate of convergence when compared to the HF projected energy.}
+    \label{fig:trial_projected_energy}
+\end{figure}
+We can see from this figure that using the trial-projected energy even with just a few determinants allows us to much more easily handle highly multireference problems. Thus, trial wave functions are used throughout the rest of this chapter.
 
 \section{Computational Details}
 
