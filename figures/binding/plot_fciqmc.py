@@ -63,28 +63,29 @@ def load_data_with_uncertainties(file_path: str, uncertainty_cols: list[int]) ->
 data_all = [
             # "N2_avdz_fciqmc.dat",
             # "N2_avqz_fciqmc.dat",
-            # "N2_avtz_casscf.dat",
-            # "N2_avtz_fciqmc.dat",
             "N2_avtz_rhf.dat",
-            # "N2_avtz_casci.dat"
+            "N2_avtz_casci.dat",
+            "N2_avtz_casscf.dat",
+            "N2_avtz_fciqmc.dat"
             ]
 data_f12_all = [
                 # "N2_avqz_f12.dat",
-                # "N2_avtz_f12.dat",
+                "N2_avtz_f12.dat",
                 # "N2_avtz_dcsdf12.dat"
                 ]
 data_exp = np.genfromtxt('experiment.dat')
 
 # %%
 
-for data_name in data_f12_all:
-    data = np.genfromtxt(data_name)
-    plt.plot(data[:,0], data[:,-1], 'd-', label=data_name, markerfacecolor='none')
 for data_name in data_all:
     data = load_data_with_uncertainties(data_name, [1])
-    plt.plot(data[:,0], data[:,1], 'o-', label=data_name)
+    data_name = data_name.split("_")[-1].split(".")[0].upper()
+    plt.plot(data[:,0], data[:,1], 'o-', label=f"{data_name}-Jastrow")
     # plt.plot(data[:,0], data[:,-1], 's-', label=data_name+"_dcsd")
-# plt.legend()
+for data_name in data_f12_all:
+    data = np.genfromtxt(data_name)
+    plt.plot(data[:,0], data[:,-1], 'd-', label="MRCI-F12", markerfacecolor='none')
+plt.legend()
 plt.ylim(-109.190, -109.175)
 plt.xlim(left=4)
 # plt.plot(data_exp[:,0], data_exp[:,1], 'k-', label='Experiment')
@@ -93,21 +94,30 @@ plt.show()
 plt.close()
 
 # %%
+for data_name in data_all:
+    data = load_data_with_uncertainties(data_name, [1])
+    data_name = data_name.split("_")[-1].split(".")[0].upper()
+    residuals = (data[:,1]-data[-1,1]) - (data_exp[:,1]-data_exp[-1,1])
+    plt.plot(data_exp[:,0], residuals, 'o-', label=f"{data_name}-Jastrow")
+    residuals = (data[:,-1]-data[-1,-1]) - (data_exp[:,1]-data_exp[-1,1])
+    # plt.plot(data_exp[:,0], residuals, 's-', label=data_name+"_dcsd")
 for data_name in data_f12_all:
     # remove last 2 points from f12 data because they are bad
     data = np.genfromtxt(data_name)
     residuals = (data[:-2,-1]-data[-3,-1]) - (data_exp[:-2,1]-data_exp[-3,1])
-    plt.plot(data_exp[:-2,0], residuals, 'd-', label=data_name, markerfacecolor='none')
-for data_name in data_all:
-    data = load_data_with_uncertainties(data_name, [1])
-    residuals = (data[:,1]-data[-1,1]) - (data_exp[:,1]-data_exp[-1,1])
-    plt.plot(data_exp[:,0], residuals, 'o-', label=data_name)
-    residuals = (data[:,-1]-data[-1,-1]) - (data_exp[:,1]-data_exp[-1,1])
-    # plt.plot(data_exp[:,0], residuals, 's-', label=data_name+"_dcsd")
-plt.grid(True, which="both", ls="--")
+    plt.plot(data_exp[:-2,0], residuals, 'd-', label="MRCI-F12", markerfacecolor='none', zorder=1)
+data_nontc = np.genfromtxt("N2_nontcfciqmc_bind_avtz.dat")
+residuals = (data_nontc[:,1]-data_nontc[-1,1]) - (data_exp[:,1]-data_exp[-1,1])
+# plt.plot(data_exp[:,0], residuals, '^-', label="Non-TC-FCIQMC", zorder=1)
+# plt.grid(True, which="both", ls="--")
 # plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left")
 plt.legend()
-plt.fill_between([min(data_exp[:,0]), max(data_exp[:,0])], -0.0016, +0.0016, alpha=0.2, color='k')
+xlim = plt.xlim()
+ylim = plt.ylim()
+plt.fill_between([min(data_exp[:,0])-10, max(data_exp[:,0])+10], -0.0016, +0.0016, alpha=0.2, color='k')
+plt.xlim(xlim)
+plt.ylim(ylim)
+plt.ylim(top=0.008)
 plt.savefig("residuals.pdf", bbox_inches='tight')
 plt.show()
 plt.close()

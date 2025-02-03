@@ -125,6 +125,7 @@ We are now faced with the question of which choice of $\Phi_0$ is best. We prese
     \item Using a CASSCF wavefunction ansatz for $\Phi_0$. In this method, the orbitals are also modified. It is a compromise compared to the FCIQMC approach, though still quite costly, is not a blackbox method, and a greater percentage of the wavefunction might be stored in the CI vector (since only a smaller subset of the orbitals are considered). We will refer to Jastrow factors optimised with this ansatz as ``CASSCF-Jastrows''.
     \item Using a CASCI wavefunction ansatz for $\Phi_0$. Of the methods presented here, this is the least costly while still potentially capturing much of the static correlation needed and being relatively blackbox.\supercite{levineCAS2021} This is probably the most realistic choice for large-scale problems. We will refer to Jastrow factors optimised with this ansatz as ``CASCI-Jastrows''.
 \end{itemize}
+We refer to the Jastrow factors optimised with the restricted HF ansatz described in the previous section as ``RHF-Jastrows''.\footnote{Unrestricted HF along with spin-dependent Jastrow factors are the subject of a future work.}
 
 \section{Trial Wavefunctions in TC-FCIQMC}
 \begingroup
@@ -161,13 +162,77 @@ As an example of the effectiveness of this approach, consider a highly dissociat
 \end{figure}
 We can see from this figure that using the trial-projected energy even with just a few determinants allows us to much more easily handle highly multireference problems. Thus, trial wave functions are used throughout the rest of this chapter.
 
-\section{Computational Details}
-
 \section{Results}
+\subsection{Computational Details}
+
+We calculate the energy of the nitrogen molecule across multiple bond lengths, ranging from $1.92$ to $10$ Bohr. We use the \avtz basis set, which contains diffuse functions for long-range correlations while still being a modest size. We calculate the non-TC CI vectors and \glspl{1RDM} for each geometry with FCIQMC (using \neci),\supercite{gutherNECI2020} CASSCF (using \molpro),\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020} and CASCI (using \pyscf).\supercite{sunPySCF2018} The CI vector is then used in the objective function for optimising the Jastrow factor with VMC using \casino.\supercite{needsVariational2020} Using the optimised Jastrow factor and 1RDM, we then calculate the relevant integrals for the xTC Hamiltonian using \pytchint. Finally, xTC-FCIQMC is performed on these integrals with \neci. Each geometry is calculated independently; that is, the Jastrow factor is optimised for each geometry separately.
+
+Next, we also calculate the vertical excited-state energies using this workflow for a few states of the nitrogen and ammonia (NH$_3$) molecules with CASSCF- and CASCI-Jastrows. Excited states are also challenging multireference problems. Moreover, we optimise the Jastrow factors in a state-specific manner. That is, for some excited state $\Phi_\mathrm{ex}$, our ansatz becomes $\Psi_\mathrm{ex} = \e^J\Phi_\mathrm{ex}$, thereby modifying our workflow slightly to optimise specifically for that state, as well as using its 1RDM for the xTC approximation. Naturally, the xTC-FCIQMC calculation will be targeting this state. For cases where a triplet excited state of the same symmetry is lower in energy than a singlet excited state, the FCIQMC calculation will collapse to the triplet state. To overcome this, we use a spin-penalty term to target the singlet excited state.\supercite{weserSpin2022}
+
+For the N$_2$ binding curve, we compare against the accurate experimental curve determined in reference \citenum{leroyAccurate2006}, and as a benchmark we compare against F12 calculations, performed in \molpro. For excited states we compare against extrapolated FCI calculations reported in reference \citenum{loosMountaineering2018}.
 
 \subsection{Binding Curves}
-\todo{mention that we fix the binding curves}
+
+Performing the
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/binding/all_binding_curves}
+    \includegraphics[width=0.8\textwidth]{figures/binding/all_binding_curves_dissociated}
+    \caption{\todo{describe plots getting back dissociated limit}}
+    \label{fig:binding-curves-full-diss}
+\end{figure}
+
+\todo{mention that we recover qualitatively-correct binding curves}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/binding/all_binding_curves_min}
+    \caption{\todo{describe minimum shift}}
+    \label{fig:binding-curves-minimum}
+\end{figure}
+
+\todo{discussion comparing against experiment, maybe a brief description of what the experiment actually is}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/binding/residuals}
+    \caption{\todo{description of curves against experiment; mention they're fixed at 10 Bohr, except MRCI-F12 which didn't converge there; mention shaded = chemical accuracy}}
+    \label{fig:binding-curves-experiment}
+\end{figure}
+
 \todo{also include a table about just ``how size-consistent'' the results actually are.}
+
+\todo{atomisation energies comparison against experiment and HEAT}
+
+\todo{plots to include:
+- Full binding curves (maybe inset for the dissociated limit)
+- Zoom in at the minimum
+- Comparison to experiment for all curves
+- comparison to non-TC-FCIQMC}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{c|c}
+        Jastrow Factor & Atomisation Energy (mHa) \\
+        \hline
+        \todo{...} &
+    \end{tabular}
+    \caption{\todo{table of atomisation energies}}
+    \label{tbl:binding-atomisation-energies}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{c|c}
+        Jastrow Factor & $\sum E_\mathrm{atom} - E_\mathrm{molecule}$ (mHa) \\
+        \hline
+        \todo{...} &
+    \end{tabular}
+    \caption{\todo{error for size Consistency}}
+    \label{tbl:size-consistency}
+\end{table}
+
 
 \subsection{Excitation Energies}
 \todo{mention can target the exact state(s) in question}
