@@ -197,7 +197,7 @@ Performing the
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/residuals}
-    \caption{\todo{description of curves against experiment; mention they're fixed at 10 Bohr, except MRCI-F12 which didn't converge there; mention shaded = chemical accuracy}}
+    \caption{\todo{description of curves against experiment; mention they're fixed at 10 Bohr, except MRCI-F12 which didn't converge there; mention shaded = chemical accuracy -- also worth noting that the TC methods dip below experiment a little! i.e. we are not fully variational(!)}}
     \label{fig:binding-curves-experiment}
 \end{figure}
 
@@ -244,12 +244,32 @@ Performing the
 \multicolumn{6}{c}{\textbf{Dinitrogen}} \\
 State & Method & \avdz & \avtz & \avqz & Experiment \\
 \hline
-\multirow{3}{*}{$1\,^1\Pi_g$}
-& non-TC      & &  & val 3 & \multirow{3}{*}{\todo{exp}} \\
+\multirow{3}{*}{$^1\Pi_g$}
+& non-TC exFCI      & &  & val 3 & \multirow{3}{*}{\todo{exp}} \\
 & CASCI-xTC   & &  & val 1 &  \\
 & CASSCF-xTC  & &  & val 2 &  \\
 \hline
-\multirow{3}{*}{$3\,^2\Sigma_g$}
+\multirow{3}{*}{$^1\Sigma_u^-$}
+& ---       & &    & ---   & \multirow{3}{*}{---} \\
+& ---       & &    & ---   &  \\
+& ---       & &    & ---   &  \\
+\hline
+\multirow{3}{*}{$^1\Delta_u$}
+& ---       & &    & ---   & \multirow{3}{*}{---} \\
+& ---       & &    & ---   &  \\
+& ---       & &    & ---   &  \\
+\hline
+\multirow{3}{*}{$^3\Sigma_u^+$}
+& ---       & &    & ---   & \multirow{3}{*}{---} \\
+& ---       & &    & ---   &  \\
+& ---       & &    & ---   &  \\
+\hline
+\multirow{3}{*}{$^3\Pi_g$}
+& ---       & &    & ---   & \multirow{3}{*}{---} \\
+& ---       & &    & ---   &  \\
+& ---       & &    & ---   &  \\
+\hline
+\multirow{3}{*}{$^3\Delta_u$}
 & ---       & &    & ---   & \multirow{3}{*}{---} \\
 & ---       & &    & ---   &  \\
 & ---       & &    & ---   &  \\
@@ -264,12 +284,12 @@ State & Method & \avdz & \avtz & \avqz & Experiment \\
 \multicolumn{6}{c}{\textbf{Ammonia}} \\
 State & Method & \avdz & \avtz & \avqz & Experiment \\
 \hline
-\multirow{3}{*}{$1\,^1\Pi_g$}
-& non-TC      & &  & val 3 & \multirow{3}{*}{\todo{exp}} \\
+\multirow{3}{*}{$^1\Pi_g$}
+& non-TC exFCI     & &  & val 3 & \multirow{3}{*}{\todo{exp}} \\
 & CASCI-xTC   & &  & val 1 &  \\
 & CASSCF-xTC  & &  & val 2 &  \\
 \hline
-\multirow{3}{*}{$3\,^2\Sigma_g$}
+\multirow{3}{*}{$^3\Sigma_g$}
 & ---       & &    & ---   & \multirow{3}{*}{---} \\
 & ---       & &    & ---   &  \\
 & ---       & &    & ---   &  \\

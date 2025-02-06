@@ -1,11 +1,15 @@
-\chapter{(Quasi-)Universal Jastrow Factors}
+\chapter{Universal and Modular Jastrow Factors for the Transcorrelated Method}
 \label{chap:universal}
 
 The contents of this chapter are planned to be expanded for a future publication. Some images may be repeated there.
 
 \section{Introduction}
 
-\todo{describe motivation (ease of use, scalability, generalisability)}
+So far, the \gls{TC} methods we have discussed had one major bottleneck in common: the optimisation of the Jastrow factor. While VMC in itself does not scale unfavourably, the fact that we need so many VMC cycles in order to properly optimise for TC (see \autoref{chap:opt}) results in a significant computational cost. For large systems, this can become the prohibitive step in the workflow.
+
+Here we explore some alternative avenues to construct Jastrow factors for use in the transcorrelated method. In particular, we consider constructing ``universal'' Jastrow factors that do not need any optimisation. These have already been introduced in the literature,\supercite{fournaisNonIsotropic2007,fournaisSharp2005,tewSecond2008,szenesStriking2024} and are constructed to satisfy cusp conditions. We will also construct Jastrow factors from those optimised for atomic systems. That is, we optimise the Jastrow factor for the atom, and use the same Jastrow factor for molecules (so that the molecular Jastrow is the sum of atomic Jastrows). In effect, this would allow us to compile sophisticated atomic Jastrow factors that may be stored in a database for easy retrieval when doing larger systems, without any optimisation. We also consider keeping some components of these Jastrows fixed, while optimising other elements as a ``molecular correction'' to the atomic Jastrow factor.
+
+These updated workflows represent significant improvements in the scalability and ease of use for TC methods, while arguably being more conceptually satisfying by making the Jastrow factors more general.
 
 \section{Theory}
 

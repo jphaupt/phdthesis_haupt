@@ -118,6 +118,8 @@ plt.fill_between([min(data_exp[:,0])-10, max(data_exp[:,0])+10], -0.0016, +0.001
 plt.xlim(xlim)
 plt.ylim(ylim)
 plt.ylim(top=0.008)
+plt.ylabel(r"$E-E_\mathrm{exp}$")
+plt.xlabel(r"Interatomic Distance (Bohr)")
 plt.savefig("residuals.pdf", bbox_inches='tight')
 plt.show()
 plt.close()

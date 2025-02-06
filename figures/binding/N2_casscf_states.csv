@@ -1,0 +1,12 @@
+# comment
+# TODO : all of these need verification
+# can use this even inside the individual cells(!)
+# use to leave notes
+ state  , avdz             , avtz
+ gs     , -109.4780736(53) , -109.532236(21)
+ 1Pig   , -109.137310(35)  , -109.190221(80)
+ 1Sigu- , -109.111545(20)  , -109.167268(17) ##
+ 1Delu  , -109.100542(49)  , -109.15556(13)
+ 3Sigu+ ,  -109.195368(24) , -109.248247(42)
+ 3Pig   , -109.185238(13)  , -109.237669(18)
+ 3Delu  , -109.152141(21)  , -109.206424(43)
