@@ -165,25 +165,39 @@ We can see from this figure that using the trial-projected energy even with just
 \section{Results}
 \subsection{Computational Details}
 
-We calculate the energy of the nitrogen molecule across multiple bond lengths, ranging from $1.92$ to $10$ Bohr. We use the \avtz basis set, which contains diffuse functions for long-range correlations while still being a modest size. We calculate the non-TC CI vectors and \glspl{1RDM} for each geometry with FCIQMC (using \neci),\supercite{gutherNECI2020} CASSCF (using \molpro),\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020} and CASCI (using \pyscf).\supercite{sunPySCF2018} The CI vector is then used in the objective function for optimising the Jastrow factor with VMC using \casino.\supercite{needsVariational2020} Using the optimised Jastrow factor and 1RDM, we then calculate the relevant integrals for the xTC Hamiltonian using \pytchint. Finally, xTC-FCIQMC is performed on these integrals with \neci. Each geometry is calculated independently; that is, the Jastrow factor is optimised for each geometry separately.
+We calculate the energy of the nitrogen molecule across multiple bond lengths, ranging from $1.92$ to $10$ Bohr. We use the \avtz basis set, which contains diffuse functions for long-range correlations while still being a modest size. We calculate the non-TC CI vectors and \glspl{1RDM} for each geometry with FCIQMC (using \neci),\supercite{gutherNECI2020} CASSCF (using \molpro),\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020} and CASCI (using \pyscf).\supercite{sunPySCF2018} The CI vector is then used in the objective function for optimising the Jastrow factor with VMC using \casino.\supercite{needsVariational2020} Using the optimised Jastrow factor and 1RDM, we then calculate the relevant integrals for the xTC Hamiltonian using \pytchint. Finally, xTC-FCIQMC is performed on these integrals with \neci. Each geometry is calculated independently; that is, the Jastrow factor is optimised for each geometry separately. In order to keep memory usage manageable, we cutoff the number of determinants in our CI vector to be $100$. Even at the dissociated limit, the number of relatively-highly-weighted determinants is around $20$, so $100$ should be enough to capture the static correlation for the VMC optimisation.
 
 Next, we also calculate the vertical excited-state energies using this workflow for a few states of the nitrogen and ammonia (NH$_3$) molecules with CASSCF- and CASCI-Jastrows. Excited states are also challenging multireference problems. Moreover, we optimise the Jastrow factors in a state-specific manner. That is, for some excited state $\Phi_\mathrm{ex}$, our ansatz becomes $\Psi_\mathrm{ex} = \e^J\Phi_\mathrm{ex}$, thereby modifying our workflow slightly to optimise specifically for that state, as well as using its 1RDM for the xTC approximation. Naturally, the xTC-FCIQMC calculation will be targeting this state. For cases where a triplet excited state of the same symmetry is lower in energy than a singlet excited state, the FCIQMC calculation will collapse to the triplet state. To overcome this, we use a spin-penalty term to target the singlet excited state.\supercite{weserSpin2022}
 
-For the N$_2$ binding curve, we compare against the accurate experimental curve determined in reference \citenum{leroyAccurate2006}, and as a benchmark we compare against F12 calculations, performed in \molpro. For excited states we compare against extrapolated FCI calculations reported in reference \citenum{loosMountaineering2018}.
+For the N$_2$ binding curve, we compare against the highly accurate experimental curve determined in reference \citenum{leroyAccurate2006}, and as a benchmark we compare against F12 calculations, performed in \molpro. For excited states we compare against extrapolated FCI calculations reported in reference \citenum{loosMountaineering2018}.
 
 \subsection{Binding Curves}
 
-Performing the
+As illustrated in figure \ref{fig:binding-curves-full-diss}, we obtain a qualitatively-correct binding curve for the nitrogen molecule using any of the Jastrow factors, besides the RHF-Jastrow. Shown in that figure is also a zoom-in on the dissociated limit, indicating the RHF-Jastrow curve is the only one exhibiting the pathological ``dip'' behaviour. The remaining nonphysical behaviour amounts to noise, which has a few potential sources:
+\begin{itemize}
+    \item The optimisation of the Jastrow factor is done with VMC, a stochastic algorithm. As described in \autoref{chap:opt}, VMC optimisation for the TC method is complex, and as of yet has not been done on strongly multireference problems. Since the optimisation is done independently for each point along the binding curve, this may lead to some noise.
+    \item The FCIQMC calculations are also stochastic, and this may also lead to some noise, particularly in the dissociated limit when not using a multideterminantal trial wave function.
+    \item In the case of the FCIQMC-Jastrow, even the non-TC calculation prior to Jastrow optimisation is stochastic. In this case, the CI vector and 1RDM collected from the non-TC-FCIQMC calculation is done so at only a snapshot in imaginary time: right at the end of the calculation. One way to reduce this noise (not explored here) would be to average these values over imaginary time.
+\end{itemize}
+Thus, we can conclude that the biggest problem with the TC workflow has been resolved in three ways by introducing a multireference Jastrow optimisation (and 1RDM for the xTC approximation).
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/all_binding_curves}
     \includegraphics[width=0.8\textwidth]{figures/binding/all_binding_curves_dissociated}
-    \caption{\todo{describe plots getting back dissociated limit}}
+    \caption{xTC-FCIQMC energies for the nitrogen dimer for various points along its binding curve, between 1.92 and 10 Bohr radii. Calculations were performed with the \avtz basis set. Four choices for Jastrow factors are presented. The forms for the actual Jastrow factor $J$ is the same, but the value for $\ket{\Phi}$ in the ansatz $\ket\Psi=\e^J\ket\Phi$ is different. The choices are: RHF-Jastrow (blue), CASCI-Jastrow (orange), CASSCF-Jastrow (green) and the FCIQMC-Jastrow (red). The top panel shows the full binding curve, while the bottom panel shows the dissociated limit. Notice that except for the RHF-Jastrow curve, these Jastrow factors result in qualitatively-correct xTC-FCIQMC binding curves.
+    }
     \label{fig:binding-curves-full-diss}
 \end{figure}
 
-\todo{mention that we recover qualitatively-correct binding curves}
+We now consider the binding curve at the equilibrium geometry (taken to be $2.08$ Bohr radii). Such a zoom-in is shown in figure \ref{fig:binding-curves-minimum}. Since N$_2$ is largely single-reference in this region, we expect all of the curves, including that with the RHF-Jastrow, to approximately be equal there. Relative to the RHF-Jastrow curve,
+\begin{itemize}
+    \item The CASCI-Jastrow curve uses the same orbitals and uses only a small subspace of the full CI space, and is indeed strongly single-reference in this region. As a result, this curve is almost identical to the RHF-Jastrow curve in the region around the minimum.
+    \item The CASSCF-Jastrow \todo{...}
+    \item The FCIQMC-Jastrow \todo{...}
+\end{itemize}
+
+\todo{mention the shifted minimum and Daniel's basic explanation (shift is about 2.8 mHa) - has to do with the orbitals or maybe because of the 1RDM, also mention how FCIQMC goes up a little (maybe because we capture less of the wave function?)}
 
 \begin{figure}[htbp]
     \centering
@@ -197,7 +211,7 @@ Performing the
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/residuals}
-    \caption{\todo{description of curves against experiment; mention they're fixed at 10 Bohr, except MRCI-F12 which didn't converge there; mention shaded = chemical accuracy -- also worth noting that the TC methods dip below experiment a little! i.e. we are not fully variational(!)}}
+    \caption{\todo{description of curves against experiment; mention they're fixed at 10 Bohr, except MRCI-F12 which didn't converge there; mention shaded = chemical accuracy -- also worth noting that the TC methods dip below experiment a little! but we are still variational; this is because we are comparing against the zeroed-at-10-bohr curve}}
     \label{fig:binding-curves-experiment}
 \end{figure}
 
@@ -211,7 +225,7 @@ Performing the
 - Comparison to experiment for all curves
 - comparison to non-TC-FCIQMC}
 
-\begin{table}[htbp]
+\begin{table}[!h]
     \centering
     \begin{tabular}{c|c}
         Jastrow Factor & Atomisation Energy (mHa) \\
@@ -222,10 +236,10 @@ Performing the
     \label{tbl:binding-atomisation-energies}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[!h]
     \centering
     \begin{tabular}{c|c}
-        Jastrow Factor & $\sum E_\mathrm{atom} - E_\mathrm{molecule}$ (mHa) \\
+        Jastrow Factor & $\sum E_\mathrm{atom} - E_\mathrm{molecule}(r=10)$ (mHa) \\
         \hline
         \todo{...} &
     \end{tabular}
