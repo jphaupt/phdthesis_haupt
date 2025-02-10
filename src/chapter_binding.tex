@@ -261,14 +261,15 @@ We also wish to determine just how accurate our calculations are. This is easy t
 
 \begin{table}[h!]
 \centering
+\begin{threeparttable}
 \begin{tabular}{c|cccc|c}
 \multicolumn{6}{c}{\textbf{Dinitrogen}} \\
-State & Method & \avdz & \avtz & \avqz & Benchmarks* \\
+State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 \hline
 \multirow{3}{*}{$^1\Pi_g$}
-& non-TC exFCI & 345.8(0)  &  & \todo{} & \multirow{3}{*}{\todo{exp}} \\
-& CASCI-xTC    & 341.86(4) &  & \todo{} &  \\
-& CASSCF-xTC   & 340.729(3) &  & \todo{} &  \\
+& non-TC exFCI & 345.8(0)  &  & \todo{} & \todo{exp1}\tnote{1} \\
+& CASCI-xTC    & 341.86(4) &  & \todo{} & \todo{exp2}\tnote{2}  \\
+& CASSCF-xTC   & 340.729(3) &  & \todo{} & \todo{th1}\tnote{3}  \\
 \hline
 \multirow{3}{*}{$^1\Sigma_u^-$}
 & non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
@@ -295,9 +296,13 @@ State & Method & \avdz & \avtz & \avqz & Benchmarks* \\
 & CASCI-xTC          & &    & \todo{}   &  \\
 & CASSCF-xTC         & &    & \todo{}   &  \\
 \bottomrule
-\multicolumn{6}{l}{\small *In each row, the first two values are experimental, from references \todo{...} -- \todo{use threeparttable and tnote instead!}} \\
-\multicolumn{6}{l}{\small and the last is last one is theoretical, from reference \todo{...}.}
 \end{tabular}
+\begin{tablenotes}
+    \item[1] Experimental value, reference \todo{...}.
+    \item[2] Experimental value, reference \todo{...}.
+    \item[3] Theoretical value, reference \todo{...}.
+\end{tablenotes}
+\end{threeparttable}
 \caption{\todo{Comparison of methods and experimental values for different states.}}
 \label{tbl:excitation-energies-n2}
 \end{table}
