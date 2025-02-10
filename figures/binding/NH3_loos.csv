@@ -1,0 +1,5 @@
+# values taken from Loos paper
+# values in eV
+state  , avdz     , avtz     , avqz
+1E , 8.08 , 8.16 , 8.22
+3A2, 6.19 , 6.31 , 6.35

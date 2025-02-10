@@ -193,20 +193,20 @@ Thus, we can conclude that the biggest problem with the TC workflow has been res
 We now consider the binding curve at the equilibrium geometry (taken to be $2.08$ Bohr radii). Such a zoom-in is shown in figure \ref{fig:binding-curves-minimum}. Since N$_2$ is largely single-reference in this region, we expect all of the curves, including that with the RHF-Jastrow, to approximately be equal there. Relative to the RHF-Jastrow curve,
 \begin{itemize}
     \item The CASCI-Jastrow curve uses the same orbitals and uses only a small subspace of the full CI space, and is indeed strongly single-reference in this region. As a result, this curve is almost identical to the RHF-Jastrow curve in the region around the minimum.
-    \item The CASSCF-Jastrow \todo{...}
-    \item The FCIQMC-Jastrow \todo{...}
+    \item The CASSCF-Jastrow curve has a noticeable shift of about $2.8$ mHa. While not expected, since the TC method is nonvariational we cannot guarantee a more complete wave function description to necessarily lead to a lower energy value. However, notice in the bottom panel of figure \ref{fig:binding-curves-full-diss} the CASSCF-Jastrow curve is shifted upwards relative to the CASCI-Jastrow curve by about the same amount, so in relative terms this is actually acceptable.
+    \item The FCIQMC-Jastrow is slightly higher in energy compared to the RHF- and CASCI-Jastrow curves near the minimum, and similarly above the CASCI-Jastrow curve at dissociation. Since it shares the same orbitals as the CASCI-Jastrow curve, and we are primarily concerned with static correlation at this part of the workflow, we expect the FCIQMC-Jastrow curve to have a similar shape, and indeed it does. Possible sources of differences are: stochastic noise and having more flexibility to capture the full wave function (especially relevant at dissociation).
 \end{itemize}
-
-\todo{mention the shifted minimum and Daniel's basic explanation (shift is about 2.8 mHa) - has to do with the orbitals or maybe because of the 1RDM, also mention how FCIQMC goes up a little (maybe because we capture less of the wave function?)}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/all_binding_curves_min}
-    \caption{\todo{describe minimum shift}}
+    \caption{The N$_2$ binding curves at \avtz for the RHF- (blue), CASCI- (orange), CASSCF- (green) and FCIQMC-Jastrow (red), zoomed in near equilibrium. Here, the problem is strongly single-reference and hence we expect all curves to be similar. However, the CASSCF-Jastrow curve is shifted upwards relative to the CASCI-Jastrow curve by about $2.8$ mHa, but this is compensated for at dissociation.}
     \label{fig:binding-curves-minimum}
 \end{figure}
 
-\todo{discussion comparing against experiment, maybe a brief description of what the experiment actually is}
+We also wish to determine just how accurate our calculations are. This is easy to verify for the relative energies, as we can directly compare against HEAT.\supercite{fellerSurvey2008} However, we also want to evaluate the accuracy of the rest of the binding curve. For this, we test against an accurate fit to experimental spectroscopic data which includes high-energy dissociated data.\supercite{leroyAccurate2006} Since we are only interested in relative energies, we normalise all curves to be zero at $10$ Bohr radii, and subtract the experimental values. The result of this is shown in figure \ref{fig:binding-curves-experiment}.
+
+\todo{discussion of results}
 
 \begin{figure}[htbp]
     \centering
@@ -219,20 +219,25 @@ We now consider the binding curve at the equilibrium geometry (taken to be $2.08
 
 \todo{atomisation energies comparison against experiment and HEAT}
 
-\todo{plots to include:
-- Full binding curves (maybe inset for the dissociated limit)
-- Zoom in at the minimum
-- Comparison to experiment for all curves
-- comparison to non-TC-FCIQMC}
 
 \begin{table}[!h]
     \centering
-    \begin{tabular}{c|c}
-        Jastrow Factor & Atomisation Energy (mHa) \\
-        \hline
-        \todo{...} &
-    \end{tabular}
-    \caption{\todo{table of atomisation energies}}
+    \begin{threeparttable}
+        \begin{tabular}{c|c}
+            Jastrow Factor & Atomisation Energy (mHa) \\
+            \hline
+            CASCI & \todo{...}\tnote{1} \\
+            CASSCF & \todo{...} \\
+            FCIQMC & \todo{...}\tnote{1} \\
+            \bottomrule
+            HEAT & \todo{...}
+        \end{tabular}
+        \begin{tablenotes}
+            \item[1] \todo{} test
+            \item[2] \todo{} test
+        \end{tablenotes}
+    \end{threeparttable}
+    \caption{\todo{table of atomisation energies, mention also the HEAT result, mention RHF is meaningless because of dip}}
     \label{tbl:binding-atomisation-energies}
 \end{table}
 
@@ -241,9 +246,11 @@ We now consider the binding curve at the equilibrium geometry (taken to be $2.08
     \begin{tabular}{c|c}
         Jastrow Factor & $\sum E_\mathrm{atom} - E_\mathrm{molecule}(r=10)$ (mHa) \\
         \hline
-        \todo{...} &
+        CASCI & \todo{...} \\
+        CASSCF & \todo{...} \\
+        FCIQMC & \todo{...}
     \end{tabular}
-    \caption{\todo{error for size Consistency}}
+    \caption{\todo{error for size Consistency, again including RHF is meaningless because of the dip}}
     \label{tbl:size-consistency}
 \end{table}
 
@@ -256,37 +263,40 @@ We now consider the binding curve at the equilibrium geometry (taken to be $2.08
 \centering
 \begin{tabular}{c|cccc|c}
 \multicolumn{6}{c}{\textbf{Dinitrogen}} \\
-State & Method & \avdz & \avtz & \avqz & Experiment \\
+State & Method & \avdz & \avtz & \avqz & Benchmarks* \\
 \hline
 \multirow{3}{*}{$^1\Pi_g$}
-& non-TC exFCI      & &  & val 3 & \multirow{3}{*}{\todo{exp}} \\
-& CASCI-xTC   & &  & val 1 &  \\
-& CASSCF-xTC  & &  & val 2 &  \\
+& non-TC exFCI & 345.8(0)  &  & \todo{} & \multirow{3}{*}{\todo{exp}} \\
+& CASCI-xTC    & 341.86(4) &  & \todo{} &  \\
+& CASSCF-xTC   & 340.729(3) &  & \todo{} &  \\
 \hline
 \multirow{3}{*}{$^1\Sigma_u^-$}
-& ---       & &    & ---   & \multirow{3}{*}{---} \\
-& ---       & &    & ---   &  \\
-& ---       & &    & ---   &  \\
+& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& CASCI-xTC          & &    & \todo{}   &  \\
+& CASSCF-xTC         & &    & \todo{}   &  \\
 \hline
 \multirow{3}{*}{$^1\Delta_u$}
-& ---       & &    & ---   & \multirow{3}{*}{---} \\
-& ---       & &    & ---   &  \\
-& ---       & &    & ---   &  \\
+& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& CASCI-xTC          & &    & \todo{}   &  \\
+& CASSCF-xTC         & &    & \todo{}   &  \\
 \hline
 \multirow{3}{*}{$^3\Sigma_u^+$}
-& ---       & &    & ---   & \multirow{3}{*}{---} \\
-& ---       & &    & ---   &  \\
-& ---       & &    & ---   &  \\
+& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& CASCI-xTC          & &    & \todo{}   &  \\
+& CASSCF-xTC         & &    & \todo{}   &  \\
 \hline
 \multirow{3}{*}{$^3\Pi_g$}
-& ---       & &    & ---   & \multirow{3}{*}{---} \\
-& ---       & &    & ---   &  \\
-& ---       & &    & ---   &  \\
+& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& CASCI-xTC          & &    & \todo{}   &  \\
+& CASSCF-xTC         & &    & \todo{}   &  \\
 \hline
 \multirow{3}{*}{$^3\Delta_u$}
-& ---       & &    & ---   & \multirow{3}{*}{---} \\
-& ---       & &    & ---   &  \\
-& ---       & &    & ---   &  \\
+& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& CASCI-xTC          & &    & \todo{}   &  \\
+& CASSCF-xTC         & &    & \todo{}   &  \\
+\bottomrule
+\multicolumn{6}{l}{\small *In each row, the first two values are experimental, from references \todo{...} -- \todo{use threeparttable and tnote instead!}} \\
+\multicolumn{6}{l}{\small and the last is last one is theoretical, from reference \todo{...}.}
 \end{tabular}
 \caption{\todo{Comparison of methods and experimental values for different states.}}
 \label{tbl:excitation-energies-n2}
@@ -304,9 +314,9 @@ State & Method & \avdz & \avtz & \avqz & Experiment \\
 & CASSCF-xTC  & &  & val 2 &  \\
 \hline
 \multirow{3}{*}{$^3\Sigma_g$}
-& ---       & &    & ---   & \multirow{3}{*}{---} \\
-& ---       & &    & ---   &  \\
-& ---       & &    & ---   &  \\
+& \todo{}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& \todo{}       & &    & \todo{}   &  \\
+& \todo{}       & &    & \todo{}   &  \\
 \end{tabular}
 \caption{\todo{Comparison of methods and experimental values for different states.}}
 \label{tbl:excitation-energies-nh3}

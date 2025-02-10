@@ -9,3 +9,4 @@ binding curves for N2, for:
 - universal e-e + e-n CASINO jastrow
 - atomic Jastrow, no extra opt
 - atomic Jastrow, en and een only, opt ee for molecule
+- atomic Jastrow, en and een only, opt ee multidet casci for molecule? (not casscf to keep orbitals consistent with atom!)

@@ -1,0 +1,6 @@
+# can only do gs; 1E; and 3A2 states due to symmetry :(
+# all of these need to be checked
+state , avdz            , avtz
+gs    , -56.5347019(46) , -56.561393(14)
+1E    , -56.230233(53)  , -56.25496(19)
+3A2   , -56.3017385(39) , -56.325703(16)

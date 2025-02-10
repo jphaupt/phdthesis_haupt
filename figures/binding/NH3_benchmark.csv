@@ -1,0 +1,6 @@
+# values taken from Loos paper
+# values in eV
+# 3A2 from a different experiment & no paper reference exists
+state , exp1, exp2, theory
+1E, 7.90 , 7.93 , 8.02
+3A2 , 6.02, nan, nan
