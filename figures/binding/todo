@@ -1,24 +1,7 @@
 For the thesis:
-- [ ] collect data so far 20250127
-  - [ ] binding curve N2 avtz
-    - [ ] fciqmc-jastrow
-    - [ ] casscf-jastrow
-    - [ ] casci-jastrow
-    - [ ] rhf-jastrow (not as important)
-  - [ ] excited states (I think N2)
-- [ ] avdz, avtz
-  - [ ] maybe vtz just to show the augmented basis is necessary
-- [ ] excited states
-  - [ ] N2
-  - [ ] ammonia
-  - [ ] active-space-only calculations
-- [ ] redo anomalous point in rhf curve
-- [ ] run the casscf jastrows from pyscf
-
-For the paper:
-- [ ] hammer down trial wave function xTC-FCIQMC calculations
-- [ ] time-averaged CI vector?
-- [ ] replica-averaged CI vector (maybe not a good idea if we have degenerate eigenvectors?)
-- [ ] really hammer down FCIQMC non-TC
-- [ ] one other molecule's excited states
-- [ ] basis sets: avdz, avtz, avqz
+- !! check size consistency of CASSCF calculations for separate Jastrow (also see if the minimum shifts!), also fciqmc jastrows
+  - /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_casscf_enL4_C3_nd100_s0/augccpvtz/{2.08,10.0}/04_fciqmc_sep
+  - /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_enL4_C3_nd100_again_s0_fixparity/augccpvtz/{2.08,10.0}/04_fciqmc_sep
+  - /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_enL4_C3_nd1_again_s0_fixparity/augccpvtz/{2.08,10.0}/04_fciqmc_sep
+  - /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_casci_enL4_C3_nd100_s0/augccpvtz/{2.08,10.0}/04_fciqmc_sep
+- collect CASSCF data from PySCF(!) not molpro

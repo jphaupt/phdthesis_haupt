@@ -169,7 +169,7 @@ We calculate the energy of the nitrogen molecule across multiple bond lengths, r
 
 Next, we also calculate the vertical excited-state energies using this workflow for a few states of the nitrogen and ammonia (NH$_3$) molecules with CASSCF- and CASCI-Jastrows. Excited states are also challenging multireference problems. Moreover, we optimise the Jastrow factors in a state-specific manner. That is, for some excited state $\Phi_\mathrm{ex}$, our ansatz becomes $\Psi_\mathrm{ex} = \e^J\Phi_\mathrm{ex}$, thereby modifying our workflow slightly to optimise specifically for that state, as well as using its 1RDM for the xTC approximation. Naturally, the xTC-FCIQMC calculation will be targeting this state. For cases where a triplet excited state of the same symmetry is lower in energy than a singlet excited state, the FCIQMC calculation will collapse to the triplet state. To overcome this, we use a spin-penalty term to target the singlet excited state.\supercite{weserSpin2022}
 
-For the N$_2$ binding curve, we compare against the highly accurate experimental curve determined in reference \citenum{leroyAccurate2006}, and as a benchmark we compare against F12 calculations, performed in \molpro. For excited states we compare against extrapolated FCI calculations reported in reference \citenum{loosMountaineering2018}.
+For the N$_2$ binding curve, we compare against the highly accurate experimental curve determined in reference \citenum{leroyAccurate2006}, and as a benchmark we compare against F12 calculations, performed in \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020} For excited states we compare against extrapolated FCI calculations reported in reference \citenum{loosMountaineering2018}.
 
 \subsection{Binding Curves}
 
@@ -204,42 +204,42 @@ We now consider the binding curve at the equilibrium geometry (taken to be $2.08
     \label{fig:binding-curves-minimum}
 \end{figure}
 
-We also wish to determine just how accurate our calculations are. This is easy to verify for the relative energies, as we can directly compare against HEAT.\supercite{fellerSurvey2008} However, we also want to evaluate the accuracy of the rest of the binding curve. For this, we test against an accurate fit to experimental spectroscopic data which includes high-energy dissociated data.\supercite{leroyAccurate2006} Since we are only interested in relative energies, we normalise all curves to be zero at $10$ Bohr radii, and subtract the experimental values. The result of this is shown in figure \ref{fig:binding-curves-experiment}.
+Naturally, we also wish to determine how accurate our calculations are. This is easy to verify for the extremes, as we can directly compare against HEAT.\supercite{fellerSurvey2008} However, we also want to evaluate the accuracy of the rest of the binding curve. For this, we test against an accurate fit to experimental spectroscopic data which includes high-energy dissociated data.\supercite{leroyAccurate2006} Since we are only interested in relative energies, we normalise all curves to be zero at $10$ Bohr radii, and subtract the experimental values. The result of this is shown in figure \ref{fig:binding-curves-experiment}.
 
 \todo{discussion of results}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/residuals}
-    \caption{\todo{description of curves against experiment; mention they're fixed at 10 Bohr, except MRCI-F12 which didn't converge there; mention shaded = chemical accuracy -- also worth noting that the TC methods dip below experiment a little! but we are still variational; this is because we are comparing against the zeroed-at-10-bohr curve}}
+    \caption{Binding curves for each Jastrow factor optimisation strategy relative to the experimental fit from reference \citenum{leroyAccurate2006}. All curves are normalised such that the energy at $10$ Bohr radii is zero, except for MRCI-F12 where energy is set to zero at $8.98$ Bohr radii (past this, it did not converge). The shaded region represents $1.6$ mHa, so-called ``chemical accuracy''. We see that most of the curves for the multirefence Jastrow optimisations are within chemical accuracy, outperforming MRCI-F12. Note that while the relative values are below experiment for some regions (notably around $3$ Bohr), all absolute values are still above the HEAT result for N$_2$ (and thus can be considered variational).}
     \label{fig:binding-curves-experiment}
 \end{figure}
 
-\todo{also include a table about just ``how size-consistent'' the results actually are.}
+We find that the CASCI- and FCIQMC-Jastrow curves are all within chemical accuracy (1.6 mHa) for most of the binding curve and the CASSCF-Jastrow entirely within chemical accuracy when compared against experiment, all of them outperforming MRCI-F12. It is worth noting, however, that unlike MRCI-F12, our multireference Jastrow factors are not uniformly above experiment.
+
+% Another worthwhile check is how accurate the atomisation energy is, taking the extremely dissociated limit ($10$ Bohr radii) as twice the energy of the atom. This is shown in table \ref{tbl:binding-atomisation-energies}. \todo{discussion}
 
 \todo{atomisation energies comparison against experiment and HEAT}
 
 
 \begin{table}[!h]
     \centering
-    \begin{threeparttable}
         \begin{tabular}{c|c}
             Jastrow Factor & Atomisation Energy (mHa) \\
             \hline
-            CASCI & \todo{...}\tnote{1} \\
+            CASCI & \todo{...} \\
             CASSCF & \todo{...} \\
-            FCIQMC & \todo{...}\tnote{1} \\
+            FCIQMC & \todo{...} \\
             \bottomrule
-            HEAT & \todo{...}
+            HEAT\supercite{fellerSurvey2008} & \todo{...} \\
+            Experiment\supercite{leroyAccurate2006} & \todo{...}
         \end{tabular}
-        \begin{tablenotes}
-            \item[1] \todo{} test
-            \item[2] \todo{} test
-        \end{tablenotes}
-    \end{threeparttable}
     \caption{\todo{table of atomisation energies, mention also the HEAT result, mention RHF is meaningless because of dip}}
     \label{tbl:binding-atomisation-energies}
 \end{table}
+
+
+\todo{also include a table about just ``how size-consistent'' the results actually are.}
 
 \begin{table}[!h]
     \centering
@@ -267,40 +267,41 @@ We also wish to determine just how accurate our calculations are. This is easy t
 State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 \hline
 \multirow{3}{*}{$^1\Pi_g$}
-& non-TC exFCI & 345.8(0)  &  & \todo{} & \todo{exp1}\tnote{1} \\
-& CASCI-xTC    & 341.86(4) &  & \todo{} & \todo{exp2}\tnote{2}  \\
-& CASSCF-xTC   & 340.729(3) &  & \todo{} & \todo{th1}\tnote{3}  \\
+& non-TC exFCI\tnote{a} & 345.8  &  & \todo{} & \todo{exp1}\tnote{b} \\
+& CASCI-xTC    & 341.86(4) &  & \todo{} & \todo{exp2}\tnote{c}  \\
+& CASSCF-xTC   & 340.729(3) &  & \todo{} & \todo{th1}\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^1\Sigma_u^-$}
-& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
 & CASCI-xTC          & &    & \todo{}   &  \\
 & CASSCF-xTC         & &    & \todo{}   &  \\
 \hline
 \multirow{3}{*}{$^1\Delta_u$}
-& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
 & CASCI-xTC          & &    & \todo{}   &  \\
 & CASSCF-xTC         & &    & \todo{}   &  \\
 \hline
 \multirow{3}{*}{$^3\Sigma_u^+$}
-& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
 & CASCI-xTC          & &    & \todo{}   &  \\
 & CASSCF-xTC         & &    & \todo{}   &  \\
 \hline
 \multirow{3}{*}{$^3\Pi_g$}
-& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
 & CASCI-xTC          & &    & \todo{}   &  \\
 & CASSCF-xTC         & &    & \todo{}   &  \\
 \hline
 \multirow{3}{*}{$^3\Delta_u$}
-& non-TC exFCI       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
 & CASCI-xTC          & &    & \todo{}   &  \\
 & CASSCF-xTC         & &    & \todo{}   &  \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
-    \item[1] Experimental value, reference \todo{...}.
-    \item[2] Experimental value, reference \todo{...}.
-    \item[3] Theoretical value, reference \todo{...}.
+    \item[a] Taken from reference \citenum{loosMountaineering2018}.
+    \item[b] Experimental value, reference \todo{...}.
+    \item[c] Experimental value, reference \todo{...}.
+    \item[d] Theoretical value, reference \todo{...}.
 \end{tablenotes}
 \end{threeparttable}
 \caption{\todo{Comparison of methods and experimental values for different states.}}

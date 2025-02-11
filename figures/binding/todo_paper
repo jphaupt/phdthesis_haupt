@@ -1,0 +1,8 @@
+
+For the paper:
+- [ ] hammer down trial wave function xTC-FCIQMC calculations
+- [ ] time-averaged CI vector?
+- [ ] replica-averaged CI vector (maybe not a good idea if we have degenerate eigenvectors?)
+- [ ] really hammer down FCIQMC non-TC
+- [ ] one other molecule's excited states
+- [ ] basis sets: avdz, avtz, avqz

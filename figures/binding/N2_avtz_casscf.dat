@@ -1,4 +1,6 @@
 # /algpfs1/phaupt/neci/meanfield/bind/casscf2024/N2_enL4_C3_nd100_s0/aug-cc-pvtz/*/04_fciqmc/*
+# TODO !!! that directory is with Molpro !!!
+#      with PySCF it doesn't seem to be that way
 # R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
 # note also have, for RHF orbs
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_L4_C3_nd100_again/augccpvtz/2.08/necicas/04_fciqmc/walker_3e+06

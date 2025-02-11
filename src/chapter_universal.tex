@@ -13,15 +13,70 @@ These updated workflows represent significant improvements in the scalability an
 
 \section{Theory}
 
-\todo{describe how to construct them, the different forms (Fournais, r12 only, atomic, quasi-atomic)}
+In this chapter, we study various choices of Jastrow factors to avoid the need for lengthy optimisation. These may be divided into two broad categories: universal Jastrow factors and atomic Jastrow factors.
+
+\subsection{Universal Jastrow Factors}
+
+A universal form for the Jastrow factor has already been presented by Fournais \emph{et al} in 2005,\supercite{fournaisSharp2005} and has occasionally made further appearances in the literature.\supercite{tewSecond2008,szenesStriking2024} The key advantage to using these is that we require no optimisation at all, while key disadvantages are that we must be careful about cut off functions, and we do not have as much flexibility so we cannot tailor the Jastrow factor to e.g. excited states.
+
+The universal form of the Jastrow, which we shall dub the ``Fournais-Jastrow'' factor is given by\supercite{fournaisSharp2005,fournaisNonIsotropic2007}
+\begin{equation}
+    \label{eq:fournais-full}
+    J = -\sum_I\sum_i Z_Ir_{iI} + \frac 12\sum_{i<j}r_{ij} + \frac{2-\pi}{6\pi}\sum_I\sum_{i<j}Z_I\bm r_{iI}\cdot \bm r_{jI}\ln(r_{iI}^2+r_{jI}^2),
+\end{equation}
+where, as usual, upper case indices denote the nucleus, and lower case indices represent electrons. The first term resolves the electron-nucleus cusps, the second term resolves the electron-electron cusps, and finally the last term resolves electron-electron-nucleus cusps. However, these terms are unbounded, and indeed are valid only close to coalescence points. We therefore introduce gaussian cutoff functions,
+\begin{align}
+    \label{eq:fournais-full-cutoffs}
+    J &= -\sum_I\sum_i Z_Ir_{iI}\e^{-r_{iI}^2/L_{ee}^2} + \frac 12\sum_{i<j}r_{ij}\e^{-r_{ij}^2/L_{en}^2} \nonumber \\
+    &\quad + \frac{2-\pi}{6\pi}\sum_I\sum_{i<j}Z_I\bm r_{iI}\cdot \bm r_{jI}\ln(r_{iI}^2+r_{jI}^2)\e^{-r_{iI}^2/L_{een}^2}\e^{-r_{jI}^2/L_{een}^2},
+\end{align}
+where $L_{ee}, L_{en}, L_{een}$ are cutoff parameters. We find that it is necessary to have extremely small values to prevent spurious correlations and highly nonvariational energies. We choose $L_{ee} = L_{en} = L_{een} = 0.4$ Bohr.
+
+We consider three variants:
+\begin{itemize}
+    \item The full Fournais-Jastrow factor, as in equation \ref{eq:fournais-full-cutoffs}.
+    \item Neglecting the electron-electron-nucleus term and resolving the electron-nucleus cusp using the approach described in \autoref{chap:opt}, which is known to be a better way of handling electron-nucleus cusps.\supercite{drummondJastrow2004}
+    \item Neglecting both the electron-electron-nucleus and electron-nucleus terms. This has already been studied in the context of TC-DMRG,\supercite{szenesStriking2024} though the choice of cutoffs may result in nonvariational energies. This is the simplest form, containing only $r_{ij}$ terms, and we dub it the $r_{12}$-Jastrow.
+\end{itemize}
+
+\subsection{Atomic Jastrow Factors}
+
+Another approach we consider in reducing the need for optimisation is to optimise Jastrow factors for atomic systems and then reuse them in the molecular context. This can be considered a natural extension of starting with atomic orbitals for molecules. The key advantage here is flexibility while the key disadvantages include the need to optimise for the atoms, and the need to make a choice for the form of the Jastrow factor. In principle, we could produce a database of sophisticated atomic Jastrow factors that can then be queried to construct Jastrow factors for molecules or periodic systems. We use the Jastrow forms considered earlier in this dissertation, \begin{equation}
+    \label{eq:jastrow-3}
+    J = \sum_{i<j}^Nv(r_{ij}) + \sum_i^N\sum_I^{N_A}\chi(r_{iI}) + \sum_{i<j}^N\sum_I^{N_A}f(r_{ij}, r_{iI}, r_{jI}),
+\end{equation}
+with
+\begin{equation}
+    \label{eq:dtn-jastrow-ee-3}
+    v(r_{ij})    = t(r_{ij},L_v)
+                    \sum_{k} a_k r_{ij}^k ,
+\end{equation}
+\begin{equation}
+    \label{eq:dtn-jastrow-en-3}
+    \chi(r_{iI}) = t(r_{iI},L_\chi)
+    \sum_{k} b_k r_{iI}^k ,
+\end{equation}
+\begin{equation}
+    \label{eq:dtn-jastrow-een-3}
+    f(r_{ij}, r_{i}, r_{j}) = t(r_{iI},L_f) t(r_{jI},L_f)
+    \sum_{k,l,m} c_{klm}
+    r_{ij}^k r_{iI}^l r_{jI}^m ,
+\end{equation}
+and the same cutoff functions $t(r,L) = (1-r/L)^3
+\Theta(r-L)$. However, we do not want to include long-range (with respect to the nucleus) correlation in the atomic Jastrow factors, since this may bias the molecular calculations. We therefore use $L_v=L_\chi=1.0$ Bohr. We use $L_{ee}=4.5$ Bohr. We consider the following variants:
+\begin{itemize}
+    \item The Jastrow factor is kept constant for the molecule, i.e. we simply use the atomic Jastrow factors as they are.
+    \item We optimise the atomic Jastrow factor only with terms involving the nucleus, i.e. electron-nucleus and electron-electron-nucleus terms. The electron-electron part is then added to the atomic Jastrow and optimised for the molecule. We optimise both with a single- and multideterminantal VMC ansatz.
+\end{itemize}
 
 \section{Results}
-\todo{N2 binding curve, some atomisation energies (I guess C2, N2 and CN are enough)}
+\todo{N2 binding curve, some atomisation energies (I guess C2, N2 and CN are enough, say only with multidet(?) ee opt atom and en-ee universal)}
 
 \section{Conclusion and Outlook}
 \todo{mention the shortcoming of not being able to target specific states like the previous methodology (except for quasi-atomic)}
 \todo{mention the fournais/universal form does not faithfully capture long-range correlation}
 \todo{mention possibility of combining methods, also using the orbital cusp correction for the Fournais factor}
+\todo{mention that with the small optimisation we introduce the possibility of targeting specific states, at least somewhat}
 \todo{...}
 
 \todo{Also mention (maybe by then you even have data for) the Fournais Jastrow factor}
