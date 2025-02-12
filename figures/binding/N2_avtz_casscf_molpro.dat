@@ -1,0 +1,32 @@
+# /algpfs1/phaupt/neci/meanfield/bind/casscf2024/N2_enL4_C3_nd100_s0/aug-cc-pvtz/*/04_fciqmc/*
+# TODO !!! that directory is with Molpro !!!
+#      with PySCF it doesn't seem to be that way
+# R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
+# note also have, for RHF orbs
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_L4_C3_nd100_again/augccpvtz/2.08/necicas/04_fciqmc/walker_3e+06
+1.92    -109.510090(28)    nan
+2.0     -109.527883(19)      nan
+2.08    -109.532132(14)    nan
+2.16    -109.527914(14)      nan
+2.24    -109.516604(19)    nan
+2.32    -109.500762(19)     nan
+2.4     -109.481591(21)     nan
+2.48    -109.460600(33)    nan
+2.98    -109.326481(25)     nan
+3.48    -109.233899(23)      nan
+3.98    -109.19255(24)    nan
+4.48    -109.178423(47)     nan
+4.98    -109.173500(23)      nan
+5.48    -109.17136(17)      nan
+5.98    -109.17006(15)     nan
+6.48    -109.16973(15)      nan
+6.98    -109.16982(23)    nan
+7.48    -109.16992(26)      nan
+7.98    -109.16928(17)      nan
+8.48    -109.16951(25)      nan
+8.98    -109.16985(16)      nan
+9.48    -109.16912(19)     nan
+10.0    -109.16929(12)     nan
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_enL4_C3_nd1_s3_fixparity/augccpvtz/04_fciqmc/*
+# atom: -54.5854656(12)
+# 2*atom: -109.1709312(24)

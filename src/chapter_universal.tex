@@ -70,7 +70,20 @@ and the same cutoff functions $t(r,L) = (1-r/L)^3
 \end{itemize}
 
 \section{Results}
-\todo{N2 binding curve, some atomisation energies (I guess C2, N2 and CN are enough, say only with multidet(?) ee opt atom and en-ee universal)}
+
+\subsection{Computational Details}
+
+We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, CO, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT\supercite{fellerSurvey2008}.
+
+For the multideterminantal optimisation, we use CASCI as it provides a reasonably cost-effective way of obtaining the highest-weighted determinants, while keeping the orbitals consistent with the atom. Non-TC HF and CASCI calculations were performed using \pyscf\supercite{sunPySCF2018}, VMC optimisation was performed using \casino\supercite{needsVariational2020}, FCIQMC calculations using \neci\supercite{gutherNECI2020}, and MRCI-F12 calculations for comparison using \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020}
+
+\subsection{Binding Curves}
+\todo{...}
+
+\subsection{Atomisation Energies}
+\todo{...}
+
+% \todo{N2 binding curve, some atomisation energies (I guess C2, N2 and CN are enough, say only with multidet(?) ee opt atom and en-ee universal)}
 
 \section{Conclusion and Outlook}
 \todo{mention the shortcoming of not being able to target specific states like the previous methodology (except for quasi-atomic)}
