@@ -11,3 +11,5 @@ binding curves for N2, for:
 - atomic Jastrow, en and een only, opt ee for molecule
 - atomic Jastrow, en and een only, opt ee multidet casci for molecule? (not casscf to keep orbitals consistent with atom!)
 - plot curve(s) with HEAT result as horizontal line to show that some of them are nonvariational
+- check polynomial cutoff calculations:
+  - /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_universal_casino_eeLpolynomial*_s0/augccpvtz/2.08/

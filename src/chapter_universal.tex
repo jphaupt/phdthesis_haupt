@@ -7,7 +7,7 @@ The contents of this chapter are planned to be expanded for a future publication
 
 So far, the \gls{TC} methods we have discussed had one major bottleneck in common: the optimisation of the Jastrow factor. While VMC in itself does not scale unfavourably, the fact that we need so many VMC cycles in order to properly optimise for TC (see \autoref{chap:opt}) results in a significant computational cost. For large systems, this can become the prohibitive step in the workflow.
 
-Here we explore some alternative avenues to construct Jastrow factors for use in the transcorrelated method. In particular, we consider constructing ``universal'' Jastrow factors that do not need any optimisation. These have already been introduced in the literature,\supercite{fournaisNonIsotropic2007,fournaisSharp2005,tewSecond2008,szenesStriking2024} and are constructed to satisfy cusp conditions. We will also construct Jastrow factors from those optimised for atomic systems. That is, we optimise the Jastrow factor for the atom, and use the same Jastrow factor for molecules (so that the molecular Jastrow is the sum of atomic Jastrows). In effect, this would allow us to compile sophisticated atomic Jastrow factors that may be stored in a database for easy retrieval when doing larger systems, without any optimisation. We also consider keeping some components of these Jastrows fixed, while optimising other elements as a ``molecular correction'' to the atomic Jastrow factor.
+Here we explore some alternative avenues to construct Jastrow factors for use in the transcorrelated method. In particular, we consider constructing ``universal'' Jastrow factors that do not need any optimisation. These have already been introduced in the literature,\supercite{fournaisNonIsotropic2007,fournaisSharp2005,tewSecond2008,szenesStriking2024} and are constructed to satisfy cusp conditions. We will also construct Jastrow factors from those optimised for atomic systems. That is, we optimise the Jastrow factor for the atom, and use the same Jastrow factor for molecules (so that the molecular Jastrow is the sum of atomic Jastrows). In effect, this would allow us to compile sophisticated atomic Jastrow factors that may be stored in a database for easy retrieval when considering larger systems, without any optimisation. We also consider keeping some components of these Jastrows fixed, while optimising other elements as a ``molecular correction'' to the atomic Jastrow factor.
 
 These updated workflows represent significant improvements in the scalability and ease of use for TC methods, while arguably being more conceptually satisfying by making the Jastrow factors more general.
 
@@ -36,7 +36,7 @@ We consider three variants:
 \begin{itemize}
     \item The full Fournais-Jastrow factor, as in equation \ref{eq:fournais-full-cutoffs}.
     \item Neglecting the electron-electron-nucleus term and resolving the electron-nucleus cusp using the approach described in \autoref{chap:opt}, which is known to be a better way of handling electron-nucleus cusps.\supercite{drummondJastrow2004}
-    \item Neglecting both the electron-electron-nucleus and electron-nucleus terms. This has already been studied in the context of TC-DMRG,\supercite{szenesStriking2024} though the choice of cutoffs may result in nonvariational energies. This is the simplest form, containing only $r_{ij}$ terms, and we dub it the $r_{12}$-Jastrow.
+    \item Neglecting both the electron-electron-nucleus and electron-nucleus terms. This has already been studied in the context of TC-DMRG,\supercite{szenesStriking2024} though the choice of cutoffs may result in nonvariational energies. This is the simplest form, containing only $r_{ij}$ terms, and we dub it the ``$r_{12}$-Jastrow''.
 \end{itemize}
 
 \subsection{Atomic Jastrow Factors}
@@ -73,12 +73,13 @@ and the same cutoff functions $t(r,L) = (1-r/L)^3
 
 \subsection{Computational Details}
 
-We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, CO, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT\supercite{fellerSurvey2008}.
+We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT\supercite{fellerSurvey2008}.
 
 For the multideterminantal optimisation, we use CASCI as it provides a reasonably cost-effective way of obtaining the highest-weighted determinants, while keeping the orbitals consistent with the atom. Non-TC HF and CASCI calculations were performed using \pyscf\supercite{sunPySCF2018}, VMC optimisation was performed using \casino\supercite{needsVariational2020}, FCIQMC calculations using \neci\supercite{gutherNECI2020}, and MRCI-F12 calculations for comparison using \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020}
 
 \subsection{Binding Curves}
 \todo{...}
+\todo{universal Jastrows cutoff study -- also mention the pseudoMP2 values}
 
 \subsection{Atomisation Energies}
 \todo{...}
@@ -90,6 +91,7 @@ For the multideterminantal optimisation, we use CASCI as it provides a reasonabl
 \todo{mention the fournais/universal form does not faithfully capture long-range correlation}
 \todo{mention possibility of combining methods, also using the orbital cusp correction for the Fournais factor}
 \todo{mention that with the small optimisation we introduce the possibility of targeting specific states, at least somewhat}
+\todo{mention revisiting the universal Jastrow factors and the cutoffs more thoroughly}
 \todo{...}
 
 \todo{Also mention (maybe by then you even have data for) the Fournais Jastrow factor}

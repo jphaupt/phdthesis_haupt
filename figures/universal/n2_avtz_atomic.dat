@@ -1,28 +1,30 @@
-# TODO directories
-# R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
-1.92
-2.0
-2.08
-2.16
-2.24
-2.32
-2.4
-2.48
-2.98
-3.48
-3.98
-4.48
-4.98
-5.48
-5.98
-6.48
-6.98
-7.48
-7.98
-8.48
-8.98
-9.48
-10.0
-# TODO directory for atom
-# atom: TODO
-# 2*atom: TODO
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_atom_enL1_C3_nd1_again_s0/augccpvtz
+# R/Bohr EFCIQMC/Hartree
+1.92     -109.498903(19)
+2.0      -109.515776(32)
+2.08     -109.520134(16)
+2.16     -109.515191(18)
+2.24     -109.503702(31)
+2.32     -109.487531(20)
+2.4      -109.468332(17)
+# running all below for more walkers
+# !!!
+2.48     -109.447239(28)
+2.98     -109.315079(99)
+3.48     -109.228482(169)
+3.98     -109.184205(158)
+4.48     -109.169103(934)
+4.98     -109.164514(136)
+5.48     -109.162937(849)
+5.98     nan # too lazy to get
+6.48     nan # too lazy to get
+6.98     nan # too lazy to get
+7.48     nan # too lazy to get
+7.98     -109.162894(851)
+8.48     -109.1618(13) # !!!
+8.98     -109.16108(42) # !!!
+9.48     -109.162630(619) # !!!
+10.0     -109.1618(12) # !!!
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_enL1_C3_nd1_s3_fixparity/augccpvtz/04_fciqmc
+# atom: -54.5805988(28)
+# 2*atom: -109.1611976(56)

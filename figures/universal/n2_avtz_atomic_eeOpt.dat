@@ -1,8 +1,9 @@
-# TODO directories
-# R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
-1.92
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_atom_optee_enL1_C3_nd1_s0/augccpvtz/
+# R/Bohr EFCIQMC/Hartree
+# ! continued all calculations (with trial wfs)!
+1.92   -109.510881(20)
 2.0
-2.08
+2.08   -109.528442(30)
 2.16
 2.24
 2.32
@@ -23,6 +24,6 @@
 8.98
 9.48
 10.0
-# TODO directory for atom
-# atom: TODO
-# 2*atom: TODO
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_noee_enL1_C3_nd1_s3_fixparity/augccpvtz/04_fciqmc
+# atom: -54.5857237(45)
+# 2*atom: -109.171447(9)
