@@ -24,3 +24,4 @@ jphaupt_phdthesis.pdf
 *.gls
 *.ist
 jphaupt_phdthesis.bbl-SAVE-ERROR
+*.pyc
