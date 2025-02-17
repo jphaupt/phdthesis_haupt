@@ -65,12 +65,12 @@ This result has been verified for a few points with full TC (that is, with no ap
 
 Based on the discussion in the previous section, it is likely that the transcorrelated workflow suffers from a single-reference bias. Indeed, the clear culprit is the Slater-Jastrow ansatz
 \begin{equation}
-    \label{eq:slater-jastrow}
+    \label{eq:slater-jastrow-unichap}
     \Psi_\mathrm{SJ} = \e^J\Phi_\mathrm{HF},
 \end{equation}
 which affects the Jastrow optimisation and in turn the TC Hamiltonian $\htc = e^{-J}\hat H\e^J$.
 
-We modify equation \ref{eq:slater-jastrow} to optimise for a multireference expansion,
+We modify equation \ref{eq:slater-jastrow-unichap} to optimise for a multireference expansion,
 \begin{equation}
     \label{eq:general-slater-jastrow}
     \Psi = \e^J\Phi_0
@@ -328,7 +328,7 @@ State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 \begin{tablenotes}
     \item[a] Experimental value, see references \parencite{loosMountaineering2018,skerbeleElectronImpact1965}.
     \item[b] Experimental value, see references \parencite{loosMountaineering2018,harshbargerIdentification1971}.
-    \item[c] Theoretical (\gls{EOM}-\gls{CCSD}) value, see references \parencite{fickLiquid1995,bartlettAmmonia1997}.
+    \item[c] Theoretical (\gls{EOM}-\gls{CCSD}) value, see references \parencite{loosMountaineering2018,bartlettAmmonia1997}.
     \item[d] Experimental value, see references \parencite{loosMountaineering2018,arfaLowest1991,abuainLowest1984}.
 \end{tablenotes}
 \end{threeparttable}

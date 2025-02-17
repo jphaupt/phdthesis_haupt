@@ -24,7 +24,11 @@ The universal form of the Jastrow, which we shall dub the ``Fournais-Jastrow'' f
     \label{eq:fournais-full}
     J = -\sum_I\sum_i Z_Ir_{iI} + \frac 12\sum_{i<j}r_{ij} + \frac{2-\pi}{6\pi}\sum_I\sum_{i<j}Z_I\bm r_{iI}\cdot \bm r_{jI}\ln(r_{iI}^2+r_{jI}^2),
 \end{equation}
-where, as usual, upper case indices denote the nucleus, and lower case indices represent electrons. The first term resolves the electron-nucleus cusps, the second term resolves the electron-electron cusps, and finally the last term resolves electron-electron-nucleus cusps. However, these terms are unbounded, and indeed are valid only close to coalescence points. We therefore introduce gaussian cutoff functions,\footnote{We have also tested the polynomial cutoff functions as used in the atomic Jastrows, but these were found to result in highly nonvariational energies.}
+where, as usual, upper case indices denote the nucleus, and lower case indices represent electrons. The first term resolves the electron-nucleus cusps, the second term resolves the electron-electron cusps, and finally the last term resolves electron-electron-nucleus cusps. However, these terms are unbounded, and indeed are valid only close to coalescence points.
+
+\todo{everything below is out of date (since I also did a cutoff analysis)}
+
+We therefore introduce gaussian cutoff functions,\footnote{We have also tested the polynomial cutoff functions as used in the atomic Jastrows, but these were found to result in highly nonvariational energies.}
 \begin{align}
     \label{eq:fournais-full-cutoffs}
     J &= -\sum_I\sum_i Z_Ir_{iI}\e^{-r_{iI}^2/L_{ee}^2} + \frac 12\sum_{i<j}r_{ij}\e^{-r_{ij}^2/L_{en}^2} \nonumber \\
@@ -73,9 +77,9 @@ and the same cutoff functions $t(r,L) = (1-r/L)^3
 
 \subsection{Computational Details}
 
-We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT\supercite{fellerSurvey2008}.
+We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, O$_2$, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT\supercite{fellerSurvey2008}.
 
-For the multideterminantal optimisation, we use CASCI as it provides a reasonably cost-effective way of obtaining the highest-weighted determinants, while keeping the orbitals consistent with the atom. Non-TC HF and CASCI calculations were performed using \pyscf\supercite{sunPySCF2018}, VMC optimisation was performed using \casino\supercite{needsVariational2020}, FCIQMC calculations using \neci\supercite{gutherNECI2020}, and MRCI-F12 calculations for comparison using \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020}
+For the multideterminantal optimisation, we use a small FCIQMC calculation as it was found to perform particularly well in \autoref{chap:binding}, while keeping the orbitals consistent with the atom. Non-TC HF and CASCI calculations were performed using \pyscf\supercite{sunPySCF2018}, VMC optimisation was performed using \casino\supercite{needsVariational2020}, FCIQMC calculations using \neci\supercite{gutherNECI2020}, and MRCI-F12 calculations for comparison using \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020}
 
 \subsection{Binding Curves}
 \todo{...}
