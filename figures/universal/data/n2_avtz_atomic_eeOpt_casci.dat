@@ -1,28 +1,9 @@
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_atom_optee_enL1_C3_nd1_s0_casci_nd100/augccpvtz
+# NOTE we are scrapping this one
 # R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
-# ! continued all calculations (with trial wfs)!
-1.92
-2.0
-2.08
-2.16
-2.24
-2.32
-2.4
-2.48
-2.98
-3.48
-3.98
-4.48
-4.98
-5.48
-5.98
-6.48
-6.98
-7.48
-7.98
-8.48
-8.98
-9.48
+1.92    -109.511059(30)
+2.0     -109.528555(25)
+2.08    -109.533231(58)
 10.0
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_noee_enL1_C3_nd1_s3_fixparity/augccpvtz/04_fciqmc
 # atom: -54.5857237(45)

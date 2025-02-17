@@ -1,8 +1,9 @@
-# TODO directories
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_universal_casino_fullcurve_eeLgaussian0.3_s0/augccpvtz
+# !!! continuing with more walkers + trial wf
 # R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
 1.92
 2.0
-2.08
+2.08    -109.523390(43) # !!!
 2.16
 2.24
 2.32
@@ -23,6 +24,6 @@
 8.98
 9.48
 10.0
-# TODO directory for atom
-# atom: TODO
-# 2*atom: TODO
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_universal_casino_eeLgaussian0.3_s3/augccpvtz/0.0/04_fciqmc
+# atom: -54.581648(33)
+# 2*atom: -109.163296(66)

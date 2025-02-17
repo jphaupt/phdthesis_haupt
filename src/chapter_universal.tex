@@ -24,7 +24,7 @@ The universal form of the Jastrow, which we shall dub the ``Fournais-Jastrow'' f
     \label{eq:fournais-full}
     J = -\sum_I\sum_i Z_Ir_{iI} + \frac 12\sum_{i<j}r_{ij} + \frac{2-\pi}{6\pi}\sum_I\sum_{i<j}Z_I\bm r_{iI}\cdot \bm r_{jI}\ln(r_{iI}^2+r_{jI}^2),
 \end{equation}
-where, as usual, upper case indices denote the nucleus, and lower case indices represent electrons. The first term resolves the electron-nucleus cusps, the second term resolves the electron-electron cusps, and finally the last term resolves electron-electron-nucleus cusps. However, these terms are unbounded, and indeed are valid only close to coalescence points. We therefore introduce gaussian cutoff functions,
+where, as usual, upper case indices denote the nucleus, and lower case indices represent electrons. The first term resolves the electron-nucleus cusps, the second term resolves the electron-electron cusps, and finally the last term resolves electron-electron-nucleus cusps. However, these terms are unbounded, and indeed are valid only close to coalescence points. We therefore introduce gaussian cutoff functions,\footnote{We have also tested the polynomial cutoff functions as used in the atomic Jastrows, but these were found to result in highly nonvariational energies.}
 \begin{align}
     \label{eq:fournais-full-cutoffs}
     J &= -\sum_I\sum_i Z_Ir_{iI}\e^{-r_{iI}^2/L_{ee}^2} + \frac 12\sum_{i<j}r_{ij}\e^{-r_{ij}^2/L_{en}^2} \nonumber \\

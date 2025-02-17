@@ -1,6 +1,7 @@
 # can only do gs; 1E; and 3A2 states due to symmetry :(
 # all of these need to be checked
-state , avdz            , avtz
-gs    , -56.5344687(56) , -56.560278(25)
-1E    , -56.23877(14)   , -56.2524(17)
-3A2   , -56.3007642(46) , -56.326018(14)
+# !! avqz 02a still running
+state , avdz            , avtz            , avqz
+gs    , -56.5344687(56) , -56.5603882(63) ,
+1E    , -56.23877(14)   , -56.256031(18)  ,    ##
+3A2   , -56.3007642(46) , -56.326083(11)  ,
