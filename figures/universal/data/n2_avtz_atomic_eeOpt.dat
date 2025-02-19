@@ -1,29 +1,31 @@
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_atom_optee_enL1_C3_nd1_s0/augccpvtz/
 # R/Bohr EFCIQMC/Hartree
-# ! continued all calculations (with trial wfs)!
-1.92   -109.510881(20)
-2.0
-2.08   -109.528442(30)
-2.16
-2.24
-2.32
-2.4
-2.48
-2.98
-3.48
-3.98
-4.48
-4.98
-5.48
-5.98
-6.48
-6.98
-7.48
-7.98
-8.48
-8.98
-9.48
-10.0
+# (almost) all calculations need to be verified
+1.92   -109.510884(10)
+# 2.0    -109.5284731(91)
+2.08   -109.533195(23)
+# 2.16   -109.5285146(68)
+2.24   -109.517056(13)
+# 2.32   -109.500680(13)
+2.4    -109.481308(22) #
+# 2.48   -109.459846(16)
+2.98   -109.325712(23)
+# 3.48   -109.236502(48)
+3.98   -109.19508(22)
+# 4.48   -109.18341(26)
+4.98   -109.177518(31)
+# 5.48   -109.17474(36)
+5.98   -109.17364(30)
+# 6.48   -109.17411(50)
+6.98   -109.172730(29)
+# 7.48   -109.172398(32)
+7.98   -109.172495(38)
+# 8.48   -109.17353(14) #!!!
+8.98   -109.17105(88)
+# 9.48   -109.1711(13)
+10.0   -109.16990(55) #!!!
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_noee_enL1_C3_nd1_s3_fixparity/augccpvtz/04_fciqmc
+# TODO shouldn't make a difference, but running with multidet ee opt
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_noee_enL1_C3_nd1_s3_fixparity/augccpvtz/02a_opt_md
 # atom: -54.5857237(45)
 # 2*atom: -109.171447(9)

@@ -1,29 +1,29 @@
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_universal_casino_fullcurve_nocusp_eeLgaussian0.3_s0/augccpvtz
 # !!! continuing with more walkers + trial wf
 # R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
-1.92
-2.0
-2.08   -109.522428(33) # !!!
-2.16
-2.24
-2.32
-2.4
-2.48
-2.98
-3.48
-3.98
-4.48
-4.98
-5.48
-5.98
-6.48
-6.98
-7.48
-7.98
-8.48
-8.98
-9.48
-10.0
+1.92   -109.501944(12)
+# 2.0
+2.08   -109.522782(17) #
+# 2.16
+2.24   -109.505619(19)
+# 2.32
+2.4    -109.469385(31)
+# 2.48
+2.98   -109.312700(39)
+# 3.48
+3.98   -109.182944(31)
+# 4.48
+4.98   -109.165295(74)
+# 5.48
+5.98   -109.162600(35)
+# 6.48
+6.98   -109.161909(81)
+# 7.48
+7.98   -109.161802(69)
+# 8.48
+8.98   -109.161809(27)
+# 9.48
+10.0   -109.161757(20)
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_universal_casino_nocusp_eeLgaussian0.3_s3/augccpvtz/0.0/04_fciqmc
 # atom: -54.581203(11)
 # 2*atom: -109.162406(22)

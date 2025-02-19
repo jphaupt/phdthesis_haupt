@@ -1,7 +1,7 @@
 \chapter{Universal and Modular Jastrow Factors for the Transcorrelated Method}
 \label{chap:universal}
 
-The contents of this chapter are planned to be expanded for a future publication. Some images may be repeated there.
+The contents of this chapter are planned to be expanded for a future publication. Some contents may be repeated there.
 
 \section{Introduction}
 
@@ -26,7 +26,9 @@ The universal form of the Jastrow, which we shall dub the ``Fournais-Jastrow'' f
 \end{equation}
 where, as usual, upper case indices denote the nucleus, and lower case indices represent electrons. The first term resolves the electron-nucleus cusps, the second term resolves the electron-electron cusps, and finally the last term resolves electron-electron-nucleus cusps. However, these terms are unbounded, and indeed are valid only close to coalescence points. For this reason, we introduce cutoff functions on each term.
 
-Using the form of the cutoff functions used in previous chapters, that is $t(r,L) = (1-r/L)^3\Theta(r-L)$, we find highly nonvariational energies even for extremely small cutoffs, \todo{provide an example}. Thus, we instead use gaussian cutoffs, which are smooth but still decay rapidly. Our Jastrow factor therefore becomes
+Using the form of the cutoff functions used in previous chapters, that is $t(r,L) = (1-r/L)^3\Theta(r-L)$, we find unreasonable energies even for extremely small cutoffs. For example, with this form of cutoff with the electron-nucleus and electron-electron terms, and $L=0.1$ Bohr, we get a reference energy of $-246.604$ for N$_2$ with the \avtz basis set, whereas the \gls{HEAT} result is known to be $-109.5425$.\supercite{fellerSurvey2008}.
+
+Thus, we instead use gaussian cutoffs, which are smooth but still decay rapidly. Our Jastrow factor therefore becomes
 \begin{align}
     \label{eq:fournais-full-cutoffs}
     J &= -\sum_I\sum_i Z_Ir_{iI}\e^{-r_{iI}^2/L_{ee}^2} + \frac 12\sum_{i<j}r_{ij}\e^{-r_{ij}^2/L_{en}^2} \nonumber \\
@@ -35,23 +37,24 @@ Using the form of the cutoff functions used in previous chapters, that is $t(r,L
 where $L_{ee}, L_{en}, L_{een}$ are cutoff parameters. For this study, we take $L\mathdef L_{ee} = L_{en} = L_{een}$, and consider three variants of equation \ref{eq:fournais-full-cutoffs}:
 \begin{itemize}
     \item The full Fournais-Jastrow factor, as in equation \ref{eq:fournais-full-cutoffs}.
-    \item Neglecting the electron-electron-nucleus term and resolving the electron-nucleus cusp using the approach described in \autoref{chap:opt} (instead of via the $r_{iI}$ terms), which is known to be a better way of handling electron-nucleus cusps.\supercite{drummondJastrow2004,needsVariational2020}
-    \item Neglecting both the electron-electron-nucleus and electron-nucleus terms. This has already been studied in the context of TC-DMRG,\supercite{szenesStriking2024} though the choice of cutoffs may result in nonvariational energies. This is the simplest form, containing only $r_{ij}$ terms, and we dub it the ``$r_{12}$-Jastrow''.
+    \item Neglecting the electron-electron-nucleus term and resolving the electron-nucleus cusp using the approach described in \autoref{chap:opt} (instead of via the $r_{iI}$ terms), which is known to be a better way of handling electron-nucleus cusps.\supercite{drummondJastrow2004,needsVariational2020} We'll dub this the $ee+en$-Jastrow.
+    \item Neglecting both the electron-electron-nucleus and electron-nucleus terms. This has already been studied in the context of TC-DMRG,\supercite{szenesStriking2024} though the choice of cutoffs may result in uncontrollably nonvariational energies. This is the simplest form, containing only $r_{ij}$ terms, and we dub it the ``$ee$-Jastrow''.
 \end{itemize}
 
-Consider the nitrogen molecule at equilibrium. We know the exact nonrelativistic ground state energy from \gls{HEAT}\supercite{fellerSurvey2008} and can treat this as a lower bound for the lowest eigenvalue of $\htc$ for the various Jastrow factors. For each of the three choices above, there is only one parameter, $L$. \todo{mention for full fournais it was a failure, give example} The energy of the system as a function of $L$ is shown in figure \ref{fig:fournais-cutoff-n2}.
+Consider again the nitrogen molecule at equilibrium. We treat the result from \gls{HEAT}\supercite{fellerSurvey2008} as the exact nonrelativistic ground state energy, and so this is as a lower bound for the lowest eigenvalue of $\htc$ for the various Jastrow factors. For each of the three choices above, there is only one parameter, $L$. For the Fournais-Jastrow factor, we find that the reference xTC-energy with a cutoff of $L=0.1$ Bohr at \avtz is $-115.122$ Hartree, which is below the HEAT result. This may be due to numerical issues from the complexity of this Jastrow factor form. Since this is such a small cutoff, the TC and non-TC energies should be roughly equal. For simplicity, we exclude the Fournais-Jastrow factor from this study and consider the $ee$- and $ee+en$-Jastrow factors.
+
+The energy of the N$_2$ molecule and N atom with the \avtz basis set for the $ee$- and $ee+en$-Jastrow factors are shown in figure \ref{fig:fournais-cutoff-n2}. Shown are three non-TC energies: the non-TC (RHF) reference energy, the non-TC-FCIQMC energy, and the HEAT (effectively \gls{CBS} energy). Plotted as a function of $L$ are three TC energies, the xTC (RHF) reference energy, the xTC-MP2 energy, and the xTC-FCIQMC energy. For small $L$, we expect the non-TC and xTC reference and FCIQMC energies to coincide, which they approximately do. In contrast, for large $L$ we expect the energies to become unstable, as we start to include spurious long-range correlation. However, it is worth noting that according to these plots, ``long-range'' is already at $\approx 0.4$ Bohr, as the energies are all below the HEAT result. In every case, $L=0.3$ Bohr is shown to energies above that of HEAT but below that of non-TC. We therefore use $L=0.3$ Bohr as our ``universal'' cutoff for these Jastrows factors.
 
 \begin{figure}[htbp]
     \centering
-    \todo{...}
-    \caption{\todo{cutoff stuff}}
+    \includegraphics[width=\textwidth]{figures/universal/cutoffs_combined}
+    \caption{Energy estimates for the nitrogen molecule (top panel) and atom (bottom panel) as a function of a cutoff parameter $L$ for the $ee+en$- (left panel) and $ee$-Jastrow (right panel) factors. The non-TC reference (RHF) energies are represented by a horizontal red line, the HEAT result by a horizontal black line, and the non-TC-FCIQMC by a dashed line. Since HEAT is a \gls{CBS}-extrapolated method, we wish for our TC energies to be above this value, while we also wish to improve upon the non-TC-FCIQMC energy. We therefore take the value of $L$ that leads to sensible energies (i.e. above the HEAT result), which is $L=0.3$ for all four plots. Large- and small-$L$ limits behave as expected, with the former giving nonsensical results and the former approximating the non-TC results in that basis set. All calculations were performed with the \avtz basis set. Missing xTC-FCIQMC points are due to numerical instability caused by a positive correlation energy. In practice, these may be resolved by setting a positive shift, but these results are anyway undesirable.}
     \label{fig:fournais-cutoff-n2}
 \end{figure}
 
-\todo{everything below is out of date (since I also did a cutoff analysis)}
 \subsection{Atomic Jastrow Factors}
 
-Another approach we consider in reducing the need for optimisation is to optimise Jastrow factors for atomic systems and then reuse them in the molecular context. This can be considered a natural extension of starting with atomic orbitals for molecules. The key advantage here is flexibility while the key disadvantages include the need to optimise for the atoms, and the need to make a choice for the form of the Jastrow factor. In principle, we could produce a database of sophisticated atomic Jastrow factors that can then be queried to construct Jastrow factors for molecules or periodic systems. We use the Jastrow forms considered earlier in this dissertation, \begin{equation}
+Another approach we consider in reducing the need for optimisation is to optimise Jastrow factors for atomic systems and then reuse them in the molecular context. This can be considered a natural TC extension of starting with atomic orbitals for molecules. The key advantage here is flexibility while the key disadvantages include the need to optimise for the atoms, and the need to make a choice for the form of the Jastrow factor. In principle, we could produce a database of sophisticated atomic Jastrow factors that can then be queried to construct Jastrow factors for molecules or periodic systems. We use the Jastrow forms considered earlier in this dissertation, \begin{equation}
     \label{eq:jastrow-3}
     J = \sum_{i<j}^Nv(r_{ij}) + \sum_i^N\sum_I^{N_A}\chi(r_{iI}) + \sum_{i<j}^N\sum_I^{N_A}f(r_{ij}, r_{iI}, r_{jI}),
 \end{equation}
@@ -73,19 +76,21 @@ with
     r_{ij}^k r_{iI}^l r_{jI}^m ,
 \end{equation}
 and the same cutoff functions $t(r,L) = (1-r/L)^3
-\Theta(r-L)$. However, we do not want to include long-range (with respect to the nucleus) correlation in the atomic Jastrow factors, since this may bias the molecular calculations. We therefore use $L_v=L_\chi=1.0$ Bohr. We use $L_{ee}=4.5$ Bohr. We consider the following variants:
+\Theta(r-L)$. However, we do not want to include long-range (with respect to the nucleus) correlation in the atomic Jastrow factors, since this may bias the molecular calculations. We therefore use $L_v=L_\chi=1.0$ Bohr and $L_{v}=4.5$ Bohr. We consider the following variants:
 \begin{itemize}
     \item The Jastrow factor is kept constant for the molecule, i.e. we simply use the atomic Jastrow factors as they are.
-    \item We optimise the atomic Jastrow factor only with terms involving the nucleus, i.e. electron-nucleus and electron-electron-nucleus terms. The electron-electron part is then added to the atomic Jastrow and optimised for the molecule. We optimise both with a single- and multideterminantal VMC ansatz.
+    \item We optimise the atomic Jastrow factor only with terms involving the nucleus, i.e. electron-nucleus and electron-electron-nucleus terms. The electron-electron part is then added to the atomic Jastrow and optimised for the molecule with the electron-nucleus and electron-electron-nucleus term fixed at the values determined for the atom. We optimise both with a single- and multideterminantal VMC ansatz.
 \end{itemize}
+
+We find these to yield results above HEAT and therefore do not concern ourselves with a cutoff analysis as in the case of the universal Jastrow factors.
 
 \section{Results}
 
 \subsection{Computational Details}
 
-We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, O$_2$, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT\supercite{fellerSurvey2008}.
+We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, O$_2$, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT.\supercite{fellerSurvey2008}
 
-For the multideterminantal optimisation, we use a small FCIQMC calculation as it was found to perform particularly well in \autoref{chap:binding}, while keeping the orbitals consistent with the atom. Non-TC HF and CASCI calculations were performed using \pyscf\supercite{sunPySCF2018}, VMC optimisation was performed using \casino\supercite{needsVariational2020}, FCIQMC calculations using \neci\supercite{gutherNECI2020}, and MRCI-F12 calculations for comparison using \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020}
+For the multideterminantal optimisation, we use a small FCIQMC calculation as it was found to perform particularly well in \autoref{chap:binding}, while keeping the orbitals consistent with the atom. Non-TC HF and CASCI calculations were performed using \pyscf,\supercite{sunPySCF2018} VMC optimisation was performed using \casino,\supercite{needsVariational2020} FCIQMC calculations using \neci,\supercite{gutherNECI2020} and MRCI-F12 calculations for comparison using \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020}
 
 \subsection{Binding Curves}
 \todo{...}

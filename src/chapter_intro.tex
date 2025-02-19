@@ -65,9 +65,9 @@ where we have simplified notation by using miniscule roman letters for the elect
 In the language of second quantisation, equation \ref{eq:elec_hamiltonian} can be written as
 \begin{equation}
 \label{eq:elec_hamiltonian_2q}
-\hat H_\mathrm{elec} = \sum_{pq} h_{pq}a_{p}^\dag a_{q}+\frac 12 \sum_{pqrs} V_{pqrs}a_{p}^\dag a_{r}^\dag a_{s}a_{q},
+\hat H_\mathrm{elec} = \sum_\sigma\sum_{pq} h^p_{q}a_{p\sigma}^\dag a_{q\sigma}+\frac 12 \sum_{pqrs} V^{pq}_{rs}a_{p}^\dag a_{r}^\dag a_{s}a_{q},
 \end{equation}
-where $p,q,r,s$ are general spin-orbital indices, and $a_{p}$ ($a_{p}^\dag$) is the annihilation (creation) operator for an electron in spin-orbital $p$. These must obey the anti-commutation relations
+where $p,q,r,s$ are general spatial-orbital indices, and $a_{p}$ ($a_{p}^\dag$) is the annihilation (creation) operator for an electron in spatial-orbital $p$. $\sigma,\tau$ are the spin indices. These must obey the anti-commutation relations
 \begin{equation}
     \{a_{p},a_{q}^\dag\}
     \mathdef
@@ -79,14 +79,14 @@ where $p,q,r,s$ are general spin-orbital indices, and $a_{p}$ ($a_{p}^\dag$) is 
 \end{equation}
 so that the electrons satisfy the Pauli exclusion principle.
 
-In equation \ref{eq:elec_hamiltonian_2q}, $h_{pq}$ is a one-body integral,
+In equation \ref{eq:elec_hamiltonian_2q}, $h^p_{q}$ is a one-body integral,
 \begin{equation}
 \label{eq:hij}
-h_{pq} = \int \mathrm{d}^3r\ \phi_p^*(\mathbf{r})\left(-\frac 12 \nabla^2 - \sum_I \frac{Z_I}{|\mathbf{R}_I-\mathbf r|}\right)\phi_q(\mathbf{r})
+h^p_{q} = \int \mathrm{d}^3r\ \phi_p^*(\mathbf{r})\left(-\frac 12 \nabla^2 - \sum_I \frac{Z_I}{|\mathbf{R}_I-\mathbf r|}\right)\phi_q(\mathbf{r})
 \end{equation}
-and $V_{pqrs}$ is a two-body integral,
+and $V^{pq}_{rs}$ is a two-body integral,
 \begin{equation}
-V_{pqrs} = \int \mathrm{d}^3r\int\mathrm{d}^3r'\ \phi_p^*(\mathbf{r})\phi_r^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_q(\mathbf{r})\phi_s(\mathbf{r}'),
+    V^{pq}_{rs} = \int \mathrm{d}^3r\int\mathrm{d}^3r'\ \phi_p^*(\mathbf{r})\phi_r^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_q(\mathbf{r})\phi_s(\mathbf{r}'),
 \end{equation}
 with a spatial-orbital basis $\{\phi_i(\mathbf{r})\}$.
 
@@ -117,9 +117,9 @@ In a similar way, physicists and chemists often use \emph{model Hamiltonians}, w
 The most famous model Hamiltonian is the Hubbard model,\cite{Hubbard1963} most typically used to describe electrons in a periodic lattice, and can be written as
 \begin{equation}
 \label{eq:hubbard}
-\hat H_\mathrm{Hubb} = - \sum_{\langle m,n\rangle}\sum_\sigma t_{mn} a_{n\sigma}^\dag a_{m\sigma} + \sum_m U_m\hat n_{m\uparrow}\hat n_{m\downarrow},
+\hat H_\mathrm{Hubb} = - \sum_{\langle p,q\rangle}\sum_\sigma t_{pq} a_{q\sigma}^\dag a_{p\sigma} + \sum_p U_p\hat n_{p\uparrow}\hat n_{q\downarrow},
 \end{equation}
-where $\langle m,n\rangle$ denotes nearest neighbour sites, $t_{mn}$ (often taken to be constant, $t$) is a parameter called the hopping amplitude, and $U_m$ (often taken to be constant, $U$) is a parameter called the on-site repulsion. Here we have used a spatial orbital basis labels $\{m,n\}$ and spin labels $\sigma\in\{\uparrow,\downarrow\}$. $\hat n_{m\sigma}\mathdef a_{m\sigma}^\dag a_{m\sigma}$ is the number operator.
+where $\langle p,q\rangle$ denotes nearest neighbour sites, $t_{pq}$ (often taken to be constant, $t$) is a parameter called the hopping amplitude, and $U_p$ (often taken to be constant, $U$) is a parameter called the on-site repulsion. Here we have used a spatial-orbital basis labels $\{p,q\}$ and spin labels $\sigma\in\{\uparrow,\downarrow\}$. $\hat n_{p\sigma}\mathdef a_{p\sigma}^\dag a_{p\sigma}$ is the number operator.
 
 Despite its apparent simplicity, the Hubbard model is a rich model, and has been used to describe a variety of phenomena, from metal-insulator transitions to high-temperature superconductivity. Moreover, it is not always so simple to solve, and has been the subject of much research.\cite{Lieb1968a,liebermannFCIQMC2023}
 
@@ -302,18 +302,18 @@ This is a nonlinear equation, and hence the parameters $\kappa_{pq}$ must be det
 The \gls{HF} method can also be understood as a mean-field theory. That is, we treat the $N$-body problem as $N$ one-body problems, where a single electron is in an effective ``averaged'' potential from the other $N-1$ electrons. This effective one-body Hamiltonian is known as the Fock operator,
 \begin{equation}
     \label{eq:fock-operator}
-    f = \sum_{pq} f_{pq} a_p^\dag a_q.
+    f = \sum_{pq} f^p_{q} a_p^\dag a_q.
 \end{equation}
 
 The Fock operator $f$ may be written as
 \begin{equation}
     f = h + V_\mathrm{eff}
 \end{equation}
-where the Fock potential's matrix elements are $V_{\mathrm{eff},pq}=\sum_{i\in\mathrm{occ}}(V_{pqii}-V_{piiq})$.
+where the Fock potential's matrix elements are $V_{\mathrm{eff},pq}=\sum_{i\in\mathrm{occ}}(V^{pq}_{ii}-V^{pi}_{iq})$.
 
 The Hartree-Fock orbitals, which ultimately dictate the parameters for the minimisation procedure, are determined by diagonalising the Fock matrix,
 \begin{equation}
-    f_{pq} = \epsilon_p\delta_{pq}
+    f^p_{q} = \epsilon_p\delta^p_{q}
 \end{equation}
 where the eigenvalues $\epsilon_p$ are known as the orbital energies.
 

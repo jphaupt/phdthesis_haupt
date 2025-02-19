@@ -257,6 +257,8 @@ Finally, as a measure for the size consistency error, we consider the difference
 
 One major advantage to this updated workflow is the ability to explicitly target specific states. We demonstrate this by calculating select excitation energies of the nitrogen and ammonia molecules. We use CASCI and CASSCF to calculate the 1RDM, CI vector and orbitals for the state. The CI vector is then used in the VMC optimisation, and the 1RDM for the xTC approximation when calculating integrals. For simplicity, we consider only those states which are the lowest in their symmetry.\footnote{In principle, we may also target higher-order excited states, but this would require an additional adjoint replica.\supercite{bluntExcitedstateApproachFull2015}}
 
+\todo{could the reason why the singlet energies are so bad be that the Jastrow is optimised for the wrong state? The spin-penalty term only applies after the optimisation is done. -- no because it is with the correct state via the CI vector(!) or at least it should be!!}
+
 \todo{...}
 
 \begin{table}[h!]
@@ -267,34 +269,34 @@ One major advantage to this updated workflow is the ability to explicitly target
 State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 \hline
 \multirow{3}{*}{$^1\Pi_g$}
-& non-TC exFCI\tnote{a} & 345.8  & \red{test} & \todo{} & \todo{exp1}\tnote{b} \\
-& CASCI-xTC    & 341.86(4) &  & \todo{} & \todo{exp2}\tnote{c}  \\
-& CASSCF-xTC   & 340.729(3) &  & \todo{} & \todo{th1}\tnote{d}  \\
+& non-TC exFCI\tnote{a} & 345.8  & 343.2 & 343.2 & 344.47\tnote{b} \\
+& CASCI-xTC    & 341.86(4) &  & \todo{} & 344.47\tnote{c}  \\
+& CASSCF-xTC   & 340.729(3) &  & \todo{} & 342.99\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^1\Sigma_u^-$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
-& CASCI-xTC          & &    & \todo{}   &  \\
-& CASSCF-xTC         & &    & \todo{}   &  \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & 367.04\tnote{b} \\
+& CASCI-xTC          & &    & \todo{}   & 367.04\tnote{c}  \\
+& CASSCF-xTC         & &    & \todo{}   & 373.33\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^1\Delta_u$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
-& CASCI-xTC          & &    & \todo{}   &  \\
-& CASSCF-xTC         & &    & \todo{}   &  \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & 379.99\tnote{b} \\
+& CASCI-xTC          & &    & \todo{}   & 379.99\tnote{c}  \\
+& CASSCF-xTC         & &    & \todo{}   & 389.98\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Sigma_u^+$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
-& CASCI-xTC          & &    & \todo{}   &  \\
-& CASSCF-xTC         & &    & \todo{}   &  \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & 286.75\tnote{b} \\
+& CASCI-xTC          & &    & \todo{}   & 286.75\tnote{c}  \\
+& CASSCF-xTC         & &    & \todo{}   & 279.72\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Pi_g$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
-& CASCI-xTC          & &    & \todo{}   &  \\
-& CASSCF-xTC         & &    & \todo{}   &  \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & 297.48\tnote{b} \\
+& CASCI-xTC          & &    & \todo{}   & 297.48\tnote{c}  \\
+& CASSCF-xTC         & &    & \todo{}   & 297.85\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Delta_u$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & \multirow{3}{*}{\todo{}} \\
-& CASCI-xTC          & &    & \todo{}   &  \\
-& CASSCF-xTC         & &    & \todo{}   &  \\
+& non-TC exFCI\tnote{a}       & &    & \todo{}   & 328.56\tnote{b} \\
+& CASCI-xTC          & &    & \todo{}   & 328.56\tnote{c}  \\
+& CASSCF-xTC         & &    & \todo{}   & 330.41\tnote{d}  \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}

@@ -13,11 +13,13 @@ All transcorrelated matrix element calculations presented in this dissertation h
 
 As described in section \ref{sec:tc},
 \begin{equation}
-    \htc = \sum_{pq} h_q^p a_p^\dagger a_q
-    + \frac{1}{2} \sum_{pqrs} \big(V_{rs}^{pq} - K_{rs}^{pq}\big)
-    a_p^\dagger a_q^\dagger a_s a_r
-    - \frac{1}{6} \sum_{pqrstu} L_{stu}^{pqr}
-    a_p^\dagger a_q^\dagger a_r^\dagger a_u a_t a_s,
+\begin{split}
+    \htc = &\sum_{pq}\sum_\sigma h_q^p a_{p\sigma}^\dagger a_{q\sigma}
+    + \frac{1}{2} \sum_{pqrs} \big(V_{rs}^{pq} - K_{rs}^{pq}\big) \sum_{\sigma\tau}
+    a_{p\sigma}^\dagger a_{q\tau}^\dagger a_{s\tau} a_{r\sigma} \\
+    &- \frac{1}{6} \sum_{pqrstu} L_{stu}^{pqr}\sum_{\sigma\tau\lambda}
+    a_{p\sigma}^\dagger a_{q\tau}^\dagger a_{r\lambda}^\dagger a_{u\lambda} a_{t\tau} a_{s\sigma},
+\end{split}
 \end{equation}
 where
 \begin{equation}

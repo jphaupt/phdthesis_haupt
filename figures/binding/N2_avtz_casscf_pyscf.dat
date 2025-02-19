@@ -1,0 +1,32 @@
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_casscf_enL4_C3_nd100_combjasTrue_oneshot_s0
+# R/Bohr EFCIQMC/Hartree    EDCSD/Hartree
+# note also have, for RHF orbs
+# all of these need a to be run more
+# these actually *are* consistent with molpro. I was making a mistake earlier
+# just use the molpro results for now
+1.92    -109.511005(29)
+2.0
+2.08
+2.16
+2.24
+2.32
+2.4
+2.48
+2.98
+3.48
+3.98
+4.48
+4.98
+5.48
+5.98
+6.48
+6.98
+7.48
+7.98
+8.48
+8.98
+9.48
+10.0
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_enL4_C3_nd1_s3_fixparity/augccpvtz/04_fciqmc/*
+# atom: -54.5854656(12)
+# 2*atom: -109.1709312(24)

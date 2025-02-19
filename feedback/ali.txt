@@ -1,6 +1,5 @@
-why in eq 1.2 do you have 1/4pi eps_0 in some of the electrostatic terms and not others?
+- [x] why in eq 1.2 do you have 1/4pi eps_0 in some of the electrostatic terms and not others?
 
-Also you should define what is meant by atomic units later on in Eq 1.4
+- [x] Also you should define what is meant by atomic units later on in Eq 1.4
 
-eq 1.5 uses spin orbitals but then you use spatial orbitals later (e.g. eq 1.8)
- - introduce spin indices like you did later (Hubbard model I think it was)
+- [x] eq 1.5 uses spin orbitals but then you use spatial orbitals later (e.g. eq 1.8) - introduce spin indices like you did later (Hubbard model I think it was)
