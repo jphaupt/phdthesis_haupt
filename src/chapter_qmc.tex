@@ -186,7 +186,7 @@ In principle, the algorithm is doable with just a single walker, but in practice
 % \begin{minipage}{\textwidth}
 \begin{lstlisting}[escapeinside={(*}{*)}]
     Initialise (*$N$*) walkers in random positions.
-    until convergence criterion met(*\footnote{The convergence criterion in VMC is typically just to sample a predefind number of configurations.}*)
+    until convergence criterion met(*\footnote{The convergence criterion in VMC is typically just to sample a predefined number of configurations.}*)
       for each walker at position (*$r$*)
         sample the local energy (*$E_L$*) at (*$r$*)
         propose a new position (*$r'$*) with probably (*$p=|\Psi(r')/\Psi(r)|^2$ *)

@@ -65,17 +65,17 @@ where we have simplified notation by using miniscule roman letters for the elect
 In the language of second quantisation, equation \ref{eq:elec_hamiltonian} can be written as
 \begin{equation}
 \label{eq:elec_hamiltonian_2q}
-\hat H_\mathrm{elec} = \sum_\sigma\sum_{pq} h^p_{q}a_{p\sigma}^\dag a_{q\sigma}+\frac 12 \sum_{pqrs} V^{pq}_{rs}a_{p}^\dag a_{r}^\dag a_{s}a_{q},
+\hat H_\mathrm{elec} = \sum_\sigma\sum_{pq} h^p_{q}a_{p\sigma}^\dag a_{q\sigma}+\frac 12 \sum_{\sigma\tau}\sum_{pqrs} V^{pq}_{rs}a_{p\sigma}^\dag a_{r\tau}^\dag a_{s\tau}a_{q\sigma},
 \end{equation}
 where $p,q,r,s$ are general spatial-orbital indices, and $a_{p}$ ($a_{p}^\dag$) is the annihilation (creation) operator for an electron in spatial-orbital $p$. $\sigma,\tau$ are the spin indices. These must obey the anti-commutation relations
 \begin{equation}
-    \{a_{p},a_{q}^\dag\}
+    \{a_{p\sigma},a_{q\tau}^\dag\}
     \mathdef
-    a_{p}a_{q}^\dag + a_{p}^\dag a_{q}
-    =\delta_{pq}
+    a_{p\sigma}a_{q\tau}^\dag + a_{q\tau}^\dag a_{p\sigma}
+    =\delta_{pq}\delta_{\sigma\tau}
 \end{equation}
 \begin{equation}
-    \{a_{p},a_{q}\} = \{a_{p}^\dag,a_{q}^\dag\} = 0
+    \{a_{p\sigma},a_{q\tau}\} = \{a_{p\sigma}^\dag,a_{q\tau}^\dag\} = 0
 \end{equation}
 so that the electrons satisfy the Pauli exclusion principle.
 
@@ -289,27 +289,27 @@ Then, for some arbitrary initial configuration $\ket 0$,
 \end{equation}
 Here,
 \begin{equation}
-\kappa = \sum_{pq} \kappa_{pq}a_p^\dag a_q
+\kappa = \sum_{PQ} \kappa_{PQ}a_P^\dag a_Q
 \end{equation}
-is an anti-Hermitian operator (i.e. $\kappa_{pq}^* = -\kappa_{qp}$) whose matrix elements $\kappa_{pq}$ are the orbital rotation coefficients and will be the variational parameters. The anti-Hermiticity of $\kappa$ ensures that the orbital rotation $\e^{-\kappa}$ is unitary.
+is an anti-Hermitian operator (i.e. $\kappa_{PQ}^* = -\kappa_{QP}$) whose matrix elements $\kappa_{PQ}$ are the orbital rotation coefficients and will be the variational parameters. The anti-Hermiticity of $\kappa$ ensures that the orbital rotation $\e^{-\kappa}$ is unitary. Here we use the convention that capital $P,Q$ denote spin-orbital indices.
 
 With $\braket{\Phi_0}=1$, we want
 \begin{equation}
-E_\mathrm{HF} = \min_{\kappa_{pq}}\bra{\Phi_0}\hat H\ket{\Phi_0}.
+E_\mathrm{HF} = \min_{\kappa_{PQ}}\bra{\Phi_0}\hat H\ket{\Phi_0}.
 \end{equation}
-This is a nonlinear equation, and hence the parameters $\kappa_{pq}$ must be determined iteratively. Since $\e^{-\kappa}$ is unitary, the orthonormality of the spin-orbitals is preserved, $\bra{\phi_p}\ket{\phi_q} = \delta_{pq}$.
+This is a nonlinear equation, and hence the parameters $\kappa_{PQ}$ must be determined iteratively. Since $\e^{-\kappa}$ is unitary, the orthonormality of the spin-orbitals is preserved, $\bra{\phi_P}\ket{\phi_Q} = \delta_{PQ}$.
 
 The \gls{HF} method can also be understood as a mean-field theory. That is, we treat the $N$-body problem as $N$ one-body problems, where a single electron is in an effective ``averaged'' potential from the other $N-1$ electrons. This effective one-body Hamiltonian is known as the Fock operator,
 \begin{equation}
     \label{eq:fock-operator}
-    f = \sum_{pq} f^p_{q} a_p^\dag a_q.
+    f = \sum_{PQ} f^P_{Q} a_P^\dag a_Q.
 \end{equation}
 
 The Fock operator $f$ may be written as
 \begin{equation}
     f = h + V_\mathrm{eff}
 \end{equation}
-where the Fock potential's matrix elements are $V_{\mathrm{eff},pq}=\sum_{i\in\mathrm{occ}}(V^{pq}_{ii}-V^{pi}_{iq})$.
+where the Fock potential's matrix elements (in spatial-orbital basis) are $V_{\mathrm{eff},pq}=\sum_{i\in\mathrm{occ}}(V^{pq}_{ii}-V^{pi}_{iq})$.
 
 The Hartree-Fock orbitals, which ultimately dictate the parameters for the minimisation procedure, are determined by diagonalising the Fock matrix,
 \begin{equation}
@@ -381,8 +381,8 @@ We therefore have two ``axes'' on which to approach the exact solution to equati
 where $\ket{D_p}$ is a \gls{SD}. This may alternatively be written\footnote{We adopt the common notation convention where $i,j,k,...$ denote occupied orbitals, $a,b,c,...$ virtual (or unoccupied) orbitals, and $p,q,r, ...$ unspecified.}
 \begin{equation}
 \label{eq:ci}
-\ket{\Phi_\mathrm{CI}} = (\one + \sum_{ia}c_i^a\hat a_a^\dag\hat a_i +
-\sum_{ijab}c_{ij}^{ab} a_a^\dag a_b^\dag a_i a_j+...)\ket{\Phi_0}
+\ket{\Phi_\mathrm{CI}} = (\one + \sum_\sigma\sum_{ia}c_i^a\hat a_{a\sigma}^\dag\hat a_{i\sigma} +
+\sum_{\sigma\tau}\sum_{ijab}c_{ij}^{ab} a_{a\sigma}^\dag a_{b\tau}^\dag a_{i\tau} a_{j\sigma}+...)\ket{\Phi_0}
 \end{equation}
 where the number of terms in the sum depends on how many excitations we consider, i.e. how far we truncate the \gls{CI} expansion. The energy and wave function are then found as the lowest eigenvalue and corresponding eigenvector, respectively, of the Hamiltonian written in the basis of these \glspl{SD}. This can be done, for example, by exact diagonalisation. If all possible excitations are considered, then we have reached the \gls{CBS} limit, and the solution is exact within that basis set.
 
@@ -488,7 +488,7 @@ To ensure a multiplicatively-separable wave function, we use a multiplicative an
     \label{eq:cc-ansatz}
 \ket{\Psi_\mathrm{CC}} = \e^T\ket{\Phi_0},
 \end{equation}
-where $\ket{\Phi_0}$ is the reference (typically \gls{HF}) wave function, and $T$ is the cluster operator. The cluster operator is defined $T = T_1 + T_2 + T_3 + \cdots$, where $T_n$ is the $n$-body cluster operator, made up of all possible $n$-body excitations, for example, $T_1 = \sum_{i,a}t_{ia}a_a^\dag a_i$ for the one-body cluster operator, and $T_2 = \sum_{i<j,a<b}t_{ij}^{ab}a_a^\dag a_b^\dag a_j a_i$ for the two-body cluster operator.
+where $\ket{\Phi_0}$ is the reference (typically \gls{HF}) wave function, and $T$ is the cluster operator. The cluster operator is defined $T = T_1 + T_2 + T_3 + \cdots$, where $T_n$ is the $n$-body cluster operator, made up of all possible $n$-body excitations, for example, $T_1 = \sum_\sigma\sum_{i,a}t_{ia}a_{a\sigma}^\dag a_{i\sigma}$ for the one-body cluster operator, and $T_2 = \sum_{\sigma\tau}\sum_{i<j,a<b}t_{ij}^{ab}a_{a\sigma}^\dag a_{b\tau}^\dag a_{j\tau} a_{i\sigma}$ for the two-body cluster operator.
 
 It is worth noting that \gls{CC} and \gls{CI} are identical, differing only in their parametrisation, when neither are truncated. They both provide \gls{FCI}-level accuracy.
 

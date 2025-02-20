@@ -26,7 +26,7 @@ The universal form of the Jastrow, which we shall dub the ``Fournais-Jastrow'' f
 \end{equation}
 where, as usual, upper case indices denote the nucleus, and lower case indices represent electrons. The first term resolves the electron-nucleus cusps, the second term resolves the electron-electron cusps, and finally the last term resolves electron-electron-nucleus cusps. However, these terms are unbounded, and indeed are valid only close to coalescence points. For this reason, we introduce cutoff functions on each term.
 
-Using the form of the cutoff functions used in previous chapters, that is $t(r,L) = (1-r/L)^3\Theta(r-L)$, we find unreasonable energies even for extremely small cutoffs. For example, with this form of cutoff with the electron-nucleus and electron-electron terms, and $L=0.1$ Bohr, we get a reference energy of $-246.604$ for N$_2$ with the \avtz basis set, whereas the \gls{HEAT} result is known to be $-109.5425$.\supercite{fellerSurvey2008}.
+Using the form of the cutoff functions used in previous chapters, that is $t(r,L) = (1-r/L)^3\Theta(r-L)$, we find unreasonable energies even for extremely small cutoffs. For example, with this form of cutoff with the electron-nucleus and electron-electron terms, and $L=0.1$ Bohr, we get a reference energy of $-246.604$ for N$_2$ with the \avtz basis set, whereas the \gls{HEAT} result is known to be $-109.5425$.\supercite{fellerSurvey2008}
 
 Thus, we instead use gaussian cutoffs, which are smooth but still decay rapidly. Our Jastrow factor therefore becomes
 \begin{align}
@@ -43,7 +43,7 @@ where $L_{ee}, L_{en}, L_{een}$ are cutoff parameters. For this study, we take $
 
 Consider again the nitrogen molecule at equilibrium. We treat the result from \gls{HEAT}\supercite{fellerSurvey2008} as the exact nonrelativistic ground state energy, and so this is as a lower bound for the lowest eigenvalue of $\htc$ for the various Jastrow factors. For each of the three choices above, there is only one parameter, $L$. For the Fournais-Jastrow factor, we find that the reference xTC-energy with a cutoff of $L=0.1$ Bohr at \avtz is $-115.122$ Hartree, which is below the HEAT result. This may be due to numerical issues from the complexity of this Jastrow factor form. Since this is such a small cutoff, the TC and non-TC energies should be roughly equal. For simplicity, we exclude the Fournais-Jastrow factor from this study and consider the $ee$- and $ee+en$-Jastrow factors.
 
-The energy of the N$_2$ molecule and N atom with the \avtz basis set for the $ee$- and $ee+en$-Jastrow factors are shown in figure \ref{fig:fournais-cutoff-n2}. Shown are three non-TC energies: the non-TC (RHF) reference energy, the non-TC-FCIQMC energy, and the HEAT (effectively \gls{CBS} energy). Plotted as a function of $L$ are three TC energies, the xTC (RHF) reference energy, the xTC-MP2 energy, and the xTC-FCIQMC energy. For small $L$, we expect the non-TC and xTC reference and FCIQMC energies to coincide, which they approximately do. In contrast, for large $L$ we expect the energies to become unstable, as we start to include spurious long-range correlation. However, it is worth noting that according to these plots, ``long-range'' is already at $\approx 0.4$ Bohr, as the energies are all below the HEAT result. In every case, $L=0.3$ Bohr is shown to energies above that of HEAT but below that of non-TC. We therefore use $L=0.3$ Bohr as our ``universal'' cutoff for these Jastrows factors.
+The energy of the N$_2$ molecule and N atom with the \avtz basis set for the $ee$- and $ee+en$-Jastrow factors are shown in figure \ref{fig:fournais-cutoff-n2}. Shown are three non-TC energies: the non-TC (RHF) reference energy, the non-TC-FCIQMC energy, and the HEAT (effectively \gls{CBS} energy). Plotted as a function of $L$ are three TC energies, the xTC (RHF) reference energy, the xTC-MP2 energy, and the xTC-FCIQMC energy. For small $L$, we expect the non-TC and xTC reference and FCIQMC energies to coincide, which they approximately do. In contrast, for large $L$ we expect the energies to become unstable, as we start to include spurious long-range correlation. However, it is worth noting that according to these plots, ``long-range'' is already at $\approx 0.4$ Bohr, as the energies are all below the HEAT result. In every case, $L=0.3$ Bohr is shown to result in energies above that of HEAT but below that of non-TC. We therefore use $L=0.3$ Bohr as our ``universal'' cutoff for these Jastrow factors.
 
 \begin{figure}[htbp]
     \centering
@@ -88,16 +88,65 @@ We find these to yield results above HEAT and therefore do not concern ourselves
 
 \subsection{Computational Details}
 
-We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, O$_2$, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT.\supercite{fellerSurvey2008}
+We revisit the nitrogen binding curve from \autoref{chap:binding} as a stress test for our Jastrow factors, as well as the atomisation of the molecules N$_2$, C$_2$, O$_2$, and CN from \autoref{chap:opt}. As before, we compare the results of the different choices of Jastrow factors against experiment\supercite{leroyAccurate2006} and the atomisation energies to HEAT.\supercite{fellerSurvey2008} The binding curve is calculated with the \avtz basis set, while the atomisation energies are calculated with the \avxz{$X$} basis sets for $X=\text{D},\text{T},\text{Q}$.
 
 For the multideterminantal optimisation, we use a small FCIQMC calculation as it was found to perform particularly well in \autoref{chap:binding}, while keeping the orbitals consistent with the atom. Non-TC HF and CASCI calculations were performed using \pyscf,\supercite{sunPySCF2018} VMC optimisation was performed using \casino,\supercite{needsVariational2020} FCIQMC calculations using \neci,\supercite{gutherNECI2020} and MRCI-F12 calculations for comparison using \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020}
 
 \subsection{Binding Curves}
+
+
+
 \todo{...}
 \todo{universal Jastrows cutoff study -- also mention the pseudoMP2 values}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/universal/residuals}
+    \caption{The binding curves relative to a fit to experimental data\supercite{leroyAccurate2006} for the N$_2$ binding curve, calculated in the \avtz basis for various Jastrow factor forms. All curves are normalised such that the value at $10$ Bohr is $0$. The grey shaded area denotes a region of $\pm 1.6$ mHa (chemical accuracy). For reference, the multideterminantal FCIQMC-Jastrow from \autoref{chap:binding} is shown in brown (with diamonds). Both universal Jastrow forms ($ee$ and $ee+en$, denoting with only electron-electron or with both electron-electron and electron-nucleus terms, respectively) stay above the experimental result, and are indeed very close to each other. The atomic Jastrow factors, whether not optimised for the molecule (atomic $J$), or containing $ee$ terms optimised for the molecule (RHF or FCIQMC as the $\Phi$ ansatz) have a less smooth behaviour, but are generally closer to the experimental result. \todo{converge these and update the caption: this data is preliminary}}
+    \label{eq:binding-universal-experiment}
+\end{figure}
+
+\todo{...}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/universal/n2_avtz_min}
+    \includegraphics[width=0.8\textwidth]{figures/universal/n2_avtz_diss}
+    \caption{Zoomed in views of the binding N$_2$ binding curves for the various Jastrow factor choices. All forms give qualitatively correct binding curves. Included for comparison is the FCIQMC-Jastrow from \autoref{chap:binding}, which was shown to be good both at equilibrium and dissociation. Compared to this, the binding curves for both universal Jastrow forms are shifted up, as well as for the atomic Jastrow factor without further optimisation. However, when we use the atomic Jastrow factor with the electron-electron terms optimised for the molecule, we get a curve that is very close to the FCIQMC-Jastrow, particularly when using a multideterminal (FCIQMC) expansion. \todo{converge these and update the caption: this data is preliminary. I expect (hope) the weird behaviour for the ee-opt RHF curve at 10 Bohr will go away}}
+    \label{eq:binding-universal-zoom}
+\end{figure}
+
+\todo{size consistency discussion}
+
 \subsection{Atomisation Energies}
 \todo{...}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{c|c|ccc||c}
+    Molecule & Jastrow & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008} \\
+    \hline
+    \multirow{3}{*}{N$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \todo{} \\
+      & $ee+en$ & \todo{} & \todo{} & \todo{} & \todo{} \\
+      & Atomic+$ee$-FCIQMC & \todo{} & \todo{} & \todo{} & \todo{} \\
+    \hline
+    \multirow{3}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \todo{} \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} & \todo{} \\
+    & Atomic+$ee$-FCIQMC & \todo{} & \todo{} & \todo{} & \todo{} \\
+    \hline
+    \multirow{3}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \todo{} \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} & \todo{} \\
+    & Atomic+$ee$-FCIQMC & \todo{} & \todo{} & \todo{} & \todo{} \\
+    \hline
+    \multirow{3}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \todo{} \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} & \todo{} \\
+    & Atomic+$ee$-FCIQMC & \todo{} & \todo{} & \todo{} & \todo{} \\
+    \end{tabular}
+    \caption{\todo{atomisation energies}}
+    \label{tbl:universal-atomisation}
+\end{table}
+
+\todo{also plot the convergence of the atomisation energies wrt basis set size as done in optimisation chapter}
 
 % \todo{N2 binding curve, some atomisation energies (I guess C2, N2 and CN are enough, say only with multidet(?) ee opt atom and en-ee universal)}
 
@@ -108,5 +157,6 @@ For the multideterminantal optimisation, we use a small FCIQMC calculation as it
 \todo{mention that with the small optimisation we introduce the possibility of targeting specific states, at least somewhat}
 \todo{mention revisiting the universal Jastrow factors and the cutoffs more thoroughly}
 \todo{...}
+\todo{ECPs with universal/atomic Jastrows}
 
 \todo{Also mention (maybe by then you even have data for) the Fournais Jastrow factor}
