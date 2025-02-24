@@ -167,7 +167,7 @@ We can see from this figure that using the trial-projected energy even with just
 
 We calculate the energy of the nitrogen molecule across multiple bond lengths, ranging from $1.92$ to $10$ Bohr. We use the \avtz basis set, which contains diffuse functions for long-range correlations while still being a modest size. We calculate the non-TC CI vectors and \glspl{1RDM} for each geometry with FCIQMC (using \neci),\supercite{gutherNECI2020} CASSCF (using \molpro),\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020} and CASCI (using \pyscf).\supercite{sunPySCF2018} The CI vector is then used in the objective function for optimising the Jastrow factor with VMC using \casino.\supercite{needsVariational2020} Using the optimised Jastrow factor and 1RDM, we then calculate the relevant integrals for the xTC Hamiltonian using \pytchint. Finally, xTC-FCIQMC is performed on these integrals with \neci. Each geometry is calculated independently; that is, the Jastrow factor is optimised for each geometry separately. In order to keep memory usage manageable, we cutoff the number of determinants in our CI vector to be $100$. Even at the dissociated limit, the number of relatively-highly-weighted determinants is around $20$, so $100$ should be enough to capture the static correlation for the VMC optimisation.
 
-Next, we also calculate the vertical excited-state energies using this workflow for a few states of the nitrogen and ammonia (NH$_3$) molecules with CASSCF- and CASCI-Jastrows. Excited states are also challenging multireference problems. Moreover, we optimise the Jastrow factors in a state-specific manner. That is, for some excited state $\Phi_\mathrm{ex}$, our ansatz becomes $\Psi_\mathrm{ex} = \e^J\Phi_\mathrm{ex}$, thereby modifying our workflow slightly to optimise specifically for that state, as well as using its 1RDM for the xTC approximation. Naturally, the xTC-FCIQMC calculation will be targeting this state. For cases where a triplet excited state of the same symmetry is lower in energy than a singlet excited state, the FCIQMC calculation will collapse to the triplet state. To overcome this, we use a spin-penalty term to target the singlet excited state.\supercite{weserSpin2022}
+Next, we also calculate the vertical excited-state energies using this workflow for a few states of the nitrogen molecules with CASSCF- and CASCI-Jastrows. Excited states are also challenging multireference problems. Moreover, we optimise the Jastrow factors in a state-specific manner. That is, for some excited state $\Phi_\mathrm{exc}$, our ansatz becomes $\Psi_\mathrm{exc} = \e^J\Phi_\mathrm{exc}$, thereby modifying our workflow slightly to optimise specifically for that state, as well as using its 1RDM for the xTC approximation. Naturally, the xTC-FCIQMC calculation will be targeting this state. For cases where a triplet excited state of the same symmetry is lower in energy than a singlet excited state, the FCIQMC calculation will collapse to the triplet state. To overcome this, we use a spin-penalty term to target the singlet excited state.\supercite{weserSpin2022}
 
 For the N$_2$ binding curve, we compare against the highly accurate experimental curve determined in reference \citenum{leroyAccurate2006}, and as a benchmark we compare against F12 calculations, performed in \molpro.\supercite{wernerMOLPRO,wernerMolpro2012,wernerMolproQuantumChemistry2020} For excited states we compare against extrapolated FCI calculations reported in reference \citenum{loosMountaineering2018}.
 
@@ -255,16 +255,21 @@ Finally, as a measure for the size consistency error, we consider the difference
 
 \subsection{Excitation Energies}
 
-One major advantage to this updated workflow is the ability to explicitly target specific states. We demonstrate this by calculating select excitation energies of the nitrogen and ammonia molecules. We use CASCI and CASSCF to calculate the 1RDM, CI vector and orbitals for the state. The CI vector is then used in the VMC optimisation, and the 1RDM for the xTC approximation when calculating integrals. For simplicity, we consider only those states which are the lowest in their symmetry.\footnote{In principle, we may also target higher-order excited states, but this would require an additional adjoint replica.\supercite{bluntExcitedstateApproachFull2015}} For the CASSCF calculations, we try both state-specific CASSCF as well as \gls{SA} CASSCF.
+One major advantage to this updated workflow is the ability to explicitly target specific states. We demonstrate this by calculating select excitation energies of the nitrogen molecule. We use CASCI and CASSCF to calculate the 1RDM, CI vector and orbitals for the state. The CI vector is then used in the VMC optimisation, and the 1RDM for the xTC approximation when calculating integrals. For simplicity, we consider only those states which are the lowest in their symmetry.\footnote{In principle, we may also target higher-order excited states, but this would require an additional adjoint replica.\supercite{bluntExcitedstateApproachFull2015}}
+For the CASSCF-Jastrow factors, we use \gls{SA}-CASSCF to give the same orbitals for all states.
+% For the CASSCF calculations, we try both state-specific CASSCF as well as \gls{SA}-CASSCF.
 
 \begin{figure}[!h]
     \centering
-    \todo{figure}
-    \caption{\todo{figure showing relative error wrt experiment for Loos, CASSCF-Jastrow and SA-CASSCF-Jastrow}}
+    \includegraphics[width=\textwidth]{figures/binding/n2_exc}
+    \caption{Excitation energies for each state compared to experiment,\supercite{oddershedeComparison1985,huberConstants1979} $E_\mathrm{exc}-E_\mathrm{exp}$ for the nitrogen dimer. Shown are the results from reference \citenum{loosMountaineering2018} , xTC-FCIQMC with CASCI-Jastrow factors and xTC-FCIQMC with state-average CASSCF-Jastrow factors for the \avdz (horizontal stripes), \avtz (backslash hatch pattern) and \avqz (forward-slash hatch pattern) basis sets. While no one method strictly outperforms another, we do observe that SA-CASSCF-Jastrow factors perform the most consistently well and the error changes most monotonically with respect to the basis set size, in contrast to CASCI-Jastrow factors or non-TC.
+    % We find that performance is somewhat inconsistent with no one method proving universally more accurate than any other. However, SA-CASSCF Jastrow factors appear to perform best overall, with several excitation energies within chemical accuracy (1.6 mHa) relative to experiment, represented by the shaded region.
+        % \todo{figure showing relative error wrt experiment for Loos, CASSCF-Jastrow and SA-CASSCF-Jastrow}\todo{some calculations here still need to be equilibrated}
+        }
     \label{fig:n2-excite-relative}
 \end{figure}
 
-\todo{...}
+Figure \ref{fig:n2-excite-relative} displays the excitation energies of the N$_2$. Of the three methods explored (xTC-FCIQMC with SA-CASSCF- or CASCI-Jastrow factors, and non-TC), SA-CASSCF-Jastrow factors give the most consistently accurate excitation energies. Moreover, its change with respect to basis set size is relatively monotonic compared to the other two methods. This suggests a SA-CASSCF is a particularly fruitful ansatz for $\Phi$ when used in the TC method to calculate excited states.
 
 \begin{table}[h!]
 \centering
@@ -311,9 +316,14 @@ State & Method & \avdz & \avtz & \avqz & Benchmarks \\
     \item[d] Theoretical (multireference coupled cluster) value, see references \parencite{loosMountaineering2018,ben-shlomoN21990}.
 \end{tablenotes}
 \end{threeparttable}
-\caption{\todo{Comparison of methods and experimental values for different states.}}
+\caption{
+    Excitation energies for the nitrogen dimer various excited states. We use xTC-FCIQMC with CASCI- or SA-CASSCF orbitals and CI vector ansatz for the TC method, and compare it to experiment and non-TC results. We find that while no method consistently beats all others, SA-CASSCF is a particularly effective choice for calculating excited states in the context of TC.
+    % \todo{Comparison of methods and experimental values for different states.}
+    }
 \label{tbl:excitation-energies-n2}
 \end{table}
+
+The excitation energies are presented in tabular format in table \ref{tbl:excitation-energies-n2}. Here we can see again the relative efficacy of SA-CASSCF orbitals and CI vectors for use for the TC method, compared to experimental values.
 
 
 % \begin{table}[h!]
@@ -397,6 +407,13 @@ State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 % \end{table}
 
 \section{Conclusion and Outlook}
-\todo{make sure to mention the cutoff analysis and constructing Jastrow factors from atomic Jastrow factors. Mention ECPs, since it's already been submitted...}
-\todo{TC-CAS...}
-\todo{self-consistent TC (i.e. feed back into itself)}
+
+We have presented a framework for using the transcorrelated method for solving problems of strongly multireference character. We find challenging problems like the nitrogen dissociation curve may be solved by modifying the ansatz for $\Phi$ with a multireference CI expansion, and appropriately changing the corresponding 1RDM for use in the xTC approximation. Particularly effective choices for $\Phi$ are FCIQMC and CASSCF. Using a small FCIQMC calculation has already been found to effectively solve the issues experienced with a HF ansatz, and its use with \glspl{ECP} to efficienctly describe the core region with TC has already been explored.\supercite{simulaEcp}
+
+Furthermore, with this methodology we can tailor our TC Hamiltonian to target specific states of interest. Using state-averaged CASSCF, we find that this approach yields accurate results for excitation energies of the nitrogen dimer.
+
+While this approach has already proven remarkably effective for a few systems, one key outlook is to study a wider array of complex problems, including transition metals and periodic solids. We may also wish to continue the procedure self-consistently. That is, we may use the resulting right-eigenvector of $\htc$ as the ansatz for $\Phi$ in a subsequent calculation (as well as use the 1RDM, which may now be non-Hermitian), and continue until some convergence is achieved. Similarly, this study is a promising start for a \gls{TC}-\gls{MCSCF} method, wherein the orbitals, CI coefficients, and Jastrow factor parameters are all optimised simultaneously with a self-consistent algorithm.
+
+% \todo{make sure to mention the cutoff analysis and constructing Jastrow factors from atomic Jastrow factors. Mention ECPs, since it's already been submitted...}
+% \todo{TC-CAS...}
+% \todo{self-consistent TC (i.e. feed back into itself)}
