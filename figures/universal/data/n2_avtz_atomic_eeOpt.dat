@@ -3,7 +3,7 @@
 # (almost) all calculations need to be verified
 1.92   -109.510884(10)
 # 2.0    -109.5284731(91)
-2.08   -109.533195(23)
+2.08   -109.533204(16)
 # 2.16   -109.5285146(68)
 2.24   -109.517056(13)
 # 2.32   -109.500680(13)
@@ -21,9 +21,9 @@
 # 7.48   -109.172398(32)
 7.98   -109.172495(38)
 # 8.48   -109.17353(14) #!!!
-8.98   -109.17105(88)
+8.98   -109.1727429(93) #
 # 9.48   -109.1711(13)
-10.0   -109.16990(55) #!!!
+10.0   -109.17291(66) #!
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_noee_enL1_C3_nd1_s3_fixparity/augccpvtz/04_fciqmc
 # TODO shouldn't make a difference, but running with multidet ee opt
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_noee_enL1_C3_nd1_s3_fixparity/augccpvtz/02a_opt_md

@@ -255,48 +255,53 @@ Finally, as a measure for the size consistency error, we consider the difference
 
 \subsection{Excitation Energies}
 
-One major advantage to this updated workflow is the ability to explicitly target specific states. We demonstrate this by calculating select excitation energies of the nitrogen and ammonia molecules. We use CASCI and CASSCF to calculate the 1RDM, CI vector and orbitals for the state. The CI vector is then used in the VMC optimisation, and the 1RDM for the xTC approximation when calculating integrals. For simplicity, we consider only those states which are the lowest in their symmetry.\footnote{In principle, we may also target higher-order excited states, but this would require an additional adjoint replica.\supercite{bluntExcitedstateApproachFull2015}}
+One major advantage to this updated workflow is the ability to explicitly target specific states. We demonstrate this by calculating select excitation energies of the nitrogen and ammonia molecules. We use CASCI and CASSCF to calculate the 1RDM, CI vector and orbitals for the state. The CI vector is then used in the VMC optimisation, and the 1RDM for the xTC approximation when calculating integrals. For simplicity, we consider only those states which are the lowest in their symmetry.\footnote{In principle, we may also target higher-order excited states, but this would require an additional adjoint replica.\supercite{bluntExcitedstateApproachFull2015}} For the CASSCF calculations, we try both state-specific CASSCF as well as \gls{SA} CASSCF.
 
-\todo{could the reason why the singlet energies are so bad be that the Jastrow is optimised for the wrong state? The spin-penalty term only applies after the optimisation is done. -- no because it is with the correct state via the CI vector(!) or at least it should be!!}
+\begin{figure}[!h]
+    \centering
+    \todo{figure}
+    \caption{\todo{figure showing relative error wrt experiment for Loos, CASSCF-Jastrow and SA-CASSCF-Jastrow}}
+    \label{fig:n2-excite-relative}
+\end{figure}
 
 \todo{...}
 
 \begin{table}[h!]
 \centering
 \begin{threeparttable}
-\begin{tabular}{c|cccc|c}
+\begin{tabular}{c|cccc||c}
 \multicolumn{6}{c}{\textbf{Dinitrogen}} \\
 State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 \hline
 \multirow{3}{*}{$^1\Pi_g$}
 & non-TC exFCI\tnote{a} & 345.8  & 343.2 & 343.2 & 344.47\tnote{b} \\
 & CASCI-xTC    & 341.86(4) &  & \todo{} & 344.47\tnote{c}  \\
-& CASSCF-xTC   & 340.729(3) &  & \todo{} & 342.99\tnote{d}  \\
+& SA-CASSCF-xTC   & 340.729(3) &  & \todo{} & 342.99\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^1\Sigma_u^-$}
 & non-TC exFCI\tnote{a}       & &    & \todo{}   & 367.04\tnote{b} \\
 & CASCI-xTC          & &    & \todo{}   & 367.04\tnote{c}  \\
-& CASSCF-xTC         & &    & \todo{}   & 373.33\tnote{d}  \\
+& SA-CASSCF-xTC         & &    & \todo{}   & 373.33\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^1\Delta_u$}
 & non-TC exFCI\tnote{a}       & &    & \todo{}   & 379.99\tnote{b} \\
 & CASCI-xTC          & &    & \todo{}   & 379.99\tnote{c}  \\
-& CASSCF-xTC         & &    & \todo{}   & 389.98\tnote{d}  \\
+& SA-CASSCF-xTC         & &    & \todo{}   & 389.98\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Sigma_u^+$}
 & non-TC exFCI\tnote{a}       & &    & \todo{}   & 286.75\tnote{b} \\
 & CASCI-xTC          & &    & \todo{}   & 286.75\tnote{c}  \\
-& CASSCF-xTC         & &    & \todo{}   & 279.72\tnote{d}  \\
+& SA-CASSCF-xTC         & &    & \todo{}   & 279.72\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Pi_g$}
 & non-TC exFCI\tnote{a}       & &    & \todo{}   & 297.48\tnote{b} \\
 & CASCI-xTC          & &    & \todo{}   & 297.48\tnote{c}  \\
-& CASSCF-xTC         & &    & \todo{}   & 297.85\tnote{d}  \\
+& SA-CASSCF-xTC         & &    & \todo{}   & 297.85\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Delta_u$}
 & non-TC exFCI\tnote{a}       & &    & \todo{}   & 328.56\tnote{b} \\
 & CASCI-xTC          & &    & \todo{}   & 328.56\tnote{c}  \\
-& CASSCF-xTC         & &    & \todo{}   & 330.41\tnote{d}  \\
+& SA-CASSCF-xTC         & &    & \todo{}   & 330.41\tnote{d}  \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
@@ -310,33 +315,34 @@ State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 \label{tbl:excitation-energies-n2}
 \end{table}
 
-\begin{table}[h!]
-\centering
-\begin{threeparttable}
-\begin{tabular}{c|cccc|c}
-\multicolumn{6}{c}{\textbf{Ammonia}} \\
-State & Method & \avdz & \avtz & \avqz & Benchmarks \\
-\hline
-\multirow{3}{*}{$^1E$}
-& non-TC exFCI     & &  & val 3 & \red{exp1}\tnote{a} \\
-& CASCI-xTC   & &  & val 1 &  \red{exp1}\tnote{b}\\
-& CASSCF-xTC  & &  & val 2 &  \red{exp1}\tnote{c}\\
-\hline
-\multirow{3}{*}{$^3A_2$}
-& \todo{}       & &    & \todo{}   & \multirow{3}{*}{\red{value}\tnote{d}} \\
-& \todo{}       & &    & \todo{}   &  \\
-& \todo{}       & &    & \todo{}   &  \\
-\end{tabular}
-\begin{tablenotes}
-    \item[a] Experimental value, see references \parencite{loosMountaineering2018,skerbeleElectronImpact1965}.
-    \item[b] Experimental value, see references \parencite{loosMountaineering2018,harshbargerIdentification1971}.
-    \item[c] Theoretical (\gls{EOM}-\gls{CCSD}) value, see references \parencite{loosMountaineering2018,bartlettAmmonia1997}.
-    \item[d] Experimental value, see references \parencite{loosMountaineering2018,arfaLowest1991,abuainLowest1984}.
-\end{tablenotes}
-\end{threeparttable}
-\caption{\todo{Comparison of methods and experimental values for different states.}}
-\label{tbl:excitation-energies-nh3}
-\end{table}
+
+% \begin{table}[h!]
+% \centering
+% \begin{threeparttable}
+% \begin{tabular}{c|cccc|c}
+% \multicolumn{6}{c}{\textbf{Ammonia}} \\
+% State & Method & \avdz & \avtz & \avqz & Benchmarks \\
+% \hline
+% \multirow{3}{*}{$^1E$}
+% & non-TC exFCI     & &  & val 3 & \red{exp1}\tnote{a} \\
+% & CASCI-xTC   & &  & val 1 &  \red{exp1}\tnote{b}\\
+% & CASSCF-xTC  & &  & val 2 &  \red{exp1}\tnote{c}\\
+% \hline
+% \multirow{3}{*}{$^3A_2$}
+% & \todo{}       & &    & \todo{}   & \multirow{3}{*}{\red{value}\tnote{d}} \\
+% & \todo{}       & &    & \todo{}   &  \\
+% & \todo{}       & &    & \todo{}   &  \\
+% \end{tabular}
+% \begin{tablenotes}
+%     \item[a] Experimental value, see references \parencite{loosMountaineering2018,skerbeleElectronImpact1965}.
+%     \item[b] Experimental value, see references \parencite{loosMountaineering2018,harshbargerIdentification1971}.
+%     \item[c] Theoretical (\gls{EOM}-\gls{CCSD}) value, see references \parencite{loosMountaineering2018,bartlettAmmonia1997}.
+%     \item[d] Experimental value, see references \parencite{loosMountaineering2018,arfaLowest1991,abuainLowest1984}.
+% \end{tablenotes}
+% \end{threeparttable}
+% \caption{\todo{Comparison of methods and experimental values for different states.}}
+% \label{tbl:excitation-energies-nh3}
+% \end{table}
 
 % \begin{table}[htbp]
 %     \centering
