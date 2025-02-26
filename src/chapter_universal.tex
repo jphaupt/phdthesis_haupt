@@ -107,41 +107,90 @@ For the multideterminantal optimisation, we use a small FCIQMC calculation as it
 
 \subsection{Atomisation Energies}
 \todo{...}
+\todo{include both ways of optimising the ee terms from the atomic, and show that we should also optimise it in the atom so that the en and een terms don't compensate for it missing}
+
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{c|c|ccc||c}
     Molecule & Jastrow & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008} \\
     \hline
-    \multirow{4}{*}{N$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
-      & Full TC & \todo{} & \todo{} & \todo{} &  \\
-      & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-      & Atomic+$ee$-FCIQMC & \todo{} & \todo{} & \todo{} &  \\
+    \multirow{5}{*}{N$_2$} & Non-TC & -109.2809 & -109.4014 & -109.4653 & \multirow{5}{*}{-109.5425} \\
+      & Full TC & -109.4727 & -109.5312 & -109.4528 &  \\
+      & $ee+en$ & -109.4125 & -109.5141 & \textbf{-109.5580} &  \\
+      & Atomic$(n)$+$ee$ &  -109.4364 & -109.5261 & \textbf{-109.5526} &  \\
+      & Atomic+$ee$ & -109.4364 & \red{-109.5167} & \red{-109.5405} &  \\
     \hline
-    \multirow{4}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
+    \multirow{5}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
     & Full TC & \todo{} & \todo{} & \todo{} &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-    & Atomic+$ee$-FCIQMC & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     \hline
-    \multirow{4}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
+    \multirow{5}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
     & Full TC & \todo{} & \todo{} & \todo{} &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-    & Atomic+$ee$-FCIQMC & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     \hline
-    \multirow{4}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
+    \multirow{5}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
     & Full TC & \todo{} & \todo{} & \todo{} &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} & \\
-    & Atomic+$ee$-FCIQMC & \todo{} & \todo{} & \todo{} & \\
+    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} & \\
+    \end{tabular}
+    \caption{\todo{absolute energies, to compare esp to full TC}
+    \todo{comparison against optimisation chapter}
+    \todo{boldface means nonvariational}
+    \todo{red means not yet converged NECI calculation}
+    }
+    \label{tbl:universal-absE}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{c|c|ccc||c}
+    Molecule & Jastrow & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008} \\
+    \hline
+    \multirow{5}{*}{N$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
+      & Full TC & \todo{} & \todo{} & \todo{} &  \\
+      & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
+      & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+      & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    \hline
+    \multirow{5}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
+    & Full TC & \todo{} & \todo{} & \todo{} &  \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    \hline
+    \multirow{5}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
+    & Full TC & \todo{} & \todo{} & \todo{} &  \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    \hline
+    \multirow{5}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
+    & Full TC & \todo{} & \todo{} & \todo{} &  \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} & \\
+    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} & \\
     \end{tabular}
     \caption{\todo{atomisation energies}}
     \label{tbl:universal-atomisation}
 \end{table}
 
-\todo{also plot the convergence of the atomisation energies wrt basis set size as done in optimisation chapter}
 
-\todo{absolute energies (table + plot)}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/universal/atomisation_energies}
+    \caption{\todo{atomisation energies wrt number of orbitals}
+    \todo{vtz and vqz calculations are not converged!}}
+    \label{fig:universal-atomisation}
+\end{figure}
 
-\todo{comparison against optimisation chapter}
+% \todo{?absolute energies plot?}
+
 
 
 \subsection{Binding Curves}
@@ -167,8 +216,46 @@ Here we report the N$_2$ binding curve with the \avtz basis set for the various 
     \label{eq:binding-universal-zoom}
 \end{figure}
 
-\todo{size consistency discussion}
+\todo{size consistency discussion, atomisation energy using dissociated limit}
 
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c}
+        Jastrow Factor & $\sum E_\mathrm{atom} - E_\mathrm{molecule}(r=10)$ (mHa) \\
+        \hline
+        Atomic &  \\
+        Atomic+$ee$ (SD) &  \\
+        FCIQMC+$ee$ (MD) & \\
+        $ee$ & \\
+        $ee+en$ & \\
+        \bottomrule
+        % Non-TC & -3.9(1) \\
+        MRCI-D-F12 & -0.9
+    \end{tabular}
+    \caption{
+        \todo{}
+    }
+    \label{tbl:size-consistency-uni}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+        \begin{tabular}{c|c}
+            Jastrow Factor & Atomisation Energy (mHa) \\
+            \hline
+            Atomic &  \\
+            Atomic+$ee$ (SD) &  \\
+            FCIQMC+$ee$ (MD) & \\
+            $ee$ & \\
+            $ee+en$ & \\
+            \bottomrule
+            MRCI-D-F12 & 359.5 \\
+            HEAT\supercite{fellerSurvey2008} & 363.9 \\
+            Experiment\supercite{leroyAccurate2006} & 363.7
+        \end{tabular}
+    \caption{\todo{...}}
+    \label{tbl:binding-atomisation-energies-uni}
+\end{table}
 
 \section{Conclusion and Outlook}
 \todo{mention the shortcoming of not being able to target specific states like the previous methodology (except for quasi-atomic)}

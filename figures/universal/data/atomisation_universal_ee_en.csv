@@ -1,7 +1,7 @@
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/*_universal_casino_fullcurve_eeLgaussian0.3_s?/ccpv?z/*/04_fciqmc/walker_*/
 # L = 0.3 Bohr
 system , vdz              , vtz             , vqz
-N2     , -109.4124959(39) , -109.514099(24) , -109.557984(44) #!!! Have not run (woops)
+N2     , -109.4124959(39) , -109.514099(24) , -109.557984(44)
 C2     , -75.8153350(37)  , -75.882268(32)  , -75.921342(28) ###!
 CN     , -92.6039406(77)  , -92.687160(40)  , -92.728061(39)
 O2     , -150.1971672(64) , -150.324345(67) , -150.366228(92)
