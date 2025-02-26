@@ -1,0 +1,13 @@
+# TODO paths
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N_enL1_eeL4.5_C3_nd1_s3_fixparity
+# /algpfs1/phaupt/neci/meanfield/bind/size_consistent/C2_atom_optee_fromatom_enL1_C3_nd1{,_sweep}_s0/ccpvqz/2.348
+# etc
+# this is with RHF-ee-Jastrow
+system , vdz              , vtz             , vqz
+N2     , -109.4364242(10) ,
+C2     , ,
+CN     , ,
+O2     , ,
+N      , -54.54768961(12) ,
+C      , ,
+O      , ,
