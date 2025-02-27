@@ -1,6 +1,7 @@
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_atom_optee_enL1_C3_nd1_s0_fciqmc_nd100/augccpvtz
 # !!! running all with trial wave functions
 # R/Bohr EFCIQMC/Hartree
+1.0 1000 # make sure you don't use this data!
 1.92   -109.510629(15)
 # 2.0
 2.08   -109.533215(16)

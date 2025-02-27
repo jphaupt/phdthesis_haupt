@@ -8,7 +8,7 @@ Images have been reused from this paper (with permission).
 
 \section{Introduction}
 
-In this chapter, we apply the new framework for the transcorrated method described in chapter \ref{chap:opt} to problems of multireference character and find these methods may yield non-physical results. We propose an updated workflow wherein we use conventional post-Hartree-Fock methods as input to Jastrow optimisation for TC-FCIQMC. Results suggest size-consistent results and rapid basis set convergence compared to conventional methods, with the binding curve of N$_2$ at \avtz being within chemical accuracy of experiment.
+In this chapter, we apply the new framework for the transcorrated method described in chapter \ref{chap:opt} to problems of multireference character and find these methods may yield non-physical results. We propose an updated workflow wherein we use conventional post-Hartree-Fock methods as input to Jastrow factor optimisation for TC-FCIQMC. Calculations suggest size-consistent results and rapid basis set convergence compared to conventional methods, with the binding curve of N$_2$ at \avtz being within chemical accuracy of experiment.
 
 \section{Motivation}
 
@@ -341,13 +341,15 @@ Since CASSCF primarily serves to capture the effects of \emph{static} correlatio
 \begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{figures/binding/n2_exc_cas.pdf}
-    \caption{Excitation energies relative to experiment for a few states of N$_2$. For comparison, we show using non-TC SA-CASSCF, as well as all-electron (xTC-FCIQMC) and CAS-only (xTC-CASCI) using the SA-CASSCF-Jastrow factor. As expected, the non-TC SA-CASSCF is not able to sufficiently capture all correlation effects of the excited states, resulting in highly overestimated excitation energies. The xTC CAS-only calculations are much better by comparison, although still not as accurate as the all-electron xTC calculations. Considering the massive reduction in cost, this is a promising result. \todo{collect the rest of the data once calculations are complete (all-elec triplets will change + still missing avqz for cas-only)}}
+    \caption{Excitation energies relative to experiment for a few states of N$_2$. For comparison, we show using non-TC SA-CASSCF, as well as all-electron (xTC-FCIQMC) and CAS-only (xTC-CASCI) using the SA-CASSCF-Jastrow factor. As expected, the non-TC SA-CASSCF is not able to sufficiently capture all correlation effects of the excited states, resulting in highly overestimated excitation energies. The xTC CAS-only calculations improve on these, but are still largely outside chemical accuracy, and still far from all-electron FCIQMC. This suggests that some of the dynamical correlation missing in the SA-CASSCF calculation is captured by the Jastrow factor.
+    \todo{I made a mistake with the avtz and avqz values where I did not delete all the appropriate virtuals -- these are being redone because of this. NB.}
+    }
     \label{fig:n2-excite-relative-cas}
 \end{figure}
 
-Results are shown in figure \ref{fig:n2-excite-relative-cas}. As shown, non-TC SA-CASSCF fails to capture all correlation effects of the excited states and tends to overestimate the excitation energies. The xTC CAS-only calculations are much better, although not as accurate as the all-electron xTC calculations. However, since the diagonalisation is performed only in a small active space, this is a big improvement.
+Results are shown in figure \ref{fig:n2-excite-relative-cas}. As shown, non-TC SA-CASSCF fails to capture all correlation effects of the excited states and tends to overestimate the excitation energies. The xTC CAS-only calculations are better, although still far from desired accuracy, and not nearly as accurate as the all-electron xTC calculations. However, since the diagonalisation is performed only in a small active space, this is still a noteworthy improvement.
 
-\todo{? Is it worth including a table of values? Non-TC vs TC using CAS only}
+% \todo{? Is it worth including a table of values? Non-TC vs TC using CAS only}
 
 % \begin{table}[h!]
 % \centering
@@ -433,9 +435,9 @@ Results are shown in figure \ref{fig:n2-excite-relative-cas}. As shown, non-TC S
 
 We have presented a framework for using the transcorrelated method for solving problems of strongly multireference character. We find challenging problems like the nitrogen dissociation curve may be solved by modifying the ansatz for $\Phi$ with a multireference CI expansion, and appropriately changing the corresponding 1RDM for use in the xTC approximation. Particularly effective choices for $\Phi$ are FCIQMC and CASSCF. Using a small FCIQMC calculation has already been found to effectively solve the issues experienced with a HF ansatz, and its use with \glspl{ECP} to efficienctly describe the core region with TC has already been explored.\supercite{simulaEcp}
 
-Furthermore, with this methodology we can tailor our TC Hamiltonian to target specific states of interest. Using state-averaged CASSCF, we find that this approach yields accurate results for excitation energies of the nitrogen dimer. Moreoever, we show that by combining the TC method to capture dynamical correlation with CASSCF to capture static correlation, we can still obtain reasonable results by considering only the active space in the TC calculation.
+Furthermore, with this methodology we can tailor our TC Hamiltonian to target specific states of interest. Using state-averaged CASSCF, we find that this approach yields accurate results for excitation energies of the nitrogen dimer. Moreoever, we show that by combining the TC method to capture dynamical correlation with CASSCF to capture static correlation, we have improved accuracy. However, results suggest we may need larger active spaces and/or a transcorrelated perturbative treatment such as xTC-\gls{CASPT2}.
 
-While this approach has already proven remarkably effective for a few systems, one key outlook is to study a wider array of complex problems, including transition metals and periodic solids, in addition to a larger selection of smaller molecules beyond N$_2$. We may also wish to continue the procedure self-consistently. That is, we may use the resulting right-eigenvector of $\htc$ as the ansatz for $\Phi$ in a subsequent calculation (as well as use the 1RDM, which may now be non-Hermitian), and continue until some convergence is achieved. Similarly, this study is a promising start for a \gls{TC}-\gls{MCSCF} method, wherein the orbitals, CI coefficients, and Jastrow factor parameters are all optimised simultaneously with a self-consistent algorithm, and no all-electron TC calculation is required, or we might add a transcorrelated perturbative correction as in \gls{CASPT2}.
+While this approach has already proven remarkably effective for a few systems, one key outlook is to study a wider array of complex problems, including transition metals and periodic solids, in addition to a larger selection of smaller molecules beyond N$_2$. We may also wish to continue the procedure self-consistently. That is, we may use the resulting right-eigenvector of $\htc$ as the ansatz for $\Phi$ in a subsequent calculation (as well as use the 1RDM, which may now be non-Hermitian), and continue until some convergence is achieved. Similarly, this study is a promising start for a \gls{TC}-\gls{MCSCF} method, wherein the orbitals, CI coefficients, and Jastrow factor parameters are all optimised simultaneously with a self-consistent algorithm, and no all-electron TC calculation is required or, as mentioned, we might add a transcorrelated perturbative correction as in \gls{CASPT2}.
 
 % \todo{make sure to mention the cutoff analysis and constructing Jastrow factors from atomic Jastrow factors. Mention ECPs, since it's already been submitted...}
 % \todo{TC-CAS...}

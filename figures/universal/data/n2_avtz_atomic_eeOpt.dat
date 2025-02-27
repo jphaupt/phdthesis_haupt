@@ -1,6 +1,7 @@
 # /algpfs1/phaupt/neci/meanfield/bind/size_consistent/N2_atom_optee_enL1_C3_nd1_s0/augccpvtz/
 # R/Bohr EFCIQMC/Hartree
 # (almost) all calculations need to be verified
+1.0 1000 # make sure you don't use this data!
 1.92   -109.510884(10)
 # 2.0    -109.5284731(91)
 2.08   -109.533204(16)

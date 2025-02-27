@@ -1,6 +1,8 @@
 # TODO paths
+this is with fixed en and no ee
 # this is with RHF-ee-Jastrow
 system , vdz              , vtz             , vqz
+sl;,afopsd,asdfk, # make sure you don't use this data
 N2     , -109.4364242(10) , -109.526119(15) , -109.552571(33)
 C2     , -75.8584729(56)  , -75.913928(25)  , -75.932819(30)
 CN     , -92.6355341(48)  , -92.708718(30)  , -92.731878(56) ###!!

@@ -90,8 +90,9 @@ with
 and the same cutoff functions $t(r,L) = (1-r/L)^3
 \Theta(r-L)$. However, we do not want to include long-range (with respect to the nucleus) correlation in the atomic Jastrow factors, since this may bias the molecular calculations. We therefore use $L_v=L_\chi=1.0$ Bohr and $L_{v}=4.5$ Bohr. We consider the following variants:
 \begin{itemize}
-    \item The Jastrow factor is kept constant for the molecule, i.e. we simply use the atomic Jastrow factors as they are.
-    \item We optimise the atomic Jastrow factor only with terms involving the nucleus, i.e. electron-nucleus and electron-electron-nucleus terms. The electron-electron part is then added to the atomic Jastrow factor and optimised for the molecule with the electron-nucleus and electron-electron-nucleus term fixed at the values determined for the atom. We optimise both with a single- and multideterminantal VMC ansatz.
+    \item The Jastrow factor is kept constant for the molecule, i.e. we simply use the atomic Jastrow factors as they are. We refer to these as simply ``atomic'' Jastrow factors.
+    % \item We optimise the atomic Jastrow factor only with terms involving the nucleus, i.e. electron-nucleus and electron-electron-nucleus terms. The electron-electron part is then added to the atomic Jastrow factor and optimised for the target system (e.g. a molecule) with the electron-nucleus and electron-electron-nucleus term fixed at the values determined for the atom. We refer to these as ``atomic$(n)+ee$'' Jastrow factors. As we shall see, these ``over-correlates'' the the electrons in the atoms compared to the \todo{}
+    \item We optimise the atomic Jastrow factor using all terms. Then, when calculating molecules, we fix all terms involving nuclei and re-optimise the electron-electron terms. We refer to these as ``atomic$+ee$'' Jastrow factors.
 \end{itemize}
 
 We find these to yield results above HEAT and therefore do not concern ourselves with a cutoff analysis as in the case of the universal Jastrow factors.
@@ -106,6 +107,8 @@ For the multideterminantal optimisation, we use a small FCIQMC calculation as it
 
 
 \subsection{Atomisation Energies}
+
+For the atomisation energies, we focus on the $ee+en$ and atomic$+ee$ Jastrow factors, as these are the most ``complete'' of each category of Jastrow factors presented here.
 \todo{...}
 \todo{include both ways of optimising the ee terms from the atomic, and show that we should also optimise it in the atom so that the en and een terms don't compensate for it missing}
 
@@ -113,31 +116,43 @@ For the multideterminantal optimisation, we use a small FCIQMC calculation as it
 \begin{table}[htbp]
     \centering
     \begin{tabular}{c|c|ccc||c}
-    Molecule & Jastrow & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008} \\
+    System & Jastrow & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008,bytautasCorrelation2005} \\
     \hline
-    \multirow{5}{*}{N$_2$} & Non-TC & -109.2809 & -109.4014 & -109.4653 & \multirow{5}{*}{-109.5425} \\
+    \multirow{4}{*}{N$_2$} & Non-TC & -109.2809 & -109.4014 & -109.4653 & \multirow{4}{*}{-109.5425} \\
       & Full TC & -109.4727 & -109.5312 & -109.4528 &  \\
       & $ee+en$ & -109.4125 & -109.5141 & \textbf{-109.5580} &  \\
-      & Atomic$(n)$+$ee$ &  -109.4364 & -109.5261 & \textbf{-109.5526} &  \\
       & Atomic+$ee$ & -109.4364 & \red{-109.5167} & \red{-109.5405} &  \\
     \hline
-    \multirow{5}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
-    & Full TC & \todo{} & \todo{} & \todo{} &  \\
+    \multirow{4}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{-75.9240} \\
+    & Full TC & -75.8844 & -75.9197 & -75.9272 &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
     & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     \hline
-    \multirow{5}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
-    & Full TC & \todo{} & \todo{} & \todo{} &  \\
+    \multirow{4}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{-150.3273} \\
+    & Full TC & -150.2216 & -150.3078 & -150.3244 &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     \hline
-    \multirow{5}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
-    & Full TC & \todo{} & \todo{} & \todo{} &  \\
+    \multirow{4}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{-92.7232} \\
+    & Full TC & -92.6671 & -92.7152 & -92.7247 &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} & \\
-    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     & Atomic+$ee$ & \todo{} & \todo{} & \todo{} & \\
+    \hline\hline
+    \multirow{4}{*}{N} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{-54.5893} \\
+    & Full TC &  -54.5622 & -54.5842 & -54.5896  \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} & \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} & \\
+    \hline
+    \multirow{4}{*}{C} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{-37.8450} \\
+    & Full TC & -37.8293 & -37.8427 & -37.8459 & \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    \hline
+    \multirow{4}{*}{O} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{-75.0674} \\
+    & Full TC & -75.0226 & -75.0572 & -75.0665 &  \\
+    & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     \end{tabular}
     \caption{\todo{absolute energies, to compare esp to full TC}
     \todo{comparison against optimisation chapter}
@@ -152,28 +167,24 @@ For the multideterminantal optimisation, we use a small FCIQMC calculation as it
     \begin{tabular}{c|c|ccc||c}
     Molecule & Jastrow & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008} \\
     \hline
-    \multirow{5}{*}{N$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
+    \multirow{4}{*}{N$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
       & Full TC & \todo{} & \todo{} & \todo{} &  \\
       & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-      & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
       & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     \hline
-    \multirow{5}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
+    \multirow{4}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
     & Full TC & \todo{} & \todo{} & \todo{} &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     \hline
-    \multirow{5}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
+    \multirow{4}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
     & Full TC & \todo{} & \todo{} & \todo{} &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     \hline
-    \multirow{5}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{5}{*}{\todo{}} \\
+    \multirow{4}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
     & Full TC & \todo{} & \todo{} & \todo{} &  \\
     & $ee+en$ & \todo{} & \todo{} & \todo{} & \\
-    & Atomic$(n)$+$ee$ & \todo{} & \todo{} & \todo{} &  \\
     & Atomic+$ee$ & \todo{} & \todo{} & \todo{} & \\
     \end{tabular}
     \caption{\todo{atomisation energies}}
@@ -225,7 +236,7 @@ Here we report the N$_2$ binding curve with the \avtz basis set for the various 
         \hline
         Atomic &  \\
         Atomic+$ee$ (SD) &  \\
-        FCIQMC+$ee$ (MD) & \\
+        Atomic+$ee$ (MD) & \\
         $ee$ & \\
         $ee+en$ & \\
         \bottomrule
@@ -245,7 +256,7 @@ Here we report the N$_2$ binding curve with the \avtz basis set for the various 
             \hline
             Atomic &  \\
             Atomic+$ee$ (SD) &  \\
-            FCIQMC+$ee$ (MD) & \\
+            Atomic+$ee$ (MD) & \\
             $ee$ & \\
             $ee+en$ & \\
             \bottomrule
