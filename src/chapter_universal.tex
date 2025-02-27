@@ -108,18 +108,15 @@ For the multideterminantal optimisation, we use a small FCIQMC calculation as it
 
 \subsection{Atomisation Energies}
 
-For the atomisation energies, we focus on the $ee+en$ and atomic$+ee$ Jastrow factors, as these are the most ``complete'' of each category of Jastrow factors presented here.
-\todo{...}
-\todo{include both ways of optimising the ee terms from the atomic, and show that we should also optimise it in the atom so that the en and een terms don't compensate for it missing}
-
+For the atomisation energies, we focus on the $ee+en$ and atomic$+ee$ Jastrow factors, as these are the most ``complete'' of each category of Jastrow factors presented here. The absolute xTC-FCIQMC energy estimates using the various methods for the systems considered in this chapter are presented in table \ref{tbl:universal-absE}. Also presented there are the non-TC FCIQMC and TC-FCIQMC (that is, with no additional approximations such as xTC), as presented in \autoref{chap:opt}.
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{c|c|ccc||c}
-    System & Jastrow & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008,bytautasCorrelation2005} \\
+    System & Method & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008,bytautasCorrelation2005} \\
     \hline
     \multirow{4}{*}{N$_2$} & Non-TC & -109.2809 & -109.4014 & -109.4653 & \multirow{4}{*}{-109.5425} \\
-      & Full TC & -109.4727 & -109.5312 & -109.4528 &  \\
+      & Full TC & -109.4727 & -109.5312 & -109.5428 &  \\
       & $ee+en$ & -109.4125 & -109.5141 & \textbf{-109.5580} &  \\
       & Atomic+$ee$ & -109.4364 & \red{-109.5167} & \red{-109.5405} &  \\
     \hline
@@ -131,7 +128,7 @@ For the atomisation energies, we focus on the $ee+en$ and atomic$+ee$ Jastrow fa
     \multirow{4}{*}{O$_2$} & Non-TC & -149.9915 & -150.1554 & -150.2362 & \multirow{4}{*}{-150.3273} \\
     & Full TC & -150.2216 & -150.3078 & -150.3244 &  \\
     & $ee+en$ & -150.1972 & -150.3243 & \textbf{-150.3662} &  \\
-    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    & Atomic+$ee$ & -150.1763 & -150.2907 & \red{-150.3221}  \\
     \hline
     \multirow{4}{*}{CN} & Non-TC & -92.4970 & -92.5954 & -92.6517 & \multirow{4}{*}{-92.7232} \\
     & Full TC & -92.6671 & -92.7152 & -92.7247 &  \\
@@ -153,60 +150,70 @@ For the atomisation energies, we focus on the $ee+en$ and atomic$+ee$ Jastrow fa
     & $ee+en$ & -75.0123 & -75.0686 & \textbf{-75.0882} &  \\
     & Atomic+$ee$ & -74.9986 & -75.0514 & -75.0657 &  \\
     \end{tabular}
-    \caption{\todo{absolute energies, to compare esp to full TC}
-    \todo{mention that full TC also has larger cutoffs! It is from a different paper!! also explains why the atoms have different energies}
-    \todo{comparison against optimisation chapter}
-    \todo{boldface means nonvariational}
-    \todo{red means not yet converged NECI calculation}
+    \caption{
+    Absolute energies for N$_2$, C$_2$, O$_2$, CN, N, O, and C using conventional non-TC-FCIQMC, the full TC workflow with larger cutoffs (see \autoref{chap:opt}), the ``universal'' $ee+en$ Jastrow factor with $L=0.3$ Bohr, and the atomic$+ee$ Jastrow factor, where the Jastrow factors for the atoms are reused for the molecule, and the $ee$ term is reoptimised with the RHF molecular wave function ansatz. Values are reported in Hartree for the \vdz, \vtz and \vqz basis sets and compared against high-accuracy benchmarks.\supercite{fellerSurvey2008,bytautasCorrelation2005} We find that all TC methods converge rapidly to the CBS limit, but the $ee+en$ Jastrow factor has a tendency to ``overshoot'' the limit at \vqz, suggesting a nonlinear convergence. Values in boldface are below the CBS limit.
     }
     \label{tbl:universal-absE}
 \end{table}
 
+From this table, it is clear that all the TC methods have much more rapid convergence toward the \gls{CBS} limit. The ``full TC'' method, as presented in \autoref{chap:opt} which uses the form of equation \ref{eq:jastrow-3} with larger cutoff values (4.5, 4 and 4 Bohr for the electron-electron, electron-nucleus and electron-electron-nucleus terms, respectively) converges to the CBS limit most rapidly, as expected. The atomic$+ee$ total energies also converge to the CBS limit much more rapidly than conventional non-TC FCIQMC, and is remarkably close at \vqz. \todo{comment more on this once all data is settled; e.g. all within 2 mHa, or consistently above full TC but much below non-TC}
+
+The (universal) $ee+en$-Jastrow factor also exhibits rapid basis set convergence, but unlike the other methods also results in energies below the CBS limit with the \vqz basis set. These discrepencies can be quite large, almost 40 mHa in the case of CN. This might suggest that our ``universal'' cutoff proposed in figure \ref{fig:fournais-cutoff-n2} really is not so ``universal'' after all. The $L$ chosen was not properly optimised, and was determined using only one system, so it is not wholly surprising that we might get questionable TC final energies using it.
+
+However, in practice we are typically much more interested in relative energies. The atomisation energies for these molecules, obtained from the values in table \ref{tbl:universal-absE} are shown in table \ref{tbl:universal-atomisation} and plotted in figure \ref{fig:universal-atomisation}. As with the total energies, the TC atomisation energies converge much faster with respect to basis-set size in comparison to the non-TC calculations. Moreover, while the absolute energies from the $ee+en$-Jastrow factors may be strongly nonvariational, we find that the atomisation energies are reasonable. While not quite on par with the other TC methods, it appears to converge faster with respect to basis set size than the non-TC energies. Nevertheless, the uncontrolled nonvariational error arising from a fixed $L$ value suggests caution when considering the use of such universal Jastrow factors. In contrast, the atomic$+ee$ is much more robust.
+
+
 \begin{table}[htbp]
     \centering
     \begin{tabular}{c|c|ccc||c}
-    Molecule & Jastrow & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008} \\
+    Molecule & Method & \vdz & \vtz & \vqz & \gls{CBS}\supercite{fellerSurvey2008} \\
     \hline
-    \multirow{4}{*}{N$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
-      & Full TC & \todo{} & \todo{} & \todo{} &  \\
-      & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-      & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    \multirow{4}{*}{N$_2$} & Non-TC &320.7 & 351.0 & 358.3 &
+    \multirow{4}{*}{363.9} \\
+      & Full TC & 348.3 & 362.8 & 363.6 &  \\
+      & $ee+en$ & 327.6 & 355.6 & 360.9 &  \\
+      & Atomic+$ee$ & 341.0 & 359.7 & \red{363.0} & \\
     \hline
-    \multirow{4}{*}{C$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
-    & Full TC & \todo{} & \todo{} & \todo{} &  \\
-    & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    \multirow{4}{*}{C$_2$} & Non-TC & 208.2 & 229.4 & 232.6 &
+    \multirow{4}{*}{234.0} \\
+    & Full TC & 225.8 & 234.3 & 235.4 &   \\
+    & $ee+en$ & 211.3 & 231.1 & 233.9 &   \\
+    & Atomic+$ee$ & 218.1 & 233.4 & 234.5 & \\
     \hline
-    \multirow{4}{*}{O$_2$} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
-    & Full TC & \todo{} & \todo{} & \todo{} &  \\
-    & $ee+en$ & \todo{} & \todo{} & \todo{} &  \\
-    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} &  \\
+    \multirow{4}{*}{O$_2$} & Non-TC & 168.1 & 184.8 & 189.0 &\multirow{4}{*}{192.5} \\
+    & Full TC & 176.4 & 193.4 & 191.4 &   \\
+    & $ee+en$ & 172.6 & 187.2 & 189.7 &    \\
+    & Atomic+$ee$ & 179.0 & 188.0 & \red{190.6} &   \\
     \hline
-    \multirow{4}{*}{CN} & Non-TC & \todo{} & \todo{} & \todo{} & \multirow{4}{*}{\todo{}} \\
-    & Full TC & \todo{} & \todo{} & \todo{} &  \\
-    & $ee+en$ & \todo{} & \todo{} & \todo{} & \\
-    & Atomic+$ee$ & \todo{} & \todo{} & \todo{} & \\
+    \multirow{4}{*}{CN} & Non-TC & 255.0 & 280.2 & 285.6 & \multirow{4}{*}{288.9} \\
+    & Full TC & 275.6 & 288.3 & 289.2 &  \\
+    & $ee+en$ & 259.5 & 282.3 & 285.8 &  \\
+    & Atomic+$ee$ & 266.1 & 283.2 & \red{286.3} &  \\
     \end{tabular}
-    \caption{\todo{atomisation energies}}
+    \caption{Atomisation energies for N$_2$, C$_2$, O$_2$ and CN. Results are shown for the $ee+en$ and atomic$+ee$ Jastrow factors, as compared to non-TC and full TC for the \vdz, \vtz and \vqz basis sets, as well as to the CBS limit. We find that despite the nonvariational energies found in table \ref{tbl:universal-absE}, error cancellation when using the $ee+en$ terms are enough to give sensible atomisation energy estimates. However, they are consistently outperformed by the atomic$+ee$ Jastrow factor, which is also a relatively inexpensive calculation due to the lack of additional terms needed to be optimised. This data suggests to use Jastrow factors based on atomic systems for systems that are not amenable to VMC calculations for all parameters.
+    \todo{red means the value might change (a little).}
+    }
     \label{tbl:universal-atomisation}
 \end{table}
+
+Unlike with full TC, the atomic and universal Jastrow factors presented do not reach chemical accuracy (defined as within 1.6 mHa of the value at the CBS limit) for the atomisation of any molecules, with the exception of C$_2$ for the atomic$+ee$ Jastrow factor, although they are still considerably closer than non-TC. The atomic Jastrow factor consistently outperforms the universal form. The fact that this form not only outperforms in relative energies but also gives absolute energies above the CBS limit, converging from above, is strong evidence that this is the preferred method for systems that are too large for optimising all parameters simultaneously as done in previous chapters. While we have reduced accuracy, the trade off of not needing to calculate all parameters may be worthwhile for future applications of the TC method.
+
 
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/universal/atomisation_energies}
-    \caption{\todo{atomisation energies wrt number of orbitals}
-    \todo{vtz and vqz calculations are not converged!}}
+    \caption{Atomisation energies for the molecules N$_2$, O$_2$, C$_2$ and CN as a function of the reciprocal of the number of orbitals. The CBS limit is represented by a dashed line and a grey region denotes the area within chemical accuracy ($\pm 1.6$ mHa) of this value. From these plots, we can see a consistent trend where the full TC treatment from \autoref{chap:opt} performs best in that it converges most rapidly to the CBS, with the atomic$+ee$ Jastrow factor approach also performing well. Interestingly, the $ee+en$ Jastrow factor approach also performs well, despite the undesirable absolute energies discussed in table \ref{tbl:universal-absE}, suggesting considerable error cancellation. In terms of atomisation energies, this approach also performs reasonably well, though the only data point within chemical accuracy is C$_2$ in the \vqz basis, but even non-TC is chemically accurate in this case.}
     \label{fig:universal-atomisation}
 \end{figure}
 
-% \todo{?absolute energies plot?}
-
-
-
 \subsection{Binding Curves}
 
-Here we report the N$_2$ binding curve with the \avtz basis set for the various choices of Jastrow factors. Values for the interatomic distance range between $1.92$ and $10$ Bohr. The Jastrow factors used were the atomic Jastrow factor, the atomic Jastrow factor with electron-electron terms optimised for the molecule (using a RHF or FCIQMC ansatz), the $ee$- and $ee+en$-Jastrow factors. The energy values relative to experiment (normalised such that $10$ Bohr is $0$) is shown in figure \ref{fig:binding-universal-experiment}. The FCIQMC-Jastrow (i.e. multideterminant ansatz with all terms optimised) curve from \autoref{chap:binding} is also shown for comparison.
+Here we report the N$_2$ binding curve with the \avtz basis set for the various choices of Jastrow factors. Values for the interatomic distance range between $1.92$ and $10$ Bohr. The Jastrow factors used were the atomic Jastrow factor, the atomic Jastrow factor with electron-electron terms optimised for the molecule (using a RHF or FCIQMC ansatz), the $ee$- and $ee+en$-Jastrow factors. The energy values relative to experiment (normalised such that $10$ Bohr is $0$) is shown in figure \ref{fig:binding-universal-experiment}. The binding curve for the FCIQMC-Jastrow factor (i.e. multideterminant ansatz with all terms optimised) from \autoref{chap:binding} is also shown for comparison.
+
+\todo{this paragraph is based on outdated data; should be revisited but I expect the new data to not be too different once it is properly converged} We find that the atomic Jastrow factor (i.e. no optimisation for the molecule) \todo{discuss the accuracy of each}
+
+\todo{variational, but that's expected, since this is the system we studied in the cutoff analysis of \ref{fig:fournais-cutoff-n2} -- suggests this should be an optimised parameter, perhaps}
 
 \todo{...}
 
@@ -229,16 +236,18 @@ Here we report the N$_2$ binding curve with the \avtz basis set for the various 
 
 \todo{size consistency discussion, atomisation energy using dissociated limit}
 
-\begin{table}[!h]
+Since all of these Jastrow factors are strongly localised, we expect them all to be well-behaved at long interatomic separation, i.e. they should be size consistent. The only possible exception is the single-determinant-optimised atomic$+ee$ Jastrow factor, as the electron-electron term is optimised with a non-size-consistent wave function ansatz. We therefore approximate the size consistency error by the difference between the molecule and the sum of its parts. This is shown in table \ref{tbl:size-consistency-uni}. Indeed, we find all Jastrow factors to be size consistent, comparable to MRCI-D-F12. \todo{verify this once the atomic+ee jastrows are done}
+
+\begin{table}[htbp]
     \centering
     \begin{tabular}{c|c}
         Jastrow Factor & $\sum E_\mathrm{atom} - E_\mathrm{molecule}(r=10)$ (mHa) \\
         \hline
-        Atomic &  \\
-        Atomic+$ee$ (SD) &  \\
-        Atomic+$ee$ (MD) & \\
-        $ee$ & \\
-        $ee+en$ & \\
+        Atomic & -0.2(0) \\
+        Atomic+$ee$ (SD) & \todo{} \\
+        Atomic+$ee$ (MD) & \todo{}\\
+        $ee$ & -0.6(0) \\
+        $ee+en$ & -0.6(1) \\
         \bottomrule
         % Non-TC & -3.9(1) \\
         MRCI-D-F12 & -0.9
@@ -249,16 +258,16 @@ Here we report the N$_2$ binding curve with the \avtz basis set for the various 
     \label{tbl:size-consistency-uni}
 \end{table}
 
-\begin{table}[!h]
+\begin{table}[htbp]
     \centering
         \begin{tabular}{c|c}
             Jastrow Factor & Atomisation Energy (mHa) \\
             \hline
-            Atomic &  \\
-            Atomic+$ee$ (SD) &  \\
-            Atomic+$ee$ (MD) & \\
-            $ee$ & \\
-            $ee+en$ & \\
+            Atomic & 358.9(0) \\
+            Atomic+$ee$ (SD) & \todo{} \\
+            Atomic+$ee$ (MD) & \todo{}\\
+            $ee$ & 361.0(0) \\
+            $ee+en$ & 360.3(1) \\
             \bottomrule
             MRCI-D-F12 & 359.5 \\
             HEAT\supercite{fellerSurvey2008} & 363.9 \\

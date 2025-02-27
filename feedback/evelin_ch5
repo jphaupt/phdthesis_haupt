@@ -1,24 +1,24 @@
-Figure 5.1: incongruence caption/text: is it avdz or avtz?
-Caption Figure 5.1: "the nonsmooth points ... is" -> "are"
+x Figure 5.1: incongruence caption/text: is it avdz or avtz?
+x Caption Figure 5.1: "the nonsmooth points ... is" -> "are"
 
 chapter 4.9.1: xTC also approximates the densities as an antisymmetrized product of the one-body density matrix.
 
-After equation 5.9: we only use the one-body density in xTC
+x After equation 5.9: we only use the one-body density in xTC
 
 Could mention the non-convergence of MRCI-D-F12 in the text. But don't think it's necessary.
 
-Figure 5.6: Not sure about the final sentence. We do not have HEAT values for any points other than the equilbrium or full dissociation.
+x Figure 5.6: Not sure about the final sentence. We do not have HEAT values for any points other than the equilbrium or full dissociation.
 
-Table 5.1 Shouldn't the VMC error be 0.3 mHa (N2 + N + N)?
+x Table 5.1 Shouldn't the VMC error be 0.3 mHa (N2 + N + N)?
 
-"used to then determinant the 1RDM" -> determine
+x "used to then determinant the 1RDM" -> determine
 
-Figure 5.7: what is E_exc?
+x Figure 5.7: what is E_exc?
 
-Figure 5.7: Legend for basis sets barely shows the pattern for avtz
+x Figure 5.7: Legend for basis sets barely shows the pattern for avtz
 
-Figure 5.7: "for each states" -> "state"
+x Figure 5.7: "for each states" -> "state"
 
-Is there a way to make figures 5.7 and 5.8 as well as table 5.3 appear close to their mention in the text?
+x Is there a way to make figures 5.7 and 5.8 as well as table 5.3 appear close to their mention in the text?
 
 Other than that I think it's very well written and especially easily digestible. Far too often when going through the thesis of someone I have to tell them not to write sentences that go on for half a paragraph. Didn't notice any of that here.

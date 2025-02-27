@@ -17,7 +17,7 @@ A popular ``stress test'' for quantum chemistry methods is the binding curve of 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/N2_avtz_nontc}
-    \caption{The binding curve for N$_2$ with the \avdz basis set. CCSD starts to decrease near 4 Bohr, which is nonphysical, whereas FCIQMC provides a more accurate curve. FCIQMC was done with 30 million walkers and HF-projected energy. The nonsmooth points in the dissociated region is due to stochastic error, and could be resolved with more walkers and a better trial wave function. CCSD did not converge at bond lengths larger than those shown.}
+    \caption{The binding curve for N$_2$ with the \avtz basis set. CCSD starts to decrease near 4 Bohr, which is nonphysical, whereas FCIQMC provides a more accurate curve. FCIQMC was done with 30 million walkers and HF-projected energy. The nonsmooth points in the dissociated region are due to stochastic error, and could be resolved with more walkers and a better trial wave function. CCSD did not converge at bond lengths larger than those shown.}
     \label{fig:ccsd-vs-fciqmc-n2}
 \end{figure}
 
@@ -91,7 +91,7 @@ where $\ket{\Phi_0}=\sum_I\ket{D_I}$. In practice, this modification results in 
                          {\Psi({\bm R}_n)} - {\bar E}_\mathrm{ref}
             \right|^2.
     \end{equation}
-    \item The density matrices used for xTC during integration must reflect this change as well. In particular, $\gamma_{p\dots}^{q\dots}=\bra{\Phi_0} a_{p\dots}^{q\dots}\ket{\Phi_0}$ in the equations in section \ref{sec:xtc}.
+    \item The \gls{1RDM}, which is used in xTC during integration, must reflect this change as well. In particular, $\gamma_{p\dots}^{q\dots}=\bra{\Phi_0} a_{p\dots}^{q\dots}\ket{\Phi_0}$ in the equations in section \ref{sec:xtc}.
 \end{itemize}
 
 \subsection{Size Consistency}
@@ -209,7 +209,7 @@ Naturally, we also wish to determine how accurate our calculations are. This is 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/residuals}
-    \caption{Binding curves for each Jastrow factor optimisation strategy relative to the experimental fit from reference \citenum{leroyAccurate2006}. All curves are normalised such that the energy at $10$ Bohr radii is zero, except for MRCI-D-F12 where energy is set to zero at $8.98$ Bohr radii (past this, it did not converge). The shaded region represents $1.6$ mHa, so-called ``chemical accuracy''. We see that most of the curves for the multirefence Jastrow optimisations are within chemical accuracy, outperforming MRCI-D-F12. Note that while the relative values are below experiment for some regions (notably around $3$ Bohr), all absolute values are still above the HEAT result for N$_2$ (and thus can be considered variational).}
+    \caption{Binding curves for each Jastrow factor optimisation strategy relative to the experimental fit from reference \citenum{leroyAccurate2006}. All curves are normalised such that the energy at $10$ Bohr radii is zero, except for MRCI-D-F12 where energy is set to zero at $8.98$ Bohr radii (past this, it did not converge). The shaded region represents $1.6$ mHa, so-called ``chemical accuracy''. We see that most of the curves for the multirefence Jastrow optimisations are within chemical accuracy, outperforming MRCI-D-F12. Note that while the relative values are below experiment for some regions (notably around $3$ Bohr), all absolute values are above the HEAT result for N$_2$ at equilibrium.}
     \label{fig:binding-curves-experiment}
 \end{figure}
 
@@ -217,7 +217,7 @@ We find that the CASCI- and FCIQMC-Jastrow curves are within chemical accuracy (
 
 Another worthwhile check is how accurate the atomisation energy is, taking the extremely dissociated limit ($10$ Bohr radii) and comparing it against equilibrium ($2.08$ Bohr radii). This is shown in table \ref{tbl:binding-atomisation-energies}. Relative to experiment, all multideterminantal Jastrow factors are within chemical accuracy ($1.6$ mHa).
 
-\begin{table}[!h]
+\begin{table}[htbp]
     \centering
         \begin{tabular}{c|c}
             Jastrow Factor & Atomisation Energy (mHa) \\
@@ -230,13 +230,13 @@ Another worthwhile check is how accurate the atomisation energy is, taking the e
             HEAT\supercite{fellerSurvey2008} & 363.9 \\
             Experiment\supercite{leroyAccurate2006} & 363.7
         \end{tabular}
-    \caption{Atomisation energies using the binding curves for the multideterminantal Jastrow factor optimisation choices. Relative to experiment, all TC calculations are within chemical accuracy (1.6 mHa), with the CASI-Jastrow narrowly outside it relative to HEAT. The RHF-Jastrow is not included in the table because it does not stabilise to a dissociated limit. Note also that these values have an additional error coming from VMC of about $0.2$ mHa, according to the study from \autoref{chap:opt} ($0.1$ mHa error for each point). All multideterminantal Jastrow factors outperform MRCI-D-F12 according to this measure.}
+    \caption{Atomisation energies using the binding curves for the multideterminantal Jastrow factor optimisation choices. Relative to experiment, all TC calculations are within chemical accuracy (1.6 mHa), with the CASI-Jastrow narrowly outside it relative to HEAT. The RHF-Jastrow is not included in the table because it does not stabilise to a dissociated limit. Note also that these values have an additional error coming from VMC of about $0.3$ mHa, according to the study from \autoref{chap:opt} ($0.1$ mHa error for the molecule, and for each atom). All multideterminantal Jastrow factors outperform MRCI-D-F12 according to this measure.}
     \label{tbl:binding-atomisation-energies}
 \end{table}
 
 Finally, as a measure for the size consistency error, we consider the difference between twice the atom's energy and that of the molecule at a separation of $10$ Bohr radii. This is shown in table \ref{tbl:size-consistency}. We find that the CASSCF- and FCIQMC-Jastrow factors are size consistent to a reasonable degree (similar to MRCI-D-F12) whereas the CASCI-Jastrow factor is not as size consistent. Non-TC CASCI was already size inconsistent, and the Jastrow optimisation was likely not able to adequately compensate for the missing dynamical correlation.
 
-\begin{table}[!h]
+\begin{table}[htbp]
     \centering
     \begin{tabular}{c|c}
         Jastrow Factor & $\sum E_\mathrm{atom} - E_\mathrm{molecule}(r=10)$ (mHa) \\
@@ -260,16 +260,16 @@ One major advantage to this updated workflow is the ability to explicitly target
     \item CASCI$(10o,8e)$-$J$, where the CI vector is chosen ``minimally''; that is, we take 99\% of the total wave function as measured by the squared modulus of the coefficients (and including additional determinants if degenerate). This, for example, results in only the RHF determinant in the ground state, and only two in the excited states, plus possibly some very small additional determinants being included in the CI vector. This approach does no additional optimisation of the orbitals beyond RHF.
     \item \Gls{SA}-CASSCF$(10o,8e)$-$J$, where all states are included in the orbital optimisation (therefore, all states share the same orbitals). For each state, we use the top $100$ determinants of the CI vector as the $\Phi$ ansatz.
 \end{itemize}
-The CASCI or CASSCF calculations are used to then determinant the 1RDM for the state. The CI vector is then used in the VMC optimisation, and the 1RDM for the xTC approximation when calculating integrals. For simplicity, we consider only those states which are the lowest in their symmetry, which allows us to use standard ground-state FCIQMC for the excited states.\footnote{In principle, we may also target higher-order excited states, but this would require an additional adjoint replica.\supercite{bluntExcitedstateApproachFull2015}}
+The CASCI or CASSCF calculations are used to then determine the 1RDM for the state. The CI vector is then used in the VMC optimisation, and the 1RDM for the xTC approximation when calculating integrals. For simplicity, we consider only those states which are the lowest in their symmetry, which allows us to use standard ground-state FCIQMC for the excited states.\footnote{In principle, we may also target higher-order excited states, but this would require an additional adjoint replica.\supercite{bluntExcitedstateApproachFull2015}}
 
 % For the CASSCF calculations, we try both state-specific CASSCF as well as \gls{SA}-CASSCF.
 
 
-\begin{figure}[!h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/binding/n2_exc}
-    \caption{Excitation energies for each state compared to experiment,\supercite{oddershedeComparison1985,huberConstants1979} $E_\mathrm{exc}-E_\mathrm{exp}$ for the nitrogen dimer. Shown are the results from reference \citenum{loosMountaineering2018}, xTC-FCIQMC with CASCI-Jastrow factors and xTC-FCIQMC with state-average CASSCF-Jastrow factors for the \avdz (horizontal stripes), \avtz (backslash hatch pattern) and \avqz (forward-slash hatch pattern) basis sets. The SA-CASSCF Jastrow factors are shown to largely outperform the other two approaches, being generally within chemical accuracy, even for relatively modest basis sets. The CASCI Jastrow factors perform unfavourably, however. This could be because the orbitals are not optimised for the active space, or it could be because the CI vector is shorter, and the number of determinants for each states is not consistent. Therefore, it is reasonable to assert that the use of the transcorrelated method with optimised orbitals and tailored Jastrow factors allow for highly accurate excitation energies.
-    \todo{these results are still running. Triplet CASSCF energies are very much not converged yet.}
+    \caption{Excitation energies $E_\mathrm{exc}$ for each state compared to experiment $E_\mathrm{exp}$,\supercite{oddershedeComparison1985,huberConstants1979} $E_\mathrm{exc}-E_\mathrm{exp}$ for the nitrogen dimer. Shown are the results from reference \citenum{loosMountaineering2018}, xTC-FCIQMC with CASCI-Jastrow factors and xTC-FCIQMC with state-average CASSCF-Jastrow factors for the \avdz (horizontal stripes), \avtz (backslash hatch pattern) and \avqz (forward-slash hatch pattern) basis sets. The SA-CASSCF Jastrow factors are shown to largely outperform the other two approaches, being generally within chemical accuracy, even for relatively modest basis sets. The CASCI Jastrow factors perform unfavourably, however. This could be because the orbitals are not optimised for the active space, or it could be because the CI vector is shorter, and the number of determinants for each state is not consistent. Therefore, it is reasonable to assert that the use of the transcorrelated method with optimised orbitals and tailored Jastrow factors allow for highly accurate excitation energies.
+    \todo{these results are still running. Triplet CASSCF energies are very much not converged yet. NB.}
     % We find that performance is somewhat inconsistent with no one method proving universally more accurate than any other. However, SA-CASSCF Jastrow factors appear to perform best overall, with several excitation energies within chemical accuracy (1.6 mHa) relative to experiment, represented by the shaded region.
         % \todo{figure showing relative error wrt experiment for Loos, CASSCF-Jastrow and SA-CASSCF-Jastrow}\todo{some calculations here still need to be equilibrated}
         }
@@ -278,9 +278,9 @@ The CASCI or CASSCF calculations are used to then determinant the 1RDM for the s
 
 % \todo{}
 % TODO you are here
-Figure \ref{fig:n2-excite-relative} displays the excitation energies of the N$_2$. Of the three methods explored (xTC-FCIQMC with SA-CASSCF- or CASCI-Jastrow factors, and non-TC), SA-CASSCF-Jastrow factors give the most consistently accurate excitation energies. Moreover, its change with respect to basis set size is relatively monotonic compared to the other two methods. This suggests a SA-CASSCF is a particularly fruitful ansatz for $\Phi$ when used in the TC method to calculate excited states.
+Figure \ref{fig:n2-excite-relative} displays the excitation energies $E_\mathrm{exc}$ of the N$_2$. Of the three methods explored (xTC-FCIQMC with SA-CASSCF- or CASCI-Jastrow factors, and non-TC), SA-CASSCF-Jastrow factors give the most consistently accurate excitation energies. Moreover, its change with respect to basis set size is relatively monotonic compared to the other two methods. This suggests a SA-CASSCF is a particularly fruitful ansatz for $\Phi$ when used in the TC method to calculate excited states.
 
-\begin{table}[h!]
+\begin{table}[htbp]
 \centering
 \begin{threeparttable}
 \begin{tabular}{c|cccc||c}
@@ -338,11 +338,10 @@ The excitation energies are presented in tabular format in table \ref{tbl:excita
 
 Since CASSCF primarily serves to capture the effects of \emph{static} correlation, whereas TC is designed to capture the effects of \emph{dynamical} correlation, it is interesting to see how well the method performs when we perform our calculations only inside the active space. For this, we use the SA-CASSCF$(10e,8o)$-Jastrow factors from before, but instead of performing all-electron xTC-FCIQMC, we instead only diagonalise the Hamiltonian in the active space. That is, we perform a xTC-CASCI$(10e,8o)$ calculation, using the orbitals optimised by the non-TC SA-CASSCF calculation. The xTC-CASCI calculations were performed using \neci.\supercite{gutherNECI2020}
 
-\begin{figure}[!h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/binding/n2_exc_cas.pdf}
     \caption{Excitation energies relative to experiment for a few states of N$_2$. For comparison, we show using non-TC SA-CASSCF, as well as all-electron (xTC-FCIQMC) and CAS-only (xTC-CASCI) using the SA-CASSCF-Jastrow factor. As expected, the non-TC SA-CASSCF is not able to sufficiently capture all correlation effects of the excited states, resulting in highly overestimated excitation energies. The xTC CAS-only calculations improve on these, but are still largely outside chemical accuracy, and still far from all-electron FCIQMC. This suggests that some of the dynamical correlation missing in the SA-CASSCF calculation is captured by the Jastrow factor.
-    \todo{I made a mistake with the avtz and avqz values where I did not delete all the appropriate virtuals -- these are being redone because of this. NB.}
     }
     \label{fig:n2-excite-relative-cas}
 \end{figure}
