@@ -22,3 +22,29 @@ x Figure 5.7: "for each states" -> "state"
 x Is there a way to make figures 5.7 and 5.8 as well as table 5.3 appear close to their mention in the text?
 
 Other than that I think it's very well written and especially easily digestible. Far too often when going through the thesis of someone I have to tell them not to write sentences that go on for half a paragraph. Didn't notice any of that here.
+
+
+fix indexing in xtc section of ch 4
+\begin{subequations}
+\begin{align}
+    F_N =
+    \bigg[&
+        h_P^Q
+        +\big(U_{PR}^{QS}-U_{PR}^{SQ}\big)\gamma^R_S
+        \nonumber\\&
+        -\frac{1}{2}\big(L_{PRT}^{QSU}-L_{PRT}^{SQU}-L_{PRT}^{USQ}\big)\gamma^{RT}_{SU}
+    \bigg]\tilde a^{P}_{Q}
+\end{align}
+\begin{align}
+    V_N =\frac{1}{2} \bigg[&
+        U_{PR}^{QS}
+        -\big(L_{PRT}^{QSU}
+        \nonumber\\&
+        -L_{PRT}^{QUS}-L_{PRT}^{USQ}\big)\gamma^T_U
+    \bigg]\tilde a^{PR}_{QS}
+\end{align}
+\begin{eqnarray}
+    \label{eq:LN}
+    L_N =-\frac{1}{6} L_{PRT}^{QSU}\tilde a^{PRT}_{QSU}
+\end{eqnarray}
+\end{subequations}

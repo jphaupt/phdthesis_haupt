@@ -16,7 +16,7 @@ These updated workflows represent significant improvements in the scalability an
 In this chapter, we study various choices of Jastrow factors to avoid the need for lengthy optimisation. These may be divided into two broad categories: universal Jastrow factors and atomic Jastrow factors.
 
 \subsection{Universal Jastrow Factors}
-
+\label{sec:universal-jastrow}
 A universal form for the Jastrow factor has already been presented by Fournais \emph{et al} in 2005,\supercite{fournaisSharp2005} and has occasionally made further appearances in the literature.\supercite{tewSecond2008,szenesStriking2024} The key advantage to using these is that we require no optimisation at all, while key disadvantages are that we must be careful about cut off functions, and we do not have as much flexibility so we cannot tailor the Jastrow factor to e.g. excited states.
 
 The universal form of the Jastrow, which we shall dub the ``Fournais-Jastrow'' factor is given by\supercite{fournaisSharp2005,fournaisNonIsotropic2007}
@@ -107,6 +107,7 @@ For the multideterminantal optimisation, we use a small FCIQMC calculation as it
 
 
 \subsection{Atomisation Energies}
+\label{sec:universal-atomisation}
 
 For the atomisation energies, we focus on the $ee+en$ and atomic$+ee$ Jastrow factors, as these are the most ``complete'' of each category of Jastrow factors presented here. The absolute xTC-FCIQMC energy estimates using the various methods for the systems considered in this chapter are presented in table \ref{tbl:universal-absE}. Also presented there are the non-TC FCIQMC and TC-FCIQMC (that is, with no additional approximations such as xTC), as presented in \autoref{chap:opt}.
 
@@ -209,34 +210,33 @@ Unlike with full TC, the atomic and universal Jastrow factors presented do not r
 
 \subsection{Binding Curves}
 
-Here we report the N$_2$ binding curve with the \avtz basis set for the various choices of Jastrow factors. Values for the interatomic distance range between $1.92$ and $10$ Bohr. The Jastrow factors used were the atomic Jastrow factor, the atomic Jastrow factor with electron-electron terms optimised for the molecule (using a RHF or FCIQMC ansatz), the $ee$- and $ee+en$-Jastrow factors. The energy values relative to experiment (normalised such that $10$ Bohr is $0$) is shown in figure \ref{fig:binding-universal-experiment}. The binding curve for the FCIQMC-Jastrow factor (i.e. multideterminant ansatz with all terms optimised) from \autoref{chap:binding} is also shown for comparison.
+Here we report the N$_2$ binding curve with the \avtz basis set for the various choices of Jastrow factors. Values for the interatomic distance range between $1.92$ and $10$ Bohr. The Jastrow factors used were the atomic Jastrow factor, the atomic Jastrow factor with electron-electron terms optimised for the molecule (using a RHF or FCIQMC ansatz), and the $ee$- and $ee+en$-Jastrow ``universal'' factors.  The binding curve for the FCIQMC-Jastrow factor (i.e. multideterminant ansatz with all terms optimised) from \autoref{chap:binding} is also shown for comparison. All choices of Jastrow factor give qualitatively correct binding curves.
 
-\todo{this paragraph is based on outdated data; should be revisited but I expect the new data to not be too different once it is properly converged} We find that the atomic Jastrow factor (i.e. no optimisation for the molecule) \todo{discuss the accuracy of each}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/universal/n2_avtz_min}
+    \includegraphics[width=0.9\textwidth]{figures/universal/n2_avtz_diss}
+    \caption{Zoomed in plots of the N$_2$ binding curves for the various Jastrow factor choices. All forms give qualitatively correct binding curves. Included for comparison is the FCIQMC-Jastrow from \autoref{chap:binding}, which was shown to be good both at equilibrium and dissociation. Compared to this, all Jastrow factors newly presented in this chapter shift the minimum upwards, with all of them having similar values in this region except for the pure atomic Jastrow factor. This is likely because the eleectron-electron terms are suboptimal. \todo{some of this data still needs to be converged, in particular the FCIQMC-ee Jastrow at dissociation.}
+    }
+    \label{eq:binding-universal-zoom}
+\end{figure}
 
-\todo{variational, but that's expected, since this is the system we studied in the cutoff analysis of \ref{fig:fournais-cutoff-n2} -- suggests this should be an optimised parameter, perhaps}
+Plots for the binding curves are shown in figure \ref{eq:binding-universal-zoom}, focusing on the minimum and dissociation regions. Compared to the FCIQMC-Jastrow factor of \autoref{chap:binding}, the binding curves using the Jastrow factors presented in this chapter shift the minimum upwards. This is to be expected, since we have fewer (or even no) parameters being optimised, so less flexibility in the VMC optimisation. Note that, while the cutoff $L$ for the universal Jastrow factors is not optimised, its value was determined in section \ref{sec:universal-jastrow} based on this exact system at equilibrium. Based on the results in section \ref{sec:universal-atomisation}, it is likely that this cutoff analysis effectively behaved as a surrogate for optimisation, and that $L=0.3$ Bohr would not be optimal for other systems, and may even result in values below the CBS limit. This suggests that simple Jastrow factors such as the $ee$-Jastrow factor are viable, but that they need to be used carefully, and may need to be optimised for each system.
 
-\todo{...}
+It is also worth noting that unlike the RHF-Jastrow factor in \autoref{chap:binding}, the single-reference electron-electron optimisation with the atomic Jastrow factor performs well, and even gives the correct behaviour in the dissociated limit. This may be because the atomic Jastrow factor is already a good approximation for the dissociated limit, and so the electron-electron optimisation in the molecule does little extra work. It also does not have as much flexibility as the RHF-Jastrow factor from \autoref{chap:binding}, so the poor TC ansatz cannot do as much harm, though it is responsible for a higher energy estimate in the dissociated limit, as can be seen be comparing against the multireference (FCIQMC)-optimised electron-electron Jastrow factor.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/universal/residuals}
-    \caption{The binding curves relative to a fit to experimental data\supercite{leroyAccurate2006} for the N$_2$ binding curve, calculated in the \avtz basis for various Jastrow factor forms. All curves are normalised such that the value at $10$ Bohr is $0$. The grey shaded area denotes a region of $\pm 1.6$ mHa (chemical accuracy). For reference, the multideterminantal FCIQMC-Jastrow from \autoref{chap:binding} is shown in brown (with diamonds). Both universal Jastrow forms ($ee$ and $ee+en$, denoting with only electron-electron or with both electron-electron and electron-nucleus terms, respectively) stay above the experimental result, and are indeed very close to each other. The atomic Jastrow factors, whether not optimised for the molecule (atomic $J$), or containing $ee$ terms optimised for the molecule (RHF or FCIQMC as the $\Phi$ ansatz) have a less smooth behaviour, but are generally closer to the experimental result. \todo{converge these and update the caption: this data is preliminary}}
+    \caption{The binding curves relative to a fit to experimental data\supercite{leroyAccurate2006} for the nitrogen dimer, calculated in the \avtz basis for various Jastrow factor forms. All curves are normalised such that the value at $10$ Bohr is $0$ Hartree. The grey shaded area denotes a region of $\pm 1.6$ mHa (i.e. chemical accuracy). For reference, the multideterminantal FCIQMC-Jastrow from \autoref{chap:binding} is shown in brown (with diamonds). Both universal Jastrow factor forms ($ee$ and $ee+en$, denoting with only electron-electron or with both electron-electron and electron-nucleus terms, respectively) stay above the experimental result, and are indeed very close to each other. The atomic Jastrow factors, whether not optimised for the molecule (atomic $J$), or containing $ee$ terms optimised for the molecule (RHF or FCIQMC as the $\Phi$ ansatz) have a less smooth behaviour, but are generally closer to the experimental result. \todo{converge these and update the caption: the data for the two atomic+ee curves will change a little}}
     \label{fig:binding-universal-experiment}
 \end{figure}
 
-\todo{...}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/universal/n2_avtz_min}
-    \includegraphics[width=0.8\textwidth]{figures/universal/n2_avtz_diss}
-    \caption{Zoomed in views of the binding N$_2$ binding curves for the various Jastrow factor choices. All forms give qualitatively correct binding curves. Included for comparison is the FCIQMC-Jastrow from \autoref{chap:binding}, which was shown to be good both at equilibrium and dissociation. Compared to this, the binding curves for both universal Jastrow forms are shifted up, as well as for the atomic Jastrow factor without further optimisation. However, when we use the atomic Jastrow factor with the electron-electron terms optimised for the molecule, we get a curve that is very close to the FCIQMC-Jastrow, particularly when using a multideterminal (FCIQMC) expansion. \todo{converge these and update the caption: this data is preliminary. I expect (hope) the weird behaviour for the ee-opt RHF curve at 10 Bohr will go away}}
-    \label{eq:binding-universal-zoom}
-\end{figure}
+The energy estimates relative to experiment (normalised such that the energy at $10$ Bohr is $0$ Hartree) is shown in figure \ref{fig:binding-universal-experiment}. In contrast to the multireference Jastrow factors presented in \autoref{chap:binding}, such as the FCIQMC-Jastrow factor reproduced here, the atomic and universal Jastrow factors stay above the experimental result and converge relatively monotonically. That said, they are overall not as close to the experimental result as the FCIQMC-Jastrow factor across the binding curve. It is also worth noting that the $ee$- and $ee+en$-Jastrow factors result in very similar curves, suggesting only a minimal effect from the nuclear term. In contrast, optimising the $ee$ terms for the molecule results in a curve that is closer to the experimental result. \todo{this discussion might change a little depending on updated binding curve results.}
 
 \todo{size consistency discussion, atomisation energy using dissociated limit}
 
-Since all of these Jastrow factors are strongly localised, we expect them all to be well-behaved at long interatomic separation, i.e. they should be size consistent. The only possible exception is the single-determinant-optimised atomic$+ee$ Jastrow factor, as the electron-electron term is optimised with a non-size-consistent wave function ansatz. We therefore approximate the size consistency error by the difference between the molecule and the sum of its parts. This is shown in table \ref{tbl:size-consistency-uni}. Indeed, we find all Jastrow factors to be size consistent, comparable to MRCI-D-F12. \todo{verify this once the atomic+ee jastrows are done}
+Since all of these Jastrow factors are strongly localised, we expect them all to be well-behaved at long interatomic separation, i.e. they should be size consistent, and that is consistent with figure \ref{fig:binding-curves-experiment}. The possible exception is the single-determinant-optimised atomic$+ee$ Jastrow factor, as the electron-electron term is optimised with a non-size-consistent wave function ansatz, although as observed even this curve appears well-behaved. We approximate the size consistency error by the difference between the molecule and the sum of its parts and show the results in table \ref{tbl:size-consistency-uni}. Indeed, we find all Jastrow factors to be size consistent, comparable to MRCI-D-F12. \todo{verify this once the atomic+ee jastrows are done}
 
 \begin{table}[htbp]
     \centering
@@ -244,8 +244,8 @@ Since all of these Jastrow factors are strongly localised, we expect them all to
         Jastrow Factor & $\sum E_\mathrm{atom} - E_\mathrm{molecule}(r=10)$ (mHa) \\
         \hline
         Atomic & -0.2(0) \\
-        Atomic+$ee$ (SD) & \todo{} \\
-        Atomic+$ee$ (MD) & \todo{}\\
+        Atomic+$ee$ (RHF) & \red{-0.4(0)} \\
+        Atomic+$ee$ (FCIQMC) & \red{0.9(1)}\\
         $ee$ & -0.6(0) \\
         $ee+en$ & -0.6(1) \\
         \bottomrule
@@ -253,10 +253,12 @@ Since all of these Jastrow factors are strongly localised, we expect them all to
         MRCI-D-F12 & -0.9
     \end{tabular}
     \caption{
-        \todo{}
+        Size consistency error, measured as the difference between the sum of energies for the constituent atoms in isolation and the energy of the molecule at dissocation (taken to be $10$ Bohr). We see that all methods presented here have size consistency errors that are comparable to MRCI-D-F12.
     }
     \label{tbl:size-consistency-uni}
 \end{table}
+
+Finally, the atomisation energy estimates using the binding curves, i.e. the difference between the energy in the dissociated limit and that at equilibrium, are shown in table \ref{tbl:binding-atomisation-energies-uni}. All Jastrow factors perform similarly well, comparable to MRCI-D-F12. While not as accurate as previous methods presented in this dissertation, these approaches are substantially less computationally expensive.
 
 \begin{table}[htbp]
     \centering
@@ -264,8 +266,8 @@ Since all of these Jastrow factors are strongly localised, we expect them all to
             Jastrow Factor & Atomisation Energy (mHa) \\
             \hline
             Atomic & 358.9(0) \\
-            Atomic+$ee$ (SD) & \todo{} \\
-            Atomic+$ee$ (MD) & \todo{}\\
+            Atomic+$ee$ (RHF) & \red{361.4(1)} \\
+            Atomic+$ee$ (FCIQMC) & \red{360.9(1)}\\
             $ee$ & 361.0(0) \\
             $ee+en$ & 360.3(1) \\
             \bottomrule
@@ -273,19 +275,15 @@ Since all of these Jastrow factors are strongly localised, we expect them all to
             HEAT\supercite{fellerSurvey2008} & 363.9 \\
             Experiment\supercite{leroyAccurate2006} & 363.7
         \end{tabular}
-    \caption{\todo{...}}
+    \caption{Atomisation energies for the nitrogen dimer using only the binding curve. We see that all methods presented here have atomisation energies that are comparable to MRCI-D-F12, with most slightly outperforming it. While not within chemical accuracy like full TC or the multireference Jastrows presented in \autoref{chap:binding}, these results are still promising on account of their relative simplicity and inexpensiveness.
+    }
     \label{tbl:binding-atomisation-energies-uni}
 \end{table}
 
 \section{Conclusion and Outlook}
-\todo{mention the shortcoming of not being able to target specific states like the previous methodology (except for quasi-atomic)}
-\todo{mention the fournais/universal form does not faithfully capture long-range correlation}
-\todo{mention possibility of combining methods, also using the orbital cusp correction for the Fournais factor}
-\todo{mention that with the small optimisation we introduce the possibility of targeting specific states, at least somewhat}
-\todo{mention revisiting the universal Jastrow factors and the cutoffs more thoroughly}
-\todo{...}
-\todo{outlook: optimising $L$, using different cutoff functions}
-\todo{ECPs with universal/atomic Jastrows to mitigate the effects from the core!}
-\todo{a more sophisticated way of handling heterogeneous systems}
 
-\todo{Also mention (maybe by then you even have data for) the Fournais Jastrow factor}
+We have presented an alternative approach to constructing Jastrow factors, either using a ``universal'' approach focusing on describing analytical behaviour near coalescence points, or reusing Jastrow factors optimised for small systems (such as an atom) for larger systems (such as a molecule). We have shown that the resulting Jastrow factors are size consistent and provide rapid basis set convergence when compared against conventional electronic structure methods.
+
+It is, however, worth pointing out some shortcomings of these approaches. Perhaps the most obvious shortcoming is the relative lack of flexibility in the Jastrow factor, as either there are no terms to optimise or relatively few compared to previous approaches presented in this dissertation. Moreoever, with the exception of the atomic$+ee$ Jastrow factor with the electron-electron term optimised using an FCIQMC ansatz, there is no clear way for these methods to be tailored for specific states. Additionally, the use of universal Jastrow factors may lead to TC energies well below the CBS limit if not careful in the choice of the cutoff function. While these appear to be mostly compensated for by error cancellation, the nonmonotonic convergence to the CBS limit is nevertheless undesirable. This suggests future studies on the effects of the cutoffs and the potential need for optimising its parameters for each state. In this sense, the form of the Jastrow factor may be ``universal'', but its cutoffs may not be. Since this convergence appears strongly linked to the core region, it may also be worthwhile studying the effects of using futher core functions, or \glspl{ECP}, as well as a more careful introduction of the electron-electron-nucleus term in the Fournais-Jastrow factor.
+
+These results suggest that a realistic approach to studying larger systems with the transcorrelated method would involve combining Jastrow factors optimised for small systems and reoptimising some terms (such as the electron-electron term) for the larger system, as a form of correction. This would allow for a more computationally tractable approach while still benefiting from rapid convergence to the CBS limit.
