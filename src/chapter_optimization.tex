@@ -183,7 +183,7 @@ The variance of the reference energy has been used as a target function for opti
 To understand the physical significance of the variance of the reference energy, note that equation \ref{eq:var_eref_1} may be rewritten as
 \begin{equation}
     \label{eq:varref-connectivity}
-    \sigma_\mathrm{ref}^2 = \sum_{I\neq \mathrm{HF}}\bra{D_I}\htc\ket{D_\mathrm{HF}},
+    \sigma_\mathrm{ref}^2 = \sum_{I\neq \mathrm{HF}}|\bra{D_I}\htc\ket{D_\mathrm{HF}}|^2,
 \end{equation}
 where $I$ runs over a complete basis set.\footnote{Here we have a complete basis set because we are optimising with continuum Monte Carlo. If we were to optimise this by directly calculating the matrix elements in equation \ref{eq:varref-connectivity}, then the sum must be truncated. This is the subject of ongoing work.}
 

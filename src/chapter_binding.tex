@@ -8,16 +8,16 @@ Images have been reused from this paper (with permission).
 
 \section{Introduction}
 
-In this chapter, we apply the new framework for the transcorrated method described in chapter \ref{chap:opt} to problems of multireference character and find these methods may yield non-physical results. We propose an updated workflow wherein we use conventional post-Hartree-Fock methods as input to Jastrow factor optimisation for TC-FCIQMC. Calculations suggest size-consistent results and rapid basis set convergence compared to conventional methods, with the binding curve of N$_2$ at \avtz being within chemical accuracy of experiment.
+In this chapter, we apply the new framework for the transcorrated method described in chapter \ref{chap:opt} to problems of multireference character and find these methods may yield unphysical results. We propose an updated workflow wherein we use conventional post-Hartree-Fock methods as input to Jastrow factor optimisation for TC-FCIQMC. Calculations suggest size-consistent results and rapid basis set convergence compared to conventional methods, with the binding curve of N$_2$ at \avtz being within chemical accuracy of experiment.
 
 \section{Motivation}
 
-A popular ``stress test'' for quantum chemistry methods is the binding curve of N$_2$. Highly accurate experimental results\supercite{leroyAccurate2006} exist to recreate the curve, allowing for a useful benchmark. At equilibrium, this system is essentially single reference in character, but as the bond is stretched, the system becomes strongly multireference, making it particularly challenging for many methods. As an example, we might consider standard \gls{CCSD}, which is a single-reference method, compared to FCIQMC which (within stochastic error) is exact. Figure \ref{fig:ccsd-vs-fciqmc-n2} shows the binding curve of N$_2$ with CCSD compared to FCIQMC, using \avtz. We see that CCSD is not stable at large bond lengths.
+A popular ``stress test'' for quantum chemistry methods is the binding curve of N$_2$. Highly accurate experimental results\supercite{leroyAccurate2006} exist to recreate the curve, allowing for a useful benchmark. At equilibrium, this system is essentially single reference in character, but as the bond is stretched, the system becomes strongly multireference, making it particularly challenging for many methods. As an example, we might consider standard \gls{CCSD}, which is a single-reference method, compared to FCIQMC which (within stochastic error) is exact.\footnote{We do not necessarily need an exact method to resolve this issue. Indeed, coupled cluster may be extended to be multireference, in which case it describes the N$_2$ binding curve very well.\supercite{lyakhMultireference2012}} Figure \ref{fig:ccsd-vs-fciqmc-n2} shows the binding curve of N$_2$ with CCSD compared to FCIQMC, using \vdz. We see that CCSD is not stable at large bond lengths.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/binding/N2_avtz_nontc}
-    \caption{The binding curve for N$_2$ with the \avtz basis set. CCSD starts to decrease near 4 Bohr, which is nonphysical, whereas FCIQMC provides a more accurate curve. FCIQMC was done with 30 million walkers and HF-projected energy. The nonsmooth points in the dissociated region are due to stochastic error, and could be resolved with more walkers and a better trial wave function. CCSD did not converge at bond lengths larger than those shown.}
+    \includegraphics[width=0.9\textwidth]{figures/binding/N2_vdz_nontc}
+    \caption{The binding curve for N$_2$ with the \vdz basis set. CCSD starts to decrease near 4 Bohr, which is unphysical, whereas FCIQMC provides a more accurate curve. This is because CCSD is a single-reference method, whereas FCIQMC is exact (within stochastic error). FCIQMC was done with 30 million walkers and HF-projected energy. CCSD did not converge at bond lengths larger than those shown.}
     \label{fig:ccsd-vs-fciqmc-n2}
 \end{figure}
 
@@ -47,14 +47,14 @@ and the same cutoff functions $t(r,L) = (1-r/L)^3
 \Theta(r-L)$. We also use the same objective function,
 \begin{equation}
     \label{eq:varref-hf}
-    \sigma_\mathrm{ref}^2 = \sum_{I\neq \mathrm{HF}}\bra{D_I}\htc\ket{D_\mathrm{HF}},
+    \sigma_\mathrm{ref}^2 = \sum_{I\neq \mathrm{HF}}|\bra{D_I}\htc\ket{D_\mathrm{HF}}|^2,
 \end{equation}
-Using this workflow with the xTC approximation, we calculate points along the binding curve of N$_2$, and find a non-physical ``dip'', as shown in figure \ref{fig:binding-dip}, similar to what CCSD exhibits in figure \ref{fig:ccsd-vs-fciqmc-n2}, albeit much more subtle.
+Using this workflow with the xTC approximation, we calculate points along the binding curve of N$_2$ with the \avtz basis set, and find a unphysical ``dip'', as shown in figure \ref{fig:binding-dip}, similar to what CCSD exhibits in figure \ref{fig:ccsd-vs-fciqmc-n2}, albeit much more subtle.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/inset_nontcfciqmc}
-    \caption{The xTC-FCIQMC binding curve for N$_2$ with the \avtz basis set. While much smaller than that in figure \ref{fig:ccsd-vs-fciqmc-n2}, a non-physical dip is still present. This is apparent when zooming in on the curve, as shown in the inset.}
+    \caption{The xTC-FCIQMC binding curve for N$_2$ with the \avtz basis set. While much smaller than that in figure \ref{fig:ccsd-vs-fciqmc-n2}, a unphysical dip is still present. This is apparent when zooming in on the curve, as shown in the inset.}
     \label{fig:binding-dip}
 \end{figure}
 
@@ -80,7 +80,7 @@ where $\ket{\Phi_0}=\sum_I\ket{D_I}$. In practice, this modification results in 
     \item The objective function used during the VMC optimisation, equation \ref{eq:varref-hf}, needs to reflect the multireference ansatz. In particular, it will need to be changed to
     \begin{equation}
         \label{eq:varref-md}
-        \sigma_\mathrm{ref}^2 = \sum_{I}\bra{D_I}\htc\ket{\Phi_0} - \bra{\Phi_0}\htc\ket{\Phi_0},
+        \sigma_\mathrm{ref}^2 = \sum_{I}|\bra{D_I}\htc\ket{\Phi_0} - \braket{D_I}{\Phi_0}\bra{\Phi_0}\htc\ket{\Phi_0}|^2,
     \end{equation}
     which is evaluated in VMC by sampling
     \begin{equation}
@@ -173,7 +173,7 @@ For the N$_2$ binding curve, we compare against the highly accurate experimental
 
 \subsection{Binding Curves}
 
-As illustrated in figure \ref{fig:binding-curves-full-diss}, we obtain a qualitatively-correct binding curve for the nitrogen molecule using any of the Jastrow factors, besides the RHF-Jastrow. Shown in that figure is also a zoom-in on the dissociated limit, indicating the RHF-Jastrow curve is the only one exhibiting the pathological ``dip'' behaviour. The remaining nonphysical behaviour amounts to noise, which has a few potential sources:
+As illustrated in figure \ref{fig:binding-curves-full-diss}, we obtain a qualitatively-correct binding curve for the nitrogen molecule using any of the Jastrow factors, besides the RHF-Jastrow. Shown in that figure is also a zoom-in on the dissociated limit, indicating the RHF-Jastrow curve is the only one exhibiting the pathological ``dip'' behaviour. The remaining unphysical behaviour amounts to noise, which has a few potential sources:
 \begin{itemize}
     \item The optimisation of the Jastrow factor is done with VMC, a stochastic algorithm. As described in \autoref{chap:opt}, VMC optimisation for the TC method is complex, and as of yet has not been done on strongly multireference problems. Since the optimisation is done independently for each point along the binding curve, this may lead to some noise.
     \item The FCIQMC calculations are also stochastic, and this may also lead to some noise, particularly in the dissociated limit when not using a multideterminantal trial wave function.
@@ -185,7 +185,7 @@ Thus, we can conclude that the biggest problem with the TC workflow has been res
     \centering
     \includegraphics[width=0.8\textwidth]{figures/binding/all_binding_curves}
     \includegraphics[width=0.8\textwidth]{figures/binding/all_binding_curves_dissociated}
-    \caption{xTC-FCIQMC energies for the nitrogen dimer for various points along its binding curve, between 1.92 and 10 Bohr radii. Calculations were performed with the \avtz basis set. Four choices for Jastrow factors are presented. The forms for the actual Jastrow factor $J$ is the same, but the value for $\ket{\Phi}$ in the ansatz $\ket\Psi=\e^J\ket\Phi$ is different. The choices are: RHF-Jastrow (blue), CASCI-Jastrow (orange), CASSCF-Jastrow (green) and the FCIQMC-Jastrow (red). The top panel shows the full binding curve, while the bottom panel shows the dissociated limit. Notice that except for the RHF-Jastrow curve, these Jastrow factors result in qualitatively-correct xTC-FCIQMC binding curves.
+    \caption{xTC-FCIQMC energies for the nitrogen dimer for various points along its binding curve, between 1.92 and 10 Bohr radii. Calculations were performed with the \avtz basis set. Four choices for Jastrow factors are presented. The forms for the actual Jastrow factor $J$ is the same, but the value for $\ket{\Phi}$ in the ansatz $\ket\Psi=\e^J\ket\Phi$ is different. The choices are: RHF-Jastrow (blue), CASCI-Jastrow (orange), CASSCF-Jastrow (green) and the FCIQMC-Jastrow (red). The top panel shows the full binding curve, while the bottom panel shows the dissociated limit. Notice that except for the RHF-Jastrow curve, these Jastrow factors result in qualitatively-correct xTC-FCIQMC binding curves. \todo{converge these points at dissociation}
     }
     \label{fig:binding-curves-full-diss}
 \end{figure}

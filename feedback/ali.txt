@@ -3,3 +3,15 @@
 - [x] Also you should define what is meant by atomic units later on in Eq 1.4
 
 - [x] eq 1.5 uses spin orbitals but then you use spatial orbitals later (e.g. eq 1.8) - introduce spin indices like you did later (Hubbard model I think it was)
+
+
+- [x] Philip, on p56, eq4.15, there should be a squared (^2) in the sum (it's a variance....).
+
+- [ ] In FIG 5.1 (p 71) why is the FCIQMC result so noisy in the tail? Did you use a trial wavefunction or is this projected on the HF det?
+    - projected on HF det. Noisy because it was fixed at 30 million walkers, as the main purpose was just to show the bump in DCSD can be resolved, as explained in the caption. Should I update this?
+
+- [x] The inset on Fig 5.2 needs to have a scale.
+
+- [x] Eq 5.5 is missing a square.
+
+- [x] As is 5.8.
