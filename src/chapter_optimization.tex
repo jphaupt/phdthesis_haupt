@@ -580,13 +580,34 @@ The Hamiltonian is normal-ordered with respect to $\Phi$ (where $\Psi=\e^J\Phi$,
     H_N = \htc - \bra{\Phi}\htc\ket\Phi = F_N + V_N + L_N
 \end{equation}
 where the one-, two-, and three-body operators are (using Einstein summation)
-\begin{align}
-F_N =& [h_q^p + (U_{qs}^{pr}-U_{sq}^{pr})\gamma_s^r \\
-&- \frac 12 (L_{qsu}^{prt} - L_{qus}^{prt}-L_{usq}^{prt})\gamma_{us}^{rt}]
-\tilde a_q^p, \\
-V_N =& \frac 12[U_{qs}^{pr} - (L_{qsu}^{prt} - L_{qus}^{prt}-L_{usq}^{prt})]\tilde a_{qs}^{pr}, \\
-L_N =& \frac 16L_{qsu}^{prt}\tilde a_{qsu}^{prt}
-\end{align}
+% \begin{align}
+% F_N =& [h_q^p + (U_{qs}^{pr}-U_{sq}^{pr})\gamma_s^r \\
+% &- \frac 12 (L_{qsu}^{prt} - L_{qus}^{prt}-L_{usq}^{prt})\gamma_{us}^{rt}]
+% \tilde a_q^p, \\
+% V_N =& \frac 12[U_{qs}^{pr} - (L_{qsu}^{prt} - L_{qus}^{prt}-L_{usq}^{prt})]\tilde a_{qs}^{pr}, \\
+% L_N =& \frac 16L_{qsu}^{prt}\tilde a_{qsu}^{prt}
+% \end{align}
+\begin{subequations}
+    \begin{align}
+        F_N =
+        \bigg[
+            h_p^q
+            +\big(U_{pr}^{qs}-U_{pr}^{sq}\big)\gamma^r_s
+            -\frac{1}{2}\big(L_{prt}^{qsu}-L_{prt}^{squ}-L_{prt}^{usq}\big)\gamma^{rt}_{su}
+        \bigg]\tilde a^{p}_{q}
+    \end{align}
+    \begin{align}
+        V_N =\frac{1}{2} \bigg[
+            U_{pr}^{qs}
+            -\big(L_{prt}^{qsu}
+            -L_{prt}^{qus}-L_{prt}^{usq}\big)\gamma^t_u
+        \bigg]\tilde a^{pr}_{qs}
+    \end{align}
+    \begin{eqnarray}
+        \label{eq:LN}
+        L_N =-\frac{1}{6} L_{prt}^{qsu}\tilde a^{prt}_{qsu}
+    \end{eqnarray}
+    \end{subequations}
 and $U=V-K$, $\tilde a_{p\dots}^{q\dots}$ are the normal-ordered
 excitation operators, and $\gamma_{p\dots}^{q\dots}=\bra\Phi a_{p\dots}^{q\dots}\ket\Phi$ are the density matrices. The higher-order density matrices are also approximated as the antisymmetrised products of the one-body density matrix. That is, $\gamma_{us\dots}^{rt\dots}\approx\mathcal{A}(\gamma_u^r\gamma_s^t\cdots)$, where $\mathcal A$ is the antisymmetriser operator. This means that the only density matrix needed in the xTC approximation is the \gls{RDM}.\footnote{Without this approximation, we would also need the \gls{2RDM} and \gls{3RDM}. One refinement of the approximation would be to include one or both of these instead of approximating with \glspl{1RDM}.}
 

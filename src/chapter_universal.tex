@@ -268,11 +268,11 @@ Finally, the atomisation energy estimates using the binding curves, i.e. the dif
         \begin{tabular}{c|c}
             Jastrow Factor & Atomisation Energy (mHa) \\
             \hline
-            Atomic & 358.9(0) \\
-            Atomic+$ee$ (RHF) & 361.8(0) \\
-            Atomic+$ee$ (FCIQMC) & 361.7(0)\\
-            $ee$ & 361.0(0) \\
-            $ee+en$ & 360.3(1) \\
+            Atomic & 358.9 \\
+            Atomic+$ee$ (RHF) & 361.8 \\
+            Atomic+$ee$ (FCIQMC) & 361.7\\
+            $ee$ & 361.0 \\
+            $ee+en$ & 360.3 \\
             \bottomrule
             MRCI-D-F12 & 359.5 \\
             HEAT\supercite{fellerSurvey2008} & 363.9 \\
@@ -290,4 +290,4 @@ These updated workflows represent significant improvements in the scalability an
 
 It is, however, worth pointing out some shortcomings of these approaches. Perhaps the most obvious shortcoming is the relative lack of flexibility in the Jastrow factor, as either there are no terms to optimise or relatively few compared to previous approaches presented in this dissertation. Moreoever, with the exception of the atomic$+ee$ Jastrow factor with the electron-electron term optimised using an FCIQMC ansatz, there is no clear way for these methods to be tailored for specific states. Additionally, the use of minimal Jastrow factors may lead to TC energies well below the CBS limit if not careful in the choice of the cutoff function. While these appear to be mostly compensated for by error cancellation when computing atomisation energies, the nonmonotonic convergence to the CBS limit is nevertheless undesirable. This suggests future studies on the effects of the cutoffs and the potential need for optimising its parameters for each state. In this sense, the form of the minimal Jastrow factor may be ``universal'', but its cutoffs may not be. Since this convergence appears strongly linked to the core region, it may also be worthwhile studying the effects of using futher core functions, or \glspl{ECP}, as well as a more careful introduction of the electron-electron-nucleus term in the Fournais-Jastrow factor.
 
-These results suggest that a realistic approach to studying larger systems, or performing optimisation deterministically, with the transcorrelated method would involve combining Jastrow factors optimised for small systems and reoptimising some terms (such as the electron-electron term) for the larger system, as a form of correction. This would allow for a more computationally tractable approach with fewer optimisable parameters, while still benefiting from rapid convergence to the CBS limit.
+These results suggest that a realistic approach to studying larger systems and/or performing optimisation deterministically, with the transcorrelated method would involve combining Jastrow factors optimised for small systems and reoptimising some terms (such as the electron-electron term) for the larger system, as a form of correction. This would allow for a more computationally tractable approach with fewer optimisable parameters, while still benefiting from rapid convergence to the CBS limit.
