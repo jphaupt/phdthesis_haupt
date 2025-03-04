@@ -1,0 +1,13 @@
+p.53: substationally -> substantially
+
+p.54: so-call -> so-called
+
+Section 4.6, first paragraph: Do you explain what the initiator error is elsewhere? Alternatively, do you have a citation for the sentence mentioning it?
+
+Just for my personal understanding: p.65 Why are two-body excitations more expensive to attempt than three-body excitations? Does the increase in cost on neglect of three-body excitations come from more two-body excitations being attempted instead?
+
+Table 4.4 seems to indicate that for some calculations, you actually get slower on discarding three-body excitations. Do I interpret that correctly?
+
+p.68 Future work have focused -> Future work will focus
+
+p.69 You could note that the "approximation" of the densities as antisymmetrized products of the 1-RDM is exact for a single determinant reference.

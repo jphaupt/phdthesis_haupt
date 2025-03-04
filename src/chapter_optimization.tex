@@ -71,7 +71,7 @@ $L_v$, $L_\chi$, and $L_f$ are cut-off lengths, $t(r,L) = (1-r/L)^3
 \Theta(r-L)$ is a cut-off function, and $\Theta(r-L)$ is the Heaviside
 step function.
 
-As described in chapter \ref{chap:explicit}, accurately describing the (electron-electron and electron-nucleus) Kato cusp conditions\supercite{katoEigenfunctionsManyparticleSystems1957a} substationally improves the accuracy of our method. Also, as described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\bm R\}$ from a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\bm R)$ to produce a variational estimate of the total energy as an average of the local energy, $E_{\mathrm L}({\bm R}) = \tilde\Psi_{\mathrm T}^{-1}({\bm R}) \hat H({\bm R}) \tilde\Psi_{\mathrm T}({\bm R})$ over the sampled configurations. In the case of \gls{VMC}, accurate description of the electron-electron and electron-nucleus Kato cusp conditions suppresses extreme outliers in the local energy sampling, allowing meaningful wave function parameters.
+As described in chapter \ref{chap:explicit}, accurately describing the (electron-electron and electron-nucleus) Kato cusp conditions\supercite{katoEigenfunctionsManyparticleSystems1957a} substantially improves the accuracy of our method. Also, as described in chapter \ref{chap:qmc}, \gls{VMC} and \gls{DMC} methods sample electronic configurations $\{\bm R\}$ from a probability distribution based on an analytical trial wave function $\tilde\Psi_{\mathrm T}(\bm R)$ to produce a variational estimate of the total energy as an average of the local energy, $E_{\mathrm L}({\bm R}) = \tilde\Psi_{\mathrm T}^{-1}({\bm R}) \hat H({\bm R}) \tilde\Psi_{\mathrm T}({\bm R})$ over the sampled configurations. In the case of \gls{VMC}, accurate description of the electron-electron and electron-nucleus Kato cusp conditions suppresses extreme outliers in the local energy sampling, allowing meaningful wave function parameters.
 
 The most obvious way to enforce the electron-electron and electron-nucleus cusp conditions is by enforcing them in the form of the Jastrow factor through the relevant terms, namely $v$ (equation \ref{eq:dtn-jastrow-ee}) for the electron-electron cusp, and $\chi$ (equation \ref{eq:dtn-jastrow-en}) for the electron-nucleus cusp. However, in the context of continuum \gls{QMC}, it has been found to be better\supercite{drummondJastrow,needsVariational2020,maScheme2005} to enforce the electron-nucleus cusp by modifying the $l=0$ ($s$-type) component of the cuspless molecular orbitals, $\phi(r)$, such that they exhibit a cusp.
 
@@ -93,7 +93,7 @@ Here, $\{\alpha_l\}$ are parameters determining the shape of the
 corrected orbital and the shift $C$ is only set to a non-zero value in
 the presence of nodes of $\phi(r)$ near the nucleus. More precisely, the shift $C$ is chosen such that $\tilde\phi(r_c)-C$ is of one sign within the radius $r_c$. This is necessary since we wish to impose an exponential correction, which is necessarily of one sign.
 
-Following \onlinecite{maScheme2005}, we impose the cusp condition at $r=r_c$, as well as twice continuous differentiability at $r=r_c$. This leaves only $\alpha_0$ and $r_c$ as free parameters from equations \ref{eq:cusp-corr-1} and \ref{eq:cusp-corr-2}. $r_c$ is chosen to be small but within the same sign, as described above, while $\alpha_0$ is determined by enforcing smoothness for the so-call ``effective one-electron local energy'',
+Following \onlinecite{maScheme2005}, we impose the cusp condition at $r=r_c$, as well as twice continuous differentiability at $r=r_c$. This leaves only $\alpha_0$ and $r_c$ as free parameters from equations \ref{eq:cusp-corr-1} and \ref{eq:cusp-corr-2}. $r_c$ is chosen to be small but within the same sign, as described above, while $\alpha_0$ is determined by enforcing smoothness for the so-called ``effective one-electron local energy'',
 \begin{equation}
     E_L^s(r) \mathdef \tilde\phi(r)^{-1}\left[-\frac 12\nabla^2-\frac{Z_{\mathrm{eff}}}r\right]\tilde\phi(r).
 \end{equation}
@@ -247,7 +247,7 @@ In figure \ref{fig:bsdep-atoms-emin}, we compare the convergence with basis-set 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/optimisation/Fig/bsdep-atoms-emin}
-    \caption{Total energy of the C, N, and O atoms as a function of the reciprocal number of molecular orbitals in the \vxz{X} basis set family. The non-variational behaviour of up to about $5$ mHa is evident for the energy-minimised Jastrow factors, for which convergence to the exact energy as a function of basis-set size is slow. The shaded areas represent $\pm 1$ kcal/mol (so-call ``chemical accuracy'') around the exact non-relativistic total energy from reference \citenum{bytautasCorrelation2005}. Points in the top panel are annotated with the basis set cardinal number $X$.}
+    \caption{Total energy of the C, N, and O atoms as a function of the reciprocal number of molecular orbitals in the \vxz{X} basis set family. The non-variational behaviour of up to about $5$ mHa is evident for the energy-minimised Jastrow factors, for which convergence to the exact energy as a function of basis-set size is slow. The shaded areas represent $\pm 1$ kcal/mol (so-called ``chemical accuracy'') around the exact non-relativistic total energy from reference \citenum{bytautasCorrelation2005}. Points in the top panel are annotated with the basis set cardinal number $X$.}
     \label{fig:bsdep-atoms-emin}
 \end{figure}
 
@@ -289,7 +289,7 @@ In figure \ref{fig:griderr-dimers} we plot the absolute integration error in the
 
 
 \section{Compactification of the CI Vector}
-The more compact the CI wave function is, the easier it is for FCIQMC to sample the wave function accurately and the smaller the initiator error becomes. The TC method has already been shown to make CI wave functions more compact for the two-dimensional Hubbard model.\supercite{dobrautzCompact2019} Let $\{c_I\}$ be the $L^2$-normalized coefficients of the CI wave
+The more compact the CI wave function is, the easier it is for FCIQMC to sample the wave function accurately and the smaller the initiator error (see section \ref{sec:fciqmc-initiator})\supercite{clelandCommunications2010} becomes. The TC method has already been shown to make CI wave functions more compact for the two-dimensional Hubbard model.\supercite{dobrautzCompact2019} Let $\{c_I\}$ be the $L^2$-normalized coefficients of the CI wave
 function such that $\sum_I c_I^2=1$.
 %
 The quantity
@@ -567,7 +567,7 @@ In this chapter, we presented a new method to optimise flexible Jastrow factors 
 
 These results show that this workflow can provide remarkably accurate total and relative energies, with relative energies at \vtz rivalling non-TC results at \vxz{5}. These results also provide better energy estimates compared to other promising methods, such as neural-network based trial wave functions.\supercite{pfauInitio2020,hermannDeepneuralnetwork2020}
 
-Future work on this topic have focused on technical advancements and efficient approximations for dealing with the three-body integrals.
+Work pursued on this topic have focused on technical advancements and efficient approximations for dealing with the three-body integrals.
 
 \subsection{The xTC Approximation}
 \label{sec:xtc}
@@ -609,6 +609,6 @@ where the one-, two-, and three-body operators are (using Einstein summation)
     \end{eqnarray}
     \end{subequations}
 and $U=V-K$, $\tilde a_{p\dots}^{q\dots}$ are the normal-ordered
-excitation operators, and $\gamma_{p\dots}^{q\dots}=\bra\Phi a_{p\dots}^{q\dots}\ket\Phi$ are the density matrices. The higher-order density matrices are also approximated as the antisymmetrised products of the one-body density matrix. That is, $\gamma_{us\dots}^{rt\dots}\approx\mathcal{A}(\gamma_u^r\gamma_s^t\cdots)$, where $\mathcal A$ is the antisymmetriser operator. This means that the only density matrix needed in the xTC approximation is the \gls{RDM}.\footnote{Without this approximation, we would also need the \gls{2RDM} and \gls{3RDM}. One refinement of the approximation would be to include one or both of these instead of approximating with \glspl{1RDM}.}
+excitation operators, and $\gamma_{p\dots}^{q\dots}=\bra\Phi a_{p\dots}^{q\dots}\ket\Phi$ are the density matrices. The higher-order density matrices are also approximated as the antisymmetrised products of the one-body density matrix. That is, $\gamma_{us\dots}^{rt\dots}\approx\mathcal{A}(\gamma_u^r\gamma_s^t\cdots)$, where $\mathcal A$ is the antisymmetriser operator. This means that the only density matrix needed in the xTC approximation is the \gls{RDM}.\footnote{Without this approximation, we would also need the \gls{2RDM} and \gls{3RDM}. One refinement of the approximation would be to include one or both of these instead of approximating with \glspl{1RDM}. Also note that this approximation is exact for a single reference determinant.}
 
 Ignoring the three-body terms $L_N$ leads to an improved scaling with respect to basis set size while directly contracting intermediates to the lower-body corrections obviates the necessity to calculate $L$ and results in excellent energy agreement.\supercite{christlmaierXTC2023} Once the integrals are calculated, $\htc$ has, like $\hat H$, at most two-body interactions and therefore needs storage for four indices (albeit we no longer have Hermiticity). This means that calculations done on these integrals (in principle) are not much more expensive than the conventional non-TC calculations.

@@ -270,13 +270,11 @@ The CASCI or CASSCF calculations are used to then determine the 1RDM for the sta
     \centering
     \includegraphics[width=\textwidth]{figures/binding/n2_exc}
     \caption{Excitation energies $E_\mathrm{exc}$ for each state compared to experiment $E_\mathrm{exp}$,\supercite{oddershedeComparison1985,huberConstants1979} $E_\mathrm{exc}-E_\mathrm{exp}$ for the nitrogen dimer. Shown are the results from reference \citenum{loosMountaineering2018}, xTC-FCIQMC with CASCI-Jastrow factors and xTC-FCIQMC with state-average CASSCF-Jastrow factors for the \avdz (horizontal stripes), \avtz (backslash hatch pattern) and \avqz (forward-slash hatch pattern) basis sets. The SA-CASSCF Jastrow factors are shown to largely outperform the other two approaches, being generally within chemical accuracy, even for relatively modest basis sets. The CASCI Jastrow factors perform unfavourably, however. This could be because the orbitals are not optimised for the active space, or it could be because the CI vector is shorter, and the number of determinants for each state is not consistent. Therefore, it is reasonable to assert that the use of the transcorrelated method with optimised orbitals and tailored Jastrow factors allow for highly accurate excitation energies.
-    \todo{these results are still running. Triplet CASSCF energies are very much not converged yet. NB.}
-    % We find that performance is somewhat inconsistent with no one method proving universally more accurate than any other. However, SA-CASSCF Jastrow factors appear to perform best overall, with several excitation energies within chemical accuracy (1.6 mHa) relative to experiment, represented by the shaded region.
         }
     \label{fig:n2-excite-relative}
 \end{figure}
 
-Figure \ref{fig:n2-excite-relative} displays the excitation energies $E_\mathrm{exc}$ of the N$_2$. Of the three methods explored (xTC-FCIQMC with SA-CASSCF- or CASCI-Jastrow factors, and non-TC), SA-CASSCF-Jastrow factors give the most consistently accurate excitation energies. Moreover, its change with respect to basis set size is relatively monotonic compared to the other two methods. This suggests a SA-CASSCF is a particularly fruitful ansatz for $\Phi$ when used in the TC method to calculate excited states.
+Figure \ref{fig:n2-excite-relative} displays the excitation energies $E_\mathrm{exc}$ of the N$_2$. Of the three methods explored (xTC-FCIQMC with SA-CASSCF- or CASCI-Jastrow factors, and non-TC), SA-CASSCF-Jastrow factors give the most consistently accurate excitation energies. The SA-CASSCF-Jastrow factors result in excitation energies typically within chemical accuracy even with \avdz, and consistently in chemical accuracy for \avtz and \avqz. This suggests a SA-CASSCF is a particularly fruitful ansatz for $\Phi$ when used in the TC method to calculate excited states.
 
 \begin{table}[htbp]
 \centering
@@ -287,33 +285,33 @@ State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 \hline
 \multirow{3}{*}{$^1\Pi_g$}
 & non-TC exFCI\tnote{a} & 345.8  & 343.2 & 343.2 & 344.47\tnote{b} \\
-& CASCI-xTC    & 341.86(4) &  & \todo{} & 344.47\tnote{c}  \\
-& SA-CASSCF-xTC   & 340.729(3) &  & \todo{} & 342.99\tnote{d}  \\
+& CASCI-xTC    & 341.7 & 339.0 & 339.2 & 344.47\tnote{c}  \\
+& SA-CASSCF-xTC   & 343.4 & 342.1 & 342.3 & 342.99\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^1\Sigma_u^-$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & 367.04\tnote{b} \\
-& CASCI-xTC          & &    & \todo{}   & 367.04\tnote{c}  \\
-& SA-CASSCF-xTC         & &    & \todo{}   & 373.33\tnote{d}  \\
+& non-TC exFCI\tnote{a}       & 369.3 & 363.1 & 364.6  & 367.04\tnote{b} \\
+& CASCI-xTC          & 365.8 & 360.5 & 361.4   & 367.04\tnote{c}  \\
+& SA-CASSCF-xTC         & 366.0 & 363.1 & 364.8   & 373.33\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^1\Delta_u$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & 379.99\tnote{b} \\
-& CASCI-xTC          & &    & \todo{}   & 379.99\tnote{c}  \\
-& SA-CASSCF-xTC         & &    & \todo{}   & 389.98\tnote{d}  \\
+& non-TC exFCI\tnote{a}       & 383.3 & 378.2 & 378.9 & 379.99\tnote{b} \\
+& CASCI-xTC          & 379.7 & 375.3 & 375.1  & 379.99\tnote{c}  \\
+& SA-CASSCF-xTC         & 380.1 & 377.3 & 377.3   & 389.98\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Sigma_u^+$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & 286.75\tnote{b} \\
-& CASCI-xTC          & &    & \todo{}   & 286.75\tnote{c}  \\
-& SA-CASSCF-xTC         & &    & \todo{}   & 279.72\tnote{d}  \\
+& non-TC exFCI\tnote{a}       & 283.0 & 283.0 & 284.4  & 286.75\tnote{b} \\
+& CASCI-xTC          & 285.4 & 284.9 & 284.2  & 286.75\tnote{c}  \\
+& SA-CASSCF-xTC         & 283.6 & 284.6 & 284.7 & 279.72\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Pi_g$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & 297.48\tnote{b} \\
-& CASCI-xTC          & &    & \todo{}   & 297.48\tnote{c}  \\
-& SA-CASSCF-xTC         & &    & \todo{}   & 297.85\tnote{d}  \\
+& non-TC exFCI\tnote{a}       & 295.8 &  294.4& 295.1  & 297.48\tnote{b} \\
+& CASCI-xTC          & 294.9 & 296.1 & 295.4  & 297.48\tnote{c}  \\
+& SA-CASSCF-xTC         & 295.2 & 295.3 & 295.1 & 297.85\tnote{d}  \\
 \hline
 \multirow{3}{*}{$^3\Delta_u$}
-& non-TC exFCI\tnote{a}       & &    & \todo{}   & 328.56\tnote{b} \\
-& CASCI-xTC          & &    & \todo{}   & 328.56\tnote{c}  \\
-& SA-CASSCF-xTC         & &    & \todo{}   & 330.41\tnote{d}  \\
+& non-TC exFCI\tnote{a}       & 329.3 &  326.0 & 326.3   & 328.56\tnote{b} \\
+& CASCI-xTC          & 330.8 & 327.3 & 328.2   & 328.56\tnote{c}  \\
+& SA-CASSCF-xTC         & 328.0 & 326.4 & 326.5 & 330.41\tnote{d}  \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
@@ -324,7 +322,7 @@ State & Method & \avdz & \avtz & \avqz & Benchmarks \\
 \end{tablenotes}
 \end{threeparttable}
 \caption{
-    Excitation energies for the nitrogen dimer various excited states. We use xTC-FCIQMC with CASCI- or SA-CASSCF orbitals and CI vector ansatz for the TC method, and compare it to experiment and non-TC results. We find that while no method consistently beats all others, SA-CASSCF is a particularly effective choice for calculating excited states in the context of TC.
+    Excitation energies for the nitrogen dimer various excited states, in mHa. We use xTC-FCIQMC with CASCI- or SA-CASSCF orbitals and CI vector ansatz for the TC method, and compare it to experiment and non-TC results. We find that while no method consistently beats all others, SA-CASSCF is a particularly effective choice for calculating excited states in the context of TC.
     }
 \label{tbl:excitation-energies-n2}
 \end{table}

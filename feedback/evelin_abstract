@@ -1,0 +1,30 @@
+"Die Transkorrelierten (TC) Methode" -> "Die Transkorrelierte (TC) Methode" or simply "Transkorrelation"
+
+"In diese Methode" -> "In dieser Methode"
+
+"angewendet" -> "angewandt" (although both are acceptable, the latter seems to be preferred)
+
+"insbesondere der dynamischen Korrelation" -> "insbesondere die dynamische Korrelation"
+
+"des Hamiltonoperator" -> "des Hamiltonoperators"
+
+If you put FCIQMC in quotation marks you should probably do the same for VMC in the second paragraph.
+
+"Referenzenergie.Es" missing space.
+
+"Probleme mit starken Multireferenzproblemen" sounds a bit repetitv. Maybe "Probleme mit starken Multireferenzcharakter" Same in the English version then.
+
+N2 -> Stickstoffdimers /Stickstoffmoleküls
+
+"Dies wird nachweislich günstige, größenkonsistente Energien wie-
+derherstellen und gleichzeitig die schnelle Basissatzkonvergenz von TC erreichen." The sentence sounds a bit off to me, but I can't really put my finger on it and don't really know how to change it while maintaining what you want to say. It's probably not a problem though.
+
+"Aufwand" -> "Skalierung"
+
+"aber relativen Energien führen können" -> "aber guten relativen Energien führen können"
+
+"die für Atome optimierte waren und wiederverwendete für Moleküle" -> die für Atome optimiert und für Moleküle wiederverwendet wurden"
+
+"abgeragt" -> "abgefragt"
+
+Nach einer Wiederholung der Grundlagen wellenfunktionsbasierter und Quantum-Monte-Carlo Methoden
