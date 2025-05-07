@@ -58,7 +58,7 @@ More generally, consider the integral of some smooth function $f$ over $[a,b]\su
 \begin{equation}
     I = \int_a^b \d x \ f(x).
 \end{equation}
-Standard finite element methods for solving integrals of this type typically involving dividing the integration domain into $N$ subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. That is,
+Standard finite element methods for solving integrals of this type typically involve dividing the integration domain into $N$ subintervals of length $h$ and determining the weights $w_i$ from e.g. a polynomial approximation. That is,
 \begin{equation}
 I \approx \sum_{i=1}^N w_if(x_i).
 \end{equation}
@@ -70,7 +70,7 @@ In \gls{MC} methods, $\forall i$ take $w_i=1$ and $x_i\in[a,b]$ randomly sampled
 \begin{equation}
     I\approx \sum_{i=1}^N f(x_i).
 \end{equation}
-If, for example, we choose $N$ to be randomly sampled, then the variance is
+If, for example, we choose $x_i$ to be uniformly sampled, then the variance is
 \begin{align}
     \sigma^2 &= \left\langle \left( \frac{b-a}{N}\sum^N_{i=1}f_i\right)^2\right\rangle - \left( \left\langle  \frac{b-a}{N}\sum^N_{i=1}f_i\right\rangle\right)^2 \\
     &= \frac{(b-a)^2}{N}(\bar{f^2} - \bar f^2)

@@ -25,7 +25,7 @@ Consider two charged point particles in a system described by the Hamiltonian of
 \begin{equation}
     E_L\mathdef \frac{H\Psi}{\Psi}
 \end{equation}
-must be constant in the exact solution. However, when these two particles coalesce, i.e. $r_{12}\to 0$, the Coulomb potential, $r^{-1}$, diverges. Thus, for the local energy to be constant, we must have that near coalescence points, the kinetic energy exactly cancels the Coulomb energy. A more formal treatment of this argument leads to the (antiparallel) electron-electron Kato cusp condition,\cite{katoEigenfunctionsManyparticleSystems1957a}
+must be constant in the exact solution. However, when these two particles coalesce, i.e. $r_{12}\to 0$, the Coulomb potential, $r_{12}^{-1}$, diverges. Thus, for the local energy to be constant, we must have that near coalescence points, the kinetic energy exactly cancels the Coulomb energy. A more formal treatment of this argument leads to the (antiparallel) electron-electron Kato cusp condition,\cite{katoEigenfunctionsManyparticleSystems1957a}
 \begin{equation}
     \label{eq:cusp}
     \left.\widetilde{\frac{\partial \Psi}{\partial r_{12}}}\right|_{r_{12}\to 0}
@@ -83,7 +83,7 @@ Boys\cite{boysIntegral1960} and Singer\cite{singerUse1960} independently introdu
 This can be interpreted as two $s$-type orbitals and an interelectronic correlation factor $\e^{-\gamma r_{12}^2}$.
 While they do not have the correct cusp behaviour, a linear combination of \glspl{GTG} approximately capture the electron-electron cusp. This is similar to how gaussian basis functions do not individually capture the electron-nuclear cusp, but a linear combination of them approximately does.
 
-One major strength of this approach is that all integrals have closed-form algebraic expressions,\cite{lesterGaussian1964} and avoids nonlinear optimisation.\cite{bukowskiNew1994,perssonAccurate1996} \Gls{ECG} methods have been extended to post-Hartre-Fock methods, such as MP2\cite{panGaussian1970,panElectron1972}, and methods to avoid its many difficult integrals have also been developed.\cite{szalewiczNew1982,szalewiczAtomic1983,wenzelAtomic1986,szalewiczAtomic1984,tewWeak2007}
+One major strength of this approach is that all integrals have closed-form algebraic expressions,\cite{lesterGaussian1964} and avoids nonlinear optimisation.\cite{bukowskiNew1994,perssonAccurate1996} \Gls{ECG} methods have been extended to post-Hartre-Fock methods, such as MP2,\cite{panGaussian1970,panElectron1972} and methods to avoid its many difficult integrals have also been developed.\cite{szalewiczNew1982,szalewiczAtomic1983,wenzelAtomic1986,szalewiczAtomic1984,tewWeak2007}
 
 While not as popular as F12 methods (see section \ref{sec:f12}), \glspl{ECG} have been used for highly accurate variational calculations,\cite{korobovCoulomb2000} as well as for applications outside of standard electronic structure theory, such as bosons,\cite{vargaPrecise1995} positronium (a bound state of an electron and a positron),\cite{bubinGroundstate2011} and non-Born-Oppenheimer systems.\cite{stankeNonBornOppenheimer2009}
 
@@ -100,7 +100,7 @@ where $\Psi_0$ is a reference wave function (such as \gls{HF}), $\ket{\Psi_{p}}$
     Q_{12} \mathdef \sum_{\alpha\beta}\ket{\alpha\beta}\bra{\alpha\beta}
 \end{equation}
 is referred to as a ``strong orthogonality projector'', which ensures the $F_{12}(r_{12})$ term is orthogonal to the reference and singly-excited determinants.
-Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. The fact that, due to $Q_{12}$, the $F_{12}(r_{12})$ term commutes with the standard excitation operators aids in including this explicit correlation into conventional electron correlation methods. This geminal term is added a correction to the standard wave function.
+Here $\alpha,\beta$ refer to virtual orbitals in the formally complete basis. The fact that, due to $Q_{12}$, the $F_{12}(r_{12})$ term commutes with the standard excitation operators aids in including this explicit correlation into conventional electron correlation methods. This geminal term is added as a correction to the standard wave function.
 % NOTE TO self: when defending, might want to review Joachim Werner's F12 review to properly understand this form of writing Q12
 
 In the original formulation, $F_{12}(r_{12})=r_{12}$ (hence the name ``R12'' or ``F12'' for the more general methodology). However, another popular choice is a Slater-type geminal\supercite{ten-noInitiation2004} fitted to a linear combination of gaussians,\supercite{wernerGeneral2007}
@@ -149,13 +149,14 @@ It was also shown that solving for the amplitudes $t_{ij}^{kl}$ can be avoided,\
     t_{ij}^{kl} = \frac 38\delta_{ik}\delta_{jl}+\frac 18\delta_{il}\delta_{jk}.
 \end{equation}
 This also tends to be more accurate, as it avoids the geminal basis set superposition error.\supercite{tewComparison2006,adlerSimple2007}
+% NOTE TO self: review BSSE and geminal basis set
 
 \subsection{Many-Electron Integrals}
 
 The Hylleraas functional, equation \ref{eq:hyllerass-functional}, will contain terms such as
-\begin{equation}
-    \sum_{\alpha\beta}\bra{\Phi_0}H\ket{\Psi_{ij}^{\alpha\beta}} \bra{\alpha\beta}Q_{12}F_{12}(r_{12})\ket{kl} = 2\bra{ij}r_{12}^{-1}Q_{12}F_{12}(r_{12})\ket{kl} - \bra{jl}r_{12}^{-1}Q_{12}F_{12}(r_{12})\ket{kl}.
-\end{equation}
+\begin{align}
+    &\sum_{\alpha\beta}\bra{\Phi_0}H\ket{\Psi_{ij}^{\alpha\beta}} \bra{\alpha\beta}Q_{12}F_{12}(r_{12})\ket{kl} \nonumber\\=& 2\bra{ij}r_{12}^{-1}Q_{12}F_{12}(r_{12})\ket{kl} - \bra{jl}r_{12}^{-1}Q_{12}F_{12}(r_{12})\ket{kl}.
+\end{align}
 Plugging in the form for $Q_{12}$ from equation \ref{eq:mp2-f12-projector}, we get integrals of the form
 \begin{equation}
     \bra{ij}r_{12}^{-1}o_1F_{12}(r_{12})\ket{kl}.
@@ -198,9 +199,9 @@ where $\ket{\Psi_\text{conv}}$ is the conventional wave function. In this way, w
 
 These F12 methodologies have been particularly successful for large systems, proving only marginally more expensive than the conventional methods in some cases.\supercite{adlerSimple2007,kniziaSimplified2009}
 
-Since F12 methods work directly on the wave function, it is also natural to extend to excited states, particularly for multireference methods.
+Since F12 methods work directly on the wave function, it is also natural to extend them to excited states, particularly for multireference methods.
 \supercite{floresAccurately2005,ten-noSimple2007,shiozakiCommunication2010,shiozakiExplicitly2011,flieglCoupledcluster2006}
-However, since the geminal terms include only occupied orbitals, there is an inherent bias to the ground state.\supercite{flieglCoupledcluster2006,neissExtensions2006} Several means of ameliorating this have been proposed, such as combining F12 with response theory,\supercite{neissExtensions2006} or by including extending the geminal basis to include virtual orbitals.\supercite{kohnModified2009}
+However, since the geminal terms include only occupied orbitals, there is an inherent bias to the ground state.\supercite{flieglCoupledcluster2006,neissExtensions2006} Several means of ameliorating this have been proposed, such as combining F12 with response theory,\supercite{neissExtensions2006} or by extending the geminal basis to include virtual orbitals.\supercite{kohnModified2009}
 
 \section{The Transcorrelated Method}
 \label{sec:tc}
@@ -315,7 +316,7 @@ and the energy is calculated via projection,
 \end{equation}
 Equation \ref{eq:almost-hermitian} in particular is to make the TC Hamiltonian as close to Hermitian as possible for orbital optimisation.
 
-This formulation was further refined by Handy.\supercite{handyEnergies1969} We notice that since $\htc$ is non-Hermitian, we cannot directly minimise the energy. Instead, he minimised the transcorrelated variance,
+This formulation was further refined by Handy.\supercite{handyEnergies1969} He notice that since $\htc$ is non-Hermitian, we cannot directly minimise the energy. Instead, he minimised the transcorrelated variance,
 \begin{equation}
     \sigma^2 = \langle [(\htc - E)\Phi]^2\rangle.
 \end{equation}
@@ -324,7 +325,7 @@ Furthermore, equation \ref{eq:boys-handy-jastrow} is not the only possible choic
 
 \subsection{Modern Resurgence}
 
-For several decades TC received little attention, though some more developments were made, such as calculations using a fixed Jastrow factor,\supercite{nooijenElimination1998} more efficient integration,\supercite{ten-noFeasible2000,ten-noThreeelectron2000} multi-reference $\Phi$,\supercite{zweistraSimilarityTransformed2003} among others.\supercite{Luo2010,luoVariational2010,luoComplete2011} More recently, there has been a renewal of interest in TC,
+For several decades TC received little attention, though some more developments were made, such as calculations using a fixed Jastrow factor,\supercite{nooijenElimination1998} more efficient integration,\supercite{ten-noFeasible2000,ten-noThreeelectron2000} multireference $\Phi$,\supercite{zweistraSimilarityTransformed2003} among others.\supercite{Luo2010,luoVariational2010,luoComplete2011} More recently, there has been a renewal of interest in TC,
 \supercite{luoQuantum2010,ammarCompactification2024,ammarExtension2022,ammarTranscorrelated2023,baiardiExplicitly2022,baiardiTranscorrelated2020,christlmaierXTC2023,cohenSimilarity2019,Dobrautz2019,dobrautzPerformance2022,dobrautzReal2024,ginerNew2021,Guther2021,hinoApplication2002,imamuraNew2003,jeszenszkiAccelerating2018,jeszenszkiEliminating2020,katsOrbital2024,kumarQuantum2022,leeStudies2023,liaoDensity2023,liaoEfficient2021,Luo2010,luoCombining2018,luoComplete2011,luoTranscorrelated2012,luoVariational2010,magnussonEfficient2024,mottaQuantum2020,ochiEfficient2012,ochiIterative2016,ochiOptical2014,sakumaElectronic2006,schraivogelTranscorrelated2021,schraivogelTranscorrelated2023,sokolovOrders2023,szenesStriking2024,ten-noNew2002,ten-noNonunitary2023,tsuneyukiTranscorrelated2008,umezawaExcited2004,umezawaGroundstate2004,umezawaPractical2005,umezawaTranscorrelated2003}
 notably the demonstrations that the TC Hamiltonian may be treated by various electronic structure methods, to be discussed more in section \ref{sec:tc-fciqmc}.\supercite{luoCombining2018,cohenSimilarity2019,liaoDensity2023,baiardiExplicitly2022,ammarExtension2022,ammarTranscorrelated2023,ammarCompactification2024,schraivogelTranscorrelated2021,schraivogelTranscorrelated2023,liaoEfficient2021,hinoApplication2002,ten-noNew2002}
 TC has since been applied to a variety of systems, and in the context of quantum computing.\supercite{mottaQuantum2020,kumarQuantum2022,sokolovOrders2023,dobrautzReal2024,magnussonEfficient2024} After an overview of stochastic methods, the rest of this dissertation will be focused on discussing recent developments in TC.

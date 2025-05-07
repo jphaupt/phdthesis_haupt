@@ -7,7 +7,7 @@ According to modern quantum theory, to fully describe a (nonrelativistic) system
     i \hbar \frac{\partial}{\partial t} \Psi(\bm{x}, t)
     = \hat{H} \Psi(\bm{x}, t)
 \end{equation}
-where $\bm x=(\bm{r}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ gives the spatial coordinates, and $\sigma$ the corresponding spins. For nuclei with atomic numbers $Z_I$ (positive charge $Ze$), the Hamiltonian operator $\hat H$ may be written
+where $\bm x=(\bm{r}, \sigma)$, $\bm r\in\mathcal{R}^{3(N_e+N_A)}$ gives the spatial coordinates, and $\sigma$ the corresponding spins. For nuclei with atomic numbers $Z_I$ (positive charge $Z_Ie$), the Hamiltonian operator $\hat H$ may be written
 
 \begin{align}
 \begin{split}
@@ -67,7 +67,7 @@ In the language of second quantisation, equation \ref{eq:elec_hamiltonian} can b
 \label{eq:elec_hamiltonian_2q}
 \hat H_\mathrm{elec} = \sum_\sigma\sum_{pq} h^p_{q}a_{p\sigma}^\dag a_{q\sigma}+\frac 12 \sum_{\sigma\tau}\sum_{pqrs} V^{pq}_{rs}a_{p\sigma}^\dag a_{r\tau}^\dag a_{s\tau}a_{q\sigma},
 \end{equation}
-where $p,q,r,s$ are general spatial-orbital indices, and $a_{p}$ ($a_{p}^\dag$) is the annihilation (creation) operator for an electron in spatial-orbital $p$. $\sigma,\tau$ are the spin indices. These must obey the anti-commutation relations
+where $p,q,r,s$ are general spatial-orbital indices, $\sigma,\tau$ are the spin indices, and $a_{p\sigma}$ ($a_{p\sigma}^\dag$) is the annihilation (creation) operator for an electron in spatial-orbital $p$ with spin $\sigma$. These must obey the anti-commutation relations
 \begin{equation}
     \{a_{p\sigma},a_{q\tau}^\dag\}
     \mathdef
@@ -119,7 +119,7 @@ The most famous model Hamiltonian is the Hubbard model,\cite{Hubbard1963} most t
 \label{eq:hubbard}
 \hat H_\mathrm{Hubb} = - \sum_{\langle p,q\rangle}\sum_\sigma t_{pq} a_{q\sigma}^\dag a_{p\sigma} + \sum_p U_p\hat n_{p\uparrow}\hat n_{q\downarrow},
 \end{equation}
-where $\langle p,q\rangle$ denotes nearest neighbour sites, $t_{pq}$ (often taken to be constant, $t$) is a parameter called the hopping amplitude, and $U_p$ (often taken to be constant, $U$) is a parameter called the on-site repulsion. Here we have used a spatial-orbital basis labels $\{p,q\}$ and spin labels $\sigma\in\{\uparrow,\downarrow\}$. $\hat n_{p\sigma}\mathdef a_{p\sigma}^\dag a_{p\sigma}$ is the number operator.
+where $\langle p,q\rangle$ denotes nearest neighbour sites, $t_{pq}$ (often taken to be constant, $t$) is a parameter called the hopping amplitude, and $U_p$ (often taken to be constant, $U$) is a parameter called the on-site repulsion. Here we have used spatial-orbital basis labels $\{p,q\}$ and spin labels $\sigma\in\{\uparrow,\downarrow\}$. $\hat n_{p\sigma}\mathdef a_{p\sigma}^\dag a_{p\sigma}$ is the number operator.
 
 Despite its apparent simplicity, the Hubbard model is a rich model, and has been used to describe a variety of phenomena, from metal-insulator transitions to high-temperature superconductivity. Moreover, it is not always so simple to solve, and has been the subject of much research.\cite{Lieb1968a,liebermannFCIQMC2023}
 
@@ -353,7 +353,7 @@ Correlation energy is typically categorised as either dynamical or static, altho
 
 Dynamical correlation is remaining correlation that arises due to the instantaneous repulsion from the motion (dynamics) of the electrons.
 
-Static correlation, on the other hand, is related to the degeneracy or near-degeneracy of configurations. In general, to accurately describe a system with strong static correlation, a so-called multi-reference method is needed. As will be seen in chapter \ref{chap:binding}, static correlation plays a big role for molecules at dissociation.
+Static correlation, on the other hand, is related to the degeneracy or near-degeneracy of configurations. In general, to accurately describe a system with strong static correlation, a so-called multireference method is needed. As will be seen in chapter \ref{chap:binding}, static correlation plays a big role for molecules at dissociation.
 
 We therefore have two ``axes'' on which to approach the exact solution to equation \ref{eq:elec_hamiltonian_2q}:
 \begin{itemize}
@@ -364,7 +364,7 @@ We therefore have two ``axes'' on which to approach the exact solution to equati
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/intro/hierarchies.pdf}
-    \caption{A sketch for the hierarchy of theories and basis sets. There are two axes on which to systematically improve until reaching the exact solution to the time-independent Schr\"odinger equation under the \gls{BOA}: increasing basis set size (x axis) and increasing the level of theory (y axis). For most of this dissertation, we assume to be at or close to the highest level of theory (the FCI limit), as we mostly employ \gls{FCIQMC}. We therefore focus on methods of rapidly converging to the \gls{CBS} limit without the inherently expensive process of adding more basis functions.}
+    \caption{A sketch for the hierarchy of theories and basis sets. There are two axes on which to systematically improve until reaching the exact solution to the time-independent Schr\"odinger equation under the \gls{BOA}: increasing basis set size ($x$ axis) and increasing the level of theory ($y$ axis). For most of this dissertation, we assume to be at or close to the highest level of theory (the FCI limit), as we mostly employ \gls{FCIQMC}. We therefore focus on methods of rapidly converging to the \gls{CBS} limit without the inherently expensive process of adding more basis functions.}
     \label{fig:hierarchies}
 \end{figure}
 
@@ -393,7 +393,7 @@ where the number of terms in the sum depends on how many excitations we consider
     \label{fig:excitations}
 \end{figure}
 
-There are some important limitations to this method, however. Perhaps most notable is that the \gls{CI} method is not size consistent. For two noninteracting systems $A$ and $B$, we expect the composite system $A+B$ to have energy equal to the sum of that for $A$ and $B$, i.e. $E_{A+B}=E_A+E_B$. However, within a truncated \gls{CI} method, this is not the case\footnote{Of course, in \gls{FCI} we necessarily have size consistency, since we have the exact solution for the basis set.}, due to the additive ansatz \ref{eq:ci}.
+There are some important limitations to this method, however. Perhaps most notable is that the truncated \gls{CI} method is not necessarily size consistent. For two noninteracting systems $A$ and $B$, we expect the composite system $A+B$ to have energy equal to the sum of that for $A$ and $B$, i.e. $E_{A+B}=E_A+E_B$. However, within a truncated \gls{CI} method, this is not the case,\footnote{Of course, in \gls{FCI} we necessarily have size consistency, since we have the exact solution for the basis set.} due to the additive ansatz \ref{eq:ci}.
 
 Additionally, if we wish to go to the \gls{FCI} limit and ensure size consistency and accurate results, we once again have bad scaling, as discussed in section \ref{sec:matrix}. However, there exist sparse diagonalisation routines that need not store the entire matrix $H$, such as the Davidson,\cite{davidsonIterative1975} Lanczos,\cite{lanczosIteration1950} and Arnoldi\cite{arnoldiPrinciple1951} (for non-Hermitian $H$) methods, which target the ground state and need to store only a fraction of the matrix. Still, these scale with the size of the eigenvector, which is still prohibitively expensive for large systems. A more practical approach to reaching \gls{FCI} accuracy will be discussed later in section \ref{sec:fciqmc}, where we discuss the \gls{FCIQMC} algorithm.
 
@@ -403,7 +403,7 @@ As a generalisation of the \gls{HF} method, \gls{MCSCF} is particularly well-sui
 \begin{equation}
 \ket{\kappa,\bm c} = e^{-\kappa}\sum_ic_i\ket{D_i},
 \end{equation}
-where $\kappa$ is familiar from HF, and the $c_i$ coefficients farmiliar from \gls{CI}. In MCSCF, we optimise
+where $\kappa$ is familiar from HF, and the $c_i$ coefficients familiar from \gls{CI}. In MCSCF, we optimise
 \begin{equation}
 E_\mathrm{MCSCF} = \frac{\bra{\kappa,\bm c}H\ket{\kappa,\bm c}}{\bra{\kappa,\bm c}\ket{\kappa,\bm c}}.
 \end{equation}
@@ -428,7 +428,7 @@ Perturbation theory applied to time-independent problems is sometimes referred t
 \begin{equation}
 H_\mathrm{PT} = H_0 + \lambda H',
 \end{equation}
-where $H_0$, referred to as the unperturbed Hamiltonian, $\lambda$ is an arbitrary (real) parameter controlling the strength of the perturbation, and $H'$ is the perturbation. We assume that we know the exact solution to $H_0$, such that we have all eigenstates $\{\ket{\Psi_n^{(0)}}\}$ and their corresponding eigenvalues $\{E_n^{(0)} \}$.
+where $H_0$ is referred to as the unperturbed Hamiltonian, $\lambda$ is an arbitrary (real) parameter controlling the strength of the perturbation, and $H'$ is the perturbation. We assume that we know the exact solution to $H_0$, such that we have all eigenstates $\{\ket{\Psi_n^{(0)}}\}$ and their corresponding eigenvalues $\{E_n^{(0)} \}$.
 
 To obtain the solution to the true Hamiltonian $H$, we expand in terms of the perturbation $\lambda$,
 \begin{equation}
@@ -463,9 +463,9 @@ where we have also identified the zeroth-order energy as the sum of orbital ener
     E^{(1)} &= \bra{\Psi_0^{(0)}}H'\ket{\Psi_0^{(0)}} = \bra{\Phi_0}H'\ket{\Phi_0} \\
     E^{(2)} &=
     \sum_{n>0} \frac{|\bra{\Psi_n^{(0)}}H'\ket{\Psi_0^{(0)}}|^2}{E_0^{(0)}-E_n^{(0)}} =
-    -\sum_{i>j,a>b}\frac{|\bra{\Phi_{ij}^{ab}}H'\ket{\Phi_0}|^2}{\epsilon_a+\epsilon_b-\epsilon_i-\epsilon_j},
+    -\sum_{I>J,A>B}\frac{|\bra{\Phi_{IJ}^{AB}}H'\ket{\Phi_0}|^2}{\epsilon_A+\epsilon_B-\epsilon_I-\epsilon_J},
 \end{align}
-where $\ket{\Phi_{ij}^{ab}}=a_a^\dag a_b^\dag a_ia_j\ket{\Phi_0}$ is a doubly-excited state with respect to the HF wave function, and $\epsilon_a+\epsilon_b-\epsilon_i-\epsilon_j = E_0^{(0)} - E_n^{(0)}$ is the energy difference between two eigenstates of the Fock operator.
+where $\ket{\Phi_{IJ}^{AB}}=a_A^\dag a_B^\dag a_Ia_J\ket{\Phi_0}$ is a doubly-excited state with respect to the HF wave function, and $\epsilon_A+\epsilon_B-\epsilon_I-\epsilon_J = E_0^{(0)} - E_n^{(0)}$ is the energy difference between two eigenstates of the Fock operator.
 
 Some features worth noting about M{\o}ller-Plesset perturbation theory:
 \begin{itemize}
@@ -479,7 +479,7 @@ While higher-order approaches exist and see use, the most popular is \gls{MP2}, 
 
 \subsection{Coupled Cluster Theory}
 
-The lack of size consistency in \gls{CI} theory arises from the linear ansatz in section \ref{sec:ci}. By instead using an exponential ansatz, we arrive at one of the most successful theories in electronic theory, \gls{CC}.\cite{cizekCorrelation1966,cizekCorrelation1971,paldusTimeIndependent1975,shavittManyBody2009} While the methods presented here are inherently single-reference and build on a single \gls{SD}, multi-reference generalisations to \gls{CC} theory exist and are the study of active research.\cite{aotoInternally2016,evangelistaPerspective2018,hanauerPilot2011,jankowskiApplicability1992,jeziorskiCoupledcluster1981,kohnImproved2020} Therefore, the presented ``flavours'' of \gls{CC} are generally expected to fail for systems with strong static correlation.
+The lack of size consistency in \gls{CI} theory arises from the linear ansatz in section \ref{sec:ci}. By instead using an exponential ansatz, we arrive at one of the most successful theories in electronic theory, \gls{CC}.\cite{cizekCorrelation1966,cizekCorrelation1971,paldusTimeIndependent1975,shavittManyBody2009} While the methods presented here are inherently single-reference and build on a single \gls{SD}, multireference generalisations to \gls{CC} theory exist and are the study of active research.\cite{aotoInternally2016,evangelistaPerspective2018,hanauerPilot2011,jankowskiApplicability1992,jeziorskiCoupledcluster1981,kohnImproved2020} Therefore, the presented ``flavours'' of \gls{CC} are generally expected to fail for systems with strong static correlation.
 
 \subsubsection{Standard Coupled Cluster}
 
@@ -488,7 +488,7 @@ To ensure a multiplicatively-separable wave function, we use a multiplicative an
     \label{eq:cc-ansatz}
 \ket{\Psi_\mathrm{CC}} = \e^T\ket{\Phi_0},
 \end{equation}
-where $\ket{\Phi_0}$ is the reference (typically \gls{HF}) wave function, and $T$ is the cluster operator. The cluster operator is defined $T = T_1 + T_2 + T_3 + \cdots$, where $T_n$ is the $n$-body cluster operator, made up of all possible $n$-body excitations, for example, $T_1 = \sum_\sigma\sum_{i,a}t_{ia}a_{a\sigma}^\dag a_{i\sigma}$ for the one-body cluster operator, and $T_2 = \sum_{\sigma\tau}\sum_{i<j,a<b}t_{ij}^{ab}a_{a\sigma}^\dag a_{b\tau}^\dag a_{j\tau} a_{i\sigma}$ for the two-body cluster operator.
+where $\ket{\Phi_0}$ is the reference (typically \gls{HF}) wave function, and $T$ is the cluster operator. The cluster operator is defined $T \mathdef T_1 + T_2 + T_3 + \cdots$, where $T_n$ is the $n$-body cluster operator, made up of all possible $n$-body excitations, for example, $T_1 = \sum_\sigma\sum_{i,a}t_{ia}a_{a\sigma}^\dag a_{i\sigma}$ for the one-body cluster operator, and $T_2 = \sum_{\sigma\tau}\sum_{i<j,a<b}t_{ij}^{ab}a_{a\sigma}^\dag a_{b\tau}^\dag a_{j\tau} a_{i\sigma}$ for the two-body cluster operator. The values $t_{i\cdots}^{a\cdots}$ are referred to as the cluster amplitudes.
 
 It is worth noting that \gls{CC} and \gls{CI} are identical, differing only in their parametrisation, when neither are truncated. They both provide \gls{FCI}-level accuracy.
 
@@ -501,7 +501,7 @@ By inserting equation \ref{eq:cc-ansatz} into the time-independent Schr\"odinger
 \end{align}
 where $\ket{\Phi_{ij...}^{ab...}}$ is a $n$-body excitation with respect to the reference wave function.
 
-Note, however, that these equations do not rely on the Variational Principle. Instead of minimising a functional, we solve equations \ref{eq:cc-schrodinger} for the amplitudes, which give the energy. While we still cannot reasonably always include all excitations in the cluster operator $T$, due to the multiplicative ansatz, even if we truncate the cluster operator, we get size-consistent results. In particular, any truncated CC wave function ansatz will contain contributions from all determinants in Fock space. The simplest CC truncation commonly used is the \gls{CCSD} method. In a sense, \gls{CCSD} and any other truncated CC method is an approximation for \gls{FCI} where the coefficients are not approximated to be zero (like in \gls{CI}) but instead the higher-order excitations terms are generated from the lower-order excitation terms in a size-consistent fashion.
+Note, however, that these equations do not rely on the Variational Principle. Instead of minimising a functional, we solve equations \ref{eq:cc-schrodinger} for the cluster amplitudes, which give the energy. While we still cannot reasonably always include all excitations in the cluster operator $T$, due to the multiplicative ansatz, even if we truncate the cluster operator, we get size-consistent results. In particular, any truncated CC wave function ansatz will contain contributions from all determinants in Fock space. The simplest CC truncation commonly used is the \gls{CCSD} method. In a sense, \gls{CCSD} and any other truncated CC method is an approximation for \gls{FCI} where the coefficients are not approximated to be zero (like in \gls{CI}) but instead the higher-order excitations terms are generated from the lower-order excitation terms in a size-consistent fashion.
 
 CC theory owes much of its success to its high accuracy at a reasonable cost. \gls{CCSD} and \gls{CCSDT} in particular scale as $\mathcal{O}(M^6)$ and $\mathcal{O}(M^8)$ respectively, with $M$ the number of spatial orbitals. Every additional set of excitations incurs an additional factor of $\mathcal{O}(M^2)$ scaling.
 
