@@ -23,9 +23,9 @@ where $N_A$ and $N_e$ are the number of nuclei and electrons, respectively, and 
 
 Since quantum chemistry and condensed matter sciences are in general concerned with nonrelativistic processes involving electrons and nuclei, this might boldly be called the \emph{theory of everything}.\cite{laughlinTheory2000} Hence, we may be tempted to conclude this dissertation early, but in practice the evaluation of the Hamiltonian in equation \ref{eq:theory_of_everything} is impossible. First, there is no closed form solution of equation \ref{eq:schrodinger} with this Hamiltonian. Second, numerical evaluation of $\hat H$ is far from trivial.
 
-Let's consider a simple example, the Argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a very coarse $10\times 10\times 10$ grid. Then \emph{at each time step} we need to store $10^{3\times (18+18)}=10^{108}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroduction2017} this is completely unreasonable.
+Let's consider a simple example, the Argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a coarse $100\times 100\times 100$ grid. Then \emph{at each time step} we need to store $10^{2\times 3\times (18+1)}=10^{114}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroduction2017} this is completely unreasonable.
 
-This system has only 18 electrons and 18 nuclei, a far cry from the $10^{23}$ or higher number of electrons in a typical condensed matter system, for example. Moreover, we have not taken into account floating point precision, or that we would need to calculate this for possibly many time steps. Clearly, drastic approximations and more sophisticated methods are required.
+This system has only 18 electrons and 1 nucleus, a far cry from the $10^{23}$ or higher number of electrons in a typical condensed matter system, for example. Moreover, we have not taken into account floating point precision, or that we would need to calculate this for possibly many time steps. Clearly, drastic approximations and more sophisticated methods are required.
 
 \section{Overview of the Thesis}
 
@@ -143,7 +143,7 @@ One way of finding approximations to the lowest energy eigenstate of a quantum p
 \end{equation}
 where $E_0$ is the lowest eigenvalue (e.g. the ground state energy). That is, the energy of $\ket{\tilde\Psi}$ is an upper bound of the exact energy of the system.
 
-To prove this, consider an expansion of $\ket{\tilde\Psi}$ terms of the exact eigenkets $\ket k$ of $\hat H$, so that $\hat H\ket k = E_k\ket k$ and $\ket{\tilde\Psi}=\sum_kc_k\ket k$. Then
+To prove this, consider an expansion of $\ket{\tilde\Psi}$ in terms of the exact eigenkets $\ket k$ of $\hat H$, so that $\hat H\ket k = E_k\ket k$ and $\ket{\tilde\Psi}=\sum_kc_k\ket k$. Then
 \begin{align}
 \label{eq:var_proof}
     \begin{split}
