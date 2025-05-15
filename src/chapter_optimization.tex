@@ -15,7 +15,7 @@ As an illustration of the method, we compute the all-electron atomisation energi
 \section{Computational Details}
 We compute the ground-state energies of the all-electron C, N, and O atoms, as well as that for the C$_2$, CN, N$_2$ and O$_2$ molecules at their equilibrium geometries,\supercite{fellerSurvey2008,bytautasCorrelation2005,hardingHighaccuracy2008} listed in table
 \ref{table:bond_lengths}.
-TC- and non-TC-FCIQMC calculations used \gls{HF} orbitals (restricted open-shell in the case of open-shell systems) expanded in the standard \vxz{X} family of basis sets.\supercite{dunningGaussian1989a}
+TC- and non-TC-FCIQMC calculations used \gls{HF} orbitals (restricted open-shell in the case of open-shell systems) expanded in the standard \vxz{X} family of basis sets.\supercite{dunningGaussian1989}
 
 
 \begin{table}[htbp]
@@ -331,7 +331,7 @@ From reference \citenum{dobrautzCompact2019}, TC yields a maximum of $\xi=0.64$ 
 
 As described in section \ref{sec:fciqmc}, sampling in FCIQMC involves spawning walkers from occupied determinants onto connected determinants. The $\hat L$ matrix, that is the three-body operator arising from the similarity transformation in TC, results in TC also connecting determinants by three-body excitations. This represents a huge increase in the connectivity of the Hilbert space compared to non-TC-FCIQMC.
 
-These three-body excitations are represented by $L_{ijk}^{abc}$ where each index is distinct. These have been found to typically be small.\supercite{dobrautzPerformance2022} Moreoever, simultaneous interaction of three electrons is unlikely due to Pauli repulsion (as necessarily at least two of the electrons will be of the same spin). Therefore, we neglect these contributions. The only distinct six-index integrals that we must keep are those occupied in the HF determinant, as these matrix elements are necessary to evaluate the projected energy.
+These three-body excitations are represented by $L_{ijk}^{abc}$ where each index is distinct. These have been found to typically be small.\supercite{dobrautzPerformance2022} Therefore, we neglect these contributions. The only distinct six-index integrals that we must keep are those occupied in the HF determinant, as these matrix elements are necessary to evaluate the projected energy.
 
 Neglecting pure three-body excitations reduces the amount of storage needed to hold $\hat L$ from $\mathcal{O}(M^6)$ to $\mathcal{O}(M^5+N^3M^3)$, where $M$ is the number of orbitals and $N$ is the number of electrons. Reduction factors obtained for the molecules studied in this chapter are reported in table \ref{table:no3_memory}.
 
@@ -519,7 +519,7 @@ and plotted in figure
             &         & $288.6$ & $363.9$ & $192.7$ \\
     \hline
   \end{tabular}
-  \caption{Atomisation energies in mHa obtained for the molecules
+  \caption{Electronic contributions to the atomisation energies in mHa obtained for the molecules
     considered in this chapter, along with benchmark non-relativistic
     results.
     %

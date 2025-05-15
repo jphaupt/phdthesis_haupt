@@ -23,7 +23,7 @@ where $N_A$ and $N_e$ are the number of nuclei and electrons, respectively, and 
 
 Since quantum chemistry and condensed matter sciences are in general concerned with nonrelativistic processes involving electrons and nuclei, this might boldly be called the \emph{theory of everything}.\cite{laughlinTheory2000} Hence, we may be tempted to conclude this dissertation early, but in practice the evaluation of the Hamiltonian in equation \ref{eq:theory_of_everything} is impossible. First, there is no closed form solution of equation \ref{eq:schrodinger} with this Hamiltonian. Second, numerical evaluation of $\hat H$ is far from trivial.
 
-Let's consider a simple example, the Argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a coarse $100\times 100\times 100$ grid. Then \emph{at each time step} we need to store $10^{2\times 3\times (18+1)}=10^{114}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroduction2017} this is completely unreasonable.
+Let's consider a simple example, the Argon atom. Say we want to solve this partial differential equation on a grid. Let's choose a coarse $100\times 100\times 100$ grid. Then \emph{at each time step} we need to store $10^{2\times 3\times (18+1)}=10^{114}$ values, corresponding to all the particle positions and the grid. Considering there are ``only'' $\sim 10^{80}$ atoms in the known universe,\cite{rydenIntroductionCosmology2017} this is completely unreasonable.
 
 This system has only 18 electrons and 1 nucleus, a far cry from the $10^{23}$ or higher number of electrons in a typical condensed matter system, for example. Moreover, we have not taken into account floating point precision, or that we would need to calculate this for possibly many time steps. Clearly, drastic approximations and more sophisticated methods are required.
 
@@ -55,7 +55,9 @@ The most important approximation used in electronic structure theory is the \gls
     \Psi_\mathrm{total} = \Psi_\mathrm{nuc} \Psi_\mathrm{elec}.
 \end{equation}
 
-Notice that the first two terms of equation \ref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$. This leads to the \emph{electronic Hamiltonian} under the \gls{BOA}, which can be written as
+% Notice that the first two terms of equation \ref{eq:theory_of_everything} are independent of the electronic coordinates and, ipso facto, have no effect on $\Psi_\mathrm{elec}$.
+As $\Phi_\mathrm{elec}$ depends only weakly on the nuclear coordinates, we typically keep the nuclear coordinates fixed and solve the corresponding problem for only the electrons.\footnote{This neglects non-adiabatic coupling terms between the electronic and nuclear wave functions arising from the nuclear kinetic energy operator.}
+This leads to the \emph{electronic Hamiltonian} under the \gls{BOA}, which can be written as
 \begin{equation}
 \label{eq:elec_hamiltonian}
 \hat H_\mathrm{elec} = -\sum_{i} \frac{1}{2} \nabla_i^2 - \sum_{i,I} \frac{Z_I}{r_{iI}} + \sum_{i\gt j} \frac{1}{r_{ij}},
@@ -86,7 +88,7 @@ h^p_{q} = \int \mathrm{d}^3r\ \phi_p^*(\mathbf{r})\left(-\frac 12 \nabla^2 - \su
 \end{equation}
 and $V^{pq}_{rs}$ is a two-body integral,
 \begin{equation}
-    V^{pq}_{rs} = \int \mathrm{d}^3r\int\mathrm{d}^3r'\ \phi_p^*(\mathbf{r})\phi_r^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_q(\mathbf{r})\phi_s(\mathbf{r}'),
+    V^{pq}_{rs} = \int \mathrm{d}^3r\int\mathrm{d}^3r'\ \phi_p^*(\mathbf{r})\phi_q^*(\mathbf{r}')\frac{1}{|\mathbf{r}-\mathbf{r}'|}\phi_r(\mathbf{r})\phi_s(\mathbf{r}'),
 \end{equation}
 with a spatial-orbital basis $\{\phi_i(\mathbf{r})\}$.
 
@@ -135,7 +137,7 @@ Of course, when solving a problem using a model Hamiltonian, we must be careful 
 \section{The Variational Principle}
 \label{sec:variational_principle}
 
-One way of finding approximations to the lowest energy eigenstate of a quantum problem like that of equation \ref{eq:elec_hamiltonian_2q} is the variational method. Several methods discussed in this dissertation build on the variational method, and the variational method itself is based on the variational principle, which states\cite{sakuraiModern2017} for any ``trial wave function'' $\ket{\tilde\Psi}$ and Hermitian operator (such as the electronic Hamiltonian) $\hat H$,
+One way of finding approximations to the lowest energy eigenstate of a quantum problem like that of equation \ref{eq:elec_hamiltonian_2q} is the variational method. Several methods discussed in this dissertation build on the variational method, and the variational method itself is based on the variational principle, which states\cite{sakuraiModern2017} for any ``trial wave function'' $\ket{\tilde\Psi}$ and Hermitian operator (such as the electronic Hamiltonian) $\hat H$ with a spectrum bounded from below,
 \begin{equation}
     \label{eq:variational_principle}
     \frac{\bra{\tilde\Psi}\hat H\ket{\tilde\Psi}}{\braket{\tilde\Psi}}
@@ -194,7 +196,7 @@ If we have $N_\uparrow$ spin-up electrons and $N_\downarrow$ spin-down electrons
 \end{equation}
 where $|\mathcal{H}|$ denotes the size of the Hilbert space, and we have assumed that the number of spin-up orbitals $M$ is equal to the number of spin-down orbitals. Here, ${n\choose r}=\frac{n!}{r!(n-r)!}$ is a binomial coefficient.
 
-The combinatorial scaling is still unfavourable. For a closed-shell system with 20 electrons in 20 orbitals, $|\mathcal{H}|=3.41\times 10^{10}$. Assuming we wish to have double precision,\footnote{A double precision floating-point number has 1 bit for the sign, 11 bits for the exponent, and 52 bits for digits in the number (known as the mantissa or significand).\cite{ascherFirst2011} This resolves to 64 bits or 8 bytes.} to store the whole matrix we would need about $10^{23}$ bytes, or 100 zettabytes. So, while we've substantially reduced the complexity of the problem, it is still extremely demanding. More approximations are therefore needed.
+The combinatorial scaling is still unfavourable. For a closed-shell system with 20 electrons in 20 orbitals, $|\mathcal{H}|=3.41\times 10^{10}$. Assuming we wish to have double precision,\footnote{A double precision floating-point number has 1 bit for the sign, 11 bits for the exponent, and 52 bits for digits in the number (known as the mantissa or significand).\cite{ascherFirst2011} This resolves to 64 bits or 8 bytes.} to store the whole matrix we would need about $10^{22}$ bytes, or 100 zettabytes. So, while we've substantially reduced the complexity of the problem, it is still extremely demanding. More approximations are therefore needed.
 
 \subsection{Orbitals}
 \label{sec:orbitals}
@@ -309,7 +311,10 @@ The Fock operator $f$ may be written as
 \begin{equation}
     f = h + V_\mathrm{eff}
 \end{equation}
-where the Fock potential's matrix elements (in spatial-orbital basis) are $V_{\mathrm{eff},pq}=\sum_{i\in\mathrm{occ}}(V^{pq}_{ii}-V^{pi}_{iq})$.
+where the Fock potential's matrix elements (in spatial-orbital basis) are
+\begin{equation}
+    V_{\mathrm{eff},pq}=\sum_{i\in\mathrm{occ}}(V^{pi}_{qi}-V^{pi}_{iq}).
+\end{equation}
 
 The Hartree-Fock orbitals, which ultimately dictate the parameters for the minimisation procedure, are determined by diagonalising the Fock matrix,
 \begin{equation}

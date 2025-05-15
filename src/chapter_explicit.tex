@@ -37,12 +37,14 @@ This cusp condition was also later generalised.\cite{packCuspConditionsMolecular
 Early literature on the subject suggested that the success of explicitly correlated methods were due to the superior description of short-range correlation effects, and in particular in their much more faithful capturing of the cusp conditions like equation \ref{sec:cusp}.\cite{roothaanAnalytical1960,watsonApproximate1960,weissConfiguration1961,schwartzGround1962}
 However, further study found that the correlation error from a bad description of the wave function around a small sphere centred on the cusp is actually negligible.\cite{coulsonElectron1961,gilbertInterpretation1963,prendergastImpact2001,klopperR122007} Instead, the success of explicitly correlated methods is actually due to the superior description of the overall shape and size of the Coulomb hole, which has a radius on the order of the atomic radius.
 
-To understand why gaussian-type basis sets fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}. It is also worth noting that \glspl{STO} do not suffer as badly from this limitation,\cite{kongExplicitly2011} but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful due to their lack of practicality.\footnote{Note that \glspl{STO} do not suffer from the electron-nuclear cusp, which is in any case not the focus of many explicitly correlated methods, such as F12, as discussed later in this chapter. Even with \glspl{STO}, we have electron-electron cusps.}
+To understand why single-particle basis set expansions fail so spectacularly at capturing the cusp behaviour, it is instructive to consider a simpler example, like that of approximating $|x|$ by its Fourier decomposition. Such an illustration is found in figure \ref{fig:cusp}.
+
+% It is also worth noting that \glspl{STO} do not suffer as badly from this limitation,\cite{kongExplicitly2011} but as discussed in chapter \ref{sec:orbitals}, they are unsuccessful due to their lack of practicality.\footnote{Note that \glspl{STO} do not suffer from the electron-nuclear cusp, which is in any case not the focus of many explicitly correlated methods, such as F12, as discussed later in this chapter. Even with \glspl{STO}, we have electron-electron cusps.}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics{figures/explicit/cusp.pdf}
-    \caption{A toy example of the Coulomb cusp. Here, the Fourier expansion $x\approx\frac{\pi}{2} - \frac {4}{\pi} \sum_{n=1}^N\frac{\cos[(2n-1)x]}{(2n-1)^2}$ is plotted for a few values of $N$, including the exact solution. As can be seen, even for many terms, the Fourier expansion is a poor descripter in the cusp region. Indeed, the only way to describe it exactly is with an infinite number of terms.}
+    \caption{A toy example of the Coulomb cusp. Here, the Fourier expansion $x\approx\frac{\pi}{2} - \frac {4}{\pi} \sum_{n=1}^N\frac{\cos[(2n-1)x]}{(2n-1)^2}$ is plotted for a few values of $N$, including the exact solution. As can be seen, even for many terms, the Fourier expansion is a poor descripter in the cusp region. Indeed, the only way to describe it exactly is with an infinite number of terms. A similar problem occurs in quantum chemistry when we approximate the wavefunction in terms of one-particle functions.}
     \label{fig:cusp}
 \end{figure}
 
@@ -291,9 +293,9 @@ Particularly noteworthy are the three-electron integrals from $\hat L$ and the n
 Boys and Handy's original choice for the form of $u$ was
 \begin{equation}
     \label{eq:boys-handy-jastrow}
-    u(\bm r_i, \bm r_j) = \sum_{l,m,n}^{l+m+n\leq S} c_{lmn}\bar r_{ij}^l(\bar r_{Ii}^m\bar r_{Jj}^n + \bar r_{Ij}^m\bar r_{Ji}^n)
+    u(\bm r_i, \bm r_j) = \sum_{l,m,n}^{l+m+n\leq S}\sum_{I,J} c_{lmn}\bar r_{ij}^l(\bar r_{Ii}^m\bar r_{Jj}^n + \bar r_{Ij}^m\bar r_{Ji}^n)
 \end{equation}
-where $S$ is some integer ($S=6$ in reference \citenum{boysCalculation1969})\supercite{cohenSimilarity2019} and
+where capital indices $I,J$ sum over nuclei and $S$ is some integer ($S=6$ in reference \citenum{boysCalculation1969})\supercite{cohenSimilarity2019} and
 \begin{equation}
     \bar r = \frac{r}{1+r}.
 \end{equation}
@@ -334,4 +336,4 @@ In typical modern TC workflows, $\Phi$ is initially kept fixed (e.g. to the \gls
 \supercite{ginerNew2021,baiardiExplicitly2022,szenesStriking2024}
 to much more sophisticated.\supercite{drummondJastrow,lopezriosFramework2012,cohenSimilarity2019}
 
-TC is still behind F12 in terms of its performance to cost ratio, but F12 is ahead several decades of development. However, TC shows promise thanks in part to the high degree of flexibility owing to the Jastrow factor. Moreover, the additive ansatz of F12 leads to many-electron integrals, whereas the multiplicative ansatz of TC leads to at most three-electron integrals.\footnote{This assumes the Jastrow factor may be written $J=\sum_iu_i(\bm r_i, \bm r_j)$.} This is ameliorated in F12 via the use of \gls{RI} approximations and in TC via other approximations, like discussed in section \ref{sec:xtc}.
+TC is still behind F12 in terms of its performance to cost ratio, but F12 is ahead several decades of development. However, TC shows promise thanks in part to the high degree of flexibility owing to the Jastrow factor. Moreover, the ansatz of F12, which acts on the wavefunction, leads to many-electron integrals, whereas the ansatz of TC, which acts on the Hamiltonian, leads to at most three-electron integrals.\footnote{This assumes the Jastrow factor may be written $J=\sum_iu_i(\bm r_i, \bm r_j)$.} This is ameliorated in F12 via the use of \gls{RI} approximations and in TC via other approximations, like discussed in section \ref{sec:xtc}.

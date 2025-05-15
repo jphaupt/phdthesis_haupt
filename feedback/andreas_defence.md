@@ -14,7 +14,7 @@ This is a good point. Maybe just drop the statement altogether for a more intuit
 
 > * Eq. 1.9 is not consistent with its later use in 2.32/2.33.
 
-I think I was confusing chemist/physicist notation here, should definitely change here
+I think I was confusing chemist/physicist notation here, should definitely change here. changed to match 2.32/2.33
 
 > * In 1.3 it would be better to explicitly require that the spectrum of H must be bounded  from below, otherwise the variation method does not work (e.g. Dirac operator).
 
@@ -35,7 +35,7 @@ Put into its own equation (and fix the indexing...). Not sure why I changed nota
 
 * Page 22, end of Section 2.1: The last paragraph reads as if the use of Gaussians was the main problem, but it is not. As mentioned in the exam, the convergence of Gaussian with respect to Slater type functions is roughly exponential and thus not a big problem (for energies). The main problem is the expansion of electron correlation in terms of products of one-particle functions, leading to the slow N^-1 convergence of the correlation energy.
 
-Good point. Not sure how to adjust the discussion though.
+Good point. Not sure how to adjust the discussion though. Remove the figure? Just change the caption and body? Not sure. Decided to go with the latter. I tried to plot sqrt(x^2+y^2) but the code is messy and slow. Plus, I think making a more complicated expansion takes away from the main point.
 
 * Pls. Check the signs in the argument of eq. 2.3
 
@@ -55,7 +55,7 @@ Yes, added.
 
 * Page 64: "... simultaneous interaction of three electrons is unlikely ..." (should not be formulated this way, as 1/r means that interaction is unavoidable and we for sure know that there are important terms beyond CCSD.
 
-Maybe best to just change how this was formulated in the paper
+Maybe best to just change how this was formulated in the paper. All I did was remove this sentence, since the fact that they are small is sufficient.
 
 * Same page: "Reduction factors obtains ..." should be "... obtained ..."
 
@@ -67,7 +67,7 @@ okay, good point. should change a little
 
 * Page 89 (and possibly other places): Ref 285 is not the correct one for HEAT
 
-woops!! *Definitely* need to change that. The citation key is correct, might have been a build issue with latex. Try again!
+The citation key is correct, might have been a build issue with latex. Went away with latex rebuild. Weird.
 
 * Figure 6.1: Pls check the upper two graphics. To me they look absolutely similar.
 
@@ -85,7 +85,11 @@ and yes fix up references:
 > do you mean 234/235? 233?
 
   - (269)/(270) Check references
+These are references to software hosted on github. As far as I know, there is no paper specifically describing them, so I cited the repositories. I modified the citation to include the URL for the repo. Is that sufficient?
 
   - (283) Journal Title
 
   - (306) Reference incomplete
+This one is in preparation. I added a note to the entry.
+
+I also removed duplicate citations added accidentally :)

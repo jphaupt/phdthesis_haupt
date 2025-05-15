@@ -111,6 +111,24 @@
   seconds=true
 ]{biblatex}
 
+% for software, still print the URLs
+\DeclareBibliographyDriver{software}{%
+  \usebibmacro{author/editor+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+  \newunit
+  \printlist{organization}%
+  \newunit
+  \printdate
+  \newunit
+  \iffieldundef{url}{}{%
+    \setunit{\adddot\space}%
+    \printfield{url}%
+  }%
+  \finentry
+}
+
+
 %make title in bib hyperlink to doi
 \newbibmacro{string+doi}[1]{%
   \iffieldundef{doi}{#1}{\href{https://doi.org/\thefield{doi}}{#1}}}

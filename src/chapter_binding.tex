@@ -113,7 +113,7 @@ e^{J_{A+B}}\ket{\Phi_{A+B}} = e^{J_0}(e^{J_{A}}\ket{\Phi_{A}})(e^{J_{B}}\ket{\Ph
 \end{equation}
 as $J_A$ will still act on system $B$, and vice versa. Here, $J_0$ is the electron-electron part of the Jastrow factor, $J_A$ the part involving nuclei in system $A$, and $J_B$ terms involving nuclei in system $B$.
 
-In contrast to these previous works, our Jastrow ansatz, equation \ref{eq:jastrow-again}, first presented by Drummond, Towler and Needs,\supercite{drummondJastrow2004} vanishes when systems $A$ and $B$ are far apart due to the presence of the cutoff functions. Therefore, our Jastrow factor form does not suffer from this problem.
+In contrast to these previous works, our Jastrow ansatz, equation \ref{eq:jastrow-again}, first presented by Drummond, Towler and Needs,\supercite{drummondJastrow} vanishes when systems $A$ and $B$ are far apart due to the presence of the cutoff functions. Therefore, our Jastrow factor form does not suffer from this problem.
 
 We must also ensure size consistency in our optimisation procedure. Assuming $\Phi_0$ is itself size consistent, it follows that for the given $J$, for non-interacting systems $A$ and $B$, the objective function, equation \ref{eq:varref-md}, $\sigma_\mathrm{ref}^2(A+B) = \sigma_\mathrm{ref}^2(A) + \sigma_\mathrm{ref}^2(B)$, where $\sigma_\mathrm{ref}^2(A)$ is the objective function for system $A$, and similarly for $B$. Hence, the parameters of the Jastrow factor should converge to the same values when treated as a non-interacting composite system as they would when treated as individual systems. Hence, our updated workflow is size consistent.
 
